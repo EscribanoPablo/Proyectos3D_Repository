@@ -7,12 +7,17 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("References")]
     CharacterController m_CharacterController;
+    Rigidbody m_Rb;
 
     [Header("Inputs")]
     [SerializeField] KeyCode m_LeftKeyCode;
     [SerializeField] KeyCode m_RightKeyCode;
-    [SerializeField] KeyCode m_LeftKeyCode;
-    [SerializeField] KeyCode m_LeftKeyCode;
+    [SerializeField] KeyCode m_UpKeyCode;
+    [SerializeField] KeyCode m_DownKeyCode;
+
+    [Header("Movement Variables")]
+    [SerializeField] float m_SpeedMovement;
+    Vector3 m_Movement;
 
 
     private void Awake()
@@ -32,11 +37,29 @@ public class PlayerMovement : MonoBehaviour
     }
     void Start()
     {
-        
+        m_CharacterController = GetComponent<CharacterController>();
+        m_Rb = GetComponent<Rigidbody>();
     }
 
     void Update()
     {
         
+    }
+
+    private void HandleMovement()
+    {
+        Vector3 l_Forward = transform.forward;
+        Vector3 l_Right = transform.right;
+
+        l_Right.y = 0;
+        l_Right.Normalize();
+
+        l_Forward.y = 0;
+        l_Forward.Normalize();
+
+        if (Input.GetKey(m_LeftKeyCode))
+        {
+            
+        }
     }
 }
