@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Traps : Obstacles
+public class RotatingSpikes : Traps
 {
-    public virtual void Awake()
+    public override void Awake()
     {
-
+        base.Awake();
     }
 }
