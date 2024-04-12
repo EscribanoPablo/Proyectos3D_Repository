@@ -9,5 +9,8 @@ public abstract class Obstacles : MonoBehaviour
 
     }
 
-    public abstract void RestartLevel();
+    public virtual void RestartLevel()
+    {
+
+    }
 }
