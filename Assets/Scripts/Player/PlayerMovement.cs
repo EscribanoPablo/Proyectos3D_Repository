@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    [Header("References")]
     CharacterController m_CharacterController;
+
+    [Header("Inputs")]
+    [SerializeField] KeyCode m_LeftKeyCode;
+    [SerializeField] KeyCode m_RightKeyCode;
+    [SerializeField] KeyCode m_LeftKeyCode;
+    [SerializeField] KeyCode m_LeftKeyCode;
+
+
     private void Awake()
     {
         //Si no hay ningun player en la escena, el player va a ser este
@@ -20,13 +30,11 @@ public class PlayerMovement : MonoBehaviour
             GameObject.Destroy(this.gameObject);
         }
     }
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         
