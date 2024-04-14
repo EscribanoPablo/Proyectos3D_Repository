@@ -7,12 +7,16 @@ public class PlacaPresiónPinchos : Traps
     [SerializeField] private float damage;
     [SerializeField] private float timeBetweenChangeState;
     private float timer;
-    //private bool spikesHidden;
+
+    [SerializeField] private Animation spikesAnimations;
+    [SerializeField] private AnimationClip spikesUp;
+    [SerializeField] private AnimationClip spikesDown;
+    private bool spikesHidden;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        spikesHidden = true;
     }
 
     // Update is called once per frame
@@ -33,7 +37,17 @@ public class PlacaPresiónPinchos : Traps
 
     private void ChangeState()
     {
-        //spikes animation /appear o disappear
-        // (de)activate hit collider
+        if (spikesHidden)
+        {
+            spikesAnimations.CrossFade(spikesUp.name);
+        }
+        else
+        {
+            spikesAnimations.CrossFade(spikesDown.name);
+        }
+
+        spikesHidden = !spikesHidden;
+
+        // (de)activate hit collider?
     }
 }
