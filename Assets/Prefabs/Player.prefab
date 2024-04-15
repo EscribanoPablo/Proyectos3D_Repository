@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &28002542383655689
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8722211926356234388}
+  m_Layer: 3
+  m_Name: GroundChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8722211926356234388
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28002542383655689}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.02, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9059143790163231872}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2156684860663523514
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,8 +43,8 @@ GameObject:
   - component: {fileID: 1957080453304931242}
   - component: {fileID: 3669434456134417375}
   - component: {fileID: 1737918349640484781}
-  m_Layer: 0
-  m_Name: Capsule
+  m_Layer: 3
+  m_Name: Render
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,7 +152,7 @@ GameObject:
   - component: {fileID: 4542035919194445217}
   - component: {fileID: 1342744353860108743}
   - component: {fileID: 5828077381273264543}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +256,7 @@ GameObject:
   - component: {fileID: 9059143790163231872}
   - component: {fileID: 7526401319612956389}
   - component: {fileID: 2113590656291869998}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,6 +278,7 @@ Transform:
   m_Children:
   - {fileID: 9150631957321747548}
   - {fileID: 5307005625148072334}
+  - {fileID: 8722211926356234388}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7526401319612956389
@@ -262,8 +294,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Camera: {fileID: 0}
+  m_GroundChecker: {fileID: 8722211926356234388}
+  m_WhatIsGround:
+    serializedVersion: 2
+    m_Bits: 64
+  m_JumpKey: 32
+  m_ShootKey: 323
   m_SpeedMovement: 100
   m_RotationTime: 0.1
+  m_JumpForce: 5
 --- !u!54 &2113590656291869998
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -288,9 +327,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!1 &5743010177009893129
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,7 +339,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5307005625148072334}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: lookAtCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +373,7 @@ GameObject:
   - component: {fileID: 6258182765270887560}
   - component: {fileID: 74896594667972882}
   - component: {fileID: 4796820693752253175}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
