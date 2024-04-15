@@ -6,18 +6,17 @@ public class PlayerMovement : MonoBehaviour
 {
 
     [Header("References")]
-    CharacterController m_CharacterController;
     Rigidbody m_Rb;
+    [SerializeField] Camera m_Camera;
 
     [Header("Inputs")]
-    [SerializeField] KeyCode m_LeftKeyCode;
-    [SerializeField] KeyCode m_RightKeyCode;
-    [SerializeField] KeyCode m_UpKeyCode;
-    [SerializeField] KeyCode m_DownKeyCode;
+    
 
     [Header("Movement Variables")]
     [SerializeField] float m_SpeedMovement;
     Vector3 m_Movement;
+    [SerializeField] float m_RotationTime = 0.1f;
+    float m_TurnSmoothVelocity;
 
 
     private void Awake()
@@ -25,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
         //Si no hay ningun player en la escena, el player va a ser este
         if (GameController.GetGameController().GetPlayer() == null)
         {
-            m_CharacterController = GetComponent<CharacterController>();
             //GameController.GetGameController().AddRestartGameElement(this);
             GameController.GetGameController().m_Player = this;
             GameObject.DontDestroyOnLoad(gameObject);
@@ -37,29 +35,31 @@ public class PlayerMovement : MonoBehaviour
     }
     void Start()
     {
-        m_CharacterController = GetComponent<CharacterController>();
         m_Rb = GetComponent<Rigidbody>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        
+        Movement();
     }
 
-    private void HandleMovement()
+    private void Movement()
     {
-        Vector3 l_Forward = transform.forward;
-        Vector3 l_Right = transform.right;
+        float l_Horizontal = Input.GetAxis("Horizontal");
+        float l_Vertical = Input.GetAxis("Vertical");
+        Vector3 l_Direction = new Vector3(l_Horizontal, 0f, l_Vertical).normalized;
 
-        l_Right.y = 0;
-        l_Right.Normalize();
-
-        l_Forward.y = 0;
-        l_Forward.Normalize();
-
-        if (Input.GetKey(m_LeftKeyCode))
+        if (l_Direction.magnitude >= 0.1f)
         {
-            
+            //Look Where You Go
+            float l_TargetAngle = Mathf.Atan2(l_Direction.x, l_Direction.z) * Mathf.Rad2Deg + m_Camera.transform.eulerAngles.y;
+            float l_Angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, l_TargetAngle, ref m_TurnSmoothVelocity, m_RotationTime);
+            transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
+
+            Vector3 l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;
+
+            //Apply to rb
+            m_Rb.velocity = l_MoveDir.normalized * m_SpeedMovement * Time.deltaTime;
         }
     }
 }
