@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PlacaPresiónPinchos : Traps
 {
-    [SerializeField] private float damage;
+    
     [SerializeField] private float timeBetweenChangeState;
+    [SerializeField] private float timeOffset;
     private float timer;
 
+    [Header("Animations")]
     [SerializeField] private Animation spikesAnimations;
     [SerializeField] private AnimationClip spikesUp;
     [SerializeField] private AnimationClip spikesDown;
@@ -17,6 +19,7 @@ public class PlacaPresiónPinchos : Traps
     void Start()
     {
         spikesHidden = true;
+        timer = timeOffset;
     }
 
     // Update is called once per frame
@@ -28,11 +31,6 @@ public class PlacaPresiónPinchos : Traps
             timer = 0;
             ChangeState();
         }
-    }
-
-    private void DoDamage()
-    {
-        //player gets damaged
     }
 
     private void ChangeState()

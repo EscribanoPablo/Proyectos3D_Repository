@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class Breakable : MonoBehaviour
+public class Breakable : Obstacles
 {
 
     [SerializeField] GameObject wholeObject;
@@ -12,6 +12,11 @@ public class Breakable : MonoBehaviour
     private bool broken;
     [SerializeField] float timeToDisappear;
     float timer;
+
+    public override void RestartLevel()
+    {
+    //PARA RESTART LEVEL, ESTARIA BIEN HACER UNA ARRAY DE LAS POSICIONES / ROTACIÓN DE TODAS LAS PIEZAS Y VOLVERLAS TODAS A SU SITIO
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -47,4 +52,5 @@ public class Breakable : MonoBehaviour
             }
         }
     }
+
 }
