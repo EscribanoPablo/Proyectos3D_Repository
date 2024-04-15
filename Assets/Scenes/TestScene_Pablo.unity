@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &760391230 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8722211926356234388, guid: d9756f0770de0894f9f83e3991330c2e,
+    type: 3}
+  m_PrefabInstance: {fileID: 4188162016678919525}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1650965671
 GameObject:
   m_ObjectHideFlags: 0
@@ -414,7 +420,7 @@ GameObject:
   - component: {fileID: 1730250433}
   - component: {fileID: 1730250432}
   - component: {fileID: 1730250431}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,16 +527,81 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2113590656291869998, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113590656291869998, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2156684860663523514, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_Name
+      value: Render
+      objectReference: {fileID: 0}
+    - target: {fileID: 2156684860663523514, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2869021257879387652, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4398075436590841281, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398075436590841281, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5743010177009893129, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7526401319612956389, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1658824162}
+    - target: {fileID: 7526401319612956389, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_JumpKey
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526401319612956389, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_ShootKey
+      value: 323
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526401319612956389, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_JumpForce
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526401319612956389, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_GroundChecker
+      value: 
+      objectReference: {fileID: 760391230}
+    - target: {fileID: 7526401319612956389, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_WhatIsGround.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8357810456686329749, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 9059143790163231872, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
       propertyPath: m_LocalPosition.x

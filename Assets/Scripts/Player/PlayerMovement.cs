@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,15 +9,20 @@ public class PlayerMovement : MonoBehaviour
     [Header("References")]
     Rigidbody m_Rb;
     [SerializeField] Camera m_Camera;
+    [SerializeField] Transform m_GroundChecker;
+    [SerializeField] LayerMask m_WhatIsGround;
 
     [Header("Inputs")]
-    
+    [SerializeField] KeyCode m_JumpKey;
+    [SerializeField] KeyCode m_ShootKey; 
 
     [Header("Movement Variables")]
     [SerializeField] float m_SpeedMovement;
-    Vector3 m_Movement;
     [SerializeField] float m_RotationTime = 0.1f;
     float m_TurnSmoothVelocity;
+
+    [Header("Jump Variables")]
+    [SerializeField] float m_JumpForce;
 
 
     private void Awake()
@@ -41,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         Movement();
+        Jumper();
     }
 
     private void Movement()
@@ -58,8 +65,38 @@ public class PlayerMovement : MonoBehaviour
 
             Vector3 l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;
 
+            float verticalSpeed = m_Rb.velocity.y;
+            verticalSpeed += Physics.gravity.y * Time.deltaTime;
+
             //Apply to rb
-            m_Rb.velocity = l_MoveDir.normalized * m_SpeedMovement * Time.deltaTime;
+            //m_Rb.velocity = l_MoveDir.normalized * m_SpeedMovement * Time.deltaTime;
+            m_Rb.velocity = (l_MoveDir.normalized * m_SpeedMovement * Time.deltaTime) + (Vector3.up * verticalSpeed);
         }
     }
+
+    private void Jumper()
+    {
+        if (IsGrounded())
+        {
+            if (Input.GetKeyDown(m_JumpKey))
+            {
+                Jump();
+            }
+        }
+    }
+
+
+    private bool IsGrounded()
+    {
+        float detectionRadius = 0.5f;
+        bool l_IsGrounded = Physics.CheckSphere(m_GroundChecker.position, detectionRadius, m_WhatIsGround);
+
+        return l_IsGrounded;
+    }
+    private void Jump()
+    {
+        Debug.Log("Jump");
+        m_Rb.AddForce(transform.up * m_JumpForce, ForceMode.Impulse);
+    }
+
 }
