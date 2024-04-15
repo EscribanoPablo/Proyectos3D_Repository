@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FallingPlatform : MonoBehaviour
+public class FallingPlatform : Traps
 {
     [SerializeField] private float timeToVanish;
     private float timer;
@@ -29,7 +29,7 @@ public class FallingPlatform : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if(collision.gameObject.tag == PLAYER_TAG)
         {
             playerTouched = true;
         }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PunchToy : MonoBehaviour
+public class PunchToy : Traps
 {
     [SerializeField] private float timeOnPunch;
     [SerializeField] private float timeToRest;
@@ -54,7 +54,6 @@ public class PunchToy : MonoBehaviour
         }
 
         punchIdle = !punchIdle;
-        Debug.Log(punchIdle);
 
     }
 }
