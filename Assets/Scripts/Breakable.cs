@@ -16,7 +16,6 @@ public class Breakable : Obstacles
     public override void RestartLevel()
     {
     //PARA RESTART LEVEL, ESTARIA BIEN HACER UNA ARRAY DE LAS POSICIONES / ROTACIÓN DE TODAS LAS PIEZAS Y VOLVERLAS TODAS A SU SITIO
-
     }
 
     // Start is called before the first frame update

@@ -76,7 +76,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jumper()
     {
-        if (IsGrounded())
+        Debug.Log("IsGrounded = " + IsGrounded());
+        //Debug.Log(m_Rb.velocity.y);
+
+        if (IsGrounded() /* m_Rb.velocity.y == 0*/)
         {
             if (Input.GetKeyDown(m_JumpKey))
             {
@@ -88,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        float detectionRadius = 0.5f;
+        float detectionRadius = 0.1f;
         bool l_IsGrounded = Physics.CheckSphere(m_GroundChecker.position, detectionRadius, m_WhatIsGround);
 
         return l_IsGrounded;
@@ -96,7 +99,13 @@ public class PlayerMovement : MonoBehaviour
     private void Jump()
     {
         Debug.Log("Jump");
-        m_Rb.AddForce(transform.up * m_JumpForce, ForceMode.Impulse);
+        StopVerticalVelocity();
+        m_Rb.AddForce(Vector3.up * m_JumpForce, ForceMode.Impulse);
+    }
+
+    private void StopVerticalVelocity()
+    {
+        m_Rb.velocity = new Vector3(m_Rb.velocity.x, 0, m_Rb.velocity.z);
     }
 
 }

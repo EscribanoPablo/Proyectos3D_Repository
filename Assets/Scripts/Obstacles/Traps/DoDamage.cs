@@ -9,8 +9,8 @@ public class DoDamage : Traps
     {
         if(collision.gameObject.tag == PLAYER_TAG)
         {
-            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(transform.position);//collision.GetContact(0).point);
-            //point of impact o position de los pinchous??
+            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(transform.position);
+
         }
     }
 }
