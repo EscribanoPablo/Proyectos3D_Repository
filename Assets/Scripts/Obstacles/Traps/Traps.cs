@@ -4,10 +4,5 @@ using UnityEngine;
 
 public class Traps : Obstacles
 {
-    protected const string PLAYER_TAG = "Player";
-
-    public virtual void Awake()
-    {
-
-    }
+    //protected const string PLAYER_TAG = "Player";
 }

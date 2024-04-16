@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Obstacles : MonoBehaviour
 {
+    protected const string PLAYER_TAG = "Player";
     public virtual void Awake()
     {
 
