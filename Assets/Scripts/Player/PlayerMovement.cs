@@ -23,6 +23,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jump Variables")]
     [SerializeField] float m_JumpForce;
+    [SerializeField] float doubleJumpForce;
+    int currentJumps;
+    bool doubleJump;
+    bool canJump;
 
 
     private void Awake()
@@ -42,19 +46,30 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         m_Rb = GetComponent<Rigidbody>();
+        currentJumps = 0;
     }
 
-    void FixedUpdate()
+    private void Update()
+    {
+        Jumper();
+        Debug.Log("Current Jumps: " + currentJumps);
+
+    }
+
+    private void FixedUpdate()
     {
         Movement();
-        Jumper();
+        
     }
 
     private void Movement()
     {
-        float l_Horizontal = Input.GetAxis("Horizontal");
-        float l_Vertical = Input.GetAxis("Vertical");
-        Vector3 l_Direction = new Vector3(l_Horizontal, 0f, l_Vertical).normalized;
+        float l_AD = Input.GetAxis("Horizontal");
+        float l_WS = Input.GetAxis("Vertical");
+        Vector3 l_Direction = new Vector3(l_AD, 0f, l_WS).normalized;
+
+        //float verticalSpeed = m_Rb.velocity.y;
+        //verticalSpeed += Physics.gravity.y * Time.deltaTime;
 
         if (l_Direction.magnitude >= 0.1f)
         {
@@ -65,23 +80,19 @@ public class PlayerMovement : MonoBehaviour
 
             Vector3 l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;
 
-            float verticalSpeed = m_Rb.velocity.y;
-            verticalSpeed += Physics.gravity.y * Time.deltaTime;
-
             //Apply to rb
-            //m_Rb.velocity = l_MoveDir.normalized * m_SpeedMovement * Time.deltaTime;
-            m_Rb.velocity = (l_MoveDir.normalized * m_SpeedMovement * Time.deltaTime) + (Vector3.up * verticalSpeed);
+            m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, m_Rb.velocity.y, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
         }
     }
 
     private void Jumper()
     {
-        Debug.Log("IsGrounded = " + IsGrounded());
+        //Debug.Log("IsGrounded = " + IsGrounded());
         //Debug.Log(m_Rb.velocity.y);
 
-        if (IsGrounded() /* m_Rb.velocity.y == 0*/)
+        if (Input.GetKeyDown(m_JumpKey) )
         {
-            if (Input.GetKeyDown(m_JumpKey))
+            if (IsGrounded() || currentJumps < 2 /* || m_Rb.velocity.y == 0*/)
             {
                 Jump();
             }
@@ -93,19 +104,42 @@ public class PlayerMovement : MonoBehaviour
     {
         float detectionRadius = 0.1f;
         bool l_IsGrounded = Physics.CheckSphere(m_GroundChecker.position, detectionRadius, m_WhatIsGround);
+        //bool l_IsGrounded = Physics.Raycast(m_GroundChecker.position, Vector3.down, m_WhatIsGround);
+        if (l_IsGrounded)
+        {
+            currentJumps = 0;
+        }
 
         return l_IsGrounded;
+        //float raycastDistance = 0.05f; 
+        //RaycastHit hit;
+
+        //if (Physics.Raycast(m_GroundChecker.position, Vector3.down, out hit, raycastDistance, m_WhatIsGround))
+        //{
+        //    currentJumps = 0;
+        //    //canJump = true;
+        //    //doubleJump = false;
+        //    return true;
+        //}
+
+        //return false;
     }
     private void Jump()
     {
-        Debug.Log("Jump");
+        //Debug.Log("Current Jumps: " + currentJumps);
+
+        float jumpForce = currentJumps != 0  ? doubleJumpForce : m_JumpForce;
+
         StopVerticalVelocity();
-        m_Rb.AddForce(Vector3.up * m_JumpForce, ForceMode.Impulse);
+        m_Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        currentJumps++;
+
     }
 
     private void StopVerticalVelocity()
     {
         m_Rb.velocity = new Vector3(m_Rb.velocity.x, 0, m_Rb.velocity.z);
     }
+
 
 }
