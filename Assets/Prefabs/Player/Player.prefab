@@ -233,8 +233,8 @@ GameObject:
   - component: {fileID: 7526401319612956389}
   - component: {fileID: 2113590656291869998}
   - component: {fileID: 410713183316784795}
-  - component: {fileID: 8869786097230673176}
   - component: {fileID: 3043128302564321382}
+  - component: {fileID: 1761026639042922387}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -332,30 +332,22 @@ CapsuleCollider:
   m_Height: 2.002079
   m_Direction: 1
   m_Center: {x: 0, y: -0.0010254383, z: 0}
---- !u!136 &8869786097230673176
-CapsuleCollider:
+--- !u!114 &3043128302564321382
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4398075436590841281}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2.002079
-  m_Direction: 1
-  m_Center: {x: 0, y: -0.0010254383, z: 0}
---- !u!114 &3043128302564321382
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6533de496ebeee4b89f8ceea9add225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startHearts: 3
+  DEV_INVINCIBLE: 0
+  knockbackImpulse: 6.5
+--- !u!114 &1761026639042922387
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
