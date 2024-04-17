@@ -70,6 +70,7 @@ public class PlayerHealth : MonoBehaviour
 
         //RESPAWN
         transform.position = startPosition;
+        rb.velocity = Vector3.zero;
     }
 
     private void Die()

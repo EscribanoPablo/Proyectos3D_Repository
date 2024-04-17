@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ParticleDestroyer : MonoBehaviour
 {
-    [SerializeField] ParticleSystem thisParticles;
+    ParticleSystem thisParticles;
     // Start is called before the first frame update
     void Start()
     {
-        
+        thisParticles = GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -16,7 +16,7 @@ public class ParticleDestroyer : MonoBehaviour
     {
         if (thisParticles.isStopped)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 }
