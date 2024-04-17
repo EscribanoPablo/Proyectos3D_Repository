@@ -111,6 +111,10 @@ public class PlayerMovement : MonoBehaviour
             //Apply to rb
             m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
         }
+        else
+        {
+            //m_Rb.velocity = Vector3.zero;
+        }
         //hacer que la verticalSpeed.y sea siempre a graviti
         m_Rb.velocity = new Vector3(m_Rb.velocity.x, verticalSpeed, m_Rb.velocity.z);
     }
@@ -211,7 +215,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(dashDuration);
 
         //Stop inercia rigidBody;
-        m_Rb.velocity = new Vector3(0, 0, 0);
+        //m_Rb.velocity = new Vector3(0, 0, 0);
 
         m_Rb.useGravity = true; 
         //_trailRenderer.emitting = false;
