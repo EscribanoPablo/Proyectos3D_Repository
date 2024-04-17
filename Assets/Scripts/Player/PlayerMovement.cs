@@ -21,11 +21,14 @@ public class PlayerMovement : MonoBehaviour
     [Header("Inputs")]
     [SerializeField] KeyCode m_JumpKey;
     [SerializeField] KeyCode m_ShootKey; 
+    [SerializeField] KeyCode dashKey;
+
 
     [Header("Movement Variables")]
     [SerializeField] float m_SpeedMovement;
     [SerializeField] float m_RotationTime = 0.1f;
     float m_TurnSmoothVelocity;
+    Vector3 moveDirection;
 
     [Header("Jump Variables")]
     [SerializeField] int multipleJumps = 2;
@@ -36,6 +39,14 @@ public class PlayerMovement : MonoBehaviour
     bool canJump;
     [SerializeField] float gravity;
     float verticalSpeed;
+
+    [Header("Dash Variables")]
+    [SerializeField] float dashDuration = 0.2f;
+    [SerializeField] float dashPower = 300;
+    bool canDash;
+    bool isDashing;
+    float coolDown = 1;
+
 
 
     private void Awake()
@@ -58,12 +69,15 @@ public class PlayerMovement : MonoBehaviour
         currentJumps = 0;
         armCanonJump.SetActive(false);
         canonJump.SetActive(false);
+        canDash = true;
     }
 
     private void Update()
     {
         Jumper();
-        Debug.Log("Current Jumps: " + currentJumps);
+        //Debug.Log("Current Jumps: " + currentJumps);
+        PlayerDash();
+        Debug.Log(moveDirection);
 
     }
 
@@ -75,6 +89,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
+        if (isDashing) return;
+
         float l_AD = Input.GetAxis("Horizontal");
         float l_WS = Input.GetAxis("Vertical");
         Vector3 l_Direction = new Vector3(l_AD, 0f, l_WS).normalized;
@@ -90,6 +106,7 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
 
             Vector3 l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;
+            moveDirection = l_MoveDir;
 
             //Apply to rb
             m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
@@ -102,12 +119,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(m_JumpKey) )
         {
-            if (IsGrounded() || currentJumps < multipleJumps)
+            if (IsGrounded() || currentJumps < multipleJumps && !isDashing)
             {
                 Jump();
             }
         }
-
     }
 
     private bool IsGrounded()
@@ -118,7 +134,6 @@ public class PlayerMovement : MonoBehaviour
         if (l_IsGrounded) 
         { 
             currentJumps = 0;
-            
         }
 
         return l_IsGrounded;
@@ -138,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
             canonIdle.SetActive(false);
             SpawnParticles(canonParticles, spawnJumpCanonParticlesPos.position);
 
-            StartCoroutine(HoldCanonAgain());
+            StartCoroutine(HoldCanonAgain(0.75f));
             //Debug.Log("double jump");
         }
         currentJumps++;
@@ -160,13 +175,50 @@ public class PlayerMovement : MonoBehaviour
         Destroy(_particles, 3);
     }
 
-    IEnumerator HoldCanonAgain()
+    IEnumerator HoldCanonAgain(float seconds)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(seconds);
         armCanon.SetActive(true);
         canonIdle.SetActive(true);
         armCanonJump.SetActive(false);
         canonJump.SetActive(false);
+    }
+
+    private void PlayerDash()
+    {
+        if (isDashing) return;
+        if (Input.GetKeyDown(dashKey) && canDash)
+        {
+            Debug.Log("dash");
+            StartCoroutine(DoDash());
+        }
+    }
+
+    private IEnumerator DoDash()
+    {
+        canDash = false;
+        isDashing = true;
+
+        m_Rb.useGravity = false;
+
+        HoldCanonAgain(0f);
+
+        Vector3 dashDirection = dashPower * transform.forward;
+        m_Rb.velocity = dashDirection;
+
+        SpawnParticles(canonParticles, spawnJumpCanonParticlesPos.position);
+
+        yield return new WaitForSeconds(dashDuration);
+
+        //Stop inercia rigidBody;
+        m_Rb.velocity = new Vector3(0, 0, 0);
+
+        m_Rb.useGravity = true; 
+        //_trailRenderer.emitting = false;
+        isDashing = false;
+
+        yield return new WaitForSeconds(coolDown);
+        canDash = true;
     }
 
 }
