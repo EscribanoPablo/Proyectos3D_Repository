@@ -811,12 +811,15 @@ MonoBehaviour:
   spawnJumpCanonParticlesPos: {fileID: 6870223169479544195}
   m_JumpKey: 32
   m_ShootKey: 323
+  dashKey: 304
   m_SpeedMovement: 150
   m_RotationTime: 0.1
   multipleJumps: 2
   m_JumpForce: 7
   doubleJumpForce: 11
   gravity: 10
+  dashDuration: 0.2
+  dashPower: 15
 --- !u!54 &2113590656291869998
 Rigidbody:
   m_ObjectHideFlags: 0
