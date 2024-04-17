@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 7148407212240624325}
   - component: {fileID: 1537042483190893359}
   - component: {fileID: 7872863231994027898}
+  - component: {fileID: 4210757856112458466}
   m_Layer: 0
-  m_Name: EnemyBomb
+  m_Name: EnemyBombWITHOUTPATH
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +117,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -126,5 +127,25 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 1
   m_BaseOffset: 0.5
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
+--- !u!114 &4210757856112458466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820307004202491559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb6a0f64b9cb5fd4cb43245d736cefe1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceToDetectPlayer: 8
+  distanceToExplode: 2.5
+  explosionParticles: {fileID: 4927424519790764583, guid: 9d2d8e138e261284bb7c17d279addbc8,
+    type: 3}
+  patrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  timeOnIdle: 3
