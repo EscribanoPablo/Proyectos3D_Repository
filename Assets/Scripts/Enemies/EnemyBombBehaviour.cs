@@ -9,6 +9,7 @@ public class EnemyBombBehaviour : MonoBehaviour
     private NavMeshAgent navMeshAgent;
     [SerializeField] float distanceToDetectPlayer;
     [SerializeField] float distanceToExplode = 1.3f;
+    [SerializeField] GameObject explosionParticles;
     EnemyState currentState;
 
     [SerializeField] List<Transform> patrolPoints;
@@ -22,6 +23,7 @@ public class EnemyBombBehaviour : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         navMeshAgent = GetComponent<NavMeshAgent>();
+        EnterState(EnemyState.PATROL);
     }
 
     // Update is called once per frame
@@ -30,14 +32,18 @@ public class EnemyBombBehaviour : MonoBehaviour
         switch (currentState)
         {
             case EnemyState.IDLE:
+                OnState_Idle();
                 break;
             case EnemyState.PATROL:
+                OnState_Patrol();
                 break;
             case EnemyState.PURSUE:
+                OnState_Pursue();
                 break;
             default:
                 break;
         }
+
     }
 
     private void OnState_Idle()
@@ -46,22 +52,35 @@ public class EnemyBombBehaviour : MonoBehaviour
         if (idleTimer >= timeOnIdle)
         {
             EnterState(EnemyState.PATROL);
+            idleTimer = 0;
+        }
+        if (DistanceToPlayer() <= distanceToDetectPlayer)
+        {
+            EnterState(EnemyState.PURSUE);
         }
     }
 
     private void OnState_Patrol()
     {
-
+        if (!navMeshAgent.hasPath && navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete)
+        {
+            EnterState(EnemyState.IDLE);
+        }
+        if (DistanceToPlayer() <= distanceToDetectPlayer)
+        {
+            EnterState(EnemyState.PURSUE);
+        }
     }
 
     private void OnState_Pursue()
     {
+        navMeshAgent.SetDestination(player.transform.position);
 
-        if ((DistanceToPlayer() > distanceToDetectPlayer))
+        if (DistanceToPlayer() > distanceToDetectPlayer)
         {
-            navMeshAgent.SetDestination(player.transform.position);
+            EnterState(EnemyState.IDLE);
         }
-        else
+        else if (DistanceToPlayer() <= distanceToExplode)
         {
             Explode();
         }
@@ -72,11 +91,14 @@ public class EnemyBombBehaviour : MonoBehaviour
         switch (state)
         {
             case EnemyState.IDLE:
+                navMeshAgent.isStopped= true;
                 break;
             case EnemyState.PATROL:
+                navMeshAgent.isStopped = false;
                 NextPatrolPoint();
                 break;
             case EnemyState.PURSUE:
+                navMeshAgent.isStopped = false;
                 break;
             default:
                 break;
@@ -86,15 +108,22 @@ public class EnemyBombBehaviour : MonoBehaviour
 
     private void NextPatrolPoint()
     {
+        navMeshAgent.SetDestination(patrolPoints[currentPoint].position);
         ++currentPoint;
         if (currentPoint >= patrolPoints.Count)
             currentPoint = 0;
-        navMeshAgent.SetDestination(patrolPoints[currentPoint].position);
     }
 
     private void Explode()
     {
+        player.GetComponent<PlayerHealth>().TakeDamage(transform.position);
+        GameObject.Instantiate(explosionParticles, transform.position, transform.rotation);
+        gameObject.SetActive(false);
+    }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        //if bala, explode
     }
 
     private float DistanceToPlayer()
