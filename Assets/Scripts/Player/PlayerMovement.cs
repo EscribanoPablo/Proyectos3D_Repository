@@ -11,6 +11,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Camera m_Camera;
     [SerializeField] Transform m_GroundChecker;
     [SerializeField] LayerMask m_WhatIsGround;
+    [SerializeField] GameObject armCanon;
+    [SerializeField] GameObject armCanonJump;
+    [SerializeField] GameObject canonJump;
+    [SerializeField] GameObject canonIdle;
+    [SerializeField] GameObject canonParticles;
+    [SerializeField] Transform spawnJumpCanonParticlesPos;
 
     [Header("Inputs")]
     [SerializeField] KeyCode m_JumpKey;
@@ -22,11 +28,14 @@ public class PlayerMovement : MonoBehaviour
     float m_TurnSmoothVelocity;
 
     [Header("Jump Variables")]
+    [SerializeField] int multipleJumps = 2;
     [SerializeField] float m_JumpForce;
     [SerializeField] float doubleJumpForce;
     int currentJumps;
     bool doubleJump;
     bool canJump;
+    [SerializeField] float gravity;
+    float verticalSpeed;
 
 
     private void Awake()
@@ -47,6 +56,8 @@ public class PlayerMovement : MonoBehaviour
     {
         m_Rb = GetComponent<Rigidbody>();
         currentJumps = 0;
+        armCanonJump.SetActive(false);
+        canonJump.SetActive(false);
     }
 
     private void Update()
@@ -68,8 +79,8 @@ public class PlayerMovement : MonoBehaviour
         float l_WS = Input.GetAxis("Vertical");
         Vector3 l_Direction = new Vector3(l_AD, 0f, l_WS).normalized;
 
-        //float verticalSpeed = m_Rb.velocity.y;
-        //verticalSpeed += Physics.gravity.y * Time.deltaTime;
+        float verticalSpeed = m_Rb.velocity.y;
+        verticalSpeed += /*Physics.gravity.y*/ -gravity * Time.deltaTime;
 
         if (l_Direction.magnitude >= 0.1f)
         {
@@ -81,57 +92,55 @@ public class PlayerMovement : MonoBehaviour
             Vector3 l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;
 
             //Apply to rb
-            m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, m_Rb.velocity.y, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
+            m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
         }
+        //hacer que la verticalSpeed.y sea siempre a graviti
+        m_Rb.velocity = new Vector3(m_Rb.velocity.x, verticalSpeed, m_Rb.velocity.z);
     }
 
     private void Jumper()
     {
-        //Debug.Log("IsGrounded = " + IsGrounded());
-        //Debug.Log(m_Rb.velocity.y);
-
         if (Input.GetKeyDown(m_JumpKey) )
         {
-            if (IsGrounded() || currentJumps < 2 /* || m_Rb.velocity.y == 0*/)
+            if (IsGrounded() || currentJumps < multipleJumps)
             {
                 Jump();
             }
         }
-    }
 
+    }
 
     private bool IsGrounded()
     {
-        float detectionRadius = 0.1f;
+        float detectionRadius = 0.05f;
         bool l_IsGrounded = Physics.CheckSphere(m_GroundChecker.position, detectionRadius, m_WhatIsGround);
-        //bool l_IsGrounded = Physics.Raycast(m_GroundChecker.position, Vector3.down, m_WhatIsGround);
-        if (l_IsGrounded)
-        {
+
+        if (l_IsGrounded) 
+        { 
             currentJumps = 0;
+            
         }
 
         return l_IsGrounded;
-        //float raycastDistance = 0.05f; 
-        //RaycastHit hit;
-
-        //if (Physics.Raycast(m_GroundChecker.position, Vector3.down, out hit, raycastDistance, m_WhatIsGround))
-        //{
-        //    currentJumps = 0;
-        //    //canJump = true;
-        //    //doubleJump = false;
-        //    return true;
-        //}
-
-        //return false;
     }
     private void Jump()
     {
         //Debug.Log("Current Jumps: " + currentJumps);
 
         float jumpForce = currentJumps != 0  ? doubleJumpForce : m_JumpForce;
-
         StopVerticalVelocity();
         m_Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        if (currentJumps != 0)
+        {
+            armCanonJump.SetActive(true);
+            canonJump.SetActive(true);
+            armCanon.SetActive(false);
+            canonIdle.SetActive(false);
+            SpawnParticles(canonParticles, spawnJumpCanonParticlesPos.position);
+
+            StartCoroutine(HoldCanonAgain());
+            //Debug.Log("double jump");
+        }
         currentJumps++;
 
     }
@@ -141,5 +150,23 @@ public class PlayerMovement : MonoBehaviour
         m_Rb.velocity = new Vector3(m_Rb.velocity.x, 0, m_Rb.velocity.z);
     }
 
+    private void SpawnParticles(GameObject particles, Vector3 position)
+    {
+        GameObject _particles = Instantiate(particles, position, particles.transform.rotation);
+
+        ParticleSystem instantiateParticles = _particles.GetComponent<ParticleSystem>();
+        instantiateParticles.Play();
+
+        Destroy(_particles, 3);
+    }
+
+    IEnumerator HoldCanonAgain()
+    {
+        yield return new WaitForSeconds(1);
+        armCanon.SetActive(true);
+        canonIdle.SetActive(true);
+        armCanonJump.SetActive(false);
+        canonJump.SetActive(false);
+    }
 
 }
