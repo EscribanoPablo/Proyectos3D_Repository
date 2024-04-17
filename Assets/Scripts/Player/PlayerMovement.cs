@@ -109,7 +109,8 @@ public class PlayerMovement : MonoBehaviour
             moveDirection = l_MoveDir;
 
             //Apply to rb
-            m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
+            //m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
+            m_Rb.AddForce(l_MoveDir * m_SpeedMovement * Time.deltaTime, ForceMode.Force);
         }
         else
         {
@@ -208,7 +209,8 @@ public class PlayerMovement : MonoBehaviour
         HoldCanonAgain(0f);
 
         Vector3 dashDirection = dashPower * transform.forward;
-        m_Rb.velocity = dashDirection;
+        //m_Rb.velocity = dashDirection;
+        m_Rb.AddForce(dashDirection, ForceMode.Impulse);
 
         SpawnParticles(canonParticles, spawnJumpCanonParticlesPos.position);
 
