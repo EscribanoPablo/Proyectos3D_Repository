@@ -4,11 +4,4 @@ using UnityEngine;
 
 public class RotatingSpikes : Traps
 {
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.transform.tag == "Player")
-        {
-            //player.GotHit
-        }
-    }
 }
