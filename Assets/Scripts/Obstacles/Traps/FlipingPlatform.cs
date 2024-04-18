@@ -11,23 +11,30 @@ public class FlipingPlatform : Traps
     [SerializeField]
     AnimationClip flipingAnimationInvested;
 
+    PlayerMovement player;
     bool investAnim = false;
+
+    private void Start()
+    {
+        player = FindObjectOfType<PlayerMovement>();
+    }
 
     void Update()
     {
-        //mirar si el jugador ha saltado, o que el jugador llame a la funcion
+        //if (player.GetIfPlayerJumped())
+        //    FlipPlatform();
     }
 
     void FlipPlatform()
     {
         if (!investAnim)
         {
-            flipPlatAnimations.Play(flipingAnimation.name);
+            flipPlatAnimations.CrossFadeQueued(flipingAnimation.name, 0.1f);
             investAnim = true;
         }
         else
         {
-            flipPlatAnimations.Play(flipingAnimationInvested.name);
+            flipPlatAnimations.CrossFadeQueued(flipingAnimationInvested.name, 0.1f);
             investAnim = false;
         }
     }
