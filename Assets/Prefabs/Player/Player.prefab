@@ -700,6 +700,7 @@ MonoBehaviour:
   canonParticles: {fileID: 7807666680103370727, guid: c36f55faa284bd54aaa8dc11308d5c0c,
     type: 3}
   spawnJumpCanonParticlesPos: {fileID: 6870223169479544195}
+  canonShoot: {fileID: 5741698530815852904}
   m_JumpKey: 32
   dashKey: 304
   m_SpeedMovement: 40
@@ -711,6 +712,10 @@ MonoBehaviour:
   gravity: 20
   dashDuration: 0.2
   dashPower: 15
+  wallJumpUpForce: 7
+  wallJumpSideForce: 5
+  wallDetectionDistance: 2
+  timeToWallFall: 3
 --- !u!54 &2113590656291869998
 Rigidbody:
   m_ObjectHideFlags: 0

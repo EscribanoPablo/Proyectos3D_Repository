@@ -47,6 +47,14 @@ public class PlayerMovement : MonoBehaviour
     bool isDashing;
     float coolDown = 1;
 
+    [Header("WallJump Variables")]
+    [SerializeField] float wallJumpUpForce;
+    [SerializeField] float wallJumpSideForce;
+    [SerializeField] float wallDetectionDistance = 0.02f;
+    [SerializeField] float timeToWallFall = 3f;
+    private bool onWall = false;
+    private bool canWall = true;
+    private float wallTimer;
 
     public bool GetIsJumping()
     {
@@ -81,22 +89,40 @@ public class PlayerMovement : MonoBehaviour
     {
 
         Jumper();
-        Debug.Log("Current Jumps: " + currentJumps);
-        PlayerDash();
-
-        if (IsGrounded())
+        if (!onWall)
         {
-            ResetJumps();
-            m_Rb.drag = 5;
+            PlayerDash();
+
+            if (IsGrounded())
+            {
+                ResetJumps();
+                m_Rb.drag = 5;
+            }
+            else
+            {
+                if (HeadOnWall() && canWall)
+                {
+                    SetOnWall();
+                }
+                else
+                {
+                    m_Rb.drag = 0.5f;
+                }
+
+            }
+
+            if (!isDashing)
+                SpeedControl();
         }
         else
         {
-
-            m_Rb.drag = 0.5f;
+            wallTimer += Time.deltaTime;
+            if ((wallTimer > timeToWallFall) || (!HeadOnWall()))
+            {
+                WallFall();
+                wallTimer = 0;
+            }
         }
-
-        if (!isDashing)
-            SpeedControl();
 
     }
 
@@ -154,7 +180,11 @@ public class PlayerMovement : MonoBehaviour
                 if (IsGrounded())
                 {
                     Jump(m_JumpForce);
-                    Debug.Log("Normal Jump");
+                    isJumping = true;
+                }
+                else if (onWall)
+                {
+                    WallJump();
                     isJumping = true;
                 }
                 else if (doubleJump)
@@ -162,7 +192,6 @@ public class PlayerMovement : MonoBehaviour
                     Jump(doubleJumpForce);
                     CanonJump();
                     canonShoot.Shoot();
-                    Debug.Log("Canon Jump");
                     doubleJump = false;
                     isJumping = true;
                 }
@@ -187,8 +216,8 @@ public class PlayerMovement : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(m_GroundChecker.position, detectionRadius, m_WhatIsGround);
         if (colliders.Length > 0)
         {
-            Debug.Log("grounded");
-            doubleJump = true; 
+            doubleJump = true;
+            canWall = true; ///////////////////////GUARRADA
             return true;
         }
         return false;
@@ -277,24 +306,38 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(coolDown);
         canDash = true;
     }
-    private IEnumerator Decelerate(float verticalSpeed, float fadeDuration)
+
+
+    private bool HeadOnWall()
     {
-        float elapsedTime = 0f; // Tiempo transcurrido desde que empezó la transición
+        return Physics.Raycast(transform.position, transform.forward, wallDetectionDistance, m_WhatIsGround);
+    }
 
-        while (elapsedTime < fadeDuration)
-        {
-            elapsedTime += Time.deltaTime;
+    private void SetOnWall()
+    {
+        onWall = true;
+        canWall = false;
+        ResetJumps();
+        m_Rb.velocity = Vector3.zero;
+        m_Rb.useGravity = false;
+    }
 
-            float t = Mathf.Clamp01(elapsedTime / fadeDuration);
+    private void WallJump()
+    {
+        onWall = false;
 
-            float newX = Mathf.Lerp(m_Rb.velocity.x, 0f, t);
-            float newZ = Mathf.Lerp(m_Rb.velocity.z, 0f, t);
-            m_Rb.velocity = new Vector3(newX, m_Rb.velocity.y, newZ);
-            Debug.Log("fading");
+        Vector3 jumpDirection = -transform.forward;
+        jumpDirection.Normalize();
+        m_Rb.AddForce((jumpDirection * wallJumpSideForce) + (Vector3.up * wallJumpUpForce), ForceMode.Impulse);
+        transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y + 180, 0));
 
-            yield return null; // Esperar al siguiente frame
-        }
+        m_Rb.useGravity = true;
+    }
 
+    private void WallFall()
+    {
+        onWall = false;
+        m_Rb.useGravity = true;
     }
 
 }
