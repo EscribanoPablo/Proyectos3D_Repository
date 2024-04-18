@@ -22,7 +22,7 @@ public class Bullet : MonoBehaviour
     {
         if (canonShoot != null)
         {
-            rb.velocity = direction * bulletSpeed * Time.deltaTime;
+            rb.velocity = direction * bulletSpeed;
         }
     }
 
