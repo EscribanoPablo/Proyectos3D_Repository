@@ -37,20 +37,19 @@ public class CanonShoot : MonoBehaviour
             canonParticles.GetComponent<ParticleSystem>().Play();
             Shoot();
         }
+        else if (Input.GetKeyDown(KeyCode.LeftShift)) /////////////////////// ARREGLAR
+        {
+                canonForward = -transform.forward;
+                Debug.Log(canonForward);
+        }
         else if (playerMovement.DoubleJump)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                canonForward = Vector3.down; 
+                canonForward = Vector3.down;
             }
         }
-        else if (playerMovement.IsDashing)
-        {
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                canonForward = -transform.forward;
-            }
-        }
+
     }
 
     public void Shoot()
