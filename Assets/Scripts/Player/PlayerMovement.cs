@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject canonIdle;
     [SerializeField] GameObject canonParticles;
     [SerializeField] Transform spawnJumpCanonParticlesPos;
+    [SerializeField] CanonShoot canonShoot;
 
     [Header("Inputs")]
     [SerializeField] KeyCode m_JumpKey;
@@ -32,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float m_JumpForce;
     [SerializeField] float doubleJumpForce;
     int currentJumps;
+    public bool DoubleJump => doubleJump;
     bool doubleJump;
     [SerializeField] float gravity;
     float verticalSpeed;
@@ -41,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashDuration = 0.2f;
     [SerializeField] float dashPower = 300;
     bool canDash;
+    public bool IsDashing => isDashing;
     bool isDashing;
     float coolDown = 1;
 
@@ -158,6 +161,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     Jump(doubleJumpForce);
                     CanonJump();
+                    canonShoot.Shoot();
                     Debug.Log("Canon Jump");
                     doubleJump = false;
                     isJumping = true;
@@ -206,7 +210,7 @@ public class PlayerMovement : MonoBehaviour
         m_Rb.velocity = new Vector3(m_Rb.velocity.x, 0, m_Rb.velocity.z);
     }
 
-    private void SpawnParticles(GameObject particles, Vector3 position)
+    private void SpawnCanonParticles(GameObject particles, Vector3 position)
     {
         GameObject _particles = Instantiate(particles, position, particles.transform.rotation);
 
@@ -231,7 +235,7 @@ public class PlayerMovement : MonoBehaviour
         canonJump.SetActive(true);
         armCanon.SetActive(false);
         canonIdle.SetActive(false);
-        SpawnParticles(canonParticles, spawnJumpCanonParticlesPos.position);
+        SpawnCanonParticles(canonParticles, spawnJumpCanonParticlesPos.position);
 
         StartCoroutine(HoldCanonAgain(0.25f));
     }
@@ -257,7 +261,9 @@ public class PlayerMovement : MonoBehaviour
         //m_Rb.velocity = dashDirection;
         m_Rb.AddForce(dashDirection, ForceMode.Impulse);
 
-        SpawnParticles(canonParticles, spawnJumpCanonParticlesPos.position);
+        SpawnCanonParticles(canonParticles, spawnJumpCanonParticlesPos.position);
+
+        canonShoot.Shoot();
 
         yield return new WaitForSeconds(dashDuration);
 

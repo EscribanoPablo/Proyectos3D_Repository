@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     Rigidbody rb;
     Vector3 direction;
     // Start is called before the first frame update
-
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
