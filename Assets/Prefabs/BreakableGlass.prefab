@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5772943645126798882}
   - component: {fileID: 2195509113175365363}
   - component: {fileID: 85559064794679284}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BreakableGlass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,6 +79,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5772943645126798882}
     m_Modifications:
+    - target: {fileID: -8917703946959959745, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15074a271db60ff439065873e037d819,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -129,10 +134,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6554458113972422046, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -2995828229661691052, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -80796838390250655, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 15074a271db60ff439065873e037d819,
         type: 3}
       propertyPath: m_Name
       value: Cristal placeholder roto
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021780583470790795, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8704484798943859418, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -596,6 +631,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Cristal placeholder
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0d8598821425d664a86ee028df879a42,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

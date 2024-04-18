@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -20,12 +18,13 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Inputs")]
     [SerializeField] KeyCode m_JumpKey;
-    [SerializeField] KeyCode m_ShootKey; 
+    [SerializeField] KeyCode m_ShootKey;
     [SerializeField] KeyCode dashKey;
 
 
     [Header("Movement Variables")]
     [SerializeField] float m_SpeedMovement;
+    [SerializeField] float maxVelocity;
     [SerializeField] float m_RotationTime = 0.1f;
     float m_TurnSmoothVelocity;
     Vector3 moveDirection;
@@ -74,16 +73,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+
         Jumper();
         //Debug.Log("Current Jumps: " + currentJumps);
         PlayerDash();
+
+        if (IsGrounded())
+        {
+            ResetJumps();
+            m_Rb.drag = 5;
+        }
+        else
+        {
+
+            m_Rb.drag = 0.5f;
+        }
+
+        if (!isDashing)
+            SpeedControl();
 
     }
 
     private void FixedUpdate()
     {
         Movement();
-        
     }
 
     private void Movement()
@@ -105,35 +118,32 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
 
             Vector3 l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;
-            moveDirection = l_MoveDir;
+            //moveDirection = l_MoveDir;
 
             //Apply to rb
-            m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
-            //m_Rb.AddForce(l_MoveDir * m_SpeedMovement * Time.deltaTime, ForceMode.Force);
+            //m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
+            m_Rb.AddForce(l_MoveDir.normalized * m_SpeedMovement, ForceMode.Force);
         }
-        else
-        {
-            //m_Rb.velocity = Vector3.zero;
 
-            // Transición de velocidad en X y Z a cero
-            
-            //yo creo que lo que pasa es que esta Coroutine solo se va a llamar cuando l_Direction.magnitude < 0.1f y aqui la velocidad ya es 0,
-            //hay que hacer cuando se suelte el input (getKeyUp o algo así) empieze la deceleracion.
-            if (m_Rb.velocity.x != 0 || m_Rb.velocity.z != 0)
-            {
-                //StartCoroutine(Decelerate(verticalSpeed, 1f));   
-            }
-        }
-        //hacer que la verticalSpeed.y sea siempre a graviti
-        m_Rb.velocity = new Vector3(m_Rb.velocity.x, verticalSpeed, m_Rb.velocity.z);
     }
 
+    private void SpeedControl()
+    {
+        Vector3 flatVel = new Vector3(m_Rb.velocity.x, 0f, m_Rb.velocity.z);
+
+        // limit velocity if needed
+        if (flatVel.magnitude > maxVelocity)
+        {
+            Vector3 limitedVel = flatVel.normalized * maxVelocity;
+            m_Rb.velocity = new Vector3(limitedVel.x, m_Rb.velocity.y, limitedVel.z);
+        }
+    }
 
     private void Jumper()
     {
-        if (Input.GetKeyDown(m_JumpKey) )
+        if (Input.GetKeyDown(m_JumpKey))
         {
-            if (IsGrounded() || currentJumps < multipleJumps && !isDashing)
+            if ((IsGrounded() || currentJumps < multipleJumps) && !isDashing)
             {
                 Jump();
             }
@@ -142,21 +152,25 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        float detectionRadius = 0.05f;
+        float detectionRadius = 0.02f;
         bool l_IsGrounded = Physics.CheckSphere(m_GroundChecker.position, detectionRadius, m_WhatIsGround);
 
-        if (l_IsGrounded) 
-        { 
-            currentJumps = 0;
-        }
+        Debug.Log(l_IsGrounded);
 
         return l_IsGrounded;
+    }
+
+    private void ResetJumps()
+    {
+
+        currentJumps = 0;
+
     }
     private void Jump()
     {
         //Debug.Log("Current Jumps: " + currentJumps);
 
-        float jumpForce = currentJumps != 0  ? doubleJumpForce : m_JumpForce;
+        float jumpForce = currentJumps != 0 ? doubleJumpForce : m_JumpForce;
         StopVerticalVelocity();
         m_Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         if (currentJumps != 0)
@@ -214,7 +228,7 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
 
         m_Rb.useGravity = false;
-        
+
         Vector3 dashDirection = dashPower * transform.forward;
         //m_Rb.velocity = dashDirection;
         m_Rb.AddForce(dashDirection, ForceMode.Impulse);
@@ -226,7 +240,7 @@ public class PlayerMovement : MonoBehaviour
         //Stop inercia rigidBody;
         //m_Rb.velocity = new Vector3(0, 0, 0);
 
-        m_Rb.useGravity = true; 
+        m_Rb.useGravity = true;
         //_trailRenderer.emitting = false;
         isDashing = false;
 
