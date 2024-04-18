@@ -8,6 +8,7 @@ public class Breakable : Obstacles
 
     [SerializeField] GameObject wholeObject;
     [SerializeField] GameObject prefracturedObject;
+    [SerializeField] string breakerTag;
 
     private bool broken;
     [SerializeField] float timeToDisappear;
@@ -27,7 +28,7 @@ public class Breakable : Obstacles
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player") //AQUI SE TIENE QUE CAMBIAR EL TAG POR EL DE LA BALA
+        if (other.tag == breakerTag) 
         {
             wholeObject.SetActive(false);
             prefracturedObject.SetActive(true);

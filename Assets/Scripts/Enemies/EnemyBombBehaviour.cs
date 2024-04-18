@@ -116,7 +116,10 @@ public class EnemyBombBehaviour : MonoBehaviour
 
     private void Explode()
     {
-        player.GetComponent<PlayerHealth>().TakeDamage(transform.position);
+        if (DistanceToPlayer() < distanceToExplode)
+        {
+            player.GetComponent<PlayerHealth>().TakeDamage(transform.position);
+        }
         GameObject.Instantiate(explosionParticles, transform.position, transform.rotation);
         gameObject.SetActive(false);
     }
@@ -124,6 +127,10 @@ public class EnemyBombBehaviour : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //if bala, explode
+        if(collision.gameObject.tag == "Cannonball")
+        {
+            Explode();
+        }
     }
 
     private float DistanceToPlayer()

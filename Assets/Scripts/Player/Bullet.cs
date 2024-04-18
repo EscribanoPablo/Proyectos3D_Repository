@@ -22,13 +22,13 @@ public class Bullet : MonoBehaviour
     {
         if (canonShoot != null)
         {
-            rb.velocity = direction * bulletSpeed * Time.deltaTime;
+            rb.velocity = direction * bulletSpeed;
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 
 

@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     bool doubleJump;
     [SerializeField] float gravity;
     float verticalSpeed;
+    bool isJumping = false;
 
     [Header("Dash Variables")]
     [SerializeField] float dashDuration = 0.2f;
@@ -43,6 +44,11 @@ public class PlayerMovement : MonoBehaviour
     bool isDashing;
     float coolDown = 1;
 
+
+    public bool GetIsJumping()
+    {
+        return isJumping;
+    }
 
 
     private void Awake()
@@ -146,15 +152,27 @@ public class PlayerMovement : MonoBehaviour
                 {
                     Jump(m_JumpForce);
                     Debug.Log("Normal Jump");
+                    isJumping = true;
                 }
-                else if(doubleJump)
+                else if (doubleJump)
                 {
                     Jump(doubleJumpForce);
                     CanonJump();
                     Debug.Log("Canon Jump");
                     doubleJump = false;
+                    isJumping = true;
                 }
+                else
+                    isJumping = false;
             }
+            else
+            {
+                isJumping = false;
+            }
+        }
+        else
+        {
+            isJumping = false;
         }
     }
 
