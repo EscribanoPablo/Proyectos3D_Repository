@@ -21,8 +21,8 @@ public class FlipingPlatform : Traps
 
     void Update()
     {
-        //if (player.GetIfPlayerJumped())
-        //    FlipPlatform();
+        if (player.GetIsJumping())
+            FlipPlatform();
     }
 
     void FlipPlatform()

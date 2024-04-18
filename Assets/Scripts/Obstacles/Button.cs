@@ -15,7 +15,7 @@ public class Button : Obstacles
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == PLAYER_TAG) //aqui tiene que detecta la bala
+        if (collision.transform.tag == BULLET_TAG)
         {
             m_Event.Invoke();
             buttonAnimations.Play(buttonPressedAnimation.name);
