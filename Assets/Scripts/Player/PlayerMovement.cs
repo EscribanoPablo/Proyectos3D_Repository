@@ -18,9 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Inputs")]
     [SerializeField] KeyCode m_JumpKey;
-    [SerializeField] KeyCode m_ShootKey;
     [SerializeField] KeyCode dashKey;
-
 
     [Header("Movement Variables")]
     [SerializeField] float m_SpeedMovement;
@@ -35,7 +33,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float doubleJumpForce;
     int currentJumps;
     bool doubleJump;
-    bool canJump;
     [SerializeField] float gravity;
     float verticalSpeed;
 
@@ -75,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
     {
 
         Jumper();
-        //Debug.Log("Current Jumps: " + currentJumps);
+        Debug.Log("Current Jumps: " + currentJumps);
         PlayerDash();
 
         if (IsGrounded())
@@ -143,9 +140,20 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(m_JumpKey))
         {
-            if ((IsGrounded() || currentJumps < multipleJumps) && !isDashing)
+            if (currentJumps < multipleJumps && !isDashing)
             {
-                Jump();
+                if (IsGrounded())
+                {
+                    Jump(m_JumpForce);
+                    Debug.Log("Normal Jump");
+                }
+                else if(doubleJump)
+                {
+                    Jump(doubleJumpForce);
+                    CanonJump();
+                    Debug.Log("Canon Jump");
+                    doubleJump = false;
+                }
             }
         }
     }
@@ -153,39 +161,26 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGrounded()
     {
         float detectionRadius = 0.02f;
-        bool l_IsGrounded = Physics.CheckSphere(m_GroundChecker.position, detectionRadius, m_WhatIsGround);
 
-        Debug.Log(l_IsGrounded);
-
-        return l_IsGrounded;
+        Collider[] colliders = Physics.OverlapSphere(m_GroundChecker.position, detectionRadius, m_WhatIsGround);
+        if (colliders.Length > 0)
+        {
+            Debug.Log("grounded");
+            doubleJump = true; 
+            return true;
+        }
+        return false;
     }
 
     private void ResetJumps()
     {
-
         currentJumps = 0;
-
     }
-    private void Jump()
+    private void Jump(float jumpForce)
     {
-        //Debug.Log("Current Jumps: " + currentJumps);
-
-        float jumpForce = currentJumps != 0 ? doubleJumpForce : m_JumpForce;
         StopVerticalVelocity();
         m_Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        if (currentJumps != 0)
-        {
-            armCanonJump.SetActive(true);
-            canonJump.SetActive(true);
-            armCanon.SetActive(false);
-            canonIdle.SetActive(false);
-            SpawnParticles(canonParticles, spawnJumpCanonParticlesPos.position);
-
-            StartCoroutine(HoldCanonAgain(0.25f));
-            //Debug.Log("double jump");
-        }
         currentJumps++;
-
     }
 
     private void StopVerticalVelocity()
@@ -210,6 +205,17 @@ public class PlayerMovement : MonoBehaviour
         canonIdle.SetActive(true);
         armCanonJump.SetActive(false);
         canonJump.SetActive(false);
+    }
+
+    private void CanonJump()
+    {
+        armCanonJump.SetActive(true);
+        canonJump.SetActive(true);
+        armCanon.SetActive(false);
+        canonIdle.SetActive(false);
+        SpawnParticles(canonParticles, spawnJumpCanonParticlesPos.position);
+
+        StartCoroutine(HoldCanonAgain(0.25f));
     }
 
     private void PlayerDash()

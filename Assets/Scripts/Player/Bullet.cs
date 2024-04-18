@@ -5,21 +5,24 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] float bulletSpeed = 20;
-    [SerializeField] CanonShoot canonShoot;
+    CanonShoot canonShoot;
     Rigidbody rb;
+    Vector3 direction;
     // Start is called before the first frame update
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        canonShoot = FindObjectOfType<CanonShoot>();
+        direction = canonShoot.CanonForward;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-
         if (canonShoot != null)
         {
-            rb.velocity = canonShoot.CanonForward * bulletSpeed * Time.deltaTime;
+            rb.velocity = direction * bulletSpeed * Time.deltaTime;
         }
     }
 
@@ -27,4 +30,6 @@ public class Bullet : MonoBehaviour
     {
         Destroy(this);
     }
+
+
 }

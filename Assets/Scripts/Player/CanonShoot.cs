@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,8 +23,8 @@ public class CanonShoot : MonoBehaviour
         {
             nextTimeFire = Time.time + fireRate;
             GameObject _bullet = Instantiate(bulletPrefab, spawnPosition.position, bulletPrefab.transform.rotation);
-
+            canonForward = transform.forward;
+            Destroy(_bullet, 10);
         }
-        canonForward = transform.forward;
     }
 }

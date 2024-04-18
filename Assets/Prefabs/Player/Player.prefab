@@ -649,6 +649,7 @@ GameObject:
   - component: {fileID: 2113590656291869998}
   - component: {fileID: 410713183316784795}
   - component: {fileID: 3043128302564321382}
+  - component: {fileID: 5741698530815852904}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -775,6 +776,24 @@ MonoBehaviour:
   startHearts: 3
   DEV_INVINCIBLE: 0
   knockbackImpulse: 7.5
+--- !u!114 &5741698530815852904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4398075436590841281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30c07646d23c61f4eab58d6ff0683c0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootButton: 0
+  spawnPosition: {fileID: 824903714382592646}
+  bulletPrefab: {fileID: 8311382077795666320, guid: b243c7373ae674443a71c737cfd223f7,
+    type: 3}
+  fireRate: 0.5
+  nextTimeFire: 0.2
 --- !u!1 &4736000364395186754
 GameObject:
   m_ObjectHideFlags: 0
