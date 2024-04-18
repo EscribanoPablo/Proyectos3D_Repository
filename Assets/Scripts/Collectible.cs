@@ -11,6 +11,7 @@ public class Collectible : MonoBehaviour
         {
             //añadir a la UI y al game controller
             gameObject.SetActive(false);
+            FindObjectOfType<HudController>().CollectibleTaken();
         }
     }
 }
