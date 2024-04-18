@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 35708809262442823}
   - component: {fileID: 5242840770428554577}
   - component: {fileID: 5889516815105615287}
-  - component: {fileID: 389760132425404415}
+  - component: {fileID: 5492672110160465538}
   m_Layer: 0
   m_Name: SpikeZone
   m_TagString: Untagged
@@ -100,13 +100,13 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &389760132425404415
+--- !u!114 &5492672110160465538
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2726465660741183569}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd82e46fe7045b4ead24d3282afdf26, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e22e06f2a098934bbb8ad46f27a05eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4204411650197594364
