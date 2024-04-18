@@ -77,7 +77,6 @@ public class PlayerMovement : MonoBehaviour
         Jumper();
         //Debug.Log("Current Jumps: " + currentJumps);
         PlayerDash();
-        Debug.Log(moveDirection);
 
     }
 
@@ -109,16 +108,26 @@ public class PlayerMovement : MonoBehaviour
             moveDirection = l_MoveDir;
 
             //Apply to rb
-            //m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
-            m_Rb.AddForce(l_MoveDir * m_SpeedMovement * Time.deltaTime, ForceMode.Force);
+            m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
+            //m_Rb.AddForce(l_MoveDir * m_SpeedMovement * Time.deltaTime, ForceMode.Force);
         }
         else
         {
             //m_Rb.velocity = Vector3.zero;
+
+            // Transición de velocidad en X y Z a cero
+            
+            //yo creo que lo que pasa es que esta Coroutine solo se va a llamar cuando l_Direction.magnitude < 0.1f y aqui la velocidad ya es 0,
+            //hay que hacer cuando se suelte el input (getKeyUp o algo así) empieze la deceleracion.
+            if (m_Rb.velocity.x != 0 || m_Rb.velocity.z != 0)
+            {
+                //StartCoroutine(Decelerate(verticalSpeed, 1f));   
+            }
         }
         //hacer que la verticalSpeed.y sea siempre a graviti
         m_Rb.velocity = new Vector3(m_Rb.velocity.x, verticalSpeed, m_Rb.velocity.z);
     }
+
 
     private void Jumper()
     {
@@ -158,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
             canonIdle.SetActive(false);
             SpawnParticles(canonParticles, spawnJumpCanonParticlesPos.position);
 
-            StartCoroutine(HoldCanonAgain(0.75f));
+            StartCoroutine(HoldCanonAgain(0.25f));
             //Debug.Log("double jump");
         }
         currentJumps++;
@@ -205,9 +214,7 @@ public class PlayerMovement : MonoBehaviour
         isDashing = true;
 
         m_Rb.useGravity = false;
-
-        HoldCanonAgain(0f);
-
+        
         Vector3 dashDirection = dashPower * transform.forward;
         //m_Rb.velocity = dashDirection;
         m_Rb.AddForce(dashDirection, ForceMode.Impulse);
@@ -225,6 +232,25 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(coolDown);
         canDash = true;
+    }
+    private IEnumerator Decelerate(float verticalSpeed, float fadeDuration)
+    {
+        float elapsedTime = 0f; // Tiempo transcurrido desde que empezó la transición
+
+        while (elapsedTime < fadeDuration)
+        {
+            elapsedTime += Time.deltaTime;
+
+            float t = Mathf.Clamp01(elapsedTime / fadeDuration);
+
+            float newX = Mathf.Lerp(m_Rb.velocity.x, 0f, t);
+            float newZ = Mathf.Lerp(m_Rb.velocity.z, 0f, t);
+            m_Rb.velocity = new Vector3(newX, m_Rb.velocity.y, newZ);
+            Debug.Log("fading");
+
+            yield return null; // Esperar al siguiente frame
+        }
+
     }
 
 }
