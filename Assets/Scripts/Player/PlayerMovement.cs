@@ -156,6 +156,7 @@ public class PlayerMovement : MonoBehaviour
             //m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
             m_Rb.AddForce(l_MoveDir.normalized * m_SpeedMovement, ForceMode.Force);
         }
+        m_Rb.velocity = new Vector3(m_Rb.velocity.x, verticalSpeed, m_Rb.velocity.z);
 
     }
 
