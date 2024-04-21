@@ -705,16 +705,16 @@ MonoBehaviour:
   dashKey: 304
   m_SpeedMovement: 40
   maxVelocity: 6
-  m_RotationTime: 0.1
+  m_RotationTime: 0.2
   multipleJumps: 1
-  m_JumpForce: 9
-  doubleJumpForce: 11
-  gravity: 12
+  m_JumpForce: 12
+  doubleJumpForce: 13
+  gravity: 0.27
   dashDuration: 0.2
-  dashPower: 15
-  wallJumpUpForce: 7
-  wallJumpSideForce: 5
-  wallDetectionDistance: 2
+  dashPower: 13
+  wallJumpUpForce: 13
+  wallJumpSideForce: 13
+  wallDetectionDistance: 1.2
   timeToWallFall: 3
 --- !u!54 &2113590656291869998
 Rigidbody:
@@ -725,7 +725,7 @@ Rigidbody:
   m_GameObject: {fileID: 4398075436590841281}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 5
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
