@@ -61,21 +61,6 @@ public class PlayerMovement : MonoBehaviour
         return isJumping;
     }
 
-
-    private void Awake()
-    {
-        //Si no hay ningun player en la escena, el player va a ser este
-        if (GameController.GetGameController().GetPlayer() == null)
-        {
-            //GameController.GetGameController().AddRestartGameElement(this);
-            GameController.GetGameController().m_Player = this;
-            GameObject.DontDestroyOnLoad(gameObject);
-        }
-        else // Y si lo hay, destruyemelo y te quedas con el otro player
-        {
-            GameObject.Destroy(this.gameObject);
-        }
-    }
     void Start()
     {
         m_Rb = GetComponent<Rigidbody>();
@@ -87,7 +72,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-
         Jumper();
         if (!onWall)
         {
@@ -103,6 +87,10 @@ public class PlayerMovement : MonoBehaviour
                 if (HeadOnWall() && canWall)
                 {
                     SetOnWall();
+                }
+                else if (HeadOnWall())
+                {
+                    KillXZVelocity();
                 }
                 else
                 {
@@ -139,8 +127,13 @@ public class PlayerMovement : MonoBehaviour
         float l_WS = Input.GetAxis("Vertical");
         Vector3 l_Direction = new Vector3(l_AD, 0f, l_WS).normalized;
 
+
         float verticalSpeed = m_Rb.velocity.y;
-        verticalSpeed += /*Physics.gravity.y*/ -gravity;
+        if (!onWall)
+        {
+
+            verticalSpeed += /*Physics.gravity.y*/ -gravity;
+        }
 
         if (l_Direction.magnitude >= 0.1f)
         {
@@ -340,6 +333,11 @@ public class PlayerMovement : MonoBehaviour
     {
         onWall = false;
         m_Rb.useGravity = true;
+    }
+
+    private void KillXZVelocity()
+    {
+        m_Rb.velocity = new Vector3(0, m_Rb.velocity.y, 0);
     }
 
 }

@@ -5,38 +5,53 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
 
-    static GameController m_GameController = null;
+    public static GameController gameController = null;
 
-    public PlayerMovement m_Player;
+    public PlayerController player;
 
-    public CameraController m_Camera;
+    public CameraController cameraController;
 
-    //public GameObject m_DestroyObjects;
+    public GameObject destroyObjects;
 
-    static bool m_AlreadyInitalized = false;
+    static bool alreadyInitializated = false;
+
+    List<IRestartLevelElement> restartLevelElements = new List<IRestartLevelElement>();
 
     public static GameController GetGameController()
     {
-        if (m_GameController == null && !m_AlreadyInitalized)
+        if (gameController == null && !alreadyInitializated)
         {
             GameObject l_GameObject = new GameObject("GameController");
-            m_GameController = l_GameObject.AddComponent<GameController>();
+            gameController = l_GameObject.AddComponent<GameController>();
             //m_GameController.m_DestroyObjects = new GameObject("DestroyObjects");
             //m_DestroyObjects.transform.SetParent(l_GameObject.transform);
             GameController.DontDestroyOnLoad(l_GameObject);
-            m_AlreadyInitalized = true;
+            alreadyInitializated = true;
         }
-        return m_GameController;
+        return gameController;
     }
 
-    public PlayerMovement GetPlayer()
+    public PlayerController GetPlayer()
     {
-        return m_Player;
+        return player;
     }
 
     public CameraController GetCamera()
     {
-        return m_Camera;
+        return cameraController;
+    }
+
+    public void AddRestartLevelElement(IRestartLevelElement element)
+    {
+        restartLevelElements.Add(element);
+    }
+
+    public void RestartLevelElment()
+    {
+        foreach (IRestartLevelElement element in restartLevelElements)
+        {
+            element.Restart();
+        }
     }
 }
     
