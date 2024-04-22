@@ -387,7 +387,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711859386}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18488708, y: -0.00000003381948, z: 0.000000006362476, w: 0.9827598}
+  m_LocalRotation: {x: 0.18488708, y: 0.00000001758613, z: -0.0000000033084873, w: 0.9827598}
   m_LocalPosition: {x: 3.45, y: 5.023128, z: -8.907366}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -688,9 +688,9 @@ MonoBehaviour:
   m_UVBias: {x: 0, y: 0}
   m_DecalLayerMask: 1
   m_ScaleMode: 0
-  m_Offset: {x: 0, y: -0.013599992, z: 28.789217}
-  m_Size: {x: 1.37, y: 1.36, z: 60.81844}
-  m_FadeFactor: 1
+  m_Offset: {x: 0, y: -0.009999994, z: 28.789217}
+  m_Size: {x: 1, y: 1, z: 60.81844}
+  m_FadeFactor: 0.734
 --- !u!1001 &1672239551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -792,12 +792,12 @@ PrefabInstance:
     - target: {fileID: 3252942764950904832, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000016923465
+      value: 0.00000001692347
       objectReference: {fileID: 0}
     - target: {fileID: 3252942764950904832, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000003107384
+      value: -0.0000000031073848
       objectReference: {fileID: 0}
     - target: {fileID: 4508683795819788619, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
