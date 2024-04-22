@@ -140,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 l_Direction = new Vector3(l_AD, 0f, l_WS).normalized;
 
         float verticalSpeed = m_Rb.velocity.y;
-        verticalSpeed += /*Physics.gravity.y*/ -gravity * Time.deltaTime;
+        verticalSpeed += /*Physics.gravity.y*/ -gravity;
 
         if (l_Direction.magnitude >= 0.1f)
         {
@@ -156,6 +156,7 @@ public class PlayerMovement : MonoBehaviour
             //m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
             m_Rb.AddForce(l_MoveDir.normalized * m_SpeedMovement, ForceMode.Force);
         }
+        m_Rb.velocity = new Vector3(m_Rb.velocity.x, verticalSpeed, m_Rb.velocity.z);
 
     }
 
@@ -329,7 +330,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 jumpDirection = -transform.forward;
         jumpDirection.Normalize();
         m_Rb.AddForce((jumpDirection * wallJumpSideForce) + (Vector3.up * wallJumpUpForce), ForceMode.Impulse);
-        transform.rotation = Quaternion.Euler(new Vector3(0, transform.rotation.y + 180, 0));
+        //transform.Rotate(Vector3.up * 180f);
+        transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180, transform.rotation.eulerAngles.z));
 
         m_Rb.useGravity = true;
     }

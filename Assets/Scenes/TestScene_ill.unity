@@ -681,6 +681,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 74896594667972882, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 73fceada90b5cb943a4aae6f2d79793b, type: 2}
+    - target: {fileID: 1342744353860108743, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 73fceada90b5cb943a4aae6f2d79793b, type: 2}
     - target: {fileID: 4398075436590841281, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
       propertyPath: m_Name
@@ -691,6 +701,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1658824162}
+    - target: {fileID: 9048762170191842557, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: af860aff0f9305b449a06304f209c7f7, type: 2}
     - target: {fileID: 9059143790163231872, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
       propertyPath: m_LocalPosition.x

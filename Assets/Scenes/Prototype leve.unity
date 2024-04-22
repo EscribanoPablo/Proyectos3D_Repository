@@ -521,8 +521,8 @@ Transform:
   m_GameObject: {fileID: 266819086}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30.2, y: -0.7652753, z: 2.62}
-  m_LocalScale: {x: 25.276001, y: 1, z: 4.4289074}
+  m_LocalPosition: {x: 30.2, y: -0.7652753, z: 2.04}
+  m_LocalScale: {x: 25.276001, y: 1, z: 5.9}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 490515098}
@@ -904,8 +904,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 424204896}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.30229902, y: -0.0037281348, z: 0.0011823388, w: 0.95320517}
-  m_LocalPosition: {x: -14.73407, y: 8.565495, z: -10.516775}
+  m_LocalRotation: {x: 0.28260845, y: -0.08470373, z: 0.02506177, w: 0.95515954}
+  m_LocalPosition: {x: -13.075134, y: 8.113492, z: -10.514668}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2485,20 +2485,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2113590656291869998, guid: d9756f0770de0894f9f83e3991330c2e,
-        type: 3}
-      propertyPath: m_Drag
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4398075436590841281, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4398075436590841281, guid: d9756f0770de0894f9f83e3991330c2e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7526401319612956389, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
@@ -2747,8 +2737,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1272360297}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.30229902, y: -0.0037281348, z: 0.0011823388, w: 0.95320517}
-  m_LocalPosition: {x: -14.73407, y: 8.565495, z: -10.516775}
+  m_LocalRotation: {x: 0.28260845, y: -0.08470373, z: 0.02506177, w: 0.95515954}
+  m_LocalPosition: {x: -13.075134, y: 8.113492, z: -10.514668}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3105,7 +3095,7 @@ PrefabInstance:
     - target: {fileID: 4498968394854500063, guid: a8b1652d06e4fa14db8805e89b49821b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -10.8
+      value: -12.05
       objectReference: {fileID: 0}
     - target: {fileID: 4498968394854500063, guid: a8b1652d06e4fa14db8805e89b49821b,
         type: 3}
@@ -3382,7 +3372,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 2031192664}
-  m_PathPosition: 0
+  m_PathPosition: 0.10500913
   m_PositionUnits: 0
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 1
@@ -4212,23 +4202,23 @@ MonoBehaviour:
   m_Waypoints:
   - position: {x: -10.53, y: 4.87, z: 0.96}
     roll: 0
-  - position: {x: 5.4393935, y: 0, z: -5.741908}
+  - position: {x: 5.4393935, y: 1.862575, z: 0.7528477}
     roll: 0
-  - position: {x: 20.973007, y: 0, z: -6.9178743}
+  - position: {x: 20.973007, y: 3.548718, z: -0.18624592}
     roll: 0
-  - position: {x: 31.58197, y: 0, z: -5.194909}
+  - position: {x: 31.58197, y: 3.7175937, z: -0.4988718}
     roll: 0
-  - position: {x: 40.450096, y: 2.0869508, z: 0.63606167}
+  - position: {x: 40.450096, y: 2.0869508, z: -0.0105752945}
     roll: 0
-  - position: {x: 54.85002, y: 2.1036248, z: -0.59943867}
+  - position: {x: 54.03954, y: 3.3337502, z: 2.5110683}
     roll: 0
-  - position: {x: 55.132526, y: 3.1418047, z: 4.138335}
+  - position: {x: 62.17053, y: 1.8671927, z: 18.396343}
     roll: 0
-  - position: {x: 72.29904, y: 2.9423757, z: 64.1302}
+  - position: {x: 64.26639, y: 3.8643227, z: 61.06161}
     roll: 0
-  - position: {x: 76.351, y: -2.9612308, z: 82.00624}
+  - position: {x: 63.36342, y: 0.0072209835, z: 81.19304}
     roll: 0
-  - position: {x: 71.48729, y: -1.7929537, z: 95.96017}
+  - position: {x: 67.95816, y: -1.7929537, z: 94.38621}
     roll: 0
   - position: {x: 81.94385, y: -3.9311357, z: 96.906265}
     roll: 0
