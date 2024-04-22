@@ -31,6 +31,8 @@ public class Breakable : Obstacles
         if (other.tag == breakerTag) 
         {
             wholeObject.SetActive(false);
+            prefracturedObject.transform.position = wholeObject.transform.position;
+            prefracturedObject.transform.rotation = wholeObject.transform.rotation;
             prefracturedObject.SetActive(true);
 
             GetComponent<Collider>().enabled = false;
