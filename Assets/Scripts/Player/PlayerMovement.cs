@@ -61,21 +61,6 @@ public class PlayerMovement : MonoBehaviour
         return isJumping;
     }
 
-
-    private void Awake()
-    {
-        //Si no hay ningun player en la escena, el player va a ser este
-        if (GameController.GetGameController().GetPlayer() == null)
-        {
-            //GameController.GetGameController().AddRestartGameElement(this);
-            GameController.GetGameController().m_Player = this;
-            GameObject.DontDestroyOnLoad(gameObject);
-        }
-        else // Y si lo hay, destruyemelo y te quedas con el otro player
-        {
-            GameObject.Destroy(this.gameObject);
-        }
-    }
     void Start()
     {
         m_Rb = GetComponent<Rigidbody>();

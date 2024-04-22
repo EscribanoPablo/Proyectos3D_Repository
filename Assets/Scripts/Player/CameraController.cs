@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour
         if (GameController.GetGameController().GetCamera() == null)
         {
 
-            GameController.GetGameController().m_Camera = this;
+            GameController.GetGameController().cameraController = this;
             GameObject.DontDestroyOnLoad(gameObject);
         }
         else

@@ -736,6 +736,7 @@ GameObject:
   - component: {fileID: 410713183316784795}
   - component: {fileID: 3043128302564321382}
   - component: {fileID: 5741698530815852904}
+  - component: {fileID: 5280560021130776560}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -885,6 +886,18 @@ MonoBehaviour:
   canonParticles: {fileID: 3138042963513272267}
   fireRate: 1
   nextTimeFire: 0.2
+--- !u!114 &5280560021130776560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4398075436590841281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e41d849207515e842a621aa04030e49a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4736000364395186754
 GameObject:
   m_ObjectHideFlags: 0
@@ -1191,7 +1204,7 @@ Transform:
   m_GameObject: {fileID: 6280613537647067442}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.914, z: 0}
+  m_LocalPosition: {x: 0, y: -0.255, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
