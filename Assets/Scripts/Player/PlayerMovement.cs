@@ -72,7 +72,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-
         Jumper();
         if (!onWall)
         {
@@ -88,6 +87,10 @@ public class PlayerMovement : MonoBehaviour
                 if (HeadOnWall() && canWall)
                 {
                     SetOnWall();
+                }
+                else if (HeadOnWall())
+                {
+                    KillXZVelocity();
                 }
                 else
                 {
@@ -124,8 +127,13 @@ public class PlayerMovement : MonoBehaviour
         float l_WS = Input.GetAxis("Vertical");
         Vector3 l_Direction = new Vector3(l_AD, 0f, l_WS).normalized;
 
+
         float verticalSpeed = m_Rb.velocity.y;
-        verticalSpeed += /*Physics.gravity.y*/ -gravity;
+        if (!onWall)
+        {
+
+            verticalSpeed += /*Physics.gravity.y*/ -gravity;
+        }
 
         if (l_Direction.magnitude >= 0.1f)
         {
@@ -325,6 +333,11 @@ public class PlayerMovement : MonoBehaviour
     {
         onWall = false;
         m_Rb.useGravity = true;
+    }
+
+    private void KillXZVelocity()
+    {
+        m_Rb.velocity = new Vector3(0, m_Rb.velocity.y, 0);
     }
 
 }
