@@ -9,19 +9,29 @@ public class Breakable : Obstacles
     [SerializeField] GameObject wholeObject;
     [SerializeField] GameObject prefracturedObject;
     [SerializeField] string breakerTag;
+    GameObject [] breakableCubes;
+
+    Vector3[] breakableStartPosition;
+    Quaternion[] breakableStartRotation;
 
     private bool broken;
     [SerializeField] float timeToDisappear;
     float timer;
 
-    public override void RestartLevel()
-    {
-    //PARA RESTART LEVEL, ESTARIA BIEN HACER UNA ARRAY DE LAS POSICIONES / ROTACIÓN DE TODAS LAS PIEZAS Y VOLVERLAS TODAS A SU SITIO
-    }
 
     // Start is called before the first frame update
     void Start()
     {
+        breakableCubes = prefracturedObject.GetComponentsInChildren<GameObject>();
+        breakableStartPosition = new Vector3[breakableCubes.Length];
+        breakableStartRotation = new Quaternion[breakableCubes.Length];
+
+        for (int i = 0; i < breakableCubes.Length; i++)
+        {
+            breakableStartPosition[i] = breakableCubes[i].transform.position;
+            breakableStartRotation[i] = breakableCubes[i].transform.rotation;
+        }
+
         wholeObject.SetActive(true);
         prefracturedObject.SetActive(false);
     }
@@ -53,6 +63,16 @@ public class Breakable : Obstacles
             {
                 gameObject.SetActive(false);
             }
+        }
+    }
+    public override void RestartLevel()
+    {
+        //PARA RESTART LEVEL, ESTARIA BIEN HACER UNA ARRAY DE LAS POSICIONES / ROTACIÓN DE TODAS LAS PIEZAS Y VOLVERLAS TODAS A SU SITIO
+
+        for (int i = 0; i < breakableCubes.Length; i++)
+        {
+            breakableCubes[i].transform.position = breakableStartPosition[i];
+            breakableCubes[i].transform.rotation = breakableStartRotation[i];
         }
     }
 
