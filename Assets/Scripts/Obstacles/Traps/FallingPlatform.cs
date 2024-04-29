@@ -1,16 +1,23 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class FallingPlatform : Traps
 {
     [SerializeField] private float timeToVanish;
-    private float timer;
+    [SerializeField] private float timeToReappear;
+    private float timerVanished;
+
+    private Renderer renderer;
+    private Collider collider;
 
     private bool playerTouched = false;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        renderer = GetComponent<Renderer>();
+        collider = GetComponent<Collider>();
     }
 
     // Update is called once per frame
@@ -18,14 +25,15 @@ public class FallingPlatform : Traps
     {
         if (playerTouched)
         {
-            timer += Time.deltaTime;
-            if (timer >= timeToVanish)
+            timerVanished += Time.deltaTime;
+            if (timerVanished >= timeToVanish)
             {
-                timer = 0;
-                gameObject.SetActive(false);
+                ObjectDisappear();
+                StartCoroutine(ObjectReappear());
             }
         }
     }
+
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -33,5 +41,19 @@ public class FallingPlatform : Traps
         {
             playerTouched = true;
         }
+    }
+    private void ObjectDisappear()
+    {
+        timerVanished = 0;
+        playerTouched = false;
+        renderer.enabled = false;
+        collider.enabled = false;
+    }
+
+    IEnumerator ObjectReappear()
+    {
+        yield return new WaitForSeconds(timeToReappear);
+        renderer.enabled = true;
+        collider.enabled = true;
     }
 }
