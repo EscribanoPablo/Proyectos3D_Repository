@@ -833,10 +833,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 0}
-  groundChecker: {fileID: 0}
+  groundChecker: {fileID: 8722211926356234388}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
   armCanon: {fileID: 321474049592577477}
   armCanonJump: {fileID: 2169129222556867023}
   canonJump: {fileID: 7195080838147387175}
@@ -845,11 +845,11 @@ MonoBehaviour:
     type: 3}
   spawnJumpCanonParticlesPos: {fileID: 6870223169479544195}
   canonShoot: {fileID: 5741698530815852904}
-  speedMovement: 0
+  speedMovement: 40
   maxVelocity: 6
-  rotationTime: 0.1
+  rotationTime: 0.2
   multipleJumps: 1
-  jumpForce: 0
+  jumpForce: 12
   doubleJumpForce: 13
   gravity: 0.27
   dashDuration: 0.2

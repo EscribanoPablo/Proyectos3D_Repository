@@ -142,16 +142,21 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3043128302564321382, guid: d9756f0770de0894f9f83e3991330c2e,
-        type: 3}
-      propertyPath: knockbackImpulse
-      value: 10.5
-      objectReference: {fileID: 0}
     - target: {fileID: 4398075436590841281, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5741698530815852904, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: fireRate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526401319612956389, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: camera
+      value: 
+      objectReference: {fileID: 711859387}
     - target: {fileID: 7526401319612956389, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
       propertyPath: m_Camera
@@ -383,7 +388,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711859386}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18488708, y: -0.00000001758613, z: 0.0000000033084873, w: 0.9827598}
+  m_LocalRotation: {x: 0.18488708, y: 0.000000033819482, z: -0.0000000063624754, w: 0.9827598}
   m_LocalPosition: {x: 3.45, y: 5.023128, z: -8.907366}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -732,12 +737,12 @@ PrefabInstance:
     - target: {fileID: 3252942764950904832, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000016923465
+      value: 0.00000001692347
       objectReference: {fileID: 0}
     - target: {fileID: 3252942764950904832, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000003107384
+      value: -0.0000000031073848
       objectReference: {fileID: 0}
     - target: {fileID: 4508683795819788619, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
