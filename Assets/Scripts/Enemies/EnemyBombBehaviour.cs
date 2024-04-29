@@ -5,7 +5,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBombBehaviour : MonoBehaviour
 {
-    private GameObject player;
+    private PlayerController player;
     private NavMeshAgent navMeshAgent;
     [SerializeField] float distanceToDetectPlayer;
     [SerializeField] float distanceToExplode = 1.3f;
@@ -21,7 +21,7 @@ public class EnemyBombBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameController.GetGameController().GetPlayer();
         navMeshAgent = GetComponent<NavMeshAgent>();
         EnterState(EnemyState.PATROL);
     }
