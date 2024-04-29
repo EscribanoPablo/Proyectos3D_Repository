@@ -1,14 +1,15 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
 
     [Header("References")]
-    Rigidbody m_Rb;
-    [SerializeField] Camera m_Camera;
-    [SerializeField] Transform m_GroundChecker;
-    [SerializeField] LayerMask m_WhatIsGround;
+    Rigidbody rigidBody;
+    [SerializeField] Camera camera;
+    [SerializeField] Transform groundChecker;
+    [SerializeField] LayerMask whatIsGround;
     [SerializeField] GameObject armCanon;
     [SerializeField] GameObject armCanonJump;
     [SerializeField] GameObject canonJump;
@@ -18,19 +19,20 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] CanonShoot canonShoot;
 
     [Header("Inputs")]
-    [SerializeField] KeyCode m_JumpKey;
-    [SerializeField] KeyCode dashKey;
+    //[SerializeField] KeyCode m_JumpKey;
+    //[SerializeField] KeyCode dashKey;
+    PlayerInput playerInput;
 
     [Header("Movement Variables")]
-    [SerializeField] float m_SpeedMovement;
+    [SerializeField] float speedMovement;
     [SerializeField] float maxVelocity;
-    [SerializeField] float m_RotationTime = 0.1f;
-    float m_TurnSmoothVelocity;
+    [SerializeField] float rotationTime = 0.1f;
+    float turnSmoothVelocity;
     Vector3 moveDirection;
 
     [Header("Jump Variables")]
     [SerializeField] int multipleJumps = 2;
-    [SerializeField] float m_JumpForce;
+    [SerializeField] float jumpForce;
     [SerializeField] float doubleJumpForce;
     int currentJumps;
     public bool DoubleJump => doubleJump;
@@ -63,7 +65,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        m_Rb = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
+        playerInput = GetComponent<PlayerInput>();
         currentJumps = 0;
         armCanonJump.SetActive(false);
         canonJump.SetActive(false);
@@ -80,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded())
             {
                 ResetJumps();
-                m_Rb.drag = 5;
+                rigidBody.drag = 5;
             }
             else
             {
@@ -94,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else
                 {
-                    m_Rb.drag = 0.5f;
+                    rigidBody.drag = 0.5f;
                 }
 
             }
@@ -123,57 +126,58 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isDashing) return;
 
-        float l_AD = Input.GetAxis("Horizontal");
-        float l_WS = Input.GetAxis("Vertical");
-        Vector3 l_Direction = new Vector3(l_AD, 0f, l_WS).normalized;
+        //float l_AD = Input.GetAxis("Horizontal");
+        //float l_WS = Input.GetAxis("Vertical");
+        //Vector3 l_Direction = new Vector3(l_AD, 0f, l_WS).normalized;
+        Vector3 direction = new Vector3(playerInput.actions["Movement"].ReadValue<Vector2>().x, 0f, playerInput.actions["Movement"].ReadValue<Vector2>().y).normalized;
 
 
-        float verticalSpeed = m_Rb.velocity.y;
+        float verticalSpeed = rigidBody.velocity.y;
         if (!onWall)
         {
 
             verticalSpeed += /*Physics.gravity.y*/ -gravity;
         }
 
-        if (l_Direction.magnitude >= 0.1f)
+        if (direction.magnitude >= 0.1f)
         {
             //Look Where You Go
-            float l_TargetAngle = Mathf.Atan2(l_Direction.x, l_Direction.z) * Mathf.Rad2Deg + m_Camera.transform.eulerAngles.y;
-            float l_Angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, l_TargetAngle, ref m_TurnSmoothVelocity, m_RotationTime);
-            transform.rotation = Quaternion.Euler(0f, l_Angle, 0f);
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            Vector3 l_MoveDir = Quaternion.Euler(0f, l_TargetAngle, 0f) * Vector3.forward;
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             //moveDirection = l_MoveDir;
 
             //Apply to rb
             //m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
-            m_Rb.AddForce(l_MoveDir.normalized * m_SpeedMovement, ForceMode.Force);
+            rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
         }
-        m_Rb.velocity = new Vector3(m_Rb.velocity.x, verticalSpeed, m_Rb.velocity.z);
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, verticalSpeed, rigidBody.velocity.z);
 
     }
 
     private void SpeedControl()
     {
-        Vector3 flatVel = new Vector3(m_Rb.velocity.x, 0f, m_Rb.velocity.z);
+        Vector3 flatVel = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
 
         // limit velocity if needed
         if (flatVel.magnitude > maxVelocity)
         {
             Vector3 limitedVel = flatVel.normalized * maxVelocity;
-            m_Rb.velocity = new Vector3(limitedVel.x, m_Rb.velocity.y, limitedVel.z);
+            rigidBody.velocity = new Vector3(limitedVel.x, rigidBody.velocity.y, limitedVel.z);
         }
     }
 
     private void Jumper()
     {
-        if (Input.GetKeyDown(m_JumpKey))
+        if (/*Input.GetKeyDown(m_JumpKey)*/playerInput.actions["Jump"].WasPressedThisFrame())
         {
             if (currentJumps < multipleJumps && !isDashing)
             {
                 if (IsGrounded())
                 {
-                    Jump(m_JumpForce);
+                    Jump(jumpForce);
                     isJumping = true;
                 }
                 else if (onWall)
@@ -207,7 +211,7 @@ public class PlayerMovement : MonoBehaviour
     {
         float detectionRadius = 0.02f;
 
-        Collider[] colliders = Physics.OverlapSphere(m_GroundChecker.position, detectionRadius, m_WhatIsGround);
+        Collider[] colliders = Physics.OverlapSphere(groundChecker.position, detectionRadius, whatIsGround);
         if (colliders.Length > 0)
         {
             doubleJump = true;
@@ -224,13 +228,13 @@ public class PlayerMovement : MonoBehaviour
     private void Jump(float jumpForce)
     {
         StopVerticalVelocity();
-        m_Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         currentJumps++;
     }
 
     private void StopVerticalVelocity()
     {
-        m_Rb.velocity = new Vector3(m_Rb.velocity.x, 0, m_Rb.velocity.z);
+        rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
     }
 
     private void SpawnCanonParticles(GameObject particles, Vector3 position)
@@ -266,7 +270,7 @@ public class PlayerMovement : MonoBehaviour
     private void PlayerDash()
     {
         if (isDashing) return;
-        if (Input.GetKeyDown(dashKey) && canDash)
+        if (/*Input.GetKeyDown(dashKey)*/playerInput.actions["Dash"].WasPressedThisFrame() && canDash)
         {
             Debug.Log("dash");
             StartCoroutine(DoDash());
@@ -278,11 +282,11 @@ public class PlayerMovement : MonoBehaviour
         canDash = false;
         isDashing = true;
 
-        m_Rb.useGravity = false;
+        rigidBody.useGravity = false;
 
         Vector3 dashDirection = dashPower * transform.forward;
         //m_Rb.velocity = dashDirection;
-        m_Rb.AddForce(dashDirection, ForceMode.Impulse);
+        rigidBody.AddForce(dashDirection, ForceMode.Impulse);
 
         SpawnCanonParticles(canonParticles, spawnJumpCanonParticlesPos.position);
 
@@ -293,7 +297,7 @@ public class PlayerMovement : MonoBehaviour
         //Stop inercia rigidBody;
         //m_Rb.velocity = new Vector3(0, 0, 0);
 
-        m_Rb.useGravity = true;
+        rigidBody.useGravity = true;
         //_trailRenderer.emitting = false;
         isDashing = false;
 
@@ -304,7 +308,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool HeadOnWall()
     {
-        return Physics.Raycast(transform.position, transform.forward, wallDetectionDistance, m_WhatIsGround);
+        return Physics.Raycast(transform.position, transform.forward, wallDetectionDistance, whatIsGround);
     }
 
     private void SetOnWall()
@@ -312,8 +316,8 @@ public class PlayerMovement : MonoBehaviour
         onWall = true;
         canWall = false;
         ResetJumps();
-        m_Rb.velocity = Vector3.zero;
-        m_Rb.useGravity = false;
+        rigidBody.velocity = Vector3.zero;
+        rigidBody.useGravity = false;
     }
 
     private void WallJump()
@@ -322,22 +326,22 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 jumpDirection = -transform.forward;
         jumpDirection.Normalize();
-        m_Rb.AddForce((jumpDirection * wallJumpSideForce) + (Vector3.up * wallJumpUpForce), ForceMode.Impulse);
+        rigidBody.AddForce((jumpDirection * wallJumpSideForce) + (Vector3.up * wallJumpUpForce), ForceMode.Impulse);
         //transform.Rotate(Vector3.up * 180f);
         transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180, transform.rotation.eulerAngles.z));
 
-        m_Rb.useGravity = true;
+        rigidBody.useGravity = true;
     }
 
     private void WallFall()
     {
         onWall = false;
-        m_Rb.useGravity = true;
+        rigidBody.useGravity = true;
     }
 
     private void KillXZVelocity()
     {
-        m_Rb.velocity = new Vector3(0, m_Rb.velocity.y, 0);
+        rigidBody.velocity = new Vector3(0, rigidBody.velocity.y, 0);
     }
 
 }

@@ -9,7 +9,7 @@ public class Breakable : Obstacles
     [SerializeField] GameObject wholeObject;
     [SerializeField] GameObject prefracturedObject;
     [SerializeField] string breakerTag;
-    GameObject [] breakableCubes;
+    GameObject[] breakableCubes;
 
     Vector3[] breakableStartPosition;
     Quaternion[] breakableStartRotation;
@@ -22,7 +22,14 @@ public class Breakable : Obstacles
     // Start is called before the first frame update
     void Start()
     {
-        breakableCubes = prefracturedObject.GetComponentsInChildren<GameObject>();
+        //breakableCubes = prefracturedObject.;
+        breakableCubes = new GameObject[prefracturedObject.transform.childCount - 1];
+
+        for (int i = 0; i < prefracturedObject.transform.childCount-1; i++)
+        {
+            breakableCubes[i] = prefracturedObject.transform.GetChild(i).gameObject;
+        }
+
         breakableStartPosition = new Vector3[breakableCubes.Length];
         breakableStartRotation = new Quaternion[breakableCubes.Length];
 
