@@ -17,12 +17,6 @@
         },
         {
             "m_Id": "ee1719cdf1e343eaaa91580223d35293"
-        },
-        {
-            "m_Id": "5e54d5a12e9e4df086bc1391138f832e"
-        },
-        {
-            "m_Id": "655510859eee4c34924b984685fed362"
         }
     ],
     "m_Keywords": [],
@@ -1421,34 +1415,6 @@
 }
 
 {
-    "m_SGVersion": 1,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
-    "m_ObjectId": "5e54d5a12e9e4df086bc1391138f832e",
-    "m_Guid": {
-        "m_GuidSerialized": "304721f1-9179-4f24-bbbb-1a67dde3aa7d"
-    },
-    "m_Name": "Grosor Línea",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Grosor Línea",
-    "m_DefaultReferenceName": "_Grosor_L_nea",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": 3.0,
-    "m_FloatType": 0,
-    "m_RangeValues": {
-        "x": 0.0,
-        "y": 1.0
-    }
-}
-
-{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "63f5dc3fd3684f4283265f9c31b4e90c",
@@ -1470,36 +1436,6 @@
         "z": 0.0,
         "w": 0.0
     }
-}
-
-{
-    "m_SGVersion": 3,
-    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
-    "m_ObjectId": "655510859eee4c34924b984685fed362",
-    "m_Guid": {
-        "m_GuidSerialized": "76e94162-cf81-4b34-b14f-367d1f605a95"
-    },
-    "m_Name": "Color Línea",
-    "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Color Línea",
-    "m_DefaultReferenceName": "_Color_L_nea",
-    "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
-    "m_UseCustomSlotLabel": false,
-    "m_CustomSlotLabel": "",
-    "m_DismissedVersion": 0,
-    "m_Precision": 0,
-    "overrideHLSLDeclaration": false,
-    "hlslDeclarationOverride": 0,
-    "m_Hidden": false,
-    "m_Value": {
-        "r": 0.0,
-        "g": 0.0,
-        "b": 0.0,
-        "a": 0.0
-    },
-    "isMainColor": false,
-    "m_ColorMode": 0
 }
 
 {
@@ -1982,12 +1918,6 @@
         },
         {
             "m_Id": "ee1719cdf1e343eaaa91580223d35293"
-        },
-        {
-            "m_Id": "5e54d5a12e9e4df086bc1391138f832e"
-        },
-        {
-            "m_Id": "655510859eee4c34924b984685fed362"
         }
     ]
 }
