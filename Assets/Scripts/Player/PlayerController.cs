@@ -36,5 +36,10 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
 
         GameController.GetGameController().RestartLevelElment(); 
     }
-    
+
+    public void SetRespawnPos(Transform transform)
+    {
+        startPosition = transform.position;
+        startRotation = transform.rotation;
+    }
 }
