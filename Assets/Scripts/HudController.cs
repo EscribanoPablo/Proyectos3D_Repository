@@ -11,6 +11,8 @@ public class HudController : MonoBehaviour
 
     [SerializeField]
     List<GameObject> collectibles;
+    [SerializeField]
+    List<GameObject> lifes;
 
     int collectiblesTaken = 0;
 
@@ -19,5 +21,10 @@ public class HudController : MonoBehaviour
         collectiblesAnimation.Play(collectiblesAnimate.name);
         collectibles[collectiblesTaken].SetActive(true);
         collectiblesTaken++;
+    }
+
+    public void LifeLost(int lifesNum)
+    {
+        lifes[lifesNum].SetActive(false);
     }
 }

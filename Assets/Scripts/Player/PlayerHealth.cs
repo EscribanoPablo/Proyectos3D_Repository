@@ -9,10 +9,13 @@ public class PlayerHealth : MonoBehaviour
     private Rigidbody rb;
     [SerializeField] float knockbackImpulse;
 
+    private HudController hudController;
+
     private void Start()
     {
         currentHearts = startHearts;
         rb = GetComponent<Rigidbody>();
+        hudController = FindObjectOfType<HudController>();
     }
 
     public void TakeDamage(Vector3 pointOfImpact)
@@ -23,6 +26,7 @@ public class PlayerHealth : MonoBehaviour
             currentHearts --;
             CheckHealth();
             Debug.Log("Player current health = " + currentHearts);
+            hudController.LifeLost(currentHearts);
 
             //tiempo de invencibilidad mientras recibe daño??
         }
@@ -35,6 +39,7 @@ public class PlayerHealth : MonoBehaviour
             currentHearts--;
             CheckHealth();
             Debug.Log("Player current health = " + currentHearts);
+            hudController.LifeLost(currentHearts);
 
             //tiempo de invencibilidad mientras recibe daño??
         }
