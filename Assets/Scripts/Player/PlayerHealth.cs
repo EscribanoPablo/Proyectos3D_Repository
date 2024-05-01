@@ -9,13 +9,10 @@ public class PlayerHealth : MonoBehaviour
     private Rigidbody rb;
     [SerializeField] float knockbackImpulse;
 
-    Vector3 startPosition; //TEMPORAL
-
     private void Start()
     {
         currentHearts = startHearts;
         rb = GetComponent<Rigidbody>();
-        startPosition = transform.position;
     }
 
     public void TakeDamage(Vector3 pointOfImpact)
@@ -67,9 +64,8 @@ public class PlayerHealth : MonoBehaviour
     {
         TakeDamage();
         //podemos o quitarle vida y respawnear o que tenga que volver a empezar de nuevo, preguntar jowy
-
+        GameController.GetGameController().RestartLevelElment();
         //RESPAWN
-        transform.position = startPosition;
         rb.velocity = Vector3.zero;
     }
 

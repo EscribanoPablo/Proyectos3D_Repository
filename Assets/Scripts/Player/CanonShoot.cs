@@ -2,12 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CanonShoot : MonoBehaviour
 {
     [Range(0, 1)]
     [SerializeField] int shootButton;
 
+    PlayerInput playerInput;
     PlayerMovement playerMovement;
 
     [SerializeField] Transform spawnPosition;
@@ -23,12 +25,13 @@ public class CanonShoot : MonoBehaviour
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        playerInput = GetComponent<PlayerInput>();
         canonParticles.SetActive(false);
     }
 
     private void Update()
     {
-        if (Input.GetMouseButton(shootButton) && Time.time >= nextTimeFire)
+        if (/*Input.GetMouseButton(shootButton)*/playerInput.actions["Shoot"].WasPressedThisFrame() && Time.time >= nextTimeFire)
         {
             nextTimeFire = Time.time + fireRate;
             canonForward = transform.forward;
@@ -37,12 +40,12 @@ public class CanonShoot : MonoBehaviour
             canonParticles.GetComponent<ParticleSystem>().Play();
             Shoot();
         }
-        else if (Input.GetKeyDown(KeyCode.LeftShift)) /////////////////////// ARREGLAR
+        else if (/*Input.GetKeyDown(KeyCode.LeftShift)*/playerInput.actions["Dash"].WasPressedThisFrame()) /////////////////////// ARREGLAR
         {
                 canonForward = -transform.forward;
                 Debug.Log(canonForward);
         }
-        else if (playerMovement.DoubleJump)
+        else if (/*playerMovement.DoubleJump*/playerInput.actions["Jump"].WasPressedThisFrame())
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {

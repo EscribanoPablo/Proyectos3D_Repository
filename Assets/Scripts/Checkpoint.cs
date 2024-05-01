@@ -8,8 +8,9 @@ public class Checkpoint : MonoBehaviour
     {
         if(other.transform.tag == "Player")
         {
-            //other.GetComponent<PlayerHealth>().SetRespawnPos(gameObject.transform);
-            //this.enabled = false;
+            Debug.Log("Check Point");
+            other.GetComponent<PlayerController>().SetRespawnPos(gameObject.transform);
+            this.enabled = false;
         }
     }
 }
