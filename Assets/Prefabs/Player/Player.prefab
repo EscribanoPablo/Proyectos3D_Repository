@@ -920,7 +920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6533de496ebeee4b89f8ceea9add225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHearts: 3
+  startLifes: 3
   DEV_INVINCIBLE: 0
   knockbackImpulse: 7.5
 --- !u!114 &5741698530815852904
@@ -940,7 +940,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8311382077795666320, guid: b243c7373ae674443a71c737cfd223f7,
     type: 3}
   canonParticles: {fileID: 3138042963513272267}
-  fireRate: 1
+  fireRate: 2
   nextTimeFire: 0.2
 --- !u!114 &5280560021130776560
 MonoBehaviour:

@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] int startHearts;
-    private int currentHearts;
+    [SerializeField] int startLifes;
+    private int currentLifes;
     [SerializeField] bool DEV_INVINCIBLE;
 
-    private Rigidbody rb;
+    private Rigidbody playerRigidBody;
     [SerializeField] float knockbackImpulse;
 
     private HudController hudController;
 
     private void Start()
     {
-        currentHearts = startHearts;
-        rb = GetComponent<Rigidbody>();
+        currentLifes = startLifes;
+        playerRigidBody = GetComponent<Rigidbody>();
         hudController = FindObjectOfType<HudController>();
     }
 
@@ -23,10 +23,10 @@ public class PlayerHealth : MonoBehaviour
         if (!DEV_INVINCIBLE)
         {
             AddKnockback(pointOfImpact);
-            currentHearts --;
+            currentLifes --;
+            hudController.LifeLost(currentLifes);
             CheckHealth();
-            Debug.Log("Player current health = " + currentHearts);
-            hudController.LifeLost(currentHearts);
+            Debug.Log("Player current health = " + currentLifes);
 
             //tiempo de invencibilidad mientras recibe daño??
         }
@@ -36,10 +36,10 @@ public class PlayerHealth : MonoBehaviour
     {
         if (!DEV_INVINCIBLE)
         {
-            currentHearts--;
+            currentLifes--;
+            hudController.LifeLost(currentLifes);
             CheckHealth();
-            Debug.Log("Player current health = " + currentHearts);
-            hudController.LifeLost(currentHearts);
+            Debug.Log("Player current health = " + currentLifes);
 
             //tiempo de invencibilidad mientras recibe daño??
         }
@@ -49,35 +49,39 @@ public class PlayerHealth : MonoBehaviour
     {
         Vector3 knockbackDirection = transform.position - pointOfImpact;
         knockbackDirection.Normalize();
-        rb.AddForce(knockbackDirection * knockbackImpulse, ForceMode.Impulse);
+        playerRigidBody.AddForce(knockbackDirection * knockbackImpulse, ForceMode.Impulse);
     }
 
     private void CheckHealth()
     {
-        if (currentHearts <= 0)
+        if (currentLifes <= 0)
         {
+            currentLifes = 0;
             Die();
-            currentHearts = 0;
         }
-        else if (currentHearts > startHearts)
+        else if (currentLifes > startLifes)
         {
-            currentHearts = startHearts;
+            currentLifes = startLifes;
         }
     }
 
     public void EnterDeathZone()
     {
-        TakeDamage();
+        Die();
         //podemos o quitarle vida y respawnear o que tenga que volver a empezar de nuevo, preguntar jowy
-        GameController.GetGameController().RestartLevelElment();
+        //GameController.GetGameController().RestartLevelElment();
         //RESPAWN
-        rb.velocity = Vector3.zero;
+        //playerRigidBody.velocity = Vector3.zero;
+        //hudController.RestartLifes();
+        //currentHearts = startHearts;
     }
 
     private void Die()
     {
-        Debug.Log("Player DEAD");
-        //respawn y recargar escena
+        playerRigidBody.velocity = Vector3.zero;
+        hudController.RestartLifes();
+        currentLifes = startLifes;
+        GameController.GetGameController().RestartLevelElment();
     }
 }
 

@@ -27,4 +27,12 @@ public class HudController : MonoBehaviour
     {
         lifes[lifesNum].SetActive(false);
     }
+
+    public void RestartLifes()
+    {
+        foreach(GameObject life in lifes)
+        {
+            life.SetActive(true);
+        }
+    }
 }
