@@ -13,6 +13,8 @@ public class FallingPlatform : Traps
 
     private bool playerTouched = false;
 
+    private float minDotToOnPlatform = 0.8f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -39,9 +41,33 @@ public class FallingPlatform : Traps
     {
         if(collision.gameObject.tag == PLAYER_TAG)
         {
-            playerTouched = true;
+            if (PlayerOnPlatform(collision))
+            {
+                playerTouched = true;
+            }
         }
     }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == PLAYER_TAG)
+        {
+            if (PlayerOnPlatform(collision))
+            {
+                playerTouched = true;
+            }
+        }
+    }
+
+    private bool PlayerOnPlatform(Collision player)
+    {
+        Vector3 directionToPlayer = player.transform.position - transform.position;
+        directionToPlayer.Normalize();
+        return Vector3.Dot(Vector3.up, directionToPlayer) > minDotToOnPlatform;
+    }
+
+
+
     private void ObjectDisappear()
     {
         timerVanished = 0;
