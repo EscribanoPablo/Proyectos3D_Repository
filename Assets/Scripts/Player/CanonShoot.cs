@@ -45,9 +45,9 @@ public class CanonShoot : MonoBehaviour
                 canonForward = -transform.forward;
                 Debug.Log(canonForward);
         }
-        else if (/*playerMovement.DoubleJump*/playerInput.actions["Jump"].WasPressedThisFrame())
+        else if (playerMovement.DoubleJump)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (/*Input.GetKeyDown(KeyCode.Space)*/playerInput.actions["Jump"].WasPressedThisFrame())
             {
                 canonForward = Vector3.down;
             }
