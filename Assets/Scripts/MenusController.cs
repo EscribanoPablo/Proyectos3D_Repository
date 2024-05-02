@@ -13,7 +13,7 @@ public class MenusController : MonoBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name == "TestScene_Poche")
+        if (SceneManager.GetActiveScene().name == "AlphaLevel_Prove01")
         {
             playerInputs = FindObjectOfType<PlayerInput>();
         }
