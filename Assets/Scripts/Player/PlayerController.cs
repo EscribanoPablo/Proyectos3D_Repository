@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
         }
         else // Y si lo hay, destruyemelo y te quedas con el otro player
         {
+            GameController.GetGameController().player.SetRespawnPos(transform);
             GameObject.Destroy(this.gameObject);
         }
     }
@@ -40,5 +41,8 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
     {
         startPosition = transform.position;
         startRotation = transform.rotation;
+
+        transform.position = startPosition;
+        transform.rotation = startRotation;
     }
 }
