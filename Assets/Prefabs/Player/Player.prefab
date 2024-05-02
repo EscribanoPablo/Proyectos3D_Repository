@@ -941,7 +941,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8311382077795666320, guid: b243c7373ae674443a71c737cfd223f7,
     type: 3}
   canonParticles: {fileID: 3138042963513272267}
-  fireRate: 2
+  fireRate: 0.5
   nextTimeFire: 0.2
 --- !u!114 &5280560021130776560
 MonoBehaviour:
@@ -1884,6 +1884,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6709885006330193771, guid: 417a777a63519e3458e96ee14cbde372,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0646605f9209ed148ac3db73d2e2c467, type: 2}
+    - target: {fileID: -2495090521982266096, guid: 417a777a63519e3458e96ee14cbde372,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: -876546973899608171, guid: d5395567ff987554fad862c9089972e7,
+        type: 3}
     - target: {fileID: 919132149155446097, guid: 417a777a63519e3458e96ee14cbde372,
         type: 3}
       propertyPath: m_Name
