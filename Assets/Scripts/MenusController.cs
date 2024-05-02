@@ -21,7 +21,7 @@ public class MenusController : MonoBehaviour
 
     private void Update()
     {
-        if(SceneManager.GetActiveScene().name == "TestScene_Poche")
+        if(SceneManager.GetActiveScene().name == "AlphaLevel_Prove01")
         {
             if (playerInputs.actions["PauseGame"].WasPressedThisFrame())
             {
@@ -36,9 +36,9 @@ public class MenusController : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             Time.timeScale = 1;
-            SceneManager.LoadScene("TestScene_Poche");
+            SceneManager.LoadScene("AlphaLevel_Prove01");
         }
-        else if(SceneManager.GetActiveScene().name == "TestScene_Poche")
+        else if(SceneManager.GetActiveScene().name == "AlphaLevel_Prove01")
         {
             pauseMenu.SetActive(false);
             Time.timeScale = 1;
