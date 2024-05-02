@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,7 +13,7 @@ public class CanonShoot : MonoBehaviour
     [SerializeField] Transform spawnPosition;
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] GameObject canonParticles;
- 
+
     [SerializeField] float fireRate = 0.5f;
     [SerializeField] float nextTimeFire = 0.2f;
 
@@ -31,27 +29,31 @@ public class CanonShoot : MonoBehaviour
 
     private void Update()
     {
-        if (/*Input.GetMouseButton(shootButton)*/playerInput.actions["Shoot"].WasPressedThisFrame() && Time.time >= nextTimeFire)
+        if (Time.timeScale == 1)
         {
-            nextTimeFire = Time.time + fireRate;
-            canonForward = transform.forward;
+            if (/*Input.GetMouseButton(shootButton)*/playerInput.actions["Shoot"].WasPressedThisFrame() && Time.time >= nextTimeFire)
+            {
+                nextTimeFire = Time.time + fireRate;
+                canonForward = transform.forward;
 
-            canonParticles.SetActive(true);
-            canonParticles.GetComponent<ParticleSystem>().Play();
-            Shoot();
-        }
-        else if (/*Input.GetKeyDown(KeyCode.LeftShift)*/playerInput.actions["Dash"].WasPressedThisFrame()) /////////////////////// ARREGLAR
-        {
+                canonParticles.SetActive(true);
+                canonParticles.GetComponent<ParticleSystem>().Play();
+                Shoot();
+            }
+            else if (/*Input.GetKeyDown(KeyCode.LeftShift)*/playerInput.actions["Dash"].WasPressedThisFrame()) /////////////////////// ARREGLAR
+            {
                 canonForward = -transform.forward;
                 Debug.Log(canonForward);
-        }
-        else if (playerMovement.DoubleJump)
-        {
-            if (/*Input.GetKeyDown(KeyCode.Space)*/playerInput.actions["Jump"].WasPressedThisFrame())
+            }
+            else if (playerMovement.DoubleJump)
             {
-                canonForward = Vector3.down;
+                if (/*Input.GetKeyDown(KeyCode.Space)*/playerInput.actions["Jump"].WasPressedThisFrame())
+                {
+                    canonForward = Vector3.down;
+                }
             }
         }
+
 
     }
 

@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
             //GameController.GetGameController().AddRestartGameElement(this);
             GameController.GetGameController().player = this;
             GameController.GetGameController().AddRestartLevelElement(this);
-            GameObject.DontDestroyOnLoad(gameObject);
+            //GameObject.DontDestroyOnLoad(gameObject);
         }
         else // Y si lo hay, destruyemelo y te quedas con el otro player
         {

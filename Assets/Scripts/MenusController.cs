@@ -1,24 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class MenusController : MonoBehaviour
 {
+    private PlayerInput playerInputs;
+
+    [SerializeField]
+    private GameObject pauseMenu;
+
+    private void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "TestScene_Poche")
+        {
+            playerInputs = FindObjectOfType<PlayerInput>();
+        }
+    }
+
     private void Update()
     {
-        
+        if(SceneManager.GetActiveScene().name == "TestScene_Poche")
+        {
+            if (playerInputs.actions["PauseGame"].WasPressedThisFrame())
+            {
+                pauseMenu.SetActive(true);
+                Time.timeScale = 0;
+            }
+        }
     }
 
     public void StartButtonPressed()
     {
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
-            SceneManager.LoadScene("Alpha_Level");
+            SceneManager.LoadScene("TestScene_Poche");
         }
-        else
+        else if(SceneManager.GetActiveScene().name == "TestScene_Poche")
         {
-            //FindObjectOfType<PauseMenuController>().UnpauseGame();
+            pauseMenu.SetActive(false);
+            Time.timeScale = 1;
         }
     }
 
@@ -36,6 +58,7 @@ public class MenusController : MonoBehaviour
         else
         {
             SceneManager.LoadScene("MainMenu");
+            Time.timeScale = 1;
         }
     }
 }
