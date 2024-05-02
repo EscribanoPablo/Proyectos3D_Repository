@@ -9,19 +9,20 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
 
     private void Awake()
     {
-        //Si no hay ningun player en la escena, el player va a ser este
-        if (GameController.GetGameController().GetPlayer() == null)
-        {
-            //GameController.GetGameController().AddRestartGameElement(this);
-            GameController.GetGameController().player = this;
-            GameController.GetGameController().AddRestartLevelElement(this);
-            GameObject.DontDestroyOnLoad(gameObject);
-        }
-        else // Y si lo hay, destruyemelo y te quedas con el otro player
-        {
-            GameController.GetGameController().player.SetRespawnPos(transform);
-            GameObject.Destroy(this.gameObject);
-        }
+        ////Si no hay ningun player en la escena, el player va a ser este
+        //if (GameController.GetGameController().GetPlayer() == null)
+        //{
+        //    //GameController.GetGameController().AddRestartGameElement(this);
+        //    GameController.GetGameController().player = this;
+        //    GameController.GetGameController().AddRestartLevelElement(this);
+        //    GameObject.DontDestroyOnLoad(gameObject);
+        //}
+        //else // Y si lo hay, destruyemelo y te quedas con el otro player
+        //{
+        //    GameController.GetGameController().player.SetRespawnPos(transform);
+        //    GameObject.Destroy(this.gameObject);
+        //}
+        GameController.GetGameController().AddRestartLevelElement(this);
     }
 
     private void Start()
