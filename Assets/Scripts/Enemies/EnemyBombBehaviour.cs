@@ -21,7 +21,8 @@ public class EnemyBombBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameController.GetGameController().GetPlayer();
+        player = FindAnyObjectByType<PlayerController>();
+        //player = GameController.GetGameController().GetPlayer();
         navMeshAgent = GetComponent<NavMeshAgent>();
         EnterState(EnemyState.PATROL);
     }
