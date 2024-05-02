@@ -31,7 +31,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3277191425651743373}
   - {fileID: 3167671381044414098}
   - {fileID: 5896271152148096251}
   m_Father: {fileID: 215698282080703326}
@@ -98,6 +97,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3277191425651743373}
   - {fileID: 5605730492620405546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -254,17 +254,17 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 5605730492620405546}
+    m_TransformParent: {fileID: 215698282080703326}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: befb42e7254502043adbce4189cfd5dc,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 3.7138638
+      value: 3.713864
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: befb42e7254502043adbce4189cfd5dc,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 3.713864
+      value: 3.7138646
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: befb42e7254502043adbce4189cfd5dc,
         type: 3}
@@ -274,17 +274,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: befb42e7254502043adbce4189cfd5dc,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.6
+      value: 0.5999999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: befb42e7254502043adbce4189cfd5dc,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.22
+      value: 2.2199998
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: befb42e7254502043adbce4189cfd5dc,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.02
+      value: -0.020000458
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: befb42e7254502043adbce4189cfd5dc,
         type: 3}
