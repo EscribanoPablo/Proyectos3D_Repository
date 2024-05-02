@@ -35,6 +35,7 @@ public class MenusController : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
+            Time.timeScale = 1;
             SceneManager.LoadScene("TestScene_Poche");
         }
         else if(SceneManager.GetActiveScene().name == "TestScene_Poche")
@@ -47,6 +48,7 @@ public class MenusController : MonoBehaviour
     public void SettingsButtonPressed()
     {
         SceneManager.LoadScene("SettingsMenu");
+        Time.timeScale = 0;
     }
 
     public void ExitButtonPressed()
@@ -58,7 +60,6 @@ public class MenusController : MonoBehaviour
         else
         {
             SceneManager.LoadScene("MainMenu");
-            Time.timeScale = 1;
         }
     }
 }
