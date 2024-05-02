@@ -231,13 +231,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MousePos",
-                    "type": "Value",
-                    "id": "b745b13a-0485-4249-a4fe-1c8869f6474c",
-                    "expectedControlType": "",
+                    "name": "Point",
+                    "type": "PassThrough",
+                    "id": "7b7dd88e-c1b5-45e7-af7f-7bc9b626c34e",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": true
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -265,7 +265,7 @@
                 },
                 {
                     "name": "",
-                    "id": "1c78ee74-dbdb-4666-a2cf-7526c13b794d",
+                    "id": "5485210e-c80c-4084-a86a-c7311f4be870",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
@@ -374,59 +374,15 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "2D Vector",
-                    "id": "002f4b1f-a2de-4853-b391-43dd9377f55d",
-                    "path": "2DVector",
+                    "name": "",
+                    "id": "b86e478e-cce7-4097-8535-f7e71844fac2",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MousePos",
-                    "isComposite": true,
+                    "action": "Point",
+                    "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "3d6d5402-f66d-49b2-892b-522d6767bbf5",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "MousePos",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "70f89a66-9dc2-429f-a73c-64e728a9155d",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "MousePos",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "a67899e4-5355-44e2-bcb8-0f36ace1949f",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "MousePos",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "114fdd82-707d-43a4-b210-bf21fcb14e1f",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "MousePos",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 }
             ]
         }
