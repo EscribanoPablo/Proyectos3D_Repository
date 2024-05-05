@@ -924,6 +924,7 @@ MonoBehaviour:
   startLifes: 3
   DEV_INVINCIBLE: 0
   knockbackImpulse: 7.5
+  invulnerableTime: 1
 --- !u!114 &5741698530815852904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1893,8 +1894,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -876546973899608171, guid: d5395567ff987554fad862c9089972e7,
-        type: 3}
+      objectReference: {fileID: 2100000, guid: e79d8206a47e7ca45a4ba1f920b182cb, type: 2}
     - target: {fileID: 919132149155446097, guid: 417a777a63519e3458e96ee14cbde372,
         type: 3}
       propertyPath: m_Name
