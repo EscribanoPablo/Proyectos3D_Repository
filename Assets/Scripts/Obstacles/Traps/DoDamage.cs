@@ -13,4 +13,13 @@ public class DoDamage : Traps
 
         }
     }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == PLAYER_TAG)
+        {
+            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(transform.position);
+
+        }
+    }
 }

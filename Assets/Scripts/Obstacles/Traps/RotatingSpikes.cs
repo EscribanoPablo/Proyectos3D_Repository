@@ -5,15 +5,23 @@ using UnityEngine;
 public class RotatingSpikes : Traps
 {
 
-    private void OnCollisionEnter(Collision collision)
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == PLAYER_TAG)
+    //    {
+    //        collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(GetComponentInParent<Transform>().position - new Vector3(0, 1.0f, 0));
+    //    }
+    //}
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.tag == PLAYER_TAG)
+        if (other.gameObject.tag == PLAYER_TAG)
         {
-            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(GetComponentInParent<Transform>().position - new Vector3(0, 1.0f, 0));
+            other.gameObject.GetComponent<PlayerHealth>().TakeDamage(GetComponentInParent<Transform>().position - new Vector3(0, 1.0f, 0));
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == PLAYER_TAG)
         {
