@@ -422,6 +422,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PunchToy
       objectReference: {fileID: 0}
+    - target: {fileID: 5060062546585209002, guid: 86fcb58f1d037d54c83aef447e8f54d4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5275680166931285098, guid: 86fcb58f1d037d54c83aef447e8f54d4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1505,6 +1510,11 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a2deafa45b0cba647bb2a5152e1a6479,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a2deafa45b0cba647bb2a5152e1a6479,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6652725513331149018, guid: a2deafa45b0cba647bb2a5152e1a6479,
