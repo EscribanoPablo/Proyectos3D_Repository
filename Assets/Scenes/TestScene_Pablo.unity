@@ -5751,8 +5751,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 424204896}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2999516, y: 0.5892277, z: -0.24984337, w: 0.70740235}
-  m_LocalPosition: {x: -27.647312, y: 7.150793, z: 1.7526865}
+  m_LocalRotation: {x: 0.16204466, y: 0.22909011, z: -0.038708255, w: 0.9590417}
+  m_LocalPosition: {x: -25.318329, y: 7.5950394, z: -9.2993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17233,7 +17233,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 207
+  m_Priority: 1
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 1222595907}
   m_Follow: {fileID: 1222595906}
@@ -17264,14 +17264,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1272360297}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2999516, y: 0.5892277, z: -0.24984337, w: 0.70740235}
-  m_LocalPosition: {x: -27.647312, y: 7.150793, z: 1.7526865}
+  m_LocalRotation: {x: 0.16204466, y: 0.22909011, z: -0.038708255, w: 0.9590417}
+  m_LocalPosition: {x: -25.318329, y: 7.5950394, z: -9.2993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1669961762}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -1.583, y: -11.66, z: -51.817}
+  m_LocalEulerAnglesHint: {x: 10.596, y: 20.893, z: 0}
 --- !u!114 &1272360300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22805,7 +22805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 2031192664}
-  m_PathPosition: 0.20740664
+  m_PathPosition: 0
   m_PositionUnits: 0
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 2.97
@@ -22838,14 +22838,14 @@ MonoBehaviour:
   m_LookaheadIgnoreY: 0
   m_HorizontalDamping: 0.5
   m_VerticalDamping: 0.5
-  m_ScreenX: 0.5
-  m_ScreenY: 0.64
+  m_ScreenX: 0.31
+  m_ScreenY: 0.59
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
   m_SoftZoneWidth: 0.8
   m_SoftZoneHeight: 0.8
-  m_BiasX: 0
-  m_BiasY: 0
+  m_BiasX: 0.219
+  m_BiasY: -0.039
   m_CenterOnActivate: 1
 --- !u!114 &1669961765
 MonoBehaviour:
@@ -27480,7 +27480,7 @@ MonoBehaviour:
     width: 0.2
   m_Looped: 0
   m_Waypoints:
-  - position: {x: -28.563828, y: 0.28220677, z: 16.783142}
+  - position: {x: -16.24833, y: 6.375039, z: 8.7207}
     roll: 0
   - position: {x: -5.922948, y: 12.382015, z: 1.7559319}
     roll: 0
@@ -27525,7 +27525,7 @@ Transform:
   m_GameObject: {fileID: 2031192663}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.20407, y: 3.6954951, z: -11.476775}
+  m_LocalPosition: {x: -9.07, y: 1.22, z: -18.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
