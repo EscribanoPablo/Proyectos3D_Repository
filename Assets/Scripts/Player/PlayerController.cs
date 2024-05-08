@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
         //    GameObject.Destroy(GameController.GetGameController().GetPlayer().gameObject);
         //}
 
-        //GameController.GetGameController().SetCurrentPlayer(this);
+        GameController.GetGameController().SetCurrentPlayer(this);
         GameController.GetGameController().AddRestartLevelElement(this);
     }
 
