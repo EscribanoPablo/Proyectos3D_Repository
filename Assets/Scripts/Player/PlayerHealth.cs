@@ -77,6 +77,7 @@ public class PlayerHealth : MonoBehaviour
     {
         Vector3 knockbackDirection = transform.position - pointOfImpact;
         knockbackDirection.Normalize();
+        Debug.Log(knockbackDirection);
         playerRigidBody.AddForce(knockbackDirection * knockbackImpulse, ForceMode.Impulse);
     }
 
