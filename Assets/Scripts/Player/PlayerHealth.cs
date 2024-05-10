@@ -50,8 +50,6 @@ public class PlayerHealth : MonoBehaviour
 
                 Debug.Log("Player current health = " + currentLifes);
             }
-
-            //tiempo de invencibilidad mientras recibe daño??
         }
     }
 
@@ -68,16 +66,15 @@ public class PlayerHealth : MonoBehaviour
 
                 Debug.Log("Player current health = " + currentLifes);
             }
-
-            //tiempo de invencibilidad mientras recibe daño??
         }
     }
 
     public void AddKnockback(Vector3 pointOfImpact)
     {
         Vector3 knockbackDirection = transform.position - pointOfImpact;
+        if (knockbackDirection.y < 0)
+            knockbackDirection.y = 0.5f;
         knockbackDirection.Normalize();
-        Debug.Log(knockbackDirection);
         playerRigidBody.AddForce(knockbackDirection * knockbackImpulse, ForceMode.Impulse);
     }
 
