@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
 
     private Rigidbody playerRigidBody;
     [SerializeField] float knockbackImpulse;
+    private PlayerInput playerInputs;
 
     private HudController hudController;
 
@@ -21,6 +23,7 @@ public class PlayerHealth : MonoBehaviour
         currentLifes = startLifes;
         playerRigidBody = GetComponent<Rigidbody>();
         hudController = FindObjectOfType<HudController>();
+        playerInputs = GetComponent<PlayerInput>();
     }
 
     private void Update()
@@ -33,6 +36,8 @@ public class PlayerHealth : MonoBehaviour
                 gotHit = false;
                 timeCounter = 0;
             }
+            else if(timeCounter >= invulnerableTime / 3)
+                playerInputs.enabled = true;
         }
     }
 
@@ -42,13 +47,14 @@ public class PlayerHealth : MonoBehaviour
         {
             if (!gotHit)
             {
+                playerInputs.enabled = false;
                 AddKnockback(pointOfImpact);
                 currentLifes--;
                 hudController.LifeLost(currentLifes);
                 CheckHealth();
                 gotHit = true;
 
-                Debug.Log("Player current health = " + currentLifes);
+                //Debug.Log("Player current health = " + currentLifes);
             }
         }
     }
@@ -59,12 +65,13 @@ public class PlayerHealth : MonoBehaviour
         {
             if (!gotHit)
             {
+                playerInputs.enabled = false;
                 currentLifes--;
                 hudController.LifeLost(currentLifes);
                 CheckHealth();
                 gotHit = true;
 
-                Debug.Log("Player current health = " + currentLifes);
+                //Debug.Log("Player current health = " + currentLifes);
             }
         }
     }
@@ -72,7 +79,7 @@ public class PlayerHealth : MonoBehaviour
     public void AddKnockback(Vector3 pointOfImpact)
     {
         Vector3 knockbackDirection = transform.position - pointOfImpact;
-        if (knockbackDirection.y < 0)
+        //if (knockbackDirection.y < 0)
             knockbackDirection.y = 0.5f;
         knockbackDirection.Normalize();
         playerRigidBody.AddForce(knockbackDirection * knockbackImpulse, ForceMode.Impulse);
