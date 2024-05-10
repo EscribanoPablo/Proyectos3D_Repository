@@ -8,6 +8,7 @@ public class DeathZone : Traps
     {
         if(other.tag == PLAYER_TAG)
         {
+            Debug.Log("player should die");
             other.gameObject.GetComponent<PlayerHealth>().EnterDeathZone();
         }
     }

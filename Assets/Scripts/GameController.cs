@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,7 @@ public class GameController : MonoBehaviour
 
     public GameObject destroyObjects;
 
-    static bool alreadyInitializated = false;
+    public static bool alreadyInitializated = false;
 
     List<IRestartLevelElement> restartLevelElements = new List<IRestartLevelElement>();
 
@@ -21,11 +22,11 @@ public class GameController : MonoBehaviour
     {
         if (gameController == null && !alreadyInitializated)
         {
-            GameObject l_GameObject = new GameObject("GameController");
-            gameController = l_GameObject.AddComponent<GameController>();
+            GameObject gameObject = new GameObject("GameController");
+            gameController = gameObject.AddComponent<GameController>();
             //m_GameController.m_DestroyObjects = new GameObject("DestroyObjects");
             //m_DestroyObjects.transform.SetParent(l_GameObject.transform);
-            GameController.DontDestroyOnLoad(l_GameObject);
+            GameController.DontDestroyOnLoad(gameObject);
             alreadyInitializated = true;
         }
         return gameController;
@@ -34,6 +35,11 @@ public class GameController : MonoBehaviour
     public PlayerController GetPlayer()
     {
         return player;
+    }
+
+    public void SetCurrentPlayer(PlayerController player)
+    {
+        this.player = player;
     }
 
     public CameraController GetCamera()
@@ -45,12 +51,24 @@ public class GameController : MonoBehaviour
     {
         restartLevelElements.Add(element);
     }
+    public void EmptyRestartList()
+    {
+        restartLevelElements = new();
+    }
+    public void RemoveRestartLevelElement(IRestartLevelElement element)
+    {
+        restartLevelElements.Remove(element);
+    }
+
+    
 
     public void RestartLevelElment()
     {
+        Debug.Log(restartLevelElements.Count);
         foreach (IRestartLevelElement element in restartLevelElements)
         {
-            element.Restart();
+            if (element != null)
+            element?.Restart();
         }
     }
 }

@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
 
     private void Awake()
     {
-        ////Si no hay ningun player en la escena, el player va a ser este
+        //Si no hay ningun player en la escena, el player va a ser este
         //if (GameController.GetGameController().GetPlayer() == null)
         //{
         //    //GameController.GetGameController().AddRestartGameElement(this);
@@ -17,11 +17,13 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
         //    GameController.GetGameController().AddRestartLevelElement(this);
         //    GameObject.DontDestroyOnLoad(gameObject);
         //}
-        //else // Y si lo hay, destruyemelo y te quedas con el otro player
+        //else // Y si lo hay, destruyeme el anterior player y te quedas con este player
         //{
         //    GameController.GetGameController().player.SetRespawnPos(transform);
-        //    GameObject.Destroy(this.gameObject);
+        //    GameObject.Destroy(GameController.GetGameController().GetPlayer().gameObject);
         //}
+
+        GameController.GetGameController().SetCurrentPlayer(this);
         GameController.GetGameController().AddRestartLevelElement(this);
     }
 
