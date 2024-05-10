@@ -17,6 +17,8 @@ public class PlayerHealth : MonoBehaviour
     private float timeCounter = 0;
     [SerializeField]
     private float invulnerableTime = 1.0f;
+    [SerializeField]
+    private float noInputsTime = 0.3f;
 
     private void Start()
     {
@@ -36,7 +38,7 @@ public class PlayerHealth : MonoBehaviour
                 gotHit = false;
                 timeCounter = 0;
             }
-            else if(timeCounter >= invulnerableTime / 3)
+            else if(timeCounter >= noInputsTime)
                 playerInputs.enabled = true;
         }
     }
