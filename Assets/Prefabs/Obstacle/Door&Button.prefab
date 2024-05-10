@@ -75,7 +75,6 @@ GameObject:
   - component: {fileID: 3590879259513913921}
   - component: {fileID: 3321812849625128645}
   - component: {fileID: 8870102793063583062}
-  - component: {fileID: 8080817598928253437}
   m_Layer: 7
   m_Name: ButtonBase
   m_TagString: Untagged
@@ -150,27 +149,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &8080817598928253437
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3240504408060673277}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.7701972, y: 2.3963468, z: 0.6354648}
-  m_Center: {x: -0.19318181, y: -0.6981737, z: 0.0319572}
 --- !u!1 &5037632879929174821
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,8 +253,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.0356266, y: 1.6472812, z: 1}
+  m_Center: {x: 0.517813, y: 0.32364225, z: 0}
 --- !u!1 &5055324445526719943
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,8 +359,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.0168576, y: 1.6407154, z: 1}
+  m_Center: {x: -0.50842834, y: 0.3203592, z: 0}
 --- !u!1 &5830181281967582177
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,7 +456,7 @@ Transform:
   m_GameObject: {fileID: 8253009347366149308}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.085999966, z: 0}
+  m_LocalPosition: {x: 0.222, y: 0.65, z: 0.006}
   m_LocalScale: {x: 0.73, y: 2, z: 0.7692307}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -553,8 +531,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.99999934, y: 0.3905736, z: 1}
+  m_Center: {x: -6.0924266e-11, y: 0.30471393, z: -5.3042626e-10}
 --- !u!111 &6405946223253967485
 Animation:
   m_ObjectHideFlags: 0
