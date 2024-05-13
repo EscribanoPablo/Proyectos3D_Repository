@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
 {
     Vector3 startPosition;
     Quaternion startRotation;
+    Rigidbody rigidBody;
 
     private void Awake()
     {
@@ -15,15 +16,23 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
 
     private void Start()
     {
+        rigidBody = GetComponent<Rigidbody>();
         startPosition = transform.position;
         startRotation = transform.rotation; 
     }
 
     public void Restart()
     {
+        StartCoroutine(ResetRigidbody());
+    }
+
+    IEnumerator ResetRigidbody()
+    {
+        yield return new WaitForSeconds(0.1f);
+        rigidBody.velocity = Vector3.zero;
         transform.position = startPosition;
         transform.rotation = startRotation;
-        //GameController.GetGameController().RestartLevelElment(); 
+        Debug.Log(rigidBody.velocity);
     }
 
     public void SetRespawnPos(Transform transform)

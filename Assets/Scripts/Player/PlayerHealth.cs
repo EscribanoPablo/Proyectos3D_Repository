@@ -84,7 +84,7 @@ public class PlayerHealth : MonoBehaviour
         //if (knockbackDirection.y < 0)
             knockbackDirection.y = 0.5f;
         knockbackDirection.Normalize();
-        playerRigidBody.AddForce(knockbackDirection * knockbackImpulse, ForceMode.Impulse);
+        playerRigidBody.AddForce(knockbackDirection.normalized * knockbackImpulse, ForceMode.Impulse);
     }
 
     private void CheckHealth()
@@ -113,10 +113,10 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
-        playerRigidBody.velocity = Vector3.zero;
         hudController.RestartLifes();
         currentLifes = startLifes;
         GameController.GetGameController().RestartLevelElment();
+        playerRigidBody.velocity = Vector3.zero;
     }
 }
 
