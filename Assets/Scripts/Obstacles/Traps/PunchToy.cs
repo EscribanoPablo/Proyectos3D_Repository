@@ -13,6 +13,7 @@ public class PunchToy : Traps
     [SerializeField] private AnimationClip punchReturn;
     private bool punchIdle;
 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,4 +57,5 @@ public class PunchToy : Traps
         punchIdle = !punchIdle;
 
     }
+
 }

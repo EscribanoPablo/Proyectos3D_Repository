@@ -6,38 +6,33 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
 {
     Vector3 startPosition;
     Quaternion startRotation;
+    Rigidbody rigidBody;
 
     private void Awake()
     {
-        //Si no hay ningun player en la escena, el player va a ser este
-        //if (GameController.GetGameController().GetPlayer() == null)
-        //{
-        //    //GameController.GetGameController().AddRestartGameElement(this);
-        //    GameController.GetGameController().player = this;
-        //    GameController.GetGameController().AddRestartLevelElement(this);
-        //    GameObject.DontDestroyOnLoad(gameObject);
-        //}
-        //else // Y si lo hay, destruyeme el anterior player y te quedas con este player
-        //{
-        //    GameController.GetGameController().player.SetRespawnPos(transform);
-        //    GameObject.Destroy(GameController.GetGameController().GetPlayer().gameObject);
-        //}
-
         GameController.GetGameController().SetCurrentPlayer(this);
         GameController.GetGameController().AddRestartLevelElement(this);
     }
 
     private void Start()
     {
+        rigidBody = GetComponent<Rigidbody>();
         startPosition = transform.position;
         startRotation = transform.rotation; 
     }
 
     public void Restart()
     {
+        StartCoroutine(ResetRigidbody());
+    }
+
+    IEnumerator ResetRigidbody()
+    {
+        yield return new WaitForSeconds(0.1f);
+        rigidBody.velocity = Vector3.zero;
         transform.position = startPosition;
         transform.rotation = startRotation;
-        //GameController.GetGameController().RestartLevelElment(); 
+        Debug.Log(rigidBody.velocity);
     }
 
     public void SetRespawnPos(Transform transform)
@@ -48,4 +43,5 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
         transform.position = startPosition;
         transform.rotation = startRotation;
     }
+    
 }
