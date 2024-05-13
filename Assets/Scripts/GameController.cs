@@ -64,7 +64,7 @@ public class GameController : MonoBehaviour
 
     public void RestartLevelElment()
     {
-        Debug.Log(restartLevelElements.Count);
+        //Debug.Log(restartLevelElements.Count);
         foreach (IRestartLevelElement element in restartLevelElements)
         {
             if (element != null)

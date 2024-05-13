@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
 
+    public Rigidbody rigidBody { get; set; }
     [Header("References")]
-    Rigidbody rigidBody;
     [SerializeField] Camera camera;
     [SerializeField] Transform groundChecker;
     [SerializeField] LayerMask whatIsGround;
@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float maxVelocity;
     [SerializeField] float rotationTime = 0.1f;
     float turnSmoothVelocity;
-    Vector3 moveDirection;
+    public bool playerControllerEnabled { get; set;}
 
     [Header("Jump Variables")]
     [SerializeField] int multipleJumps = 2;
@@ -58,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
     private bool canWall = true;
     private float wallTimer;
 
+    
+
     public bool GetIsJumping()
     {
         return isJumping;
@@ -71,6 +73,7 @@ public class PlayerMovement : MonoBehaviour
         armCanonJump.SetActive(false);
         canonJump.SetActive(false);
         canDash = true;
+        playerControllerEnabled = true;
     }
 
     private void Update()
@@ -138,20 +141,22 @@ public class PlayerMovement : MonoBehaviour
 
             verticalSpeed += /*Physics.gravity.y*/ -gravity;
         }
-
-        if (direction.magnitude >= 0.1f)
+        if (playerControllerEnabled)
         {
-            //Look Where You Go
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            if (direction.magnitude >= 0.1f)
+            {
+                //Look Where You Go
+                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            //moveDirection = l_MoveDir;
+                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+                //moveDirection = l_MoveDir;
 
-            //Apply to rb
-            //m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
-            rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
+                //Apply to rb
+                //m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
+                rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
+            }
         }
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, verticalSpeed, rigidBody.velocity.z);
 
