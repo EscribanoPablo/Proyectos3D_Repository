@@ -648,6 +648,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CircusMasterRigged
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e3270d44d7184ba4e9328e6ce84e02dc,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1630794972795428178, guid: e3270d44d7184ba4e9328e6ce84e02dc,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3127,6 +3132,74 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0014bd0d6e21f04b96f5dbc906bbcd0, type: 3}
+--- !u!1001 &7423592716916910818
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3898591512264289544, guid: 51fff56abdd7e064796af25840d86e93,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 5.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898591512264289544, guid: 51fff56abdd7e064796af25840d86e93,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.770363
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898591512264289544, guid: 51fff56abdd7e064796af25840d86e93,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 17.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898591512264289544, guid: 51fff56abdd7e064796af25840d86e93,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898591512264289544, guid: 51fff56abdd7e064796af25840d86e93,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898591512264289544, guid: 51fff56abdd7e064796af25840d86e93,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898591512264289544, guid: 51fff56abdd7e064796af25840d86e93,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898591512264289544, guid: 51fff56abdd7e064796af25840d86e93,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898591512264289544, guid: 51fff56abdd7e064796af25840d86e93,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3898591512264289544, guid: 51fff56abdd7e064796af25840d86e93,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295922026409277863, guid: 51fff56abdd7e064796af25840d86e93,
+        type: 3}
+      propertyPath: m_Name
+      value: CircusMaster
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 51fff56abdd7e064796af25840d86e93, type: 3}
 --- !u!1001 &7612071463100645472
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3475,3 +3548,4 @@ SceneRoots:
   - {fileID: 1805016248}
   - {fileID: 1666582658}
   - {fileID: 417245265}
+  - {fileID: 7423592716916910818}
