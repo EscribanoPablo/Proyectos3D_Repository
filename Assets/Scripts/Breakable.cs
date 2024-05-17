@@ -13,7 +13,6 @@ public class Breakable : Obstacles, IRestartLevelElement
     Vector3[] breakableStartPosition;
     Quaternion[] breakableStartRotation;
 
-    private bool broken;
     [SerializeField] float timeToDisappear;
     float timer;
 
@@ -49,29 +48,16 @@ public class Breakable : Obstacles, IRestartLevelElement
         {
             wholeObject.SetActive(false);
             prefracturedObject.transform.position = wholeObject.transform.position;
-            prefracturedObject.transform.rotation = wholeObject.transform.rotation;
+            //prefracturedObject.transform.rotation = wholeObject.transform.rotation;
             prefracturedObject.SetActive(true);
 
             GetComponent<Collider>().enabled = false;
 
-            broken = true;
+            StartCoroutine(DesactiateGameObject());
         }
 
     }
 
-    private void Update()
-    {
-        if (broken)
-        {
-            timer += Time.deltaTime;
-            //esto se tendria que hacer mas suave, haciendolo desaparecer poco a poco
-            //tambien podemos cambiar layer del objeto para que no se bugee con el player
-            if (timer >= timeToDisappear)
-            {
-                //gameObject.SetActive(false);
-            }
-        }
-    }
     public override void RestartLevel()
     {
         //PARA RESTART LEVEL, ESTARIA BIEN HACER UNA ARRAY DE LAS POSICIONES / ROTACIÓN DE TODAS LAS PIEZAS Y VOLVERLAS TODAS A SU SITIO
@@ -84,6 +70,14 @@ public class Breakable : Obstacles, IRestartLevelElement
         wholeObject.SetActive(true);
         prefracturedObject.SetActive(false);
         GetComponent<Collider>().enabled = true;
+    }
+
+    IEnumerator DesactiateGameObject()
+    {
+        yield return new WaitForSeconds(timeToDisappear);
+        //esto se tendria que hacer mas suave, haciendolo desaparecer poco a poco
+        //tambien podemos cambiar layer del objeto para que no se bugee con el player
+        prefracturedObject.SetActive(false);
 
     }
 
