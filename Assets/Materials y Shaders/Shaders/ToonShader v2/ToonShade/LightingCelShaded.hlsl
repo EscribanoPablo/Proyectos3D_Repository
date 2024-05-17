@@ -12,7 +12,7 @@ struct EdgeConstants {
 
 };
 
-// Datos que necesita ek shader para los diferentes cálculos y funciones
+// Datos que necesita el shader para los diferentes cálculos y funciones
 struct SurfaceVariables {
 
    float smoothness;
@@ -61,7 +61,7 @@ float3 CalculateCelShading(Light l, SurfaceVariables s) {
       rim
    );
 
-   return l.color * (diffuse + max(specular, rim));
+   return l.color * ((diffuse/1000) + max(specular, rim));
 }
 #endif
 
