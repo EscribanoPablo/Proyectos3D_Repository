@@ -51,11 +51,11 @@ public class CircusMasterMovement : MonoBehaviour
 
         if (moving)
         {
-            float yRotationValue = Mathf.Lerp(transform.rotation.eulerAngles.y, rotationDestination, Time.deltaTime * rotateSpeed);
+            float yRotationValue = Mathf.Lerp(transform.parent.transform.rotation.eulerAngles.y, rotationDestination, Time.deltaTime * rotateSpeed);
             //Debug.Log("Myangles: " + transform.rotation.eulerAngles.y + ", my new Y value: " + yRotationValue + ", my destination: " + rotationDestination);
-            transform.rotation = Quaternion.Euler(0, yRotationValue, 0);
+            transform.parent.transform.rotation = Quaternion.Euler(0, yRotationValue, 0);
             //Debug.Log(transform.rotation.eulerAngles + "    , " + Quaternion.Euler(0, yRotationValue, 0));
-            if (Snapping.Snap(rotationDestination, snapRotationFactor) == Snapping.Snap(transform.rotation.eulerAngles.y, snapRotationFactor))
+            if (Snapping.Snap(rotationDestination, snapRotationFactor) == Snapping.Snap(transform.parent.transform.rotation.eulerAngles.y, snapRotationFactor))
             {
                 moving = false;
                 animationCircusMaster.Play(encenderAnimation.name);
@@ -69,8 +69,9 @@ public class CircusMasterMovement : MonoBehaviour
     {
         Vector3 direction = lights[currentLight].transform.position - transform.position;
         direction.y = transform.position.y;
-        rotationDestination = Quaternion.LookRotation(direction).eulerAngles.y + ROTATIONFORWARD_OFFSET;
-        Debug.Log(rotationDestination);
+        rotationDestination = Quaternion.LookRotation(direction).eulerAngles.y;
+
+        Debug.Log(rotationDestination + " , "+ Quaternion.LookRotation(direction).eulerAngles.y);
     }
 
     private void EncenderLuz()
