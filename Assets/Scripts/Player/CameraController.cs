@@ -33,12 +33,10 @@ public class CameraController : MonoBehaviour
     {
         if (CameraTooInclined())
         {
-            Debug.Log("Look At null");
             virtualCamera.m_LookAt = null;
         }
         else
         {
-            Debug.Log("Look At Player");
             virtualCamera.m_LookAt = player.transform;
         }
 
