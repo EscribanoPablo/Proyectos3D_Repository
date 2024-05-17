@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenChangeState: 3
-  timeOffset: 0
+  timeOffset: 1.5
   spikesAnimations: {fileID: 991634228591935476}
   spikesUp: {fileID: 7400000, guid: f702d33df4f7d3048ae7adf78ce17ec5, type: 2}
   spikesDown: {fileID: 7400000, guid: 19ad6214fa89e984fbbe15402007e37f, type: 2}
@@ -298,7 +298,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: f458b369cc0b6624b9257f7bd6b43ed0, type: 3}
+  - {fileID: 2100000, guid: f1c4712b483fcd94f9b853a690672d50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
