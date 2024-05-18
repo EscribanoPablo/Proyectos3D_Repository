@@ -13,7 +13,6 @@ public abstract class Obstacles : MonoBehaviour, IRestartLevelElement
 
     public virtual void RestartLevel()
     {
-        Debug.Log("Restart obstacles");
     }
 
     // heredado de la interfaz
