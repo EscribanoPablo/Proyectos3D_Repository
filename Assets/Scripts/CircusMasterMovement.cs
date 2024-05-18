@@ -58,8 +58,7 @@ public class CircusMasterMovement : MonoBehaviour
             if (Snapping.Snap(rotationDestination, snapRotationFactor) == Snapping.Snap(transform.parent.transform.rotation.eulerAngles.y, snapRotationFactor))
             {
                 moving = false;
-                animationCircusMaster.Play(encenderAnimation.name);
-                Debug.Log("ARRIVED");
+                animationCircusMaster.CrossFade(encenderAnimation.name);
             }
         }
 
@@ -70,8 +69,6 @@ public class CircusMasterMovement : MonoBehaviour
         Vector3 direction = lights[currentLight].transform.position - transform.position;
         direction.y = transform.position.y;
         rotationDestination = Quaternion.LookRotation(direction).eulerAngles.y;
-
-        Debug.Log(rotationDestination + " , "+ Quaternion.LookRotation(direction).eulerAngles.y);
     }
 
     private void EncenderLuz()
