@@ -16,17 +16,21 @@ public class Breakable : Obstacles, IRestartLevelElement
     [SerializeField] float timeToDisappear;
     float timer;
 
-    [SerializeField] float fuerzaPene;
+    [SerializeField] float boxExplosionForce;
 
     Vector3 startPositionParent;
     Quaternion startRotationParent;
 
     Rigidbody rigidBody;
 
+    CanonShoot canonShoot;
+
+
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
+        canonShoot = FindObjectOfType<CanonShoot>();
 
         startPositionParent = transform.position;
         startRotationParent = transform.rotation;
@@ -49,8 +53,8 @@ public class Breakable : Obstacles, IRestartLevelElement
             //prefracturedObject.transform.position = wholeObject.transform.position;
             for (int i = 0; i < prefracturedObject.transform.childCount - 1; i++)
             {
-                //hacer que pille la dirección de la bala y añadirle velocidad, no crear un vector nuevo
-                //breakableCubes[i].GetComponent<Rigidbody>().velocity = new Vector3(1, 1, 0)* fuerzaPene;
+                //hacer que pille la dirección de la bala y añadirle velocidad
+                breakableCubes[i].GetComponent<Rigidbody>().velocity += canonShoot.CanonForward * boxExplosionForce;
             }
             GetComponent<Collider>().enabled = false;
 
@@ -79,28 +83,9 @@ public class Breakable : Obstacles, IRestartLevelElement
         }
     }
 
-    private void Update()
-    {
-        //prefracturedObject.transform.position = transform.position;
-    }
 
     public override void RestartLevel()
     {
-        StartCoroutine(Restart());
-    }
-
-    IEnumerator DesactivateGameObject()
-    {
-        yield return new WaitForSeconds(timeToDisappear);
-        //esto se tendria que hacer mas suave, haciendolo desaparecer poco a poco
-        //tambien podemos cambiar layer del objeto para que no se bugee con el player
-        prefracturedObject.SetActive(false);
-
-    }
-
-    IEnumerator Restart()
-    {
-        yield return new WaitForSeconds(0.2f);
         for (int i = 0; i < breakableCubes.Length; i++)
         {
             breakableCubes[i].transform.localPosition = breakableStartPosition[i];
@@ -122,4 +107,10 @@ public class Breakable : Obstacles, IRestartLevelElement
         transform.rotation = startRotationParent;
     }
 
+    IEnumerator DesactivateGameObject()
+    {
+        yield return new WaitForSeconds(timeToDisappear);
+        //esto se tendria que hacer mas suave, haciendolo desaparecer poco a poco
+        prefracturedObject.SetActive(false);
+    }
 }
