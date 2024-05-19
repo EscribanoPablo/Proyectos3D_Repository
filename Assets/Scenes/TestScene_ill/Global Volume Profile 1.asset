@@ -31,13 +31,13 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 1
   qualityLevel:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   gridPixelSize:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 12
   gridSizeZ:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 128
   maxDistanceVolumetric:
     m_OverrideState: 0
@@ -53,7 +53,7 @@ MonoBehaviour:
     m_Value: 0.05
   fogDensity:
     m_OverrideState: 1
-    m_Value: 2.83
+    m_Value: 2.85
   anisotropy:
     m_OverrideState: 0
     m_Value: 0.2
@@ -79,13 +79,13 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 10
   litColor:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
   shadowedColor:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {r: 0, g: 0, b: 0, a: 1}
   emitColor:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {r: 0, g: 0, b: 0, a: 1}
   colorRamp:
     m_OverrideState: 0
@@ -94,7 +94,7 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   colorInfluence:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   directionalForward:
     m_OverrideState: 0
@@ -118,13 +118,13 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0.3
   noiseTiling:
-    m_OverrideState: 0
-    m_Value: 30
+    m_OverrideState: 1
+    m_Value: 115
   noiseWindSpeed:
     m_OverrideState: 0
-    m_Value: {x: 0, y: -1, z: 0}
+    m_Value: {x: 1, y: -1, z: 0}
   noiseMap:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {x: 0, y: 1}
   volumeNoise:
     m_OverrideState: 0
