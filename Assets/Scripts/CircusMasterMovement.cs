@@ -26,6 +26,11 @@ public class CircusMasterMovement : MonoBehaviour
         animationCircusMaster.Play(idleAnimation.name);
         introducingScenario = true;
         currentLight = 0;
+
+        foreach (GameObject light in lights)
+        {
+            light.SetActive(false);
+        }
     }
 
     // Update is called once per frame

@@ -47,9 +47,9 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 426.3
+  m_Intensity: 106.7
   m_Range: 23.18777
-  m_SpotAngle: 91.925514
+  m_SpotAngle: 114.0698
   m_InnerSpotAngle: 55.5738
   m_CookieSize: 10
   m_Shadows:
@@ -78,7 +78,7 @@ Light:
       e32: 0
       e33: 1
     m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 2800000, guid: 4c664e0189193f046a4ea34a2e89382e, type: 3}
+  m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
   m_RenderMode: 1
@@ -137,8 +137,8 @@ MonoBehaviour:
   areaSizeCached: {x: 1, y: 1, z: 0, w: 0}
   lightColor: {r: 1, g: 1, b: 1, a: 1}
   bias: 0
-  lightRange: 0
-  lightIntensity: 10
+  lightRange: 20
+  lightIntensity: 19.4
 --- !u!114 &2732834923732190185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,4 +152,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heightOffset: 10
-  cameraSpeed: 2
+  lightMovementSpeed: 1.5
+  lightRotateSpeed: 3
