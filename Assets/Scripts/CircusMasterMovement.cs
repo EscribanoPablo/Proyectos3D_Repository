@@ -58,6 +58,14 @@ public class CircusMasterMovement : MonoBehaviour
         {
             float yRotationValue = Mathf.Lerp(transform.parent.transform.rotation.eulerAngles.y, rotationDestination, Time.deltaTime * rotateSpeed);
             //Debug.Log("Myangles: " + transform.rotation.eulerAngles.y + ", my new Y value: " + yRotationValue + ", my destination: " + rotationDestination);
+            if (yRotationValue > 360)
+            {
+                rotationDestination -= 360;
+            }
+            else if(yRotationValue < 0)
+            {
+                rotationDestination += 360;
+            }
             transform.parent.transform.rotation = Quaternion.Euler(0, yRotationValue, 0);
             //Debug.Log(transform.rotation.eulerAngles + "    , " + Quaternion.Euler(0, yRotationValue, 0));
             if (Snapping.Snap(rotationDestination, snapRotationFactor) == Snapping.Snap(transform.parent.transform.rotation.eulerAngles.y, snapRotationFactor))
@@ -74,6 +82,16 @@ public class CircusMasterMovement : MonoBehaviour
         Vector3 direction = lights[currentLight].transform.position - transform.position;
         direction.y = transform.position.y;
         rotationDestination = Quaternion.LookRotation(direction).eulerAngles.y;
+        if(rotationDestination - transform.parent.transform.rotation.eulerAngles.y > 180)
+        {
+            //transform.parent.transform.rotation = Quaternion.Euler(0, transform.parent.transform.rotation.eulerAngles.y + 360, 0);
+            rotationDestination -= 360;
+        }
+        else if ( transform.parent.transform.rotation.eulerAngles.y - rotationDestination > 180)
+        {
+            rotationDestination += 360;
+        }
+        Debug.Log(rotationDestination);
     }
 
     private void EncenderLuz()
