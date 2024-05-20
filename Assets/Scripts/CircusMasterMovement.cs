@@ -79,6 +79,10 @@ public class CircusMasterMovement : MonoBehaviour
     private void EncenderLuz()
     {
         lights[currentLight].SetActive(true);
+    }
+
+    private void SeguirAnimacion()
+    {
         currentLight++;
         if (currentLight > lights.Count - 1)
         {
@@ -93,3 +97,4 @@ public class CircusMasterMovement : MonoBehaviour
         animationCircusMaster.CrossFadeQueued(idleAnimation.name);
     }
 }
+
