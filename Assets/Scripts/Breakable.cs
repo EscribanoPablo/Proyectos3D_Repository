@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
-public class Breakable : Obstacles
+public class Breakable : Obstacles, IRestartLevelElement
 {
-
     [SerializeField] GameObject wholeObject;
     [SerializeField] GameObject prefracturedObject;
     [SerializeField] string breakerTag;
@@ -14,18 +13,62 @@ public class Breakable : Obstacles
     Vector3[] breakableStartPosition;
     Quaternion[] breakableStartRotation;
 
-    private bool broken;
     [SerializeField] float timeToDisappear;
     float timer;
+
+    [SerializeField] float boxExplosionForce;
+
+    Vector3 startPositionParent;
+    Quaternion startRotationParent;
+
+    Rigidbody rigidBody;
+
+    CanonShoot canonShoot;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //breakableCubes = prefracturedObject.;
+        rigidBody = GetComponent<Rigidbody>();
+        canonShoot = FindObjectOfType<CanonShoot>();
+
+        startPositionParent = transform.position;
+        startRotationParent = transform.rotation;
+
+        SaveBreakablesPosition();
+
+        wholeObject.SetActive(true);
+        prefracturedObject.SetActive(false);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == breakerTag)
+        {
+
+            wholeObject.SetActive(false);
+            //prefracturedObject.transform.rotation = wholeObject.transform.rotation;
+            prefracturedObject.SetActive(true);
+
+            //prefracturedObject.transform.position = wholeObject.transform.position;
+            for (int i = 0; i < prefracturedObject.transform.childCount - 1; i++)
+            {
+                //hacer que pille la dirección de la bala y añadirle velocidad
+                breakableCubes[i].GetComponent<Rigidbody>().velocity += canonShoot.CanonForward * boxExplosionForce;
+            }
+            GetComponent<Collider>().enabled = false;
+
+            if (rigidBody != null) rigidBody.isKinematic = true;
+
+            StartCoroutine(DesactivateGameObject());
+        }
+    }
+
+    private void SaveBreakablesPosition()
+    {
         breakableCubes = new GameObject[prefracturedObject.transform.childCount - 1];
 
-        for (int i = 0; i < prefracturedObject.transform.childCount-1; i++)
+        for (int i = 0; i < prefracturedObject.transform.childCount - 1; i++)
         {
             breakableCubes[i] = prefracturedObject.transform.GetChild(i).gameObject;
         }
@@ -35,52 +78,39 @@ public class Breakable : Obstacles
 
         for (int i = 0; i < breakableCubes.Length; i++)
         {
-            breakableStartPosition[i] = breakableCubes[i].transform.position;
-            breakableStartRotation[i] = breakableCubes[i].transform.rotation;
-        }
-
-        wholeObject.SetActive(true);
-        prefracturedObject.SetActive(false);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.tag == breakerTag) 
-        {
-            wholeObject.SetActive(false);
-            prefracturedObject.transform.position = wholeObject.transform.position;
-            prefracturedObject.transform.rotation = wholeObject.transform.rotation;
-            prefracturedObject.SetActive(true);
-
-            GetComponent<Collider>().enabled = false;
-
-            broken = true;
-        }
-
-    }
-
-    private void Update()
-    {
-        if (broken)
-        {
-            timer += Time.deltaTime;
-            //esto se tendria que hacer mas suave, haciendolo desaparecer poco a poco
-            //tambien podemos cambiar layer del objeto para que no se bugee con el player
-            if (timer >= timeToDisappear)
-            {
-                gameObject.SetActive(false);
-            }
+            breakableStartPosition[i] = breakableCubes[i].transform.localPosition;
+            breakableStartRotation[i] = breakableCubes[i].transform.localRotation;
         }
     }
+
+
     public override void RestartLevel()
     {
-        //PARA RESTART LEVEL, ESTARIA BIEN HACER UNA ARRAY DE LAS POSICIONES / ROTACIÓN DE TODAS LAS PIEZAS Y VOLVERLAS TODAS A SU SITIO
-
         for (int i = 0; i < breakableCubes.Length; i++)
         {
-            breakableCubes[i].transform.position = breakableStartPosition[i];
-            breakableCubes[i].transform.rotation = breakableStartRotation[i];
+            breakableCubes[i].transform.localPosition = breakableStartPosition[i];
+            breakableCubes[i].transform.localRotation = breakableStartRotation[i];
+            breakableCubes[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
+        if (rigidBody != null)
+        {
+            rigidBody.isKinematic = false;
+            rigidBody.velocity = Vector3.zero;
+        }
+
+        gameObject.SetActive(true);
+        wholeObject.SetActive(true);
+        prefracturedObject.SetActive(false);
+        GetComponent<Collider>().enabled = true;
+
+        transform.position = startPositionParent;
+        transform.rotation = startRotationParent;
     }
 
+    IEnumerator DesactivateGameObject()
+    {
+        yield return new WaitForSeconds(timeToDisappear);
+        //esto se tendria que hacer mas suave, haciendolo desaparecer poco a poco
+        prefracturedObject.SetActive(false);
+    }
 }

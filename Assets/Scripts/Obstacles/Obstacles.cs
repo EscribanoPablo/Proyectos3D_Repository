@@ -8,13 +8,11 @@ public abstract class Obstacles : MonoBehaviour, IRestartLevelElement
     protected const string BULLET_TAG = "Cannonball";
     public virtual void Awake()
     {
-
+        GameController.GetGameController().AddRestartLevelElement(this);
     }
-
 
     public virtual void RestartLevel()
     {
-
     }
 
     // heredado de la interfaz

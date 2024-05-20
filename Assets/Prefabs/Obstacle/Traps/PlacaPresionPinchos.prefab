@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 991634228591935476}
   - component: {fileID: 3426066022193351535}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Spikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 170008736821987278}
-  m_Mesh: {fileID: -1291710161511281072, guid: 5654dd7f5d851b94ca2b0922c281947d, type: 3}
+  m_Mesh: {fileID: -1291710161511281072, guid: 42b4c7bef8d5d7b48ba9eedcd2d13f88, type: 3}
 --- !u!23 &2186319417937311132
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6af20d21fdb3e9846be9fcc5368045e6, type: 2}
+  - {fileID: 2100000, guid: f1c4712b483fcd94f9b853a690672d50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenChangeState: 3
-  timeOffset: 0
+  timeOffset: 1.5
   spikesAnimations: {fileID: 991634228591935476}
   spikesUp: {fileID: 7400000, guid: f702d33df4f7d3048ae7adf78ce17ec5, type: 2}
   spikesDown: {fileID: 7400000, guid: 19ad6214fa89e984fbbe15402007e37f, type: 2}
@@ -277,7 +277,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7483248594156659990}
-  m_Mesh: {fileID: -5495902117074765545, guid: 42fd0759714eeaf41a779ddbd9ed8aaf, type: 3}
+  m_Mesh: {fileID: -5495902117074765545, guid: 8cd0dd4548259a54cb5fa7df884ab504, type: 3}
 --- !u!23 &5891197220331458424
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -298,7 +298,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: f458b369cc0b6624b9257f7bd6b43ed0, type: 3}
+  - {fileID: 2100000, guid: f1c4712b483fcd94f9b853a690672d50, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

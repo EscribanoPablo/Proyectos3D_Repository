@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 85559064794679284}
   m_Layer: 7
   m_Name: BreakableGlass
-  m_TagString: Untagged
+  m_TagString: Breakable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,6 +53,7 @@ MonoBehaviour:
   prefracturedObject: {fileID: 673875245931165094}
   breakerTag: Cannonball
   timeToDisappear: 5
+  fuerzaPene: 0
 --- !u!65 &85559064794679284
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -72,8 +73,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.952662, y: 0.55943155, z: 7.4040356}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 6.2615447, y: 0.55943155, z: 5.472275}
+  m_Center: {x: -0.050147295, y: 0, z: 0.0888567}
 --- !u!1001 &31566959040393341
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -157,6 +158,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Agarre
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 58458c9b5840a80439e3abf695d167c9,
+        type: 3}
+      propertyPath: m_TagString
+      value: Breakable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -180,6 +186,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8917703946959959745, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_TagString
+      value: Breakable
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8038073
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.739028
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 15074a271db60ff439065873e037d819,
         type: 3}
@@ -236,15 +257,30 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: -6554458113972422046, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_TagString
+      value: Breakable
+      objectReference: {fileID: 0}
     - target: {fileID: -2995828229661691052, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -2995828229661691052, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_TagString
+      value: Breakable
+      objectReference: {fileID: 0}
+    - target: {fileID: -80796838390250655, guid: 15074a271db60ff439065873e037d819,
         type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -80796838390250655, guid: 15074a271db60ff439065873e037d819,
         type: 3}
-      propertyPath: m_Layer
-      value: 7
+      propertyPath: m_TagString
+      value: Breakable
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 15074a271db60ff439065873e037d819,
         type: 3}
@@ -261,15 +297,30 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_TagString
+      value: Breakable
+      objectReference: {fileID: 0}
     - target: {fileID: 3021780583470790795, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3021780583470790795, guid: 15074a271db60ff439065873e037d819,
+        type: 3}
+      propertyPath: m_TagString
+      value: Breakable
+      objectReference: {fileID: 0}
+    - target: {fileID: 8704484798943859418, guid: 15074a271db60ff439065873e037d819,
         type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8704484798943859418, guid: 15074a271db60ff439065873e037d819,
         type: 3}
-      propertyPath: m_Layer
-      value: 7
+      propertyPath: m_TagString
+      value: Breakable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -749,6 +800,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cable
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8d210ecec2cf88a4cb06e8b5935f2a22,
+        type: 3}
+      propertyPath: m_TagString
+      value: Breakable
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -770,8 +826,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 0d8598821425d664a86ee028df879a42,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 609.32416
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 0d8598821425d664a86ee028df879a42,
+        type: 3}
       propertyPath: m_LocalScale.y
-      value: 706.35077
+      value: 522.013
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0d8598821425d664a86ee028df879a42,
         type: 3}
@@ -837,6 +898,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 0d8598821425d664a86ee028df879a42,
+        type: 3}
+      propertyPath: m_TagString
+      value: Breakable
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

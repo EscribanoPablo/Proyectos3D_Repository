@@ -4,45 +4,49 @@ using Cinemachine;
 public class CameraController : MonoBehaviour
 {
     CinemachineVirtualCamera virtualCamera;
-    [SerializeField] float minPitchCam;
+    [Range(-1, 1)]
+    [SerializeField] float minDotCameraVsWorld = -0.60f;
+    PlayerController player;
 
     private void Awake()
     {
 
-        if (GameController.GetGameController().GetCamera() == null)
-        {
+        //if (GameController.GetGameController().GetCamera() == null)
+        //{
 
-            GameController.GetGameController().cameraController = this;
-            GameObject.DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            GameObject.Destroy(this.gameObject);
-        }
+        //    GameController.GetGameController().cameraController = this;
+        //    GameObject.DontDestroyOnLoad(gameObject);
+        //}
+        //else
+        //{
+        //    GameObject.Destroy(this.gameObject);
+        //}
     }
 
     private void Start()
     {
+        player = FindObjectOfType<PlayerController>();
         virtualCamera = GetComponent<CinemachineVirtualCamera>();
     }
 
     private void Update()
     {
-        //CinemachineComposer cinemachineComposer = virtualCamera.AddCinemachineComponent<CinemachineComposer>();
-
-        //if (cinemachineComposer.m_ScreenY <= minPitchCam)
-        //{
-        //    cinemachineComposer.m_ScreenY = minPitchCam;
-        //}
-
-    }
-    private void FixedUpdate()
-    {
-        CinemachineComposer cinemachineComposer = virtualCamera.AddCinemachineComponent<CinemachineComposer>();
-
-        if (cinemachineComposer.m_ScreenY <= minPitchCam)
+        if (CameraTooInclined())
         {
-            cinemachineComposer.m_ScreenY = minPitchCam;
+            virtualCamera.m_LookAt = null;
         }
+        else
+        {
+            virtualCamera.m_LookAt = player.transform;
+        }
+
+        //Debug.Log(transform.forward.normalized);
+    }
+
+    private bool CameraTooInclined()
+    {
+        Vector3 directionToPlayer = player.transform.position - transform.position;
+        directionToPlayer.Normalize();
+        return Vector3.Dot(Vector3.up, directionToPlayer) < minDotCameraVsWorld;
     }
 }
