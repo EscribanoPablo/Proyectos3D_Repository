@@ -122,6 +122,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
+        GameObject.FindGameObjectWithTag("PlayerLight").GetComponent<FollowingPlayerAsLight>().ResetLight();
         hudController.RestartLifes();
         currentLifes = startLifes;
         GameController.GetGameController().RestartLevelElment();

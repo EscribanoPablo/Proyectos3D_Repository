@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class FollowingPlayerAsLight : MonoBehaviour
@@ -42,5 +43,11 @@ public class FollowingPlayerAsLight : MonoBehaviour
         //Vector3 directionToLook = player.transform.position - transform.position;
         //transform.forward = Vector3.Lerp(transform.forward.normalized, directionToLook.normalized, Time.deltaTime * cameraSpeed);
         //transform.LookAt(player.transform);
+    }
+
+    internal void ResetLight()
+    {
+        Vector3 abovePlayerPosition = new Vector3(player.transform.position.x, player.transform.position.y + heightOffset, player.transform.position.z);
+        transform.position = abovePlayerPosition;
     }
 }
