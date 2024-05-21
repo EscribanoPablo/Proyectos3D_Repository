@@ -1,5 +1,58 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1284908871634544723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8806518582474491540}
+  - component: {fileID: 7943491995267916359}
+  m_Layer: 0
+  m_Name: Collider2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8806518582474491540
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284908871634544723}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.000000029802322, z: 0.00000008940697, w: 1}
+  m_LocalPosition: {x: 13.7, y: -15.21, z: 23.46}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 7568874030695019754}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7943491995267916359
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1284908871634544723}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 14.490275, y: 11.19937, z: 1.3305557}
+  m_Center: {x: 3.066726, y: -2.0978384, z: -0.6452939}
 --- !u!1 &5522508467417650188
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,6 +128,8 @@ Transform:
   - {fileID: 1552147106806096168}
   - {fileID: 1085389712911091472}
   - {fileID: 7058407244935292265}
+  - {fileID: 8806518582474491540}
+  - {fileID: 3931393841531481666}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &2166393185123291301
@@ -98,6 +153,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 27.745007, y: 30.374428, z: 3.3085632}
   m_Center: {x: 23.230368, y: -17.200796, z: 23.428328}
+--- !u!1 &8451673131809015398
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3931393841531481666}
+  - component: {fileID: 3690398757503520168}
+  m_Layer: 0
+  m_Name: Collider2 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3931393841531481666
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8451673131809015398}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.000000029802322, z: 0.00000008940697, w: 1}
+  m_LocalPosition: {x: 13.7, y: -4.15, z: 23.46}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 7568874030695019754}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3690398757503520168
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8451673131809015398}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 21.081797, y: 13.8259535, z: 1.3305557}
+  m_Center: {x: 6.362485, y: -3.4111304, z: -0.64529413}
 --- !u!1001 &210509028064354030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -336,17 +444,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 5ba4e686162a0f04689d912820848aa8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 25.366539
+      value: 25.36654
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5ba4e686162a0f04689d912820848aa8,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.0233755
+      value: -6.8563886
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5ba4e686162a0f04689d912820848aa8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.272402
+      value: 22.253218
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5ba4e686162a0f04689d912820848aa8,
         type: 3}
