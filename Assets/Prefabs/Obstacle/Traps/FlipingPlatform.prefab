@@ -34,7 +34,7 @@ Transform:
   - {fileID: 3167671381044414098}
   - {fileID: 6802565545641622853}
   m_Father: {fileID: 215698282080703326}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!111 &8988804089933810141
 Animation:
   m_ObjectHideFlags: 0
@@ -77,6 +77,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 215698282080703326}
+  - component: {fileID: 8549449693120002212}
   m_Layer: 7
   m_Name: FlipingPlatform
   m_TagString: Untagged
@@ -101,6 +102,27 @@ Transform:
   - {fileID: 5605730492620405546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8549449693120002212
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3737338716803871218}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7798619, y: 0.79800177, z: 6.0989904}
+  m_Center: {x: 0.28257298, y: 0.08914161, z: -0.049597263}
 --- !u!1 &6972671798060125802
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,8 +228,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.1061242, y: 1, z: 1.1228129}
-  m_Center: {x: -0.053061675, y: 0, z: -0.005113697}
+  m_Size: {x: 1.1061242, y: 1.8240343, z: 1.1228129}
+  m_Center: {x: -0.053061675, y: -0.08156981, z: -0.005113697}
 --- !u!54 &2661436688593036449
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -459,12 +481,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 20d757125210b95418492e53bba0a028,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 104.9899
+      value: 112.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 20d757125210b95418492e53bba0a028,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 104.9899
+      value: 109.9
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 20d757125210b95418492e53bba0a028,
         type: 3}
