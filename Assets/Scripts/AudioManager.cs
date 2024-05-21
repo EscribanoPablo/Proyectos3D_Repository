@@ -54,6 +54,11 @@ public class AudioManager : MonoBehaviour
         playSFX(sfxClip);
     }
 
+    public void SetPlaySfx(AudioClip sfxClip, float audioVolume)
+    {
+        playSFX(sfxClip, audioVolume);
+    }
+
     private void Start()
     {
         audioMusic.clip = backgroundLevelMusic;
@@ -66,8 +71,15 @@ public class AudioManager : MonoBehaviour
     //    audioMusic.Play();
     //}
 
+    private void playSFX(AudioClip sfxClip, float clipVolume)
+    {
+        audioSFX.volume = clipVolume;
+        audioSFX.PlayOneShot(sfxClip);
+    }
+
     private void playSFX(AudioClip sfxClip)
     {
+        audioSFX.volume = 1.0f;
         audioSFX.PlayOneShot(sfxClip);
     }
 }

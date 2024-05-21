@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canWall = true;
     private float wallTimer;
 
-    
+    private AudioManager audioManager;
 
     public bool GetIsJumping()
     {
@@ -67,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         rigidBody = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
         currentJumps = 0;
@@ -182,16 +183,19 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (IsGrounded())
                 {
+                    audioManager.SetPlaySfx(audioManager.JumpSound[Random.Range(0, audioManager.JumpSound.Count)]);
                     Jump(jumpForce);
                     isJumping = true;
                 }
                 else if (onWall)
                 {
+                    audioManager.SetPlaySfx(audioManager.WallJumpSound);
                     WallJump();
                     isJumping = true;
                 }
                 else if (doubleJump)
                 {
+                    audioManager.SetPlaySfx(audioManager.DoubleJumpSound, 0.5f);
                     Jump(doubleJumpForce);
                     CanonJump();
                     canonShoot.Shoot();
