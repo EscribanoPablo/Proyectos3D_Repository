@@ -214,12 +214,12 @@ PrefabInstance:
     - target: {fileID: 3252942764950904832, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000016923465
+      value: -0.00000001692347
       objectReference: {fileID: 0}
     - target: {fileID: 3252942764950904832, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000003107384
+      value: 0.0000000031073848
       objectReference: {fileID: 0}
     - target: {fileID: 4508683795819788619, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
@@ -239,17 +239,17 @@ PrefabInstance:
     - target: {fileID: 9132840212407591407, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.19845542
+      value: 0.1984554
       objectReference: {fileID: 0}
     - target: {fileID: 9132840212407591407, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000025591165
+      value: 0.0000000038741925
       objectReference: {fileID: 0}
     - target: {fileID: 9132840212407591407, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000005181771
+      value: -7.8445667e-10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -405,6 +405,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 481951743}
+  - component: {fileID: 481951744}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -429,6 +430,68 @@ Transform:
   - {fileID: 1330292821}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &481951744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 481951742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe99d651316d0ee419c3f6c0820b3d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMusic: {fileID: 487968913}
+  audioSFX: {fileID: 1330292822}
+  menuMusic: {fileID: 8300000, guid: f2c6ea91140ed1845b0c844497db4784, type: 3}
+  backgroundLevelMusic: {fileID: 8300000, guid: f2c6ea91140ed1845b0c844497db4784,
+    type: 3}
+  ambientSounds:
+  - {fileID: 8300000, guid: e18d0fbb787b96645beb8488f6c578d6, type: 3}
+  - {fileID: 8300000, guid: bdaf0d4a5f0caf84886f15aef390df39, type: 3}
+  JumpSound:
+  - {fileID: 8300000, guid: bc0e5826269af6849bd311320517a8bf, type: 3}
+  - {fileID: 8300000, guid: 041cb1dd15e1e364e9399387989bf40c, type: 3}
+  DoubleJumpSound: {fileID: 8300000, guid: a3efbb57550999f4196789bc42da85d1, type: 3}
+  DashSound: {fileID: 8300000, guid: a3efbb57550999f4196789bc42da85d1, type: 3}
+  WallJumpSound: {fileID: 8300000, guid: 3438ac92bdbd0b340991716e83769c99, type: 3}
+  ShootSound:
+  - {fileID: 8300000, guid: a3efbb57550999f4196789bc42da85d1, type: 3}
+  FallingToGroundSound: {fileID: 0}
+  RecieveDamageSound:
+  - {fileID: 8300000, guid: f9c5848b19c55474793266bea742d732, type: 3}
+  - {fileID: 8300000, guid: 172c0f0d4fa7a2646b1856db3dc633dd, type: 3}
+  - {fileID: 8300000, guid: 4dfdb3bb2ae88434fa79a0960af1bee6, type: 3}
+  - {fileID: 8300000, guid: 6505a440af3f73b498317a7aa884eed6, type: 3}
+  - {fileID: 8300000, guid: 462c7451f7052d44492984957fcaa8cc, type: 3}
+  - {fileID: 8300000, guid: 3b6e868e49c6e3748972d59eaf844603, type: 3}
+  - {fileID: 8300000, guid: a00069f8f009cf4418b53428d782587e, type: 3}
+  DieSound: {fileID: 8300000, guid: 5a85e8966dc5eb048a5f15aab39f2754, type: 3}
+  RespawnSound: {fileID: 0}
+  GrabCollectibleSound:
+  - {fileID: 8300000, guid: 5137dfa193792a8479f23a0a10eb73f2, type: 3}
+  ActivateCheckPointSound: {fileID: 8300000, guid: e245a7ed3ba1c544bb08abb0e33b6ea8,
+    type: 3}
+  rotatorySpikesSound: {fileID: 0}
+  groundSpikesSound: {fileID: 8300000, guid: 23c5423f2a64d3e41ae355baf20e42bf, type: 3}
+  flipPlatformSound: {fileID: 8300000, guid: e820912a19f7d7147aecd7980aac8e1d, type: 3}
+  fallPlatformSound: {fileID: 8300000, guid: e57291f047c7daf46879a4c70c5d6b3c, type: 3}
+  breakingBoxSound: {fileID: 8300000, guid: 9bac45b645cdbae45a16626c5cd92618, type: 3}
+  breakingGlassSound: {fileID: 0}
+  fireCircleSound: {fileID: 8300000, guid: f251873b41d1c674f8c5e79b67c693fb, type: 3}
+  punchTrapSound: {fileID: 8300000, guid: 2f046a2a51271364cb12b21e5cbe75ee, type: 3}
+  buttonSpinSound: {fileID: 0}
+  doorOpenSound: {fileID: 8300000, guid: 620ca3a8f601b2340ba4c9c94a62e75c, type: 3}
+  bombMovingSound: {fileID: 8300000, guid: 713da9b867d0b494784173de03bf52eb, type: 3}
+  bombAttackDeathSound: {fileID: 8300000, guid: 41940e57bc42671469f7f0ba06527b28,
+    type: 3}
+  levelEndedSound: {fileID: 0}
+  lightTurningOnSound: {fileID: 0}
+  transitionsSound: {fileID: 0}
+  movingInButtonsSound: {fileID: 0}
+  pressingButtonSounds: {fileID: 8300000, guid: 8a84b4626e8b0c44c8b0940306fdee8b,
+    type: 3}
 --- !u!1 &487968911
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +539,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -804,7 +867,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088802173}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1848871, y: 0.000000018611999, z: -0.000000003501485, w: 0.9827598}
+  m_LocalRotation: {x: 0.18488708, y: -0.000000018611999, z: 0.0000000035014849, w: 0.9827598}
   m_LocalPosition: {x: 3.45, y: 5.303128, z: -8.907366}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -923,7 +986,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 6838652921303314263, guid: ac83366066f7a8c42be1d8738c545f36,
     type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

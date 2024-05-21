@@ -20,8 +20,11 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField]
     private float noInputsTime = 0.3f;
 
+    private AudioManager audioManager;
+
     private void Start()
     {
+        audioManager = FindObjectOfType<AudioManager>();
         currentLifes = startLifes;
         playerRigidBody = GetComponent<Rigidbody>();
         hudController = FindObjectOfType<HudController>();
@@ -49,12 +52,12 @@ public class PlayerHealth : MonoBehaviour
         {
             if (!gotHit)
             {
-                playerInputs.enabled = false;
-                AddKnockback(pointOfImpact);
                 currentLifes--;
                 hudController.LifeLost(currentLifes);
                 CheckHealth();
                 gotHit = true;
+                playerInputs.enabled = false;
+                AddKnockback(pointOfImpact);
 
                 //Debug.Log("Player current health = " + currentLifes);
             }
@@ -91,12 +94,18 @@ public class PlayerHealth : MonoBehaviour
     {
         if (currentLifes <= 0)
         {
+            audioManager.SetPlaySfx(audioManager.DieSound);
             currentLifes = 0;
             Die();
         }
         else if (currentLifes > startLifes)
         {
             currentLifes = startLifes;
+            audioManager.SetPlaySfx(audioManager.RecieveDamageSound[Random.Range(0, audioManager.RecieveDamageSound.Count)]);
+        }
+        else
+        {
+            audioManager.SetPlaySfx(audioManager.RecieveDamageSound[Random.Range(0, audioManager.RecieveDamageSound.Count)]);
         }
     }
 
