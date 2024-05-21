@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,7 +33,12 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
         rigidBody.velocity = Vector3.zero;
         transform.position = startPosition;
         transform.rotation = startRotation;
-        Debug.Log(rigidBody.velocity);
+        ResetLight();
+    }
+
+    private void ResetLight()
+    {
+        GameObject.FindGameObjectWithTag("PlayerLight").GetComponent<FollowingPlayerAsLight>().ResetLight();
     }
 
     public void SetRespawnPos(Transform transform)

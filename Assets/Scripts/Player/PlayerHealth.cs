@@ -126,7 +126,6 @@ public class PlayerHealth : MonoBehaviour
         currentLifes = startLifes;
         GameController.GetGameController().RestartLevelElment();
         playerRigidBody.velocity = Vector3.zero;
-        GameObject.FindGameObjectWithTag("PlayerLight").GetComponent<FollowingPlayerAsLight>().ResetLight();
     }
 }
 
