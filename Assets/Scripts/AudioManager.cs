@@ -14,7 +14,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip backgroundLevelMusic;
     
     [Header("AudioClips_Player")]
-    public List<AudioClip> ambientSounds;
+    public List<AudioClip> runSounds;
     public List<AudioClip> JumpSound;
     public AudioClip DoubleJumpSound;
     public AudioClip DashSound;
@@ -26,6 +26,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip RespawnSound;
 
     [Header("AudioClips_Environment/Obstacles")]
+    public List<AudioClip> ambientSounds;
     public List<AudioClip> GrabCollectibleSound;
     public AudioClip ActivateCheckPointSound;
     public AudioClip rotatorySpikesSound;
@@ -73,13 +74,11 @@ public class AudioManager : MonoBehaviour
 
     private void playSFX(AudioClip sfxClip, float clipVolume)
     {
-        audioSFX.volume = clipVolume;
-        audioSFX.PlayOneShot(sfxClip);
+        audioSFX.PlayOneShot(sfxClip, clipVolume);
     }
 
     private void playSFX(AudioClip sfxClip)
     {
-        audioSFX.volume = 1.0f;
-        audioSFX.PlayOneShot(sfxClip);
+        audioSFX.PlayOneShot(sfxClip, 1.0f);
     }
 }

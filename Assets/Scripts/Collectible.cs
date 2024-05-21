@@ -12,6 +12,7 @@ public class Collectible : MonoBehaviour
             //añadir a la UI y al game controller
             gameObject.SetActive(false);
             FindObjectOfType<HudController>().CollectibleTaken();
+            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().GrabCollectibleSound[Random.Range(0, FindObjectOfType<AudioManager>().GrabCollectibleSound.Count)]);
         }
     }
 }

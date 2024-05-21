@@ -22,7 +22,14 @@ public class FlipingPlatform : Traps
     void Update()
     {
         if (player.GetIsJumping())
+        {
+            //if (!flipPlatAnimations.isPlaying)
+            //{
+            //    FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().flipPlatformSound);
+            //}
+            //mirar de poner que se active al empezar la animación
             FlipPlatform();
+        }
     }
 
     void FlipPlatform()

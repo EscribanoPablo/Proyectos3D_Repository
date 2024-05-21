@@ -160,7 +160,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, verticalSpeed, rigidBody.velocity.z);
-
     }
 
     private void SpeedControl()
@@ -227,6 +226,7 @@ public class PlayerMovement : MonoBehaviour
             canWall = true; ///////////////////////GUARRADA
             return true;
         }
+
         return false;
     }
 
