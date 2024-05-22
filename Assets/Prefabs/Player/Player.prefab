@@ -872,6 +872,7 @@ MonoBehaviour:
     type: 3}
   spawnJumpCanonParticlesPos: {fileID: 6870223169479544195}
   canonShoot: {fileID: 5741698530815852904}
+  dustParticles: {fileID: 0}
   speedMovement: 40
   maxVelocity: 6
   rotationTime: 0.2
@@ -969,7 +970,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 8311382077795666320, guid: b243c7373ae674443a71c737cfd223f7,
     type: 3}
   canonParticles: {fileID: 3138042963513272267}
-  fireRate: 1
+  fireRate: 0.5
   nextTimeFire: 0.2
 --- !u!114 &5280560021130776560
 MonoBehaviour:
@@ -2004,7 +2005,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 0646605f9209ed148ac3db73d2e2c467, type: 2}
+      objectReference: {fileID: 2100000, guid: 0fd7231a3879a9e458ddaf6b2fd57048, type: 2}
     - target: {fileID: -2495090521982266096, guid: 417a777a63519e3458e96ee14cbde372,
         type: 3}
       propertyPath: m_CastShadows
@@ -2014,7 +2015,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e79d8206a47e7ca45a4ba1f920b182cb, type: 2}
+      objectReference: {fileID: 2100000, guid: f1c4712b483fcd94f9b853a690672d50, type: 2}
     - target: {fileID: 919132149155446097, guid: 417a777a63519e3458e96ee14cbde372,
         type: 3}
       propertyPath: m_Name
