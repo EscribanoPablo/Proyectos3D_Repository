@@ -48,12 +48,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioMusic: {fileID: 6137671414989037671}
   audioSFX: {fileID: 5762850803876662203}
+  maxDistanceToHearSounds: 20
   menuMusic: {fileID: 8300000, guid: f2c6ea91140ed1845b0c844497db4784, type: 3}
   backgroundLevelMusic: {fileID: 8300000, guid: f2c6ea91140ed1845b0c844497db4784,
     type: 3}
-  ambientSounds:
-  - {fileID: 8300000, guid: e18d0fbb787b96645beb8488f6c578d6, type: 3}
-  - {fileID: 8300000, guid: bdaf0d4a5f0caf84886f15aef390df39, type: 3}
+  runSounds:
+  - {fileID: 8300000, guid: c6affac084a0974488746b2a7a84274d, type: 3}
   JumpSound:
   - {fileID: 8300000, guid: bc0e5826269af6849bd311320517a8bf, type: 3}
   - {fileID: 8300000, guid: 041cb1dd15e1e364e9399387989bf40c, type: 3}
@@ -73,16 +73,19 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a00069f8f009cf4418b53428d782587e, type: 3}
   DieSound: {fileID: 8300000, guid: 5a85e8966dc5eb048a5f15aab39f2754, type: 3}
   RespawnSound: {fileID: 0}
+  ambientSounds:
+  - {fileID: 8300000, guid: e18d0fbb787b96645beb8488f6c578d6, type: 3}
+  - {fileID: 8300000, guid: bdaf0d4a5f0caf84886f15aef390df39, type: 3}
   GrabCollectibleSound:
   - {fileID: 8300000, guid: 5137dfa193792a8479f23a0a10eb73f2, type: 3}
-  ActivateCheckPointSound: {fileID: 8300000, guid: e245a7ed3ba1c544bb08abb0e33b6ea8,
+  ActivateCheckPointSound: {fileID: 8300000, guid: f76473f02c8a28044808006b04dc8c00,
     type: 3}
   rotatorySpikesSound: {fileID: 8300000, guid: eb268555487a9a14ebe1c17bc9432cd4, type: 3}
   groundSpikesSound: {fileID: 8300000, guid: 23c5423f2a64d3e41ae355baf20e42bf, type: 3}
   flipPlatformSound: {fileID: 8300000, guid: e820912a19f7d7147aecd7980aac8e1d, type: 3}
   fallPlatformSound: {fileID: 8300000, guid: e57291f047c7daf46879a4c70c5d6b3c, type: 3}
   breakingBoxSound: {fileID: 8300000, guid: 9bac45b645cdbae45a16626c5cd92618, type: 3}
-  breakingGlassSound: {fileID: 0}
+  breakingGlassSound: {fileID: 8300000, guid: 6983ae63f44779e4c99e5c8d3f0285e5, type: 3}
   fireCircleSound: {fileID: 8300000, guid: f251873b41d1c674f8c5e79b67c693fb, type: 3}
   punchTrapSound: {fileID: 8300000, guid: 2f046a2a51271364cb12b21e5cbe75ee, type: 3}
   buttonSpinSound: {fileID: 8300000, guid: 87c13001884f1d34b8e990f97246293a, type: 3}

@@ -70,6 +70,7 @@ public class FallingPlatform : Traps
 
     private void ObjectDisappear()
     {
+        FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().fallPlatformSound, transform.position);
         timerVanished = 0;
         playerTouched = false;
         renderer.enabled = false;

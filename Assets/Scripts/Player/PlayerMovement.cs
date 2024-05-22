@@ -182,19 +182,19 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (IsGrounded())
                 {
-                    audioManager.SetPlaySfx(audioManager.JumpSound[Random.Range(0, audioManager.JumpSound.Count)]);
+                    audioManager.SetPlaySfx(audioManager.JumpSound[Random.Range(0, audioManager.JumpSound.Count)], transform.position);
                     Jump(jumpForce);
                     isJumping = true;
                 }
                 else if (onWall)
                 {
-                    audioManager.SetPlaySfx(audioManager.WallJumpSound);
+                    audioManager.SetPlaySfx(audioManager.WallJumpSound, transform.position);
                     WallJump();
                     isJumping = true;
                 }
                 else if (doubleJump)
                 {
-                    audioManager.SetPlaySfx(audioManager.DoubleJumpSound, 0.5f);
+                    audioManager.SetPlaySfx(audioManager.DoubleJumpSound, 0.5f, transform.position);
                     Jump(doubleJumpForce);
                     CanonJump();
                     canonShoot.Shoot();

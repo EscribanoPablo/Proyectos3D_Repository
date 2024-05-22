@@ -37,7 +37,7 @@ public class CanonShoot : MonoBehaviour
         {
             if (/*Input.GetMouseButton(shootButton)*/playerInput.actions["Shoot"].WasPressedThisFrame() && Time.time >= nextTimeFire)
             {
-                audioManager.SetPlaySfx(audioManager.ShootSound[Random.Range(0, audioManager.ShootSound.Count)], 0.5f);
+                audioManager.SetPlaySfx(audioManager.ShootSound[Random.Range(0, audioManager.ShootSound.Count)], 0.5f, transform.position);
                 nextTimeFire = Time.time + fireRate;
                 canonForward = transform.forward;
 
@@ -47,7 +47,7 @@ public class CanonShoot : MonoBehaviour
             }
             else if (/*Input.GetKeyDown(KeyCode.LeftShift)*/playerInput.actions["Dash"].WasPressedThisFrame()) /////////////////////// ARREGLAR
             {
-                audioManager.SetPlaySfx(audioManager.DashSound, 0.5f);
+                audioManager.SetPlaySfx(audioManager.DashSound, 0.5f, transform.position);
                 canonForward = -transform.forward;
                 Debug.Log(canonForward);
             }

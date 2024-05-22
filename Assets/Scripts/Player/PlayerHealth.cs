@@ -94,18 +94,18 @@ public class PlayerHealth : MonoBehaviour
     {
         if (currentLifes <= 0)
         {
-            audioManager.SetPlaySfx(audioManager.DieSound);
+            audioManager.SetPlaySfx(audioManager.DieSound, transform.position);
             currentLifes = 0;
             Die();
         }
         else if (currentLifes > startLifes)
         {
             currentLifes = startLifes;
-            audioManager.SetPlaySfx(audioManager.RecieveDamageSound[Random.Range(0, audioManager.RecieveDamageSound.Count)]);
+            audioManager.SetPlaySfx(audioManager.RecieveDamageSound[Random.Range(0, audioManager.RecieveDamageSound.Count)], transform.position);
         }
         else
         {
-            audioManager.SetPlaySfx(audioManager.RecieveDamageSound[Random.Range(0, audioManager.RecieveDamageSound.Count)]);
+            audioManager.SetPlaySfx(audioManager.RecieveDamageSound[Random.Range(0, audioManager.RecieveDamageSound.Count)], transform.position);
         }
     }
 

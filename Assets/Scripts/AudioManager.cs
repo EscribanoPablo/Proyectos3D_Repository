@@ -9,6 +9,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     AudioSource audioSFX;
 
+    [SerializeField]
+    private float maxDistanceToHearSounds = 20.0f;
+
     [Header("AudioClips_Music")]
     public AudioClip menuMusic;
     public AudioClip backgroundLevelMusic;
@@ -50,14 +53,16 @@ public class AudioManager : MonoBehaviour
     public AudioClip pressingButtonSounds;
 
 
-    public void SetPlaySfx(AudioClip sfxClip)
+    public void SetPlaySfx(AudioClip sfxClip, Vector3 position)
     {
-        playSFX(sfxClip);
+        if ((GameObject.FindGameObjectWithTag("Player").transform.position - position).magnitude <= maxDistanceToHearSounds)
+            playSFX(sfxClip);
     }
 
-    public void SetPlaySfx(AudioClip sfxClip, float audioVolume)
+    public void SetPlaySfx(AudioClip sfxClip, float audioVolume, Vector3 position)
     {
-        playSFX(sfxClip, audioVolume);
+        if((GameObject.FindGameObjectWithTag("Player").transform.position - position).magnitude <= maxDistanceToHearSounds)
+            playSFX(sfxClip, audioVolume);
     }
 
     private void Start()

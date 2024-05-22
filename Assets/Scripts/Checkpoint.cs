@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
+    private bool checkpointGrabbed = false;
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.tag == "Player")
+        if(other.transform.tag == "Player" && !checkpointGrabbed)
         {
-            Debug.Log("Check Point");
             other.GetComponent<PlayerController>().SetRespawnPos(gameObject.transform);
-            this.enabled = false;
+            checkpointGrabbed = true;
+            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ActivateCheckPointSound, transform.position);
         }
     }
 }
