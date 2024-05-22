@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FollowingPlayerAsLight : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class FollowingPlayerAsLight : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+    }
+
+    private void OnEnable()
+    {
+        FindObjectOfType<PlayerInput>().enabled = true;
     }
 
     // Update is called once per frame
