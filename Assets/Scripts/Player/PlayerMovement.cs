@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Camera camera;
     [SerializeField] Transform groundChecker;
     [SerializeField] LayerMask whatIsGround;
+    [SerializeField] LayerMask whatIsWall;
     [SerializeField] GameObject armCanon;
     [SerializeField] GameObject armCanonJump;
     [SerializeField] GameObject canonJump;
@@ -354,7 +355,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool HeadOnWall()
     {
-        return Physics.Raycast(transform.position, transform.forward, wallDetectionDistance, whatIsGround);
+        return Physics.Raycast(transform.position, transform.forward, wallDetectionDistance, whatIsWall);
     }
 
     private void SetOnWall()

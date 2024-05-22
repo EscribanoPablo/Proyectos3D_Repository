@@ -57,7 +57,7 @@ public class PlayerHealth : MonoBehaviour
                 CheckHealth();
                 gotHit = true;
                 playerInputs.enabled = false;
-                AddKnockback(pointOfImpact);
+                AddKnockback(pointOfImpact, knockbackImpulse);
 
                 //Debug.Log("Player current health = " + currentLifes);
             }
@@ -81,13 +81,14 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void AddKnockback(Vector3 pointOfImpact)
+    public void AddKnockback(Vector3 pointOfImpact, float knockbackImpulseAded)
     {
         Vector3 knockbackDirection = transform.position - pointOfImpact;
+        float impulse = knockbackImpulse + knockbackImpulseAded;
         //if (knockbackDirection.y < 0)
             knockbackDirection.y = 0.5f;
         knockbackDirection.Normalize();
-        playerRigidBody.AddForce(knockbackDirection.normalized * knockbackImpulse, ForceMode.Impulse);
+        playerRigidBody.AddForce(knockbackDirection.normalized * impulse, ForceMode.Impulse);
     }
 
     private void CheckHealth()
