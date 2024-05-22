@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using Cinemachine;
+﻿using Cinemachine;
+using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
@@ -31,6 +31,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+
         if (CameraTooInclined())
         {
             virtualCamera.m_LookAt = null;
@@ -39,6 +40,7 @@ public class CameraController : MonoBehaviour
         {
             virtualCamera.m_LookAt = player.transform;
         }
+
 
         //Debug.Log(transform.forward.normalized);
     }

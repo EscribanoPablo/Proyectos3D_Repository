@@ -227,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
         if (colliders.Length > 0)
         {
             doubleJump = true;
-            canWall = true; ///////////////////////GUARRADA
+            canWall = true; 
             return true;
         }
 

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class CircusMasterMovement : MonoBehaviour
 {
@@ -12,12 +13,15 @@ public class CircusMasterMovement : MonoBehaviour
     [SerializeField] float rotateSpeed = 1;
     [SerializeField] float snapRotationFactor = 2;
     [SerializeField] List<GameObject> lights;
+    [SerializeField] List<GameObject> introCameras;
     private int currentLight;
+    private int currentCam;
     private float rotationDestination;
 
     private bool introducingScenario;
     private bool moving;
-    private const float ROTATIONFORWARD_OFFSET = 180;
+
+    private GameObject mainCamera;
 
 
     // Start is called before the first frame update
@@ -28,6 +32,15 @@ public class CircusMasterMovement : MonoBehaviour
         animationCircusMaster.Play(idleAnimation.name);
         introducingScenario = true;
         currentLight = 0;
+        currentCam = 0;
+
+        mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        foreach (GameObject cam in introCameras)
+        {
+            cam.SetActive(false);
+        }
+        introCameras[currentCam].SetActive(true);
 
         foreach (GameObject light in lights)
         {
@@ -76,7 +89,6 @@ public class CircusMasterMovement : MonoBehaviour
                 animationCircusMaster.CrossFade(encenderAnimation.name);
             }
         }
-
     }
 
     private void SetRotationDestination()
@@ -93,7 +105,7 @@ public class CircusMasterMovement : MonoBehaviour
         {
             rotationDestination += 360;
         }
-        Debug.Log(rotationDestination);
+
     }
 
     private void EncenderLuz()
@@ -104,6 +116,7 @@ public class CircusMasterMovement : MonoBehaviour
     private void SeguirAnimacion()
     {
         currentLight++;
+        currentCam++;
         if (currentLight > lights.Count - 1)
         {
             introducingScenario = false;
@@ -113,8 +126,18 @@ public class CircusMasterMovement : MonoBehaviour
         {
             moving = true;
             SetRotationDestination();
+            if (currentLight == lights.Count - 1)
+            {
+                mainCamera.SetActive(true);
+            }
+            else
+            {
+                introCameras[currentCam].SetActive(true);
+            }
+            introCameras[currentCam - 1].SetActive(false);
         }
         animationCircusMaster.CrossFadeQueued(idleAnimation.name);
     }
+
 }
 
