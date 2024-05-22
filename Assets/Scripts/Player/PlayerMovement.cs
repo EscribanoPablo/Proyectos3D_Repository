@@ -125,6 +125,7 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Movement();
+        UpdateDustParticles();
     }
 
     private void Movement()
@@ -147,7 +148,6 @@ public class PlayerMovement : MonoBehaviour
         {
             if (direction.magnitude >= 0.1f)
             {
-                //PlayParticles(dustParticles);
                 //Look Where You Go
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationTime);
@@ -161,10 +161,7 @@ public class PlayerMovement : MonoBehaviour
 
                 rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
             }
-            //else
-            //{
-            //    StopParticles(dustParticles);
-            //}
+            
         }
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, verticalSpeed, rigidBody.velocity.z);
     }
@@ -263,6 +260,7 @@ public class PlayerMovement : MonoBehaviour
         Destroy(_particles, 3);
     }
 
+
     private void PlayParticles(GameObject particles)
     {
         ParticleSystem particleSystem = particles.GetComponent<ParticleSystem>();
@@ -275,6 +273,18 @@ public class PlayerMovement : MonoBehaviour
         ParticleSystem particleSystem = particles.GetComponent<ParticleSystem>();
         ParticleSystem.EmissionModule emission = particleSystem.emission;
         emission.enabled = false;
+    }
+
+    private void UpdateDustParticles()
+    {
+        if (rigidBody.velocity.x != 0 && IsGrounded())
+        {
+            PlayParticles(dustParticles);
+        }
+        else
+        {
+            StopParticles(dustParticles);
+        }
     }
 
     IEnumerator HoldCanonAgain(float seconds)
