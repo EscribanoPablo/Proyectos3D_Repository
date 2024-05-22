@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Knockback : Traps
 {
-
+    [SerializeField] float knockBackImpulse; 
     PlayerMovement player;
 
     private void Start()
@@ -17,7 +17,7 @@ public class Knockback : Traps
         if (collision.gameObject.tag == PLAYER_TAG)
         {
             player.GetComponent<PlayerMovement>().playerControllerEnabled = false;
-            collision.gameObject.GetComponent<PlayerHealth>().AddKnockback(transform.position);
+            collision.gameObject.GetComponent<PlayerHealth>().AddKnockback(transform.position, knockBackImpulse);
             StartCoroutine(PunchPlayer());
         }
     }
