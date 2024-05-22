@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CircusMasterMovement : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class CircusMasterMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        FindObjectOfType<PlayerInput>().enabled = false;
         animationCircusMaster = GetComponent<Animation>();
         animationCircusMaster.Play(idleAnimation.name);
         introducingScenario = true;
