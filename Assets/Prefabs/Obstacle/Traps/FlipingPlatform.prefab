@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5605730492620405546}
   - component: {fileID: 8988804089933810141}
   - component: {fileID: 7007059027156360105}
+  - component: {fileID: 3795354649276498630}
   m_Layer: 7
   m_Name: PlaformPivot
   m_TagString: Untagged
@@ -34,7 +35,7 @@ Transform:
   - {fileID: 3167671381044414098}
   - {fileID: 6802565545641622853}
   m_Father: {fileID: 215698282080703326}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!111 &8988804089933810141
 Animation:
   m_ObjectHideFlags: 0
@@ -68,6 +69,18 @@ MonoBehaviour:
   flipingAnimation: {fileID: 7400000, guid: 86dd998e786247c4692f6ac110beff04, type: 2}
   flipingAnimationInvested: {fileID: 7400000, guid: 3e26773f57001704f80c22f0f1324f4c,
     type: 2}
+--- !u!114 &3795354649276498630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331289999163407423}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43903f36d544fd544984e7c59adbdc69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3737338716803871218
 GameObject:
   m_ObjectHideFlags: 0

@@ -239,17 +239,17 @@ PrefabInstance:
     - target: {fileID: 9132840212407591407, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.1984554
+      value: 0.19845542
       objectReference: {fileID: 0}
     - target: {fileID: 9132840212407591407, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000038741925
+      value: -0.000000025591165
       objectReference: {fileID: 0}
     - target: {fileID: 9132840212407591407, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -7.8445667e-10
+      value: 0.000000005181771
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -477,6 +477,74 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+--- !u!1001 &798682294
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2917991401332889994, guid: a0014bd0d6e21f04b96f5dbc906bbcd0,
+        type: 3}
+      propertyPath: m_Name
+      value: PlacaPresionPinchos
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275680166931285098, guid: a0014bd0d6e21f04b96f5dbc906bbcd0,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.455705
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275680166931285098, guid: a0014bd0d6e21f04b96f5dbc906bbcd0,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275680166931285098, guid: a0014bd0d6e21f04b96f5dbc906bbcd0,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -12.64862
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275680166931285098, guid: a0014bd0d6e21f04b96f5dbc906bbcd0,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275680166931285098, guid: a0014bd0d6e21f04b96f5dbc906bbcd0,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275680166931285098, guid: a0014bd0d6e21f04b96f5dbc906bbcd0,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275680166931285098, guid: a0014bd0d6e21f04b96f5dbc906bbcd0,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275680166931285098, guid: a0014bd0d6e21f04b96f5dbc906bbcd0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275680166931285098, guid: a0014bd0d6e21f04b96f5dbc906bbcd0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5275680166931285098, guid: a0014bd0d6e21f04b96f5dbc906bbcd0,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a0014bd0d6e21f04b96f5dbc906bbcd0, type: 3}
 --- !u!1 &1088802173
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,7 +710,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088802173}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18488708, y: 0.00000003279361, z: -0.0000000061694783, w: 0.9827598}
+  m_LocalRotation: {x: 0.1848871, y: 0.000000018611999, z: -0.000000003501485, w: 0.9827598}
   m_LocalPosition: {x: 3.45, y: 5.303128, z: -8.907366}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1145,6 +1213,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlipingPlatform
       objectReference: {fileID: 0}
+    - target: {fileID: 5605730492620405546, guid: 0295a1ab6e6169f4792adad739f109d3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1564,4 +1637,5 @@ SceneRoots:
   - {fileID: 1329751774}
   - {fileID: 2553544250782530932}
   - {fileID: 1088802178}
+  - {fileID: 798682294}
   - {fileID: 8158059585003626805}
