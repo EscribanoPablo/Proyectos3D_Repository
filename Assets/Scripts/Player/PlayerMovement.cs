@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject canonParticles;
     [SerializeField] Transform spawnJumpCanonParticlesPos;
     [SerializeField] CanonShoot canonShoot;
+    [SerializeField] GameObject dustParticles;
 
     [Header("Inputs")]
     //[SerializeField] KeyCode m_JumpKey;
@@ -146,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (direction.magnitude >= 0.1f)
             {
+                PlayParticles(dustParticles);
                 //Look Where You Go
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationTime);
@@ -156,7 +158,12 @@ public class PlayerMovement : MonoBehaviour
 
                 //Apply to rb
                 //m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
+
                 rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
+            }
+            else
+            {
+                StopParticles(dustParticles);
             }
         }
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, verticalSpeed, rigidBody.velocity.z);
@@ -254,6 +261,20 @@ public class PlayerMovement : MonoBehaviour
         instantiateParticles.Play();
 
         Destroy(_particles, 3);
+    }
+
+    private void PlayParticles(GameObject particles)
+    {
+        ParticleSystem particleSystem = particles.GetComponent<ParticleSystem>();
+        ParticleSystem.EmissionModule emission = particleSystem.emission;
+        emission.enabled = true;
+    }
+
+    private void StopParticles(GameObject particles)
+    {
+        ParticleSystem particleSystem = particles.GetComponent<ParticleSystem>();
+        ParticleSystem.EmissionModule emission = particleSystem.emission;
+        emission.enabled = false;
     }
 
     IEnumerator HoldCanonAgain(float seconds)
