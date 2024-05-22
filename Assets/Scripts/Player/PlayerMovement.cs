@@ -147,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (direction.magnitude >= 0.1f)
             {
-                PlayParticles(dustParticles);
+                //PlayParticles(dustParticles);
                 //Look Where You Go
                 float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
                 float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationTime);
@@ -161,10 +161,10 @@ public class PlayerMovement : MonoBehaviour
 
                 rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
             }
-            else
-            {
-                StopParticles(dustParticles);
-            }
+            //else
+            //{
+            //    StopParticles(dustParticles);
+            //}
         }
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, verticalSpeed, rigidBody.velocity.z);
     }
