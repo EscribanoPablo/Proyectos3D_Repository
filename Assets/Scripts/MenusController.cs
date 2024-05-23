@@ -13,7 +13,7 @@ public class MenusController : MonoBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name == "AlphaLevel_Prove01")
+        if (SceneManager.GetActiveScene().name == "BetaLevel01")
         {
             playerInputs = FindObjectOfType<PlayerInput>();
         }
@@ -21,7 +21,7 @@ public class MenusController : MonoBehaviour
 
     private void Update()
     {
-        if(SceneManager.GetActiveScene().name == "AlphaLevel_Prove01")
+        if(SceneManager.GetActiveScene().name == "BetaLevel01")
         {
             if (playerInputs.actions["PauseGame"].WasPressedThisFrame())
             {
@@ -36,9 +36,9 @@ public class MenusController : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             Time.timeScale = 1;
-            SceneManager.LoadScene("AlphaLevel_Prove01");
+            SceneManager.LoadScene("BetaLevel01");
         }
-        else if(SceneManager.GetActiveScene().name == "AlphaLevel_Prove01")
+        else if(SceneManager.GetActiveScene().name == "BetaLevel01")
         {
             pauseMenu.SetActive(false);
             Time.timeScale = 1;

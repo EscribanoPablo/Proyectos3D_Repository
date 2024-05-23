@@ -22,6 +22,8 @@ public class CanonShoot : MonoBehaviour
     private Vector3 canonForward;
 
     private AudioManager audioManager;
+    [SerializeField]
+    private Animator playerAnimator;
 
     private void Start()
     {
@@ -44,12 +46,12 @@ public class CanonShoot : MonoBehaviour
                 canonParticles.SetActive(true);
                 canonParticles.GetComponent<ParticleSystem>().Play();
                 Shoot();
+                playerAnimator.SetTrigger("Shoot");
             }
             else if (/*Input.GetKeyDown(KeyCode.LeftShift)*/playerInput.actions["Dash"].WasPressedThisFrame()) /////////////////////// ARREGLAR
             {
                 audioManager.SetPlaySfx(audioManager.DashSound, 0.5f, transform.position);
                 canonForward = -transform.forward;
-                Debug.Log(canonForward);
             }
             else if (playerMovement.DoubleJump)
             {

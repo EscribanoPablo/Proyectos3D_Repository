@@ -62,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
     private float wallTimer;
 
     private AudioManager audioManager;
+    [SerializeField]
+    private Animator playerAnimator;
 
     public bool GetIsJumping()
     {
@@ -143,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
         float verticalSpeed = rigidBody.velocity.y;
         if (!onWall)
         {
-
+            playerAnimator.SetBool("OnWall", false);
             verticalSpeed += /*Physics.gravity.y*/ -gravity;
         }
         if (playerControllerEnabled)
@@ -171,6 +173,8 @@ public class PlayerMovement : MonoBehaviour
             
         }
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, verticalSpeed, rigidBody.velocity.z);
+
+        playerAnimator.SetFloat("Speed", direction.magnitude);
     }
 
     private void SpeedControl()
@@ -196,12 +200,14 @@ public class PlayerMovement : MonoBehaviour
                     audioManager.SetPlaySfx(audioManager.JumpSound[Random.Range(0, audioManager.JumpSound.Count)], transform.position);
                     Jump(jumpForce);
                     isJumping = true;
+                    playerAnimator.SetTrigger("Jumped");
                 }
                 else if (onWall)
                 {
                     audioManager.SetPlaySfx(audioManager.WallJumpSound, transform.position);
                     WallJump();
                     isJumping = true;
+                    playerAnimator.SetTrigger("WallJumped");
                 }
                 else if (doubleJump)
                 {
@@ -211,6 +217,7 @@ public class PlayerMovement : MonoBehaviour
                     canonShoot.Shoot();
                     doubleJump = false;
                     isJumping = true;
+                    playerAnimator.SetTrigger("DoubleJumped");
                 }
                 else
                     isJumping = false;
@@ -234,10 +241,11 @@ public class PlayerMovement : MonoBehaviour
         if (colliders.Length > 0)
         {
             doubleJump = true;
-            canWall = true; 
+            canWall = true;
+            playerAnimator.SetBool("OnGround", true);
             return true;
         }
-
+        playerAnimator.SetBool("OnGround", false);
         return false;
     }
 
@@ -326,6 +334,8 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator DoDash()
     {
+        playerAnimator.SetTrigger("Dashed");
+
         canDash = false;
         isDashing = true;
 
@@ -336,6 +346,8 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.AddForce(dashDirection, ForceMode.Impulse);
 
         SpawnCanonParticles(canonParticles, spawnJumpCanonParticlesPos.position);
+
+        yield return new WaitForSeconds(0.2f);
 
         canonShoot.Shoot();
 
@@ -365,6 +377,7 @@ public class PlayerMovement : MonoBehaviour
         ResetJumps();
         rigidBody.velocity = Vector3.zero;
         rigidBody.useGravity = false;
+        playerAnimator.SetBool("OnWall", true);
     }
 
     private void WallJump()

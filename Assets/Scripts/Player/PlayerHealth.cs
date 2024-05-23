@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,7 +22,8 @@ public class PlayerHealth : MonoBehaviour
     private float noInputsTime = 0.3f;
 
     private AudioManager audioManager;
-
+    [SerializeField]
+    private Animator playerAnimator;
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
@@ -97,16 +99,20 @@ public class PlayerHealth : MonoBehaviour
         {
             audioManager.SetPlaySfx(audioManager.DieSound, transform.position);
             currentLifes = 0;
-            Die();
+
+            StartCoroutine(StartDeath());
         }
         else if (currentLifes > startLifes)
         {
             currentLifes = startLifes;
+            
             audioManager.SetPlaySfx(audioManager.RecieveDamageSound[Random.Range(0, audioManager.RecieveDamageSound.Count)], transform.position);
+            playerAnimator.SetTrigger("Hit");
         }
         else
         {
             audioManager.SetPlaySfx(audioManager.RecieveDamageSound[Random.Range(0, audioManager.RecieveDamageSound.Count)], transform.position);
+            playerAnimator.SetTrigger("Hit");
         }
     }
 
@@ -119,6 +125,15 @@ public class PlayerHealth : MonoBehaviour
         //playerRigidBody.velocity = Vector3.zero;
         //hudController.RestartLifes();
         //currentHearts = startHearts;
+    }
+
+    IEnumerator StartDeath()
+    {
+        playerAnimator.SetTrigger("Death");
+        
+        yield return new WaitForSeconds(0.5f);
+
+        Die();
     }
 
     private void Die()
