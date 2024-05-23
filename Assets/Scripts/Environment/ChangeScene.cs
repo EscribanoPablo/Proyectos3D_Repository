@@ -40,7 +40,10 @@ public class ChangeScene : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         if (SceneManager.GetActiveScene().name == "BetaLevel01")
+        {
+            GameController.GetGameController().EmptyRestartList();
             SceneManager.LoadScene("BetaLevel02");
+        }
         else
             Application.Quit();
     }
