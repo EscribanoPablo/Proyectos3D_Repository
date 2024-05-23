@@ -119,6 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73e7fbdd05519c840bff1441d9b4286f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkpointAnimation: {fileID: 891036312619142113}
+  checkpointClip: {fileID: 7400000, guid: 1c57398a10882ce43b049244005e3cb4, type: 2}
 --- !u!1001 &2437749184492469065
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -127,6 +129,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9096695543117627208}
     m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 3bf6850503f1c964689dc2e96401be77,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.39
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3bf6850503f1c964689dc2e96401be77,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -204,7 +211,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3bf6850503f1c964689dc2e96401be77,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 975393504483484523}
+      addedObject: {fileID: 891036312619142113}
   m_SourcePrefab: {fileID: 100100000, guid: 3bf6850503f1c964689dc2e96401be77, type: 3}
 --- !u!4 &2764689598882159778 stripped
 Transform:
@@ -218,27 +225,22 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2437749184492469065}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &975393504483484523
-Animator:
-  serializedVersion: 5
+--- !u!111 &891036312619142113
+Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3248773350715475480}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 30601cf0560b85a4b9a4c659ca843d93, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: 1c57398a10882ce43b049244005e3cb4, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &3023093322934130846
 PrefabInstance:
   m_ObjectHideFlags: 0
