@@ -143,6 +143,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4210757856112458466, guid: 14acd0c3e8b9d9541a36361e9128a42a,
         type: 3}
+      propertyPath: enemyAnimator
+      value: 
+      objectReference: {fileID: 1373478557505525694}
+    - target: {fileID: 4210757856112458466, guid: 14acd0c3e8b9d9541a36361e9128a42a,
+        type: 3}
       propertyPath: patrolPoints.Array.data[0]
       value: 
       objectReference: {fileID: 3390984396957823370}
@@ -471,6 +476,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e6ea984efa08bd4bb55b85b36b37da0, type: 3}
+--- !u!95 &1373478557505525694 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 665491203450012769, guid: 8e6ea984efa08bd4bb55b85b36b37da0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1888098691646133215}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1521130892678799639 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1094370025697751752, guid: 8e6ea984efa08bd4bb55b85b36b37da0,

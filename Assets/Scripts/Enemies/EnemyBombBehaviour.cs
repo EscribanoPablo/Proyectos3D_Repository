@@ -17,6 +17,7 @@ public class EnemyBombBehaviour : MonoBehaviour
 
     private float idleTimer;
     [SerializeField] float timeOnIdle;
+    [SerializeField] Animator enemyAnimator;
 
     // Start is called before the first frame update
     void Start()
@@ -34,12 +35,15 @@ public class EnemyBombBehaviour : MonoBehaviour
         switch (currentState)
         {
             case EnemyState.IDLE:
+                enemyAnimator.SetTrigger("Idle");
                 OnState_Idle();
                 break;
             case EnemyState.PATROL:
+                enemyAnimator.SetTrigger("Walk");
                 OnState_Patrol();
                 break;
             case EnemyState.PURSUE:
+                enemyAnimator.SetTrigger("Walk");
                 OnState_Pursue();
                 break;
             default:
