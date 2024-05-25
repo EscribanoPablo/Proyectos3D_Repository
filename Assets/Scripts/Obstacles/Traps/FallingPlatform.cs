@@ -8,19 +8,18 @@ public class FallingPlatform : Traps
     [SerializeField] private float timeToReappear;
     private float timerVanished;
 
-    private Renderer renderer;
-    private Collider collider;
+    [SerializeField] private MeshRenderer platformRenderer;
+    [SerializeField] private Collider platformCollider;
+
+    [SerializeField] private Animation animations;
+    [SerializeField] private AnimationClip idleAnimation;
+    [SerializeField] private AnimationClip vibrateAnimation;
+    [SerializeField] private AnimationClip fallAnimation;
 
     private bool playerTouched = false;
+    private bool disappearing = false;
 
     private float minDotToOnPlatform = 0.8f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        renderer = GetComponent<Renderer>();
-        collider = GetComponent<Collider>();
-    }
 
     // Update is called once per frame
     void Update()
@@ -30,8 +29,7 @@ public class FallingPlatform : Traps
             timerVanished += Time.deltaTime;
             if (timerVanished >= timeToVanish)
             {
-                ObjectDisappear();
-                StartCoroutine(ObjectReappear());
+                ObjectDisappearAnimation();
             }
         }
     }
@@ -39,22 +37,24 @@ public class FallingPlatform : Traps
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == PLAYER_TAG)
+        if(collision.gameObject.tag == PLAYER_TAG && !disappearing)
         {
             if (PlayerOnPlatform(collision))
             {
                 playerTouched = true;
+                animations.PlayQueued(vibrateAnimation.name);
             }
         }
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag == PLAYER_TAG)
+        if (collision.gameObject.tag == PLAYER_TAG && !disappearing)
         {
             if (PlayerOnPlatform(collision))
             {
                 playerTouched = true;
+                animations.Play(vibrateAnimation.name);
             }
         }
     }
@@ -68,19 +68,31 @@ public class FallingPlatform : Traps
 
 
 
-    private void ObjectDisappear()
+    private void ObjectDisappearAnimation()
     {
         FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().fallPlatformSound, transform.position);
-        timerVanished = 0;
+        animations.Play(fallAnimation.name);
         playerTouched = false;
-        renderer.enabled = false;
-        collider.enabled = false;
+        disappearing = true;
     }
+
+    public void ObjectDisappear()
+    {
+        timerVanished = 0;
+        platformRenderer.enabled = false;
+        platformCollider.enabled = false;
+        disappearing = false;
+
+        StartCoroutine(ObjectReappear());
+    }
+
+
 
     IEnumerator ObjectReappear()
     {
         yield return new WaitForSeconds(timeToReappear);
-        renderer.enabled = true;
-        collider.enabled = true;
+        platformRenderer.enabled = true;
+        platformCollider.enabled = true;
+        animations.Play(idleAnimation.name);
     }
 }
