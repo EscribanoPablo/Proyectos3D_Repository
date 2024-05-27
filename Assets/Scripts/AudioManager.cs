@@ -40,7 +40,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip vibrateFallPlatformSound;
     public AudioClip fallPlatformSound;
     public AudioClip breakingBoxSound;
-    public AudioClip breakingGlassSound;
+    public AudioClip breakingPlatformSound;
     public AudioClip fireCircleSound;
     public AudioClip punchTrapSound;
     public AudioClip buttonSpinSound;
