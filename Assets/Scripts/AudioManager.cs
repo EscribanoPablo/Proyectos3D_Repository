@@ -29,12 +29,15 @@ public class AudioManager : MonoBehaviour
     public AudioClip RespawnSound;
 
     [Header("AudioClips_Environment/Obstacles")]
+    public AudioClip cirucsMasterLaughSound;
+    public AudioClip circusMasterHeySound;
     public List<AudioClip> ambientSounds;
     public List<AudioClip> GrabCollectibleSound;
     public AudioClip ActivateCheckPointSound;
     public AudioClip rotatorySpikesSound;
     public AudioClip groundSpikesSound;
     public AudioClip flipPlatformSound;
+    public AudioClip vibrateFallPlatformSound;
     public AudioClip fallPlatformSound;
     public AudioClip breakingBoxSound;
     public AudioClip breakingGlassSound;

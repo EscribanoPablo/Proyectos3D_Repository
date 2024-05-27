@@ -48,6 +48,7 @@ public class PunchToy : Traps
         if (punchIdle)
         {
             punchAnimations.CrossFade(punchHit.name);
+            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().punchTrapSound, transform.position);
         }
         else
         {

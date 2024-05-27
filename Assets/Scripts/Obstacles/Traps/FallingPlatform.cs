@@ -43,6 +43,7 @@ public class FallingPlatform : Traps
             {
                 playerTouched = true;
                 animations.PlayQueued(vibrateAnimation.name);
+                FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().vibrateFallPlatformSound, transform.position);
             }
         }
     }
@@ -55,6 +56,7 @@ public class FallingPlatform : Traps
             {
                 playerTouched = true;
                 animations.Play(vibrateAnimation.name);
+                FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().vibrateFallPlatformSound, transform.position);
             }
         }
     }

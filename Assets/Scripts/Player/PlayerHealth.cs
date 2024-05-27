@@ -142,6 +142,8 @@ public class PlayerHealth : MonoBehaviour
         currentLifes = startLifes;
         GameController.GetGameController().RestartLevelElment();
         playerRigidBody.velocity = Vector3.zero;
+
+        audioManager.SetPlaySfx(audioManager.RespawnSound, transform.position);
     }
 }
 
