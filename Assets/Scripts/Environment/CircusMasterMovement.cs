@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Cinemachine;
+using System;
 
 public class CircusMasterMovement : MonoBehaviour
 {
@@ -21,13 +22,15 @@ public class CircusMasterMovement : MonoBehaviour
     private bool introducingScenario;
     private bool moving;
 
+    private PlayerInput playerInput;
     private GameObject mainCamera;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        FindObjectOfType<PlayerInput>().enabled = false;
+        playerInput = FindObjectOfType<PlayerInput>();
+        playerInput.SwitchCurrentActionMap("HudControls");
         animationCircusMaster = GetComponent<Animation>();
         animationCircusMaster.Play(idleAnimation.name);
         introducingScenario = true;
@@ -51,14 +54,44 @@ public class CircusMasterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (introducingScenario)
         {
-            TurningLightsOn();
+            if (playerInput.actions["Accept"].WasPressedThisFrame())
+            {
+                SkipCutscene();
+            }
+            else
+            {
+                TurningLightsOn();
+            }
+
         }
         else
         {
             // poner la ola cada 10 segundos o cuando llegue el player a un checkpoint
         }
+    }
+
+    private void SkipCutscene()
+    {
+        foreach (GameObject cam in introCameras)
+        {
+            cam.SetActive(false);
+        }
+        mainCamera.SetActive(true);
+
+        foreach (GameObject light in lights)
+        {
+            light.SetActive(true);
+        }
+
+        introducingScenario = false;
+
+        Vector3 direction = lights[lights.Count-1].transform.position - transform.position;
+        direction.y = transform.position.y;
+        float yRotationValue = Quaternion.LookRotation(direction).eulerAngles.y;
+        transform.parent.transform.rotation = Quaternion.Euler(0, yRotationValue, 0);
     }
 
     private void TurningLightsOn()

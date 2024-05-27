@@ -22,7 +22,7 @@ public class FollowingPlayerAsLight : MonoBehaviour
 
     private void OnEnable()
     {
-        FindObjectOfType<PlayerInput>().enabled = true;
+        FindObjectOfType<PlayerInput>().SwitchCurrentActionMap("PlayerActions");
     }
 
     // Update is called once per frame
