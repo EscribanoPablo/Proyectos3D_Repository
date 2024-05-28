@@ -175,6 +175,7 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, verticalSpeed, rigidBody.velocity.z);
 
         playerAnimator.SetFloat("Speed", direction.magnitude);
+
     }
 
     private void SpeedControl()
@@ -301,6 +302,7 @@ public class PlayerMovement : MonoBehaviour
         {
             StopParticles(dustParticles);
         }
+
     }
 
     IEnumerator HoldCanonAgain(float seconds)
@@ -336,18 +338,21 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator DoDash()
     {
         playerAnimator.SetTrigger("Dashed");
-
+        StartCoroutine(AddLitleForceUp());
+        GetComponent<CapsuleCollider>().enabled = false;
         canDash = false;
         isDashing = true;
 
         rigidBody.useGravity = false;
 
-        Vector3 dashDirection = dashPower * transform.forward;
-        //m_Rb.velocity = dashDirection;
+        float _dashPower = IsGrounded() ? dashPower * 1.5f : dashPower;
+        Vector3 dashDirection = _dashPower * transform.forward;
+        StopVerticalVelocity();
+
+
         rigidBody.AddForce(dashDirection, ForceMode.Impulse);
 
         SpawnCanonParticles(canonParticles, spawnJumpCanonParticlesPos.position);
-
         yield return new WaitForSeconds(0.2f);
 
         canonShoot.Shoot();
@@ -358,13 +363,19 @@ public class PlayerMovement : MonoBehaviour
         //m_Rb.velocity = new Vector3(0, 0, 0);
 
         rigidBody.useGravity = true;
-        //_trailRenderer.emitting = false;
         isDashing = false;
+        GetComponent<CapsuleCollider>().enabled = true;
+
 
         yield return new WaitForSeconds(coolDown);
         canDash = true;
     }
 
+    IEnumerator AddLitleForceUp()
+    {
+        yield return new WaitForSeconds(0.1f);
+        rigidBody.AddForce(Vector3.up * 3.5f, ForceMode.Impulse);
+    }
 
     private bool HeadOnWall()
     {
