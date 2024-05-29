@@ -48,12 +48,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioMusic: {fileID: 6137671414989037671}
   audioSFX: {fileID: 5762850803876662203}
-  maxDistanceToHearSounds: 20
+  maxDistanceToHearSounds: 15
   menuMusic: {fileID: 8300000, guid: f2c6ea91140ed1845b0c844497db4784, type: 3}
   backgroundLevelMusic: {fileID: 8300000, guid: f2c6ea91140ed1845b0c844497db4784,
     type: 3}
   runSounds:
-  - {fileID: 8300000, guid: c6affac084a0974488746b2a7a84274d, type: 3}
+  - {fileID: 8300000, guid: cf83d68981f531940bfde8f8ca97c192, type: 3}
   JumpSound:
   - {fileID: 8300000, guid: bc0e5826269af6849bd311320517a8bf, type: 3}
   - {fileID: 8300000, guid: 041cb1dd15e1e364e9399387989bf40c, type: 3}
@@ -73,7 +73,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 3b6e868e49c6e3748972d59eaf844603, type: 3}
   - {fileID: 8300000, guid: a00069f8f009cf4418b53428d782587e, type: 3}
   DieSound: {fileID: 8300000, guid: 5a85e8966dc5eb048a5f15aab39f2754, type: 3}
-  RespawnSound: {fileID: 0}
+  RespawnSound: {fileID: 8300000, guid: e245a7ed3ba1c544bb08abb0e33b6ea8, type: 3}
   cirucsMasterLaughSound: {fileID: 0}
   circusMasterHeySound: {fileID: 0}
   ambientSounds:
@@ -89,7 +89,7 @@ MonoBehaviour:
   vibrateFallPlatformSound: {fileID: 0}
   fallPlatformSound: {fileID: 8300000, guid: e57291f047c7daf46879a4c70c5d6b3c, type: 3}
   breakingBoxSound: {fileID: 8300000, guid: 9bac45b645cdbae45a16626c5cd92618, type: 3}
-  breakingGlassSound: {fileID: 8300000, guid: 6983ae63f44779e4c99e5c8d3f0285e5, type: 3}
+  breakingPlatformSound: {fileID: 0}
   fireCircleSound: {fileID: 8300000, guid: f251873b41d1c674f8c5e79b67c693fb, type: 3}
   punchTrapSound: {fileID: 8300000, guid: 2f046a2a51271364cb12b21e5cbe75ee, type: 3}
   buttonSpinSound: {fileID: 8300000, guid: 87c13001884f1d34b8e990f97246293a, type: 3}

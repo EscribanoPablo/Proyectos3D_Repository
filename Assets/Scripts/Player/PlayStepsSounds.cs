@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayStepsSounds : MonoBehaviour
 {
-    public void PlaySteps()
+    private void OnEnable()
     {
-        FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().RecieveDamageSound[Random.Range(0, FindObjectOfType<AudioManager>().RecieveDamageSound.Count)], transform.position);
+        FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().runSounds[Random.Range(0, FindObjectOfType<AudioManager>().runSounds.Count)], transform.position);
     }
 }
