@@ -8,18 +8,18 @@ public class Button : Obstacles
     [SerializeField]
     UnityEvent m_Event;
     
-    [SerializeField]
-    Animation buttonAnimations;
-    [SerializeField]
-    AnimationClip buttonPressedAnimation;
+    //[SerializeField]
+    //Animation buttonAnimations;
+    //[SerializeField]
+    //AnimationClip buttonPressedAnimation;
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == BULLET_TAG)
         {
             m_Event.Invoke();
-            buttonAnimations.Play(buttonPressedAnimation.name);
-            gameObject.GetComponent<BoxCollider>().enabled = false;
+            //buttonAnimations.Play(buttonPressedAnimation.name);
+            this.enabled = false;
         }
     }
 }

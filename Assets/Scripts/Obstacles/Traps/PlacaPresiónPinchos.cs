@@ -43,6 +43,7 @@ public class PlacaPresiónPinchos : Traps
         else
         {
             spikesAnimations.CrossFade(spikesDown.name);
+            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().groundSpikesSound, transform.position);
         }
 
         spikesHidden = !spikesHidden;

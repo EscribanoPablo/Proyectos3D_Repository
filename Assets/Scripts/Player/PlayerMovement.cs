@@ -244,7 +244,7 @@ public class PlayerMovement : MonoBehaviour
             doubleJump = true;
             canWall = true;
             playerAnimator.SetBool("OnGround", true);
-            audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
+            //audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
             return true;
         }
         playerAnimator.SetBool("OnGround", false);

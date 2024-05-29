@@ -438,7 +438,6 @@ GameObject:
   - component: {fileID: 8961343465033006189}
   - component: {fileID: 729810905174991071}
   - component: {fileID: 6364625427200459369}
-  - component: {fileID: 6405946223253967485}
   - component: {fileID: 1896125324773186118}
   m_Layer: 7
   m_Name: Button
@@ -533,22 +532,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.99999934, y: 0.3905736, z: 1}
   m_Center: {x: -6.0924266e-11, y: 0.30471393, z: -5.3042626e-10}
---- !u!111 &6405946223253967485
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8253009347366149308}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: 77d2293ac62d7454990207c31767d880, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &1896125324773186118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,7 +559,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  buttonAnimations: {fileID: 6405946223253967485}
+  buttonAnimations: {fileID: 0}
   buttonPressedAnimation: {fileID: 7400000, guid: 77d2293ac62d7454990207c31767d880,
     type: 2}
 --- !u!1 &8457695079735375695
