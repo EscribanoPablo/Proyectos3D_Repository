@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject canonJump;
     [SerializeField] GameObject canonIdle;
     [SerializeField] GameObject canonParticles;
+
     [SerializeField] Transform spawnJumpCanonParticlesPos;
     [SerializeField] CanonShoot canonShoot;
     [SerializeField] GameObject dustParticles;
@@ -216,7 +217,7 @@ public class PlayerMovement : MonoBehaviour
                     audioManager.SetPlaySfx(audioManager.DoubleJumpSound, 0.5f, transform.position);
                     Jump(doubleJumpForce);
                     CanonJump();
-                    canonShoot.Shoot();
+                    canonShoot.ShootBullet();
                     doubleJump = false;
                     isJumping = true;
                     playerAnimator.SetTrigger("DoubleJumped");
@@ -360,7 +361,7 @@ public class PlayerMovement : MonoBehaviour
         SpawnCanonParticles(canonParticles, spawnJumpCanonParticlesPos.position);
         yield return new WaitForSeconds(0.2f);
 
-        canonShoot.Shoot();
+        canonShoot.ShootBullet();
 
         yield return new WaitForSeconds(dashDuration);
 

@@ -13,6 +13,8 @@ public class CanonShoot : MonoBehaviour
 
     [SerializeField] Transform spawnPosition;
     [SerializeField] GameObject bulletPrefab;
+
+    [SerializeField] GameObject canonBoomParticles;
     [SerializeField] GameObject canonParticles;
 
     [SerializeField] float fireRate = 0.5f;
@@ -31,6 +33,8 @@ public class CanonShoot : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         playerInput = GetComponent<PlayerInput>();
         canonParticles.SetActive(false);
+        canonBoomParticles.SetActive(false);
+
     }
 
     private void Update()
@@ -39,13 +43,9 @@ public class CanonShoot : MonoBehaviour
         {
             if (/*Input.GetMouseButton(shootButton)*/playerInput.actions["Shoot"].WasPressedThisFrame() && Time.time >= nextTimeFire)
             {
-                audioManager.SetPlaySfx(audioManager.ShootSound[Random.Range(0, audioManager.ShootSound.Count)], 0.5f, transform.position);
-                nextTimeFire = Time.time + fireRate;
-                canonForward = transform.forward;
-
-                canonParticles.SetActive(true);
-                canonParticles.GetComponent<ParticleSystem>().Play();
                 Shoot();
+                ShootBullet();
+
                 playerAnimator.SetTrigger("Shoot");
             }
             else if (/*Input.GetKeyDown(KeyCode.LeftShift)*/playerInput.actions["Dash"].WasPressedThisFrame()) /////////////////////// ARREGLAR
@@ -64,7 +64,21 @@ public class CanonShoot : MonoBehaviour
 
     }
 
-    public void Shoot()
+    private void Shoot()
+    {
+        audioManager.SetPlaySfx(audioManager.ShootSound[Random.Range(0, audioManager.ShootSound.Count)], 0.5f, transform.position);
+        nextTimeFire = Time.time + fireRate;
+        canonForward = transform.forward;
+
+        canonBoomParticles.SetActive(true);
+        canonBoomParticles.GetComponent<ParticleSystem>().Play();
+
+        canonParticles.SetActive(true);
+        canonParticles.GetComponent<ParticleSystem>().Play();
+        //playerMovement.SpawnCanonParticles(canonBoomParticles, canonBoomParticles.transform.position);
+    }
+
+    public void ShootBullet()
     {
         GameObject _bullet = Instantiate(bulletPrefab, spawnPosition.position, bulletPrefab.transform.rotation);
         Destroy(_bullet, 10);
