@@ -37,11 +37,13 @@ public class MenusController : MonoBehaviour
         {
             Time.timeScale = 1;
             SceneManager.LoadScene("BetaLevel01");
+            Cursor.lockState = CursorLockMode.Locked;
         }
         else if(SceneManager.GetActiveScene().name == "BetaLevel01")
         {
             pauseMenu.SetActive(false);
             Time.timeScale = 1;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
