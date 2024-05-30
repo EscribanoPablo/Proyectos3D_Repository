@@ -92,6 +92,9 @@ public class CircusMasterMovement : MonoBehaviour
         direction.y = transform.position.y;
         float yRotationValue = Quaternion.LookRotation(direction).eulerAngles.y;
         transform.parent.transform.rotation = Quaternion.Euler(0, yRotationValue, 0);
+
+        currentCam = introCameras.Count - 1;
+        currentLight = lights.Count - 1;
     }
 
     private void TurningLightsOn()
