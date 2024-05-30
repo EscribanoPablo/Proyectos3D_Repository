@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2865739117766065518}
   - component: {fileID: 164248763170547485}
-  - component: {fileID: 8964343932589463358}
   - component: {fileID: 398826093186473091}
   m_Layer: 0
   m_Name: FireCircle
@@ -133,18 +132,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8964343932589463358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4662780668368711994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 785f6f5d2abdcec4abd3e3ad2708379a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &398826093186473091
 BoxCollider:
   m_ObjectHideFlags: 0
