@@ -13,7 +13,7 @@ public class MenusController : MonoBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name == "BetaLevel01")
+        if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
         {
             playerInputs = FindObjectOfType<PlayerInput>();
         }
@@ -21,7 +21,7 @@ public class MenusController : MonoBehaviour
 
     private void Update()
     {
-        if(SceneManager.GetActiveScene().name == "BetaLevel01")
+        if(SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
         {
             if (playerInputs.actions["PauseGame"].WasPressedThisFrame())
             {
@@ -39,7 +39,7 @@ public class MenusController : MonoBehaviour
             SceneManager.LoadScene("BetaLevel01");
             Cursor.lockState = CursorLockMode.Locked;
         }
-        else if(SceneManager.GetActiveScene().name == "BetaLevel01")
+        else if(SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
         {
             pauseMenu.SetActive(false);
             Time.timeScale = 1;
