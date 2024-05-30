@@ -31,21 +31,20 @@ public class AudioManager : MonoBehaviour
     [Header("AudioClips_Environment/Obstacles")]
     public AudioClip cirucsMasterLaughSound;
     public AudioClip circusMasterHeySound;
-    public List<AudioClip> ambientSounds;
+    public List<AudioClip> ambientLaughtsSounds;
+    public List<AudioClip> ambientClapsSounds;
     public List<AudioClip> GrabCollectibleSound;
     public AudioClip ActivateCheckPointSound;
-    public AudioClip rotatorySpikesSound;
+    public AudioClip rotatorySpikesHitSound;
     public AudioClip groundSpikesSound;
     public AudioClip flipPlatformSound;
     public AudioClip vibrateFallPlatformSound;
     public AudioClip fallPlatformSound;
     public AudioClip breakingBoxSound;
     public AudioClip breakingPlatformSound;
-    public AudioClip fireCircleSound;
     public AudioClip punchTrapSound;
     public AudioClip buttonSpinSound;
     public AudioClip doorOpenSound;
-    public AudioClip bombMovingSound;
     public AudioClip bombAttackDeathSound;
     public AudioClip levelEndedSound;
     public AudioClip lightTurningOnSound;
