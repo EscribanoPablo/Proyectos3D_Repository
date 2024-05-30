@@ -50,7 +50,6 @@ public class CanonShoot : MonoBehaviour
             }
             else if (/*Input.GetKeyDown(KeyCode.LeftShift)*/playerInput.actions["Dash"].WasPressedThisFrame()) /////////////////////// ARREGLAR
             {
-                audioManager.SetPlaySfx(audioManager.DashSound, 0.5f, transform.position);
                 canonForward = -transform.forward;
             }
             else if (playerMovement.DoubleJump)

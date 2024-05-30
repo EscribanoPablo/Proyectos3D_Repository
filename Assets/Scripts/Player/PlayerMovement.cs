@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float doubleJumpForce;
     int currentJumps;
+    bool isOnAir = false;
     public bool DoubleJump => doubleJump;
     bool doubleJump;
     [SerializeField] float gravity;
@@ -244,10 +245,13 @@ public class PlayerMovement : MonoBehaviour
             doubleJump = true;
             canWall = true;
             playerAnimator.SetBool("OnGround", true);
-            //audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
+            if (isOnAir)
+                audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
+            isOnAir = false;
             return true;
         }
         playerAnimator.SetBool("OnGround", false);
+        isOnAir = true;
         return false;
     }
 
@@ -337,6 +341,7 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator DoDash()
     {
+        audioManager.SetPlaySfx(audioManager.DashSound, 0.5f, transform.position);
         playerAnimator.SetTrigger("Dashed");
         StartCoroutine(AddLitleForceUp());
         GetComponent<CapsuleCollider>().enabled = false;
