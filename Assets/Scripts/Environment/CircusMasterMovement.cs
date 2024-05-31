@@ -147,6 +147,7 @@ public class CircusMasterMovement : MonoBehaviour
 
     private void EncenderLuz()
     {
+        FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().lightTurningOnSound);
         lights[currentLight].SetActive(true);
     }
 
