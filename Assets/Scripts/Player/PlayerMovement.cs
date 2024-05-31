@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject canonJump;
     [SerializeField] GameObject canonIdle;
     [SerializeField] GameObject canonParticles;
+    [SerializeField] GameObject wallJumpParticles;
+
 
     [SerializeField] Transform spawnJumpCanonParticlesPos;
     [SerializeField] CanonShoot canonShoot;
@@ -82,6 +84,8 @@ public class PlayerMovement : MonoBehaviour
         canonJump.SetActive(false);
         canDash = true;
         playerControllerEnabled = true;
+        wallJumpParticles.SetActive(false);
+
     }
 
     private void Update()
@@ -325,7 +329,8 @@ public class PlayerMovement : MonoBehaviour
         canonJump.SetActive(true);
         armCanon.SetActive(false);
         canonIdle.SetActive(false);
-        SpawnCanonParticles(canonParticles, spawnJumpCanonParticlesPos.position);
+        //SpawnCanonParticles(canonParticles, spawnJumpCanonParticlesPos.position);
+        canonShoot.SpawnCanonParticles();
 
         StartCoroutine(HoldCanonAgain(0.25f));
     }
@@ -345,7 +350,6 @@ public class PlayerMovement : MonoBehaviour
         audioManager.SetPlaySfx(audioManager.DashSound, 0.5f, transform.position);
         playerAnimator.SetTrigger("Dashed");
         StartCoroutine(AddLitleForceUp());
-        GetComponent<CapsuleCollider>().enabled = false;
         canDash = false;
         isDashing = true;
 
@@ -358,7 +362,9 @@ public class PlayerMovement : MonoBehaviour
 
         rigidBody.AddForce(dashDirection, ForceMode.Impulse);
 
-        SpawnCanonParticles(canonParticles, spawnJumpCanonParticlesPos.position);
+        //SpawnCanonParticles(canonParticles, spawnJumpCanonParticlesPos.position);
+        canonShoot.SpawnCanonParticles();
+
         yield return new WaitForSeconds(0.2f);
 
         canonShoot.ShootBullet();
@@ -370,7 +376,6 @@ public class PlayerMovement : MonoBehaviour
 
         rigidBody.useGravity = true;
         isDashing = false;
-        GetComponent<CapsuleCollider>().enabled = true;
 
 
         yield return new WaitForSeconds(coolDown);
@@ -401,7 +406,7 @@ public class PlayerMovement : MonoBehaviour
     private void WallJump()
     {
         onWall = false;
-
+        ActivateWallJumpParticles();
         Vector3 jumpDirection = -transform.forward;
         jumpDirection.Normalize();
         rigidBody.AddForce((jumpDirection * wallJumpSideForce) + (Vector3.up * wallJumpUpForce), ForceMode.Impulse);
@@ -409,6 +414,17 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180, transform.rotation.eulerAngles.z));
 
         rigidBody.useGravity = true;
+    }
+
+    private void ActivateWallJumpParticles()
+    {
+        wallJumpParticles.SetActive(true);
+
+        //PlayParticles(wallJumpParticles);
+        SpawnCanonParticles(wallJumpParticles, wallJumpParticles.transform.position);
+        //StopParticles(wallJumpParticles);
+
+        
     }
 
     private void WallFall()

@@ -24,6 +24,9 @@ public class PlayerHealth : MonoBehaviour
     private AudioManager audioManager;
     [SerializeField]
     private Animator playerAnimator;
+
+    [SerializeField] GameObject damageParticles;
+
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
@@ -31,6 +34,8 @@ public class PlayerHealth : MonoBehaviour
         playerRigidBody = GetComponent<Rigidbody>();
         hudController = FindObjectOfType<HudController>();
         playerInputs = GetComponent<PlayerInput>();
+
+        damageParticles.SetActive(false);
     }
 
     private void Update()
@@ -55,11 +60,16 @@ public class PlayerHealth : MonoBehaviour
             if (!gotHit)
             {
                 currentLifes--;
+
                 hudController.LifeLost(currentLifes);
                 CheckHealth();
                 gotHit = true;
                 playerInputs.enabled = false;
                 AddKnockback(pointOfImpact, knockbackImpulse);
+
+                damageParticles.SetActive(true);
+                ParticleSystem particles = damageParticles.GetComponent<ParticleSystem>();
+                particles.Emit(10);
 
                 //Debug.Log("Player current health = " + currentLifes);
             }
