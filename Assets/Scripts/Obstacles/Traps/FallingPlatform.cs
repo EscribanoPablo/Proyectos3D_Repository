@@ -19,7 +19,7 @@ public class FallingPlatform : Traps
     private bool playerTouched = false;
     private bool disappearing = false;
 
-    private float minDotToOnPlatform = 0.8f;
+    private float minDotToOnPlatform = 0.5f;
 
     // Update is called once per frame
     void Update()
