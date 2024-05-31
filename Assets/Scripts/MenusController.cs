@@ -63,6 +63,7 @@ public class MenusController : MonoBehaviour
         else
         {
             playerInputs.enabled = true;
+            Time.timeScale = 1;
             SceneManager.LoadScene("MainMenu");
         }
     }
