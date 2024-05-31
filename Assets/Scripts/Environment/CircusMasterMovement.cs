@@ -30,7 +30,8 @@ public class CircusMasterMovement : MonoBehaviour
     void Start()
     {
         playerInput = FindObjectOfType<PlayerInput>();
-        playerInput.SwitchCurrentActionMap("HudControls");
+        playerInput.currentActionMap.Disable();
+        //playerInput.SwitchCurrentActionMap("HudControls");
         animationCircusMaster = GetComponent<Animation>();
         animationCircusMaster.Play(idleAnimation.name);
         introducingScenario = true;
