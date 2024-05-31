@@ -26,6 +26,7 @@ public class MenusController : MonoBehaviour
             if (playerInputs.actions["PauseGame"].WasPressedThisFrame())
             {
                 pauseMenu.SetActive(true);
+                playerInputs.enabled = false;
                 Time.timeScale = 0;
             }
         }
@@ -42,6 +43,7 @@ public class MenusController : MonoBehaviour
         else if(SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
         {
             pauseMenu.SetActive(false);
+            playerInputs.enabled = true;
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -50,7 +52,6 @@ public class MenusController : MonoBehaviour
     public void SettingsButtonPressed()
     {
         SceneManager.LoadScene("SettingsMenu");
-        Time.timeScale = 0;
     }
 
     public void ExitButtonPressed()
@@ -61,6 +62,7 @@ public class MenusController : MonoBehaviour
         }
         else
         {
+            playerInputs.enabled = true;
             SceneManager.LoadScene("MainMenu");
         }
     }

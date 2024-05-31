@@ -23,6 +23,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip DashSound;
     public AudioClip WallJumpSound;
     public List<AudioClip> ShootSound;
+    public List<AudioClip> cannonballHit;
     public AudioClip FallingToGroundSound;
     public List<AudioClip> RecieveDamageSound;
     public AudioClip DieSound;
@@ -54,6 +55,15 @@ public class AudioManager : MonoBehaviour
     public AudioClip movingInButtonsSound;
     public AudioClip pressingButtonSounds;
 
+    public void SetPlaySfx(AudioClip sfxClip)
+    {
+        playSFX(sfxClip);
+    }
+
+    public void SetPlaySfx(AudioClip sfxClip, float audioVolume)
+    {
+        playSFX(sfxClip, audioVolume);
+    }
 
     public void SetPlaySfx(AudioClip sfxClip, Vector3 position)
     {
