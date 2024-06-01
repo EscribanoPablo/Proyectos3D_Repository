@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayTransition : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PlayTransition : MonoBehaviour
     private void Start()
     {
         animationManager = GetComponent<Animation>();
+        EnterSceneAnimation();
     }
 
 
@@ -23,7 +25,14 @@ public class PlayTransition : MonoBehaviour
 
     private void ChangeScene()
     {
-
+        if(SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            SceneManager.LoadScene("BetaLevel01");
+        }
+        else if (SceneManager.GetActiveScene().name == "BetaLevel01")
+        {
+            SceneManager.LoadScene("BetaLevel02");
+        }
     }
 
     private void SetBlack()

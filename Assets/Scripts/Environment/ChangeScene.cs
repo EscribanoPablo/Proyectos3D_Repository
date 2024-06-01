@@ -24,7 +24,7 @@ public class ChangeScene : MonoBehaviour
                 videoTransition.SetActive(true);
                 FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().transitionsSound);
 
-                StartCoroutine(waitToChangeLevel());
+                //StartCoroutine(waitToChangeLevel());
             }
             else
             {
@@ -32,7 +32,7 @@ public class ChangeScene : MonoBehaviour
                 videoGameEnded.SetActive(true);
                 FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().transitionsSound);
 
-                StartCoroutine(waitToChangeLevel());
+                //StartCoroutine(waitToChangeLevel());
             }
         }
     }

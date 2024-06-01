@@ -37,7 +37,10 @@ public class MenusController : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             Time.timeScale = 1;
-            SceneManager.LoadScene("BetaLevel01");
+            //SceneManager.LoadScene("BetaLevel01");
+
+            GameObject.FindObjectOfType<PlayTransition>().QuitSceneAnimation();
+
             Cursor.lockState = CursorLockMode.Locked;
         }
         else if(SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
