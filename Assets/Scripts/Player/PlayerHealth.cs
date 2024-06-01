@@ -108,6 +108,7 @@ public class PlayerHealth : MonoBehaviour
         if (currentLifes <= 0)
         {
             audioManager.SetPlaySfx(audioManager.DieSound, transform.position);
+            audioManager.SetPlaySfx(audioManager.cirucsMasterLaughSound, transform.position);
             currentLifes = 0;
 
             StartCoroutine(StartDeath());
