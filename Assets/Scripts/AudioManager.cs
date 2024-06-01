@@ -32,6 +32,7 @@ public class AudioManager : MonoBehaviour
     [Header("AudioClips_Environment/Obstacles")]
     public AudioClip cirucsMasterLaughSound;
     public AudioClip circusMasterHeySound;
+    public AudioClip circusMasterMoveHand;
     public List<AudioClip> ambientLaughtsSounds;
     public List<AudioClip> ambientClapsSounds;
     public List<AudioClip> GrabCollectibleSound;
