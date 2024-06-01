@@ -69,13 +69,17 @@ public class CanonShoot : MonoBehaviour
         audioManager.SetPlaySfx(audioManager.ShootSound[Random.Range(0, audioManager.ShootSound.Count)], 0.5f, transform.position);
         nextTimeFire = Time.time + fireRate;
         canonForward = transform.forward;
+        SpawnCanonParticles();
+        //playerMovement.SpawnCanonParticles(canonBoomParticles, canonBoomParticles.transform.position);
+    }
 
+    public void SpawnCanonParticles()
+    {
         canonBoomParticles.SetActive(true);
         canonBoomParticles.GetComponent<ParticleSystem>().Play();
 
         canonParticles.SetActive(true);
         canonParticles.GetComponent<ParticleSystem>().Play();
-        //playerMovement.SpawnCanonParticles(canonBoomParticles, canonBoomParticles.transform.position);
     }
 
     public void ShootBullet()
