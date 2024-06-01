@@ -21,6 +21,11 @@ public class PlayTransition : MonoBehaviour
         //gameObject.GetComponent<Animator>().SetBool("ApplyTransition", true);
     }
 
+    private void ChangeScene()
+    {
+
+    }
+
     private void SetBlack()
     {
         animationManager.Play(blackAnim.name);
@@ -31,12 +36,12 @@ public class PlayTransition : MonoBehaviour
         animationManager.Play(transparentAnim.name);
     }
 
-    private void EnterSceneAnimation()
+    public void EnterSceneAnimation()
     {
         animationManager.Play(inSceneTransitionAnim.name);
     }
 
-    private void QuitSceneAnimation()
+    public void QuitSceneAnimation()
     {
         animationManager.Play(outSceneTransitionAnim.name);
     }
