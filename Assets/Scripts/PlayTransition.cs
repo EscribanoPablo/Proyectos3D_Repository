@@ -33,14 +33,17 @@ public class PlayTransition : MonoBehaviour
     {
         if(SceneManager.GetActiveScene().name == "MainMenu")
         {
+            GameController.GetGameController().EmptyRestartList();
             SceneManager.LoadScene("BetaLevel01");
         }
         else if (SceneManager.GetActiveScene().name == "BetaLevel01")
         {
+            GameController.GetGameController().EmptyRestartList();
             SceneManager.LoadScene("BetaLevel02");
         }
         else if (SceneManager.GetActiveScene().name == "BetaLevel02")
         {
+            GameController.GetGameController().EmptyRestartList();
             SceneManager.LoadScene("MainMenu");
         }
     }
