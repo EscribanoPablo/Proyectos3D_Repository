@@ -39,7 +39,7 @@ public class MenusController : MonoBehaviour
             Time.timeScale = 1;
             //SceneManager.LoadScene("BetaLevel01");
 
-            GameObject.FindObjectOfType<PlayTransition>().QuitSceneAnimation();
+            GameObject.FindObjectOfType<PlayTransition>().GoBlack(true);
 
             Cursor.lockState = CursorLockMode.Locked;
         }
