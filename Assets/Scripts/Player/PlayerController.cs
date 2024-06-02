@@ -38,6 +38,8 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
         ResetLight();
 
         ParticleSystem particles = restartPlayerParticles.GetComponent<ParticleSystem>();
+
+        yield return new WaitForSeconds(0.5f);
         particles.Emit(20);
     }
 
