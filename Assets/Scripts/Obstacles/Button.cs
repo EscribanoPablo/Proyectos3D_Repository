@@ -7,6 +7,8 @@ public class Button : Obstacles
 {
     [SerializeField]
     UnityEvent m_Event;
+
+    bool doorOpened = false;
     
     //[SerializeField]
     //Animation buttonAnimations;
@@ -15,11 +17,11 @@ public class Button : Obstacles
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.tag == BULLET_TAG)
+        if (collision.transform.tag == BULLET_TAG && !doorOpened)
         {
             m_Event.Invoke();
             //buttonAnimations.Play(buttonPressedAnimation.name);
-            this.enabled = false;
+            doorOpened = true;
         }
     }
 }

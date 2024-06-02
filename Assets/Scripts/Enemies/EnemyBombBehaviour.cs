@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using FMODUnity;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBombBehaviour : MonoBehaviour
@@ -18,6 +19,8 @@ public class EnemyBombBehaviour : MonoBehaviour
     private float idleTimer;
     [SerializeField] float timeOnIdle;
     [SerializeField] Animator enemyAnimator;
+
+    [SerializeField] StudioEventEmitter bombMovingSound;
 
     // Start is called before the first frame update
     void Start()
@@ -127,6 +130,8 @@ public class EnemyBombBehaviour : MonoBehaviour
             player.GetComponent<PlayerHealth>().TakeDamage(transform.position);
         }
         GameObject.Instantiate(explosionParticles, transform.position, transform.rotation);
+
+        bombMovingSound.Stop(); bombMovingSound.PlayEvent = EmitterGameEvent.None;
         FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().bombAttackDeathSound, transform.position);
 
         if(Random.Range(1, 4) == 1)
