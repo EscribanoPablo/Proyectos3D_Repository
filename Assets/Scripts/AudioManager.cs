@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -84,7 +85,8 @@ public class AudioManager : MonoBehaviour
         //audioMusic.clip = backgroundLevelMusic;
         //audioMusic.Play();
 
-        RuntimeManager.PlayOneShot(backgroundLevelMusic);
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+            RuntimeManager.PlayOneShot(backgroundLevelMusic);
     }
 
     //public void playMusic(AudioClip musicClip)
