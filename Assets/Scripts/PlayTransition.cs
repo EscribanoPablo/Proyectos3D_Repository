@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayTransition : MonoBehaviour
 {
-    Animation animationManager;
+    /*Animation animationManager;
     [SerializeField] AnimationClip blackAnim;
     [SerializeField] AnimationClip transparentAnim;
     [SerializeField] AnimationClip inSceneTransitionAnim;
-    [SerializeField] AnimationClip outSceneTransitionAnim;
+    [SerializeField] AnimationClip outSceneTransitionAnim1;
+    [SerializeField] AnimationClip outSceneTransitionAnim2;*/
+
+    Animator transitionAnimator;
 
     private void Start()
     {
-        animationManager = GetComponent<Animation>();
+        //animationManager = GetComponent<Animation>();
+        //EnterSceneAnimation();
+
+        transitionAnimator = GetComponent<Animator>();
+        GoTransparent();
     }
 
 
@@ -23,10 +31,35 @@ public class PlayTransition : MonoBehaviour
 
     private void ChangeScene()
     {
-
+        if(SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            GameController.GetGameController().EmptyRestartList();
+            SceneManager.LoadScene("BetaLevel01");
+        }
+        else if (SceneManager.GetActiveScene().name == "BetaLevel01")
+        {
+            GameController.GetGameController().EmptyRestartList();
+            SceneManager.LoadScene("BetaLevel02");
+        }
+        else if (SceneManager.GetActiveScene().name == "BetaLevel02")
+        {
+            GameController.GetGameController().EmptyRestartList();
+            SceneManager.LoadScene("MainMenu");
+        }
     }
 
-    private void SetBlack()
+    public void GoBlack(bool fromMenu)
+    {
+        transitionAnimator.SetBool("MenuTransition", fromMenu);
+        transitionAnimator.SetTrigger("GoBlack");
+    }
+
+    public void GoTransparent()
+    {
+        transitionAnimator.SetTrigger("GoTransparent");
+    }
+
+    /*private void SetBlack()
     {
         animationManager.Play(blackAnim.name);
     }
@@ -41,8 +74,12 @@ public class PlayTransition : MonoBehaviour
         animationManager.Play(inSceneTransitionAnim.name);
     }
 
-    public void QuitSceneAnimation()
+    public void QuitSceneAnimation1()
     {
-        animationManager.Play(outSceneTransitionAnim.name);
+        animationManager.Play(outSceneTransitionAnim1.name);
     }
+    public void QuitSceneAnimation2()
+    {
+        animationManager.Play(outSceneTransitionAnim2.name);
+    }*/
 }

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2582876888673864480}
   - component: {fileID: 6581719004553553947}
   - component: {fileID: 3365991311532173504}
-  - component: {fileID: 3232595726798866302}
   m_Layer: 5
   m_Name: TransitionLevels
   m_TagString: Untagged
@@ -86,7 +85,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2170214363274645102}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: db0cd74776a3fa54db2e4244eea5f7b6, type: 2}
   m_CullingMode: 0
@@ -111,28 +110,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721ddace3276dd842a67945e622285d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blackAnim: {fileID: 7400000, guid: 7cf2df8a5e30f564088039ce73295733, type: 2}
-  transparentAnim: {fileID: 7400000, guid: 1a6444ec40c73984cbb7b2c6c2393144, type: 2}
-  inSceneTransitionAnim: {fileID: 7400000, guid: 1fc623307e2de0e479f6ba92f992b8c2,
-    type: 2}
-  outSceneTransitionAnim: {fileID: 7400000, guid: ce8aa97097623e741b6651abc8bfb340,
-    type: 2}
---- !u!111 &3232595726798866302
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2170214363274645102}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 1fc623307e2de0e479f6ba92f992b8c2, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 1a6444ec40c73984cbb7b2c6c2393144, type: 2}
-  - {fileID: 7400000, guid: 7cf2df8a5e30f564088039ce73295733, type: 2}
-  - {fileID: 7400000, guid: 1fc623307e2de0e479f6ba92f992b8c2, type: 2}
-  - {fileID: 7400000, guid: ce8aa97097623e741b6651abc8bfb340, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0

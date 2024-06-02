@@ -177,5 +177,9 @@ public class CircusMasterMovement : MonoBehaviour
         animationCircusMaster.CrossFadeQueued(idleAnimation.name);
     }
 
+    private void CircusMasterMoveSound()
+    {
+        FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().circusMasterMoveHand);
+    }
 }
 

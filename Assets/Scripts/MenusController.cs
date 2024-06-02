@@ -37,7 +37,10 @@ public class MenusController : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             Time.timeScale = 1;
-            SceneManager.LoadScene("BetaLevel01");
+            //SceneManager.LoadScene("BetaLevel01");
+
+            GameObject.FindObjectOfType<PlayTransition>().GoBlack(true);
+
             Cursor.lockState = CursorLockMode.Locked;
         }
         else if(SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
@@ -62,8 +65,11 @@ public class MenusController : MonoBehaviour
         }
         else
         {
-            playerInputs.enabled = true;
-            Time.timeScale = 1;
+            if(SceneManager.GetActiveScene().name != "SettingsMenu")
+            {
+                playerInputs.enabled = true;
+                Time.timeScale = 1;
+            }
             SceneManager.LoadScene("MainMenu");
         }
     }

@@ -62,6 +62,7 @@ MonoBehaviour:
   WallJumpSound: {fileID: 8300000, guid: 3438ac92bdbd0b340991716e83769c99, type: 3}
   ShootSound:
   - {fileID: 8300000, guid: a3efbb57550999f4196789bc42da85d1, type: 3}
+  cannonballHit: []
   FallingToGroundSound: {fileID: 8300000, guid: e27d639a378b41d4593db059c1653727,
     type: 3}
   RecieveDamageSound:
@@ -76,31 +77,30 @@ MonoBehaviour:
   RespawnSound: {fileID: 8300000, guid: e245a7ed3ba1c544bb08abb0e33b6ea8, type: 3}
   cirucsMasterLaughSound: {fileID: 0}
   circusMasterHeySound: {fileID: 0}
-  ambientSounds:
-  - {fileID: 8300000, guid: e18d0fbb787b96645beb8488f6c578d6, type: 3}
-  - {fileID: 8300000, guid: bdaf0d4a5f0caf84886f15aef390df39, type: 3}
+  circusMasterMoveHand: {fileID: 0}
+  ambientLaughtsSounds: []
+  ambientClapsSounds: []
   GrabCollectibleSound:
   - {fileID: 8300000, guid: 5137dfa193792a8479f23a0a10eb73f2, type: 3}
   ActivateCheckPointSound: {fileID: 8300000, guid: f76473f02c8a28044808006b04dc8c00,
     type: 3}
-  rotatorySpikesSound: {fileID: 8300000, guid: eb268555487a9a14ebe1c17bc9432cd4, type: 3}
+  rotatorySpikesHitSound: {fileID: 0}
   groundSpikesSound: {fileID: 8300000, guid: 23c5423f2a64d3e41ae355baf20e42bf, type: 3}
   flipPlatformSound: {fileID: 8300000, guid: e820912a19f7d7147aecd7980aac8e1d, type: 3}
   vibrateFallPlatformSound: {fileID: 0}
   fallPlatformSound: {fileID: 8300000, guid: e57291f047c7daf46879a4c70c5d6b3c, type: 3}
   breakingBoxSound: {fileID: 8300000, guid: 9bac45b645cdbae45a16626c5cd92618, type: 3}
   breakingPlatformSound: {fileID: 0}
-  fireCircleSound: {fileID: 8300000, guid: f251873b41d1c674f8c5e79b67c693fb, type: 3}
   punchTrapSound: {fileID: 8300000, guid: 2f046a2a51271364cb12b21e5cbe75ee, type: 3}
   buttonSpinSound: {fileID: 8300000, guid: 87c13001884f1d34b8e990f97246293a, type: 3}
   doorOpenSound: {fileID: 8300000, guid: 620ca3a8f601b2340ba4c9c94a62e75c, type: 3}
-  bombMovingSound: {fileID: 8300000, guid: 713da9b867d0b494784173de03bf52eb, type: 3}
   bombAttackDeathSound: {fileID: 8300000, guid: 41940e57bc42671469f7f0ba06527b28,
     type: 3}
   levelEndedSound: {fileID: 0}
   lightTurningOnSound: {fileID: 0}
   transitionsSound: {fileID: 0}
-  movingInButtonsSound: {fileID: 0}
+  movingInButtonsSound: {fileID: 8300000, guid: bad4a2df07c3cd340a6386cf24623261,
+    type: 3}
   pressingButtonSounds: {fileID: 8300000, guid: 8a84b4626e8b0c44c8b0940306fdee8b,
     type: 3}
 --- !u!1 &1890011372834917050
