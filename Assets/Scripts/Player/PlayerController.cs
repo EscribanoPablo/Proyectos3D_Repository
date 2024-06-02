@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
     Vector3 startPosition;
     Quaternion startRotation;
     Rigidbody rigidBody;
+    [SerializeField] GameObject restartPlayerParticles;
 
     private void Awake()
     {
@@ -35,6 +36,9 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
         transform.position = startPosition;
         transform.rotation = startRotation;
         ResetLight();
+
+        ParticleSystem particles = restartPlayerParticles.GetComponent<ParticleSystem>();
+        particles.Emit(20);
     }
 
     private void ResetLight()
