@@ -34,6 +34,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotationTime = 0.1f;
     float turnSmoothVelocity;
     bool isMoving;
+    [SerializeField] float transitionDurationStart = 0.5f; 
+    [SerializeField] float transitionDurationStop = 0.5f; 
+    private float transitionTimer = 0f;
+    float speedAnimation = 0;
     public bool playerControllerEnabled { get; set;}
 
     [Header("Jump Variables")]
@@ -138,6 +142,7 @@ public class PlayerMovement : MonoBehaviour
         UpdateDustParticles();
     }
 
+
     private void Movement()
     {
         if (isDashing) return;
@@ -171,16 +176,25 @@ public class PlayerMovement : MonoBehaviour
                 //m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
 
                 rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
+
+                transitionTimer += Time.deltaTime;
+                if (transitionTimer > transitionDurationStart) transitionTimer = transitionDurationStart;
+                speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
             }
             else
             {
                 isMoving = false;
+
+                transitionTimer -= Time.deltaTime / transitionDurationStop * transitionDurationStart;
+                if (transitionTimer < 0f) transitionTimer = 0f;
+
+                speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
             }
             
         }
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, verticalSpeed, rigidBody.velocity.z);
 
-        playerAnimator.SetFloat("Speed", direction.magnitude);
+        playerAnimator.SetFloat("Speed", speedAnimation);
 
     }
 
