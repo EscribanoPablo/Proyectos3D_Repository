@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour
         }
         else
         {
-            //FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().cannonballHit[Random.Range(0, FindObjectOfType<AudioManager>().cannonballHit.Count)], transform.position);
+            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().cannonballHit, transform.position);
             Destroy(this.gameObject);
         }
     }

@@ -49,60 +49,258 @@ MonoBehaviour:
   audioMusic: {fileID: 6137671414989037671}
   audioSFX: {fileID: 5762850803876662203}
   maxDistanceToHearSounds: 15
-  menuMusic: {fileID: 8300000, guid: f2c6ea91140ed1845b0c844497db4784, type: 3}
-  backgroundLevelMusic: {fileID: 8300000, guid: f2c6ea91140ed1845b0c844497db4784,
-    type: 3}
+  menuMusic:
+    Guid:
+      Data1: 558102303
+      Data2: 1209863200
+      Data3: -607926399
+      Data4: 1145845787
+    Path: "event:/36.AMBIENTE & RISAS & M\xDASICA/M\xDASICA"
+  backgroundLevelMusic:
+    Guid:
+      Data1: 558102303
+      Data2: 1209863200
+      Data3: -607926399
+      Data4: 1145845787
+    Path: "event:/36.AMBIENTE & RISAS & M\xDASICA/M\xDASICA"
   runSounds:
-  - {fileID: 8300000, guid: cf83d68981f531940bfde8f8ca97c192, type: 3}
+    Guid:
+      Data1: 1706274231
+      Data2: 1290177874
+      Data3: -679859276
+      Data4: -938682009
+    Path: event:/CHARACTER/1.CHR. RUN/PASOS
   JumpSound:
-  - {fileID: 8300000, guid: bc0e5826269af6849bd311320517a8bf, type: 3}
-  - {fileID: 8300000, guid: 041cb1dd15e1e364e9399387989bf40c, type: 3}
-  DoubleJumpSound: {fileID: 8300000, guid: a3efbb57550999f4196789bc42da85d1, type: 3}
-  DashSound: {fileID: 8300000, guid: a3efbb57550999f4196789bc42da85d1, type: 3}
-  WallJumpSound: {fileID: 8300000, guid: 3438ac92bdbd0b340991716e83769c99, type: 3}
+    Guid:
+      Data1: 899256986
+      Data2: 1093096282
+      Data3: -440367436
+      Data4: -263780592
+    Path: event:/CHARACTER/2.CHR. JUMP/CHARACTER JUMP
+  DoubleJumpSound:
+    Guid:
+      Data1: -1441344821
+      Data2: 1177639374
+      Data3: -1389856611
+      Data4: -1995666379
+    Path: event:/FX/13.DOUBLE JUMP + SHOOT CANON/DOUBLE JUMP + SHOOT CANON
+  DashSound:
+    Guid:
+      Data1: -1209969186
+      Data2: 1127518834
+      Data3: 340038318
+      Data4: 1470266249
+    Path: event:/FX/14.DASH/SHOT+DASH
+  WallJumpSound:
+    Guid:
+      Data1: 899256986
+      Data2: 1093096282
+      Data3: -440367436
+      Data4: -263780592
+    Path: event:/CHARACTER/2.CHR. JUMP/CHARACTER JUMP
   ShootSound:
-  - {fileID: 8300000, guid: a3efbb57550999f4196789bc42da85d1, type: 3}
-  cannonballHit: []
-  FallingToGroundSound: {fileID: 8300000, guid: e27d639a378b41d4593db059c1653727,
-    type: 3}
+    Guid:
+      Data1: 562663347
+      Data2: 1227725456
+      Data3: -958243687
+      Data4: -1919558260
+    Path: event:/FX/15.SHOOT CANON/SHOOT CANON
+  cannonballHit:
+    Guid:
+      Data1: 474065575
+      Data2: 1251166903
+      Data3: -986705787
+      Data4: 1582848517
+    Path: event:/FX/16.CANONBALL EXPLOSION/CANONBALL EXPLOSION
+  FallingToGroundSound:
+    Guid:
+      Data1: 445041527
+      Data2: 1321662420
+      Data3: -439291745
+      Data4: 477037587
+    Path: event:/CHARACTER/6.CHR. LANDING/CHR. LANDING
   RecieveDamageSound:
-  - {fileID: 8300000, guid: f9c5848b19c55474793266bea742d732, type: 3}
-  - {fileID: 8300000, guid: 172c0f0d4fa7a2646b1856db3dc633dd, type: 3}
-  - {fileID: 8300000, guid: 4dfdb3bb2ae88434fa79a0960af1bee6, type: 3}
-  - {fileID: 8300000, guid: 6505a440af3f73b498317a7aa884eed6, type: 3}
-  - {fileID: 8300000, guid: 462c7451f7052d44492984957fcaa8cc, type: 3}
-  - {fileID: 8300000, guid: 3b6e868e49c6e3748972d59eaf844603, type: 3}
-  - {fileID: 8300000, guid: a00069f8f009cf4418b53428d782587e, type: 3}
-  DieSound: {fileID: 8300000, guid: 5a85e8966dc5eb048a5f15aab39f2754, type: 3}
-  RespawnSound: {fileID: 8300000, guid: e245a7ed3ba1c544bb08abb0e33b6ea8, type: 3}
-  cirucsMasterLaughSound: {fileID: 0}
-  circusMasterHeySound: {fileID: 0}
-  circusMasterMoveHand: {fileID: 0}
-  ambientLaughtsSounds: []
-  ambientClapsSounds: []
+    Guid:
+      Data1: 1340167371
+      Data2: 1155911583
+      Data3: 907695754
+      Data4: -1667324486
+    Path: event:/CHARACTER/5&7.CHR. DEATH & HURT/CHR. HURT
+  DieSound:
+    Guid:
+      Data1: 1906738963
+      Data2: 1191284622
+      Data3: 807575224
+      Data4: 411917371
+    Path: event:/CHARACTER/5&7.CHR. DEATH & HURT/CHR. DEATH
+  RespawnSound:
+    Guid:
+      Data1: 1043801637
+      Data2: 1174799544
+      Data3: 2026474663
+      Data4: -471895825
+    Path: event:/FX/25.REAPARECER/REAPARECER
+  cirucsMasterLaughSound:
+    Guid:
+      Data1: 747054311
+      Data2: 1208267588
+      Data3: 823517873
+      Data4: -1945059529
+    Path: event:/FX/37.JEFE CIRCO/RISA JEFE
+  circusMasterHeySound:
+    Guid:
+      Data1: -206478635
+      Data2: 1218999592
+      Data3: -427781208
+      Data4: 421739091
+    Path: event:/FX/37.JEFE CIRCO/HEY JEFE
+  circusMasterMoveHand:
+    Guid:
+      Data1: -871148063
+      Data2: 1174727065
+      Data3: -481884795
+      Data4: 1812065761
+    Path: event:/FX/37.JEFE CIRCO/PASO JEFE
+  ambientLaughtsSounds:
+    Guid:
+      Data1: 1381155944
+      Data2: 1233466851
+      Data3: 1008175749
+      Data4: -1423562531
+    Path: "event:/36.AMBIENTE & RISAS & M\xDASICA/RISAS"
+  ambientClapsSounds:
+    Guid:
+      Data1: 2049429051
+      Data2: 1150311836
+      Data3: 2080174
+      Data4: -1559313613
+    Path: "event:/36.AMBIENTE & RISAS & M\xDASICA/APLAUSOS"
   GrabCollectibleSound:
-  - {fileID: 8300000, guid: 5137dfa193792a8479f23a0a10eb73f2, type: 3}
-  ActivateCheckPointSound: {fileID: 8300000, guid: f76473f02c8a28044808006b04dc8c00,
-    type: 3}
-  rotatorySpikesHitSound: {fileID: 0}
-  groundSpikesSound: {fileID: 8300000, guid: 23c5423f2a64d3e41ae355baf20e42bf, type: 3}
-  flipPlatformSound: {fileID: 8300000, guid: e820912a19f7d7147aecd7980aac8e1d, type: 3}
-  vibrateFallPlatformSound: {fileID: 0}
-  fallPlatformSound: {fileID: 8300000, guid: e57291f047c7daf46879a4c70c5d6b3c, type: 3}
-  breakingBoxSound: {fileID: 8300000, guid: 9bac45b645cdbae45a16626c5cd92618, type: 3}
-  breakingPlatformSound: {fileID: 0}
-  punchTrapSound: {fileID: 8300000, guid: 2f046a2a51271364cb12b21e5cbe75ee, type: 3}
-  buttonSpinSound: {fileID: 8300000, guid: 87c13001884f1d34b8e990f97246293a, type: 3}
-  doorOpenSound: {fileID: 8300000, guid: 620ca3a8f601b2340ba4c9c94a62e75c, type: 3}
-  bombAttackDeathSound: {fileID: 8300000, guid: 41940e57bc42671469f7f0ba06527b28,
-    type: 3}
-  levelEndedSound: {fileID: 0}
-  lightTurningOnSound: {fileID: 0}
-  transitionsSound: {fileID: 0}
-  movingInButtonsSound: {fileID: 8300000, guid: bad4a2df07c3cd340a6386cf24623261,
-    type: 3}
-  pressingButtonSounds: {fileID: 8300000, guid: 8a84b4626e8b0c44c8b0940306fdee8b,
-    type: 3}
+    Guid:
+      Data1: -327314676
+      Data2: 1161891182
+      Data3: 1263063219
+      Data4: 559642649
+    Path: event:/FX/26.COLLECTIONS/RECOGER1
+  ActivateCheckPointSound:
+    Guid:
+      Data1: -1249211858
+      Data2: 1311888628
+      Data3: -1260251734
+      Data4: 1680135430
+    Path: event:/FX/27.CHECKPOINT/CHECKPOINT
+  rotatorySpikesHitSound:
+    Guid:
+      Data1: 1531562575
+      Data2: 1328501356
+      Data3: 211931526
+      Data4: 811572641
+    Path: event:/CHARACTER/8.CHR SPIKE IMPACT/CHR SPIKE IMAPCT
+  groundSpikesSound:
+    Guid:
+      Data1: -1827080631
+      Data2: 1104515858
+      Data3: 1479986309
+      Data4: 986261492
+    Path: event:/FX/18&19.SPIKE IN & SPIKE OUT/SPIKE OUT
+  flipPlatformSound:
+    Guid:
+      Data1: -6080872
+      Data2: 1298306519
+      Data3: -931466082
+      Data4: 1130751414
+    Path: event:/FX/21.ROTATING PLATFORM/ROTATING PLATFORM
+  vibrateFallPlatformSound:
+    Guid:
+      Data1: -1077258636
+      Data2: 1258672968
+      Data3: 1837628827
+      Data4: -434205364
+    Path: event:/FX/23. TIC TAC/TIC TAC
+  fallPlatformSound:
+    Guid:
+      Data1: 1649886308
+      Data2: 1318921940
+      Data3: -1607360321
+      Data4: 1790157050
+    Path: event:/FX/22. CAIDA PLATAFORMA/CAIDA PLATAFORMA
+  breakingBoxSound:
+    Guid:
+      Data1: -1716353025
+      Data2: 1212583194
+      Data3: -20517484
+      Data4: -888112048
+    Path: event:/FX/29.BOX DESTROY/BOX DESTROY
+  breakingPlatformSound:
+    Guid:
+      Data1: -630002475
+      Data2: 1239730389
+      Data3: -1482454631
+      Data4: -9246166
+    Path: event:/FX/24.PLATAFORMA SE ROMPE/PLATAFORMA SE ROMPE
+  punchTrapSound:
+    Guid:
+      Data1: 712449909
+      Data2: 1207227054
+      Data3: -898456688
+      Data4: -1942981582
+    Path: event:/FX/20.PUNCH TOY/MUELLE
+  buttonSpinSound:
+    Guid:
+      Data1: 2142819075
+      Data2: 1142033433
+      Data3: 339936170
+      Data4: -1905864802
+    Path: event:/FX/31.DIANA/DIANA MECANSIMO
+  doorOpenSound:
+    Guid:
+      Data1: 454724071
+      Data2: 1099485393
+      Data3: 528471466
+      Data4: -784903999
+    Path: event:/FX/32.DOOR/DOOR OPEN
+  bombAttackDeathSound:
+    Guid:
+      Data1: -979750762
+      Data2: 1088883180
+      Data3: 111825296
+      Data4: -162391161
+    Path: event:/FX/15.SHOOT CANON/BOMBA
+  levelEndedSound:
+    Guid:
+      Data1: 1861280202
+      Data2: 1269144061
+      Data3: -27032177
+      Data4: 1362616685
+    Path: event:/FX/28.SUPERAR NIVEL/SUPERAR NIVEL
+  lightTurningOnSound:
+    Guid:
+      Data1: 460736219
+      Data2: 1194007823
+      Data3: -1893903703
+      Data4: -760232011
+    Path: "event:/FX/33.FOCOS ENCENDI\xC9NDOSE/FOCOS MENOS GRAVES"
+  transitionsSound:
+    Guid:
+      Data1: -1690752924
+      Data2: 1099566218
+      Data3: 981880214
+      Data4: 1180725036
+    Path: event:/FX/35.TRANSITION/TRANSITION
+  movingInButtonsSound:
+    Guid:
+      Data1: -1543587155
+      Data2: 1214221706
+      Data3: -1345354586
+      Data4: 1634169639
+    Path: event:/FX/34.BUTTON MENU/BUTTON MENU
+  pressingButtonSounds:
+    Guid:
+      Data1: -1543587155
+      Data2: 1214221706
+      Data3: -1345354586
+      Data4: 1634169639
+    Path: event:/FX/34.BUTTON MENU/BUTTON MENU
 --- !u!1 &1890011372834917050
 GameObject:
   m_ObjectHideFlags: 0
@@ -142,7 +340,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1890011372834917050}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 1335437432569521263, guid: ac83366066f7a8c42be1d8738c545f36,
     type: 2}
@@ -271,7 +469,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1941059829894588577}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6838652921303314263, guid: ac83366066f7a8c42be1d8738c545f36,
     type: 2}

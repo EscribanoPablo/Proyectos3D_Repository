@@ -218,7 +218,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (IsGrounded())
                 {
-                    audioManager.SetPlaySfx(audioManager.JumpSound[Random.Range(0, audioManager.JumpSound.Count)], transform.position);
+                    audioManager.SetPlaySfx(audioManager.JumpSound, transform.position);
                     Jump(jumpForce);
                     isJumping = true;
                     playerAnimator.SetTrigger("Jumped");

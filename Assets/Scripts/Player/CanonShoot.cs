@@ -66,7 +66,7 @@ public class CanonShoot : MonoBehaviour
 
     private void Shoot()
     {
-        audioManager.SetPlaySfx(audioManager.ShootSound[Random.Range(0, audioManager.ShootSound.Count)], 0.5f, transform.position);
+        audioManager.SetPlaySfx(audioManager.ShootSound, 0.5f, transform.position);
         nextTimeFire = Time.time + fireRate;
         canonForward = transform.forward;
         SpawnCanonParticles();
