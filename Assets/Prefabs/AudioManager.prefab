@@ -64,26 +64,26 @@ MonoBehaviour:
       Data4: 1145845787
     Path: "event:/36.AMBIENTE & RISAS & M\xDASICA/M\xDASICA"
   runSounds:
-  - Guid:
+    Guid:
       Data1: 1706274231
       Data2: 1290177874
       Data3: -679859276
       Data4: -938682009
     Path: event:/CHARACTER/1.CHR. RUN/PASOS
   JumpSound:
-  - Guid:
-      Data1: -1719152274
-      Data2: 1099091435
-      Data3: 1880200093
-      Data4: 920828716
-    Path: event:/CHARACTER/2.CHR. JUMP/CHR. JUMP
+    Guid:
+      Data1: 899256986
+      Data2: 1093096282
+      Data3: -440367436
+      Data4: -263780592
+    Path: event:/CHARACTER/2.CHR. JUMP/CHARACTER JUMP
   DoubleJumpSound:
     Guid:
-      Data1: -490971115
-      Data2: 1302986199
-      Data3: -1815327063
-      Data4: -128865223
-    Path: event:/CHARACTER/3.CHR. DOUBLE JUMP/CHR. DOUBLE JUMP
+      Data1: -1441344821
+      Data2: 1177639374
+      Data3: -1389856611
+      Data4: -1995666379
+    Path: event:/FX/13.DOUBLE JUMP + SHOOT CANON/DOUBLE JUMP + SHOOT CANON
   DashSound:
     Guid:
       Data1: -1209969186
@@ -93,20 +93,20 @@ MonoBehaviour:
     Path: event:/FX/14.DASH/SHOT+DASH
   WallJumpSound:
     Guid:
-      Data1: 1739886459
-      Data2: 1131240667
-      Data3: 1323240330
-      Data4: -1256986486
-    Path: event:/CHARACTER/4.CHR. WALL JUMPING/CHR. WALL JUMPING
+      Data1: 899256986
+      Data2: 1093096282
+      Data3: -440367436
+      Data4: -263780592
+    Path: event:/CHARACTER/2.CHR. JUMP/CHARACTER JUMP
   ShootSound:
-  - Guid:
+    Guid:
       Data1: 562663347
       Data2: 1227725456
       Data3: -958243687
       Data4: -1919558260
     Path: event:/FX/15.SHOOT CANON/SHOOT CANON
   cannonballHit:
-  - Guid:
+    Guid:
       Data1: 474065575
       Data2: 1251166903
       Data3: -986705787
@@ -120,18 +120,18 @@ MonoBehaviour:
       Data4: 477037587
     Path: event:/CHARACTER/6.CHR. LANDING/CHR. LANDING
   RecieveDamageSound:
-  - Guid:
-      Data1: 1340167371
-      Data2: 1155911583
-      Data3: 907695754
-      Data4: -1667324486
-    Path: event:/CHARACTER/5&7.CHR. DEATH & HURT/CHR. DEATH
-  DieSound:
     Guid:
       Data1: 1340167371
       Data2: 1155911583
       Data3: 907695754
       Data4: -1667324486
+    Path: event:/CHARACTER/5&7.CHR. DEATH & HURT/CHR. HURT
+  DieSound:
+    Guid:
+      Data1: 1906738963
+      Data2: 1191284622
+      Data3: 807575224
+      Data4: 411917371
     Path: event:/CHARACTER/5&7.CHR. DEATH & HURT/CHR. DEATH
   RespawnSound:
     Guid:
@@ -162,21 +162,21 @@ MonoBehaviour:
       Data4: 1812065761
     Path: event:/FX/37.JEFE CIRCO/PASO JEFE
   ambientLaughtsSounds:
-  - Guid:
+    Guid:
       Data1: 1381155944
       Data2: 1233466851
       Data3: 1008175749
       Data4: -1423562531
     Path: "event:/36.AMBIENTE & RISAS & M\xDASICA/RISAS"
   ambientClapsSounds:
-  - Guid:
+    Guid:
       Data1: 2049429051
       Data2: 1150311836
       Data3: 2080174
       Data4: -1559313613
     Path: "event:/36.AMBIENTE & RISAS & M\xDASICA/APLAUSOS"
   GrabCollectibleSound:
-  - Guid:
+    Guid:
       Data1: -327314676
       Data2: 1161891182
       Data3: 1263063219
@@ -275,11 +275,11 @@ MonoBehaviour:
     Path: event:/FX/28.SUPERAR NIVEL/SUPERAR NIVEL
   lightTurningOnSound:
     Guid:
-      Data1: 541476876
-      Data2: 1176728221
-      Data3: 527049663
-      Data4: 1132411878
-    Path: "event:/FX/33.FOCOS ENCENDI\xC9NDOSE/FOCOS NORMAL"
+      Data1: 460736219
+      Data2: 1194007823
+      Data3: -1893903703
+      Data4: -760232011
+    Path: "event:/FX/33.FOCOS ENCENDI\xC9NDOSE/FOCOS MENOS GRAVES"
   transitionsSound:
     Guid:
       Data1: -1690752924

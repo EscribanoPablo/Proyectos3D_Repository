@@ -18,15 +18,15 @@ public class AudioManager : MonoBehaviour
     public EventReference backgroundLevelMusic;
     
     [Header("AudioClips_Player")]
-    public List<EventReference> runSounds;
-    public List<EventReference> JumpSound;
+    public EventReference runSounds;
+    public EventReference JumpSound;
     public EventReference DoubleJumpSound;
     public EventReference DashSound;
     public EventReference WallJumpSound;
-    public List<EventReference> ShootSound;
-    public List<EventReference> cannonballHit;
+    public EventReference ShootSound;
+    public EventReference cannonballHit;
     public EventReference FallingToGroundSound;
-    public List<EventReference> RecieveDamageSound;
+    public EventReference RecieveDamageSound;
     public EventReference DieSound;
     public EventReference RespawnSound;
 
@@ -34,9 +34,9 @@ public class AudioManager : MonoBehaviour
     public EventReference cirucsMasterLaughSound;
     public EventReference circusMasterHeySound;
     public EventReference circusMasterMoveHand;
-    public List<EventReference> ambientLaughtsSounds;
-    public List<EventReference> ambientClapsSounds;
-    public List<EventReference> GrabCollectibleSound;
+    public EventReference ambientLaughtsSounds;
+    public EventReference ambientClapsSounds;
+    public EventReference GrabCollectibleSound;
     public EventReference ActivateCheckPointSound;
     public EventReference rotatorySpikesHitSound;
     public EventReference groundSpikesSound;

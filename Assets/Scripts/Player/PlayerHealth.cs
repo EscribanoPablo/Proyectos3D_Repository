@@ -117,12 +117,12 @@ public class PlayerHealth : MonoBehaviour
         {
             currentLifes = startLifes;
             
-            audioManager.SetPlaySfx(audioManager.RecieveDamageSound[Random.Range(0, audioManager.RecieveDamageSound.Count)], transform.position);
+            audioManager.SetPlaySfx(audioManager.RecieveDamageSound, transform.position);
             playerAnimator.SetTrigger("Hit");
         }
         else
         {
-            audioManager.SetPlaySfx(audioManager.RecieveDamageSound[Random.Range(0, audioManager.RecieveDamageSound.Count)], transform.position);
+            audioManager.SetPlaySfx(audioManager.RecieveDamageSound, transform.position);
             playerAnimator.SetTrigger("Hit");
         }
     }

@@ -179,7 +179,7 @@ public class CircusMasterMovement : MonoBehaviour
 
     private void CircusMasterMoveSound()
     {
-        FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().circusMasterMoveHand);
+        //FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().circusMasterMoveHand);
     }
 }
 
