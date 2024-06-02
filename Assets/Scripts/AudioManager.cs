@@ -84,7 +84,7 @@ public class AudioManager : MonoBehaviour
         //audioMusic.clip = backgroundLevelMusic;
         //audioMusic.Play();
 
-        //RuntimeManager.PlayOneShot(backgroundLevelMusic);
+        RuntimeManager.PlayOneShot(backgroundLevelMusic);
     }
 
     //public void playMusic(AudioClip musicClip)
