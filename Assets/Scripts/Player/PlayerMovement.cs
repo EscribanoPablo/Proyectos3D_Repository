@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject canonIdle;
     [SerializeField] GameObject canonParticles;
     [SerializeField] GameObject wallJumpParticles;
+    [SerializeField] GameObject jumpParticles;
+
 
 
     [SerializeField] Transform spawnJumpCanonParticlesPos;
@@ -230,6 +232,10 @@ public class PlayerMovement : MonoBehaviour
                 {
                     audioManager.SetPlaySfx(audioManager.JumpSound, transform.position);
                     Jump(jumpForce);
+
+                    ParticleSystem particlesJump = jumpParticles.GetComponent<ParticleSystem>();
+                    particlesJump.Emit(5);
+
                     isJumping = true;
                     playerAnimator.SetTrigger("Jumped");
                 }
@@ -468,7 +474,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void KillXZVelocity()
     {
-        rigidBody.velocity = new Vector3(0, rigidBody.velocity.y-1, 0);
+        rigidBody.velocity = new Vector3(0, rigidBody.velocity.y-0.5f, 0);
         Debug.Log(rigidBody.velocity);
     }
 

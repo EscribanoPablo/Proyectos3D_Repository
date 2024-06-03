@@ -37,6 +37,7 @@ public class Bullet : MonoBehaviour
             FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().cannonballHit, transform.position);
             ParticleSystem explosionParticle = GameObject.Instantiate(explosionParticles, transform.position, transform.rotation);
             explosionParticle.Play();
+            Destroy(explosionParticle, 3);
             Destroy(this.gameObject);
         }
     }
