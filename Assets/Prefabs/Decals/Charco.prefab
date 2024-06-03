@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 81802117186179369}
   - component: {fileID: 2629462988546258985}
   - component: {fileID: 258335009684528016}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Charco
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7172851519578394031}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.70710677, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 3.1, y: -4.73, z: 1.93}
   m_LocalScale: {x: 3.3533068, y: 3.3533068, z: 3.3533068}
   m_ConstrainProportionsScale: 0
@@ -99,10 +99,10 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
