@@ -66,6 +66,15 @@ public class AudioManager : MonoBehaviour
     public EventReference movingInButtonsSound;
     public EventReference pressingButtonSounds;
 
+    public float GetSXFVolume()
+    {
+        return SFXVolume;
+    }
+    public float GetMusicVolume()
+    {
+        return MusicVolume;
+    }
+
     public void SetPlaySfx(EventReference sfxClip)
     {
         playSFX(sfxClip);
