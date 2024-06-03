@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] float bulletSpeed = 20;
+    [SerializeField] ParticleSystem explosionParticles;
     CanonShoot canonShoot;
     Rigidbody rb;
     Vector3 direction;
@@ -30,7 +31,8 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.tag == "Breakable")
         {
-
+            explosionParticles.transform.position = collision.contacts[0].point;
+            explosionParticles.Play();
         }
         else
         {
