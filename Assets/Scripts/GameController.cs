@@ -10,6 +10,8 @@ public class GameController : MonoBehaviour
 
     public PlayerController player;
 
+    public AudioManager audioManager;
+
     public CameraController cameraController;
 
     public GameObject destroyObjects;
