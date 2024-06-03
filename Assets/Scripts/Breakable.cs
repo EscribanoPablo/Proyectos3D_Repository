@@ -12,6 +12,9 @@ public class Breakable : Obstacles, IRestartLevelElement
     [SerializeField] GameObject damageParticles;
     [SerializeField] GameObject childrenDamageParticles;
 
+    [SerializeField] bool isPlatform;
+    [SerializeField] float platformReappearTime;
+
     Vector3[] breakableStartPosition;
     Quaternion[] breakableStartRotation;
 
@@ -62,10 +65,10 @@ public class Breakable : Obstacles, IRestartLevelElement
 
             if (rigidBody != null) rigidBody.isKinematic = true;
 
-            ParticleSystem particles = damageParticles.GetComponent<ParticleSystem>();
+            /*ParticleSystem particles = damageParticles.GetComponent<ParticleSystem>();
             ParticleSystem childrenParticles = childrenDamageParticles.GetComponent<ParticleSystem>();
             childrenParticles.Emit(10);
-            particles.Emit(10);
+            particles.Emit(10);*/
 
             StartCoroutine(DesactivateGameObject());
         }
@@ -119,5 +122,16 @@ public class Breakable : Obstacles, IRestartLevelElement
         yield return new WaitForSeconds(timeToDisappear);
         //esto se tendria que hacer mas suave, haciendolo desaparecer poco a poco
         prefracturedObject.SetActive(false);
+        if (isPlatform)
+        {
+            StartCoroutine(ReappearPlatform());
+        }
+    }
+
+    IEnumerator ReappearPlatform()
+    {
+        yield return new WaitForSeconds(platformReappearTime);
+
+        RestartLevel();
     }
 }
