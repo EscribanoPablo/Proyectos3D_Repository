@@ -26,6 +26,8 @@ public class PlayerHealth : MonoBehaviour
     private Animator playerAnimator;
 
     [SerializeField] GameObject damageParticles;
+    [SerializeField] GameObject childrenDamageParticles;
+
 
     private void Start()
     {
@@ -69,6 +71,8 @@ public class PlayerHealth : MonoBehaviour
 
                 damageParticles.SetActive(true);
                 ParticleSystem particles = damageParticles.GetComponent<ParticleSystem>();
+                ParticleSystem childrenParticles = childrenDamageParticles.GetComponent<ParticleSystem>();
+                childrenParticles.Emit(10);
                 particles.Emit(10);
 
                 //Debug.Log("Player current health = " + currentLifes);
@@ -117,12 +121,12 @@ public class PlayerHealth : MonoBehaviour
         {
             currentLifes = startLifes;
             
-            audioManager.SetPlaySfx(audioManager.RecieveDamageSound[Random.Range(0, audioManager.RecieveDamageSound.Count)], transform.position);
+            audioManager.SetPlaySfx(audioManager.RecieveDamageSound, transform.position);
             playerAnimator.SetTrigger("Hit");
         }
         else
         {
-            audioManager.SetPlaySfx(audioManager.RecieveDamageSound[Random.Range(0, audioManager.RecieveDamageSound.Count)], transform.position);
+            audioManager.SetPlaySfx(audioManager.RecieveDamageSound, transform.position);
             playerAnimator.SetTrigger("Hit");
         }
     }

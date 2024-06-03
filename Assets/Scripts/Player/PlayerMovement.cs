@@ -34,6 +34,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rotationTime = 0.1f;
     float turnSmoothVelocity;
     bool isMoving;
+    [SerializeField] float transitionDurationStart = 0.5f; 
+    [SerializeField] float transitionDurationStop = 0.5f; 
+    private float transitionTimer = 0f;
+    float speedAnimation = 0; 
     public bool playerControllerEnabled { get; set;}
 
     [Header("Jump Variables")]
@@ -85,48 +89,52 @@ public class PlayerMovement : MonoBehaviour
         canDash = true;
         playerControllerEnabled = true;
         wallJumpParticles.SetActive(false);
+        speedAnimation = 0;
 
     }
 
     private void Update()
     {
-        Jumper();
-        if (!onWall)
+        if (playerControllerEnabled)
         {
-            PlayerDash();
+            Jumper();
+            if (!onWall)
+            {
+                PlayerDash();
 
-            if (IsGrounded())
-            {
-                ResetJumps();
-                rigidBody.drag = 5;
-            }
-            else
-            {
-                if (HeadOnWall() && canWall)
+                if (IsGrounded())
                 {
-                    SetOnWall();
-                }
-                else if (HeadOnWall())
-                {
-                    KillXZVelocity();
+                    ResetJumps();
+                    rigidBody.drag = 5;
                 }
                 else
                 {
-                    rigidBody.drag = 0.5f;
+                    if (HeadOnWall() && canWall)
+                    {
+                        SetOnWall();
+                    }
+                    else if (HeadOnWall())
+                    {
+                        KillXZVelocity();
+                    }
+                    else
+                    {
+                        rigidBody.drag = 0.5f;
+                    }
+
                 }
 
+                if (!isDashing)
+                    SpeedControl();
             }
-
-            if (!isDashing)
-                SpeedControl();
-        }
-        else
-        {
-            wallTimer += Time.deltaTime;
-            if ((wallTimer > timeToWallFall) || (!HeadOnWall()))
+            else
             {
-                WallFall();
-                wallTimer = 0;
+                wallTimer += Time.deltaTime;
+                if ((wallTimer > timeToWallFall) || (!HeadOnWall()))
+                {
+                    WallFall();
+                    wallTimer = 0;
+                }
             }
         }
 
@@ -134,9 +142,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Movement();
-        UpdateDustParticles();
+        if (playerControllerEnabled)
+        {
+            Movement();
+            UpdateDustParticles();
+        }
     }
+
 
     private void Movement()
     {
@@ -154,34 +166,45 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.SetBool("OnWall", false);
             verticalSpeed += /*Physics.gravity.y*/ -gravity;
         }
-        if (playerControllerEnabled)
+
+        if (direction.magnitude >= 0.1f)
         {
-            if (direction.magnitude >= 0.1f)
-            {
-                isMoving = true;
-                //Look Where You Go
-                float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
-                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationTime);
-                transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            isMoving = true;
+            //Look Where You Go
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-                Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-                //moveDirection = l_MoveDir;
+            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            //moveDirection = l_MoveDir;
 
-                //Apply to rb
-                //m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
+            //Apply to rb
+            //m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
 
-                rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
-            }
-            else
-            {
-                isMoving = false;
-            }
-            
+            rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
+
+            transitionTimer += Time.deltaTime;
+            if (transitionTimer > transitionDurationStart) transitionTimer = transitionDurationStart;
+            speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
+        }
+        else
+        {
+            isMoving = false;
+
+            transitionTimer -= Time.deltaTime / transitionDurationStop * transitionDurationStart;
+            if (transitionTimer < 0f) transitionTimer = 0f;
+
+            speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
         }
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, verticalSpeed, rigidBody.velocity.z);
 
-        playerAnimator.SetFloat("Speed", direction.magnitude);
+        playerAnimator.SetFloat("Speed", speedAnimation);
 
+    }
+
+    public void SetSpeedAnimation(float speed)
+    {
+        playerAnimator.SetFloat("Speed", speed);
     }
 
     private void SpeedControl()
@@ -204,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (IsGrounded())
                 {
-                    audioManager.SetPlaySfx(audioManager.JumpSound[Random.Range(0, audioManager.JumpSound.Count)], transform.position);
+                    audioManager.SetPlaySfx(audioManager.JumpSound, transform.position);
                     Jump(jumpForce);
                     isJumping = true;
                     playerAnimator.SetTrigger("Jumped");

@@ -10,10 +10,12 @@ public class Checkpoint : MonoBehaviour
     [SerializeField]
     private AnimationClip checkpointClip;
     [SerializeField] GameObject checkPointParticles;
+    Animator animator;
 
     private void Start()
     {
         checkPointParticles.SetActive(false);
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -33,10 +35,16 @@ public class Checkpoint : MonoBehaviour
 
     IEnumerator SpawnCheckPointParticles()
     {
-        yield return new WaitForSeconds(0.75f);
+
+        AnimatorClipInfo[] clipInfo = animator.GetCurrentAnimatorClipInfo(0);
+        float clipDuration = clipInfo.Length > 0 ? clipInfo[0].clip.length : 0f;
+
+        yield return new WaitForSeconds(clipDuration);
         checkPointParticles.SetActive(true);
         ParticleSystem particleCheckPoint = checkPointParticles.GetComponent<ParticleSystem>();
         particleCheckPoint.Emit(40);
 
     }
+
+
 }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -13,66 +15,66 @@ public class AudioManager : MonoBehaviour
     private float maxDistanceToHearSounds = 20.0f;
 
     [Header("AudioClips_Music")]
-    public AudioClip menuMusic;
-    public AudioClip backgroundLevelMusic;
+    public EventReference menuMusic;
+    public EventReference backgroundLevelMusic;
     
     [Header("AudioClips_Player")]
-    public List<AudioClip> runSounds;
-    public List<AudioClip> JumpSound;
-    public AudioClip DoubleJumpSound;
-    public AudioClip DashSound;
-    public AudioClip WallJumpSound;
-    public List<AudioClip> ShootSound;
-    public List<AudioClip> cannonballHit;
-    public AudioClip FallingToGroundSound;
-    public List<AudioClip> RecieveDamageSound;
-    public AudioClip DieSound;
-    public AudioClip RespawnSound;
+    public EventReference runSounds;
+    public EventReference JumpSound;
+    public EventReference DoubleJumpSound;
+    public EventReference DashSound;
+    public EventReference WallJumpSound;
+    public EventReference ShootSound;
+    public EventReference cannonballHit;
+    public EventReference FallingToGroundSound;
+    public EventReference RecieveDamageSound;
+    public EventReference DieSound;
+    public EventReference RespawnSound;
 
     [Header("AudioClips_Environment/Obstacles")]
-    public AudioClip cirucsMasterLaughSound;
-    public AudioClip circusMasterHeySound;
-    public AudioClip circusMasterMoveHand;
-    public List<AudioClip> ambientLaughtsSounds;
-    public List<AudioClip> ambientClapsSounds;
-    public List<AudioClip> GrabCollectibleSound;
-    public AudioClip ActivateCheckPointSound;
-    public AudioClip rotatorySpikesHitSound;
-    public AudioClip groundSpikesSound;
-    public AudioClip flipPlatformSound;
-    public AudioClip vibrateFallPlatformSound;
-    public AudioClip fallPlatformSound;
-    public AudioClip breakingBoxSound;
-    public AudioClip breakingPlatformSound;
-    public AudioClip punchTrapSound;
-    public AudioClip buttonSpinSound;
-    public AudioClip doorOpenSound;
-    public AudioClip bombAttackDeathSound;
-    public AudioClip levelEndedSound;
-    public AudioClip lightTurningOnSound;
+    public EventReference cirucsMasterLaughSound;
+    public EventReference circusMasterHeySound;
+    public EventReference circusMasterMoveHand;
+    public EventReference ambientLaughtsSounds;
+    public EventReference ambientClapsSounds;
+    public EventReference GrabCollectibleSound;
+    public EventReference ActivateCheckPointSound;
+    public EventReference rotatorySpikesHitSound;
+    public EventReference groundSpikesSound;
+    public EventReference flipPlatformSound;
+    public EventReference vibrateFallPlatformSound;
+    public EventReference fallPlatformSound;
+    public EventReference breakingBoxSound;
+    public EventReference breakingPlatformSound;
+    public EventReference punchTrapSound;
+    public EventReference buttonSpinSound;
+    public EventReference doorOpenSound;
+    public EventReference bombAttackDeathSound;
+    public EventReference levelEndedSound;
+    public EventReference lightTurningOnSound;
 
     [Header("AudioClips_UI")]
-    public AudioClip transitionsSound;
-    public AudioClip movingInButtonsSound;
-    public AudioClip pressingButtonSounds;
+    public EventReference transitionsSound;
+    public EventReference movingInButtonsSound;
+    public EventReference pressingButtonSounds;
 
-    public void SetPlaySfx(AudioClip sfxClip)
+    public void SetPlaySfx(EventReference sfxClip)
     {
         playSFX(sfxClip);
     }
 
-    public void SetPlaySfx(AudioClip sfxClip, float audioVolume)
+    public void SetPlaySfx(EventReference sfxClip, float audioVolume)
     {
         playSFX(sfxClip, audioVolume);
     }
 
-    public void SetPlaySfx(AudioClip sfxClip, Vector3 position)
+    public void SetPlaySfx(EventReference sfxClip, Vector3 position)
     {
         if ((GameObject.FindGameObjectWithTag("Player").transform.position - position).magnitude <= maxDistanceToHearSounds)
             playSFX(sfxClip);
     }
 
-    public void SetPlaySfx(AudioClip sfxClip, float audioVolume, Vector3 position)
+    public void SetPlaySfx(EventReference sfxClip, float audioVolume, Vector3 position)
     {
         if((GameObject.FindGameObjectWithTag("Player").transform.position - position).magnitude <= maxDistanceToHearSounds)
             playSFX(sfxClip, audioVolume);
@@ -80,8 +82,11 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        audioMusic.clip = backgroundLevelMusic;
-        audioMusic.Play();
+        //audioMusic.clip = backgroundLevelMusic;
+        //audioMusic.Play();
+
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+            RuntimeManager.PlayOneShot(backgroundLevelMusic);
     }
 
     //public void playMusic(AudioClip musicClip)
@@ -90,13 +95,15 @@ public class AudioManager : MonoBehaviour
     //    audioMusic.Play();
     //}
 
-    private void playSFX(AudioClip sfxClip, float clipVolume)
+    private void playSFX(EventReference sfxClip, float clipVolume)
     {
-        audioSFX.PlayOneShot(sfxClip, clipVolume);
+        //audioSFX.PlayOneShot(sfxClip, clipVolume);
+        RuntimeManager.PlayOneShot(sfxClip);
     }
 
-    private void playSFX(AudioClip sfxClip)
+    private void playSFX(EventReference sfxClip)
     {
-        audioSFX.PlayOneShot(sfxClip, 1.0f);
+        //audioSFX.PlayOneShot(sfxClip, 1.0f);
+        RuntimeManager.PlayOneShot(sfxClip);
     }
 }
