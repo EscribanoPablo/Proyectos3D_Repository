@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
     Quaternion startRotation;
     Rigidbody rigidBody;
     [SerializeField] GameObject restartPlayerParticles;
+    PlayerMovement playerMovement;
+
+    [SerializeField] float timeToMoveAgain = 1; 
 
     private void Awake()
     {
@@ -18,6 +21,7 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
 
     private void Start()
     {
+        playerMovement = GetComponent<PlayerMovement>();
         Cursor.lockState = CursorLockMode.Locked;
         rigidBody = GetComponent<Rigidbody>();
         startPosition = transform.position;
@@ -31,16 +35,25 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
 
     IEnumerator ResetRigidbody()
     {
-        yield return new WaitForSeconds(0.1f);
         rigidBody.velocity = Vector3.zero;
+        yield return new WaitForSeconds(0.1f);
         transform.position = startPosition;
         transform.rotation = startRotation;
         ResetLight();
 
+        yield return new WaitForSeconds(0.1f);
+        playerMovement.playerControllerEnabled = false;
+        rigidBody.velocity = Vector3.zero;
+        playerMovement.SetSpeedAnimation(0);
+
         ParticleSystem particles = restartPlayerParticles.GetComponent<ParticleSystem>();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         particles.Emit(20);
+
+        yield return new WaitForSeconds(timeToMoveAgain);
+        playerMovement.playerControllerEnabled = true;
+
     }
 
     private void ResetLight()
