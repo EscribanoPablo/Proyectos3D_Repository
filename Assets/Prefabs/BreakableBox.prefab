@@ -54,6 +54,8 @@ MonoBehaviour:
   breakerTag: Cannonball
   damageParticles: {fileID: 7632042616126111306}
   childrenDamageParticles: {fileID: 409748543415349672}
+  isPlatform: 0
+  platformReappearTime: 0
   timeToDisappear: 2
   boxExplosionForce: 20
 --- !u!65 &2745197764908644027
@@ -117,6 +119,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: DamageParticles
       objectReference: {fileID: 0}
+    - target: {fileID: 5918984849766847822, guid: a306fb2539b429e4194029a6844b3e69,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ecdad80b39324cf44af3b794a8f442a0, type: 2}
+    - target: {fileID: 5918984849766847822, guid: a306fb2539b429e4194029a6844b3e69,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: ecdad80b39324cf44af3b794a8f442a0, type: 2}
     - target: {fileID: 7412003977269092422, guid: a306fb2539b429e4194029a6844b3e69,
         type: 3}
       propertyPath: m_LocalRotation.w
