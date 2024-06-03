@@ -421,9 +421,9 @@ public class PlayerMovement : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + (Vector3.forward * wallDetectionDistance));
-        Gizmos.DrawLine(transform.position + (Vector3.up * wallDetectionOffset), transform.position + (Vector3.forward * wallDetectionDistance) + (Vector3.up * wallDetectionOffset));
-        Gizmos.DrawLine(transform.position - (Vector3.up * wallDetectionOffset), transform.position + (Vector3.forward * wallDetectionDistance) - (Vector3.up * wallDetectionOffset));
+        Gizmos.DrawLine(transform.position, transform.position + (transform.forward * wallDetectionDistance));
+        Gizmos.DrawLine(transform.position + (Vector3.up * wallDetectionOffset), transform.position + (transform.forward * wallDetectionDistance) + (Vector3.up * wallDetectionOffset));
+        Gizmos.DrawLine(transform.position - (Vector3.up * wallDetectionOffset), transform.position + (transform.forward * wallDetectionDistance) - (Vector3.up * wallDetectionOffset));
     }
 
     private void SetOnWall()
@@ -468,7 +468,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void KillXZVelocity()
     {
-        rigidBody.velocity = new Vector3(0, rigidBody.velocity.y, 0);
+        rigidBody.velocity = new Vector3(0, rigidBody.velocity.y-1, 0);
+        Debug.Log(rigidBody.velocity);
     }
 
 }
