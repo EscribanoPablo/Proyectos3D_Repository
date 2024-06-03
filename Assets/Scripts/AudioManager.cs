@@ -14,6 +14,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private float maxDistanceToHearSounds = 20.0f;
 
+    CharacterController characterController;
+
     [Header("Volume")]
     FMOD.Studio.Bus Music;
     FMOD.Studio.Bus SFX;
@@ -90,6 +92,16 @@ public class AudioManager : MonoBehaviour
     {
         Music = RuntimeManager.GetBus("bus:/Music");
         SFX = RuntimeManager.GetBus("bus:/SFX");
+
+        if (GameController.GetGameController().audioManager == null)
+        {
+            GameController.GetGameController().audioManager = this;
+            GameObject.DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            GameObject.Destroy(this.gameObject);
+        }
     }
 
     private void Start()
