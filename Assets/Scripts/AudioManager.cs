@@ -14,6 +14,12 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private float maxDistanceToHearSounds = 20.0f;
 
+    [Header("Volume")]
+    FMOD.Studio.Bus Music;
+    FMOD.Studio.Bus SFX;
+    float MusicVolume = 0.5f;
+    float SFXVolume = 0.5f;
+
     [Header("AudioClips_Music")]
     public EventReference menuMusic;
     public EventReference backgroundLevelMusic;
@@ -80,6 +86,12 @@ public class AudioManager : MonoBehaviour
             playSFX(sfxClip, audioVolume);
     }
 
+    void Awake()
+    {
+        Music = RuntimeManager.GetBus("bus:/Music");
+        SFX = RuntimeManager.GetBus("bus:/SFX");
+    }
+
     private void Start()
     {
         //audioMusic.clip = backgroundLevelMusic;
@@ -87,6 +99,22 @@ public class AudioManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().name == "MainMenu")
             RuntimeManager.PlayOneShot(backgroundLevelMusic);
+    }
+
+    void Update()
+    {
+        Music.setVolume(MusicVolume);
+        SFX.setVolume(SFXVolume);
+    }
+
+    public void MusicVolumeLevel(float newMusicVolume)
+    {
+        MusicVolume = newMusicVolume;
+    }
+
+    public void SFXVolumeLevel(float newSFXVolume)
+    {
+        SFXVolume = newSFXVolume;
     }
 
     //public void playMusic(AudioClip musicClip)
