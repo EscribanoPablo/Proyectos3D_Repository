@@ -64,7 +64,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float wallJumpUpForce;
     [SerializeField] float wallJumpSideForce;
     [SerializeField] float wallDetectionDistance = 0.02f;
-    [SerializeField] float wallDetectionOffset = 0.5f;
     [SerializeField] float timeToWallFall = 3f;
     private bool onWall = false;
     private bool canWall = true;
@@ -413,17 +412,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool HeadOnWall()
     {
-        return Physics.Raycast(transform.position, transform.forward, wallDetectionDistance, whatIsWall) ||
-            Physics.Raycast(transform.position + (Vector3.up*wallDetectionOffset), transform.forward, wallDetectionDistance, whatIsWall) ||
-            Physics.Raycast(transform.position - (Vector3.up * wallDetectionOffset), transform.forward, wallDetectionDistance, whatIsWall);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + (transform.forward * wallDetectionDistance));
-        Gizmos.DrawLine(transform.position + (Vector3.up * wallDetectionOffset), transform.position + (transform.forward * wallDetectionDistance) + (Vector3.up * wallDetectionOffset));
-        Gizmos.DrawLine(transform.position - (Vector3.up * wallDetectionOffset), transform.position + (transform.forward * wallDetectionDistance) - (Vector3.up * wallDetectionOffset));
+        return Physics.Raycast(transform.position, transform.forward, wallDetectionDistance, whatIsWall);
     }
 
     private void SetOnWall()
@@ -468,8 +457,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void KillXZVelocity()
     {
-        rigidBody.velocity = new Vector3(0, rigidBody.velocity.y-1, 0);
-        Debug.Log(rigidBody.velocity);
+        rigidBody.velocity = new Vector3(0, rigidBody.velocity.y, 0);
     }
 
 }
