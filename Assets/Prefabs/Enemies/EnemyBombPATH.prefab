@@ -215,6 +215,11 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[1]
       value: 
       objectReference: {fileID: 5521800061979147161}
+    - target: {fileID: 7872863231994027898, guid: 14acd0c3e8b9d9541a36361e9128a42a,
+        type: 3}
+      propertyPath: m_AngularSpeed
+      value: 280
+      objectReference: {fileID: 0}
     - target: {fileID: 7932092292164947394, guid: 14acd0c3e8b9d9541a36361e9128a42a,
         type: 3}
       propertyPath: m_LocalPosition.x
