@@ -927,6 +927,7 @@ MonoBehaviour:
   wallJumpUpForce: 13
   wallJumpSideForce: 13
   wallDetectionDistance: 1.2
+  wallDetectionOffset: 0.6
   timeToWallFall: 3
   playerAnimator: {fileID: 3282902346876754578}
 --- !u!54 &2113590656291869998
@@ -1033,6 +1034,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   restartPlayerParticles: {fileID: 5547534478382688585}
+  timeToMoveAgain: 1
 --- !u!114 &2407899779544871975
 MonoBehaviour:
   m_ObjectHideFlags: 0
