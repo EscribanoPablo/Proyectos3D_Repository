@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] float bulletSpeed = 20;
+    [SerializeField] ParticleSystem explosionParticles;
     CanonShoot canonShoot;
     Rigidbody rb;
     Vector3 direction;
@@ -30,11 +31,12 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.tag == "Breakable")
         {
-
         }
         else
         {
             FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().cannonballHit, transform.position);
+            ParticleSystem explosionParticle = GameObject.Instantiate(explosionParticles, transform.position, transform.rotation);
+            explosionParticle.Play();
             Destroy(this.gameObject);
         }
     }
