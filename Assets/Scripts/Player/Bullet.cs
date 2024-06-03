@@ -31,12 +31,12 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.tag == "Breakable")
         {
-            explosionParticles.transform.position = collision.contacts[0].point;
-            explosionParticles.Play();
         }
         else
         {
             FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().cannonballHit, transform.position);
+            ParticleSystem explosionParticle = GameObject.Instantiate(explosionParticles, transform.position, transform.rotation);
+            explosionParticle.Play();
             Destroy(this.gameObject);
         }
     }
