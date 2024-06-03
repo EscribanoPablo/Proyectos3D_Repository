@@ -56,6 +56,5 @@ public class FollowingPlayerAsLight : MonoBehaviour
     {
         Vector3 abovePlayerPosition = new Vector3(player.transform.position.x, player.transform.position.y + heightOffset, player.transform.position.z);
         transform.position = abovePlayerPosition;
-        Debug.Log(transform.position + "  " + abovePlayerPosition);
     }
 }

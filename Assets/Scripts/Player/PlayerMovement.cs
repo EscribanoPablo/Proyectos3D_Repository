@@ -363,7 +363,6 @@ public class PlayerMovement : MonoBehaviour
         if (isDashing) return;
         if (/*Input.GetKeyDown(dashKey)*/playerInput.actions["Dash"].WasPressedThisFrame() && canDash)
         {
-            Debug.Log("dash");
             StartCoroutine(DoDash());
         }
     }
