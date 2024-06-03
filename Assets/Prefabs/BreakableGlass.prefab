@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5772943645126798882}
   - component: {fileID: 2195509113175365363}
-  - component: {fileID: 85559064794679284}
+  - component: {fileID: 7430026358953050406}
   m_Layer: 7
   m_Name: BreakableGlass
   m_TagString: Breakable
@@ -52,9 +52,11 @@ MonoBehaviour:
   wholeObject: {fileID: 7653853359096741372}
   prefracturedObject: {fileID: 6128470642692150597}
   breakerTag: Cannonball
+  damageParticles: {fileID: 0}
+  childrenDamageParticles: {fileID: 0}
   timeToDisappear: 5
   boxExplosionForce: 0
---- !u!65 &85559064794679284
+--- !u!65 &7430026358953050406
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -69,12 +71,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.2615447, y: 0.55943155, z: 5.472275}
-  m_Center: {x: -0.050147295, y: 0, z: 0.0888567}
+  m_Size: {x: 9, y: 0.2551155, z: 7.3055916}
+  m_Center: {x: 0, y: 0.121444464, z: 0}
 --- !u!1001 &31566959040393341
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1849,7 +1851,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0d8598821425d664a86ee028df879a42,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5608932638833111132}
+      addedObject: {fileID: 4794029153667740339}
   m_SourcePrefab: {fileID: 100100000, guid: 0d8598821425d664a86ee028df879a42, type: 3}
 --- !u!4 &7024528794611640134 stripped
 Transform:
@@ -1863,7 +1865,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7419287610862403757}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &5608932638833111132
+--- !u!65 &4794029153667740339
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1882,5 +1884,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.3457289, y: 3.3271787, z: 0.3257679}
-  m_Center: {x: 0.0035456675, y: -0.0027958835, z: 0.15787609}
+  m_Size: {x: 4.000129, y: 4.0001283, z: 0.254002}
+  m_Center: {x: -0.0000009504882, y: -0.0000000051759974, z: 0.12700026}
