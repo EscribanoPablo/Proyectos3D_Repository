@@ -6,7 +6,9 @@ public class AmbientSounds : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientClapsSounds);
+        if(Random.Range(0, 4) == 0)
+            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientClapsSounds);
+
         FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientLaughtsSounds);
 
         FindObjectOfType<BoxCollider>().enabled = false;

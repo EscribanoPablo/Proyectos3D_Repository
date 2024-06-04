@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField]
-    AudioSource audioMusic;
-    [SerializeField]
-    AudioSource audioSFX;
+    //[SerializeField]
+    //AudioSource audioMusic;
+    //[SerializeField]
+    //AudioSource audioSFX;
 
     [SerializeField]
     private float maxDistanceToHearSounds = 20.0f;

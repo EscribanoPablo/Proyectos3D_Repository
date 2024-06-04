@@ -27,7 +27,6 @@ public class RotatingSpikes : Traps
         if (other.gameObject.tag == PLAYER_TAG)
         {
             other.gameObject.GetComponent<PlayerHealth>().TakeDamage(GetComponentInParent<Transform>().position);
-            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().rotatorySpikesHitSound, 0.5f, transform.position);
         }
     }
 }
