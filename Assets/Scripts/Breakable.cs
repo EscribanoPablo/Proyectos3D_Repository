@@ -69,8 +69,8 @@ public class Breakable : Obstacles, IRestartLevelElement
             {
                 ParticleSystem particles = damageParticles.GetComponent<ParticleSystem>();
                 ParticleSystem childrenParticles = childrenDamageParticles.GetComponent<ParticleSystem>();
-                childrenParticles.Emit(10);
-                particles.Emit(10);
+                childrenParticles.Emit(5);
+                particles.Emit(5);
             }
 
 
