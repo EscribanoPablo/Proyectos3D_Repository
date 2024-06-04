@@ -48,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float doubleJumpForce;
     int currentJumps;
     bool isOnAir = false;
+    public bool canJump { get; set; } 
     public bool DoubleJump => doubleJump;
     bool doubleJump;
     [SerializeField] float gravity;
@@ -76,10 +77,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Animator playerAnimator;
 
-    public bool GetIsJumping()
-    {
-        return isJumping;
-    }
 
     void Start()
     {
@@ -93,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
         playerControllerEnabled = true;
         wallJumpParticles.SetActive(false);
         speedAnimation = 0;
+        canJump = true; 
 
     }
 
@@ -226,7 +224,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (/*Input.GetKeyDown(m_JumpKey)*/playerInput.actions["Jump"].WasPressedThisFrame())
         {
-            if (currentJumps < multipleJumps && !isDashing)
+            if (currentJumps < multipleJumps && !isDashing && canJump)
             {
                 if (IsGrounded())
                 {
@@ -250,8 +248,10 @@ public class PlayerMovement : MonoBehaviour
                 {
                     audioManager.SetPlaySfx(audioManager.DoubleJumpSound, 0.5f, transform.position);
                     Jump(doubleJumpForce);
-                    CanonJump();
                     canonShoot.ShootBullet();
+                    canonShoot.SpawnCanonParticles();
+                    canonShoot.currentTimeShoot = 0; 
+
                     doubleJump = false;
                     isJumping = true;
                     playerAnimator.SetTrigger("DoubleJumped");
@@ -341,28 +341,6 @@ public class PlayerMovement : MonoBehaviour
         {
             StopParticles(dustParticles);
         }
-
-    }
-
-    IEnumerator HoldCanonAgain(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        armCanon.SetActive(true);
-        canonIdle.SetActive(true);
-        armCanonJump.SetActive(false);
-        canonJump.SetActive(false);
-    }
-
-    private void CanonJump()
-    {
-        armCanonJump.SetActive(true);
-        canonJump.SetActive(true);
-        armCanon.SetActive(false);
-        canonIdle.SetActive(false);
-        //SpawnCanonParticles(canonParticles, spawnJumpCanonParticlesPos.position);
-        canonShoot.SpawnCanonParticles();
-
-        StartCoroutine(HoldCanonAgain(0.25f));
     }
 
     private void PlayerDash()
@@ -397,6 +375,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         canonShoot.ShootBullet();
+        canonShoot.currentTimeShoot = 0;
 
         yield return new WaitForSeconds(dashDuration);
 
@@ -462,8 +441,6 @@ public class PlayerMovement : MonoBehaviour
         //PlayParticles(wallJumpParticles);
         SpawnCanonParticles(wallJumpParticles, wallJumpParticles.transform.position);
         //StopParticles(wallJumpParticles);
-
-        
     }
 
     private void WallFall()
@@ -476,6 +453,10 @@ public class PlayerMovement : MonoBehaviour
     {
         rigidBody.velocity = new Vector3(0, rigidBody.velocity.y-0.5f, 0);
         Debug.Log(rigidBody.velocity);
+    }
+    public bool GetIsJumping()
+    {
+        return isJumping;
     }
 
 }
