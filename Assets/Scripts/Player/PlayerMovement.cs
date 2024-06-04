@@ -19,11 +19,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject wallJumpParticles;
     [SerializeField] GameObject jumpParticles;
 
-
-
-    [SerializeField] Transform spawnJumpCanonParticlesPos;
+    [SerializeField] Transform spawnBulletDoubleJumpPosition;
     [SerializeField] CanonShoot canonShoot;
     [SerializeField] GameObject dustParticles;
+    [SerializeField] Transform spawnBulletDashPosition;
+
 
     [Header("Inputs")]
     //[SerializeField] KeyCode m_JumpKey;
@@ -248,7 +248,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     audioManager.SetPlaySfx(audioManager.DoubleJumpSound, 0.5f, transform.position);
                     Jump(doubleJumpForce);
-                    canonShoot.ShootBullet();
+                    canonShoot.ShootBullet(spawnBulletDoubleJumpPosition.position);
                     canonShoot.SpawnCanonParticles();
                     canonShoot.currentTimeShoot = 0; 
 
@@ -374,7 +374,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        canonShoot.ShootBullet();
+        canonShoot.ShootBullet(spawnBulletDashPosition.position);
         canonShoot.currentTimeShoot = 0;
 
         yield return new WaitForSeconds(dashDuration);

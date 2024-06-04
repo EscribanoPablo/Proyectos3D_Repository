@@ -46,7 +46,7 @@ public class CanonShoot : MonoBehaviour
             if (/*Input.GetMouseButton(shootButton)*/playerInput.actions["Shoot"].WasPressedThisFrame() && currentTimeShoot >= nextTimeFire)
             {
                 StartCoroutine(Shoot());
-                ShootBullet();
+                ShootBullet(spawnPosition.position);
                 
                 playerAnimator.SetTrigger("Shoot");
             }
@@ -86,9 +86,9 @@ public class CanonShoot : MonoBehaviour
         canonParticles.GetComponent<ParticleSystem>().Play();
     }
 
-    public void ShootBullet()
+    public void ShootBullet(Vector3 position)
     {
-        GameObject _bullet = Instantiate(bulletPrefab, spawnPosition.position, bulletPrefab.transform.rotation);
+        GameObject _bullet = Instantiate(bulletPrefab, position, bulletPrefab.transform.rotation);
         Destroy(_bullet, 10);
     }
 }
