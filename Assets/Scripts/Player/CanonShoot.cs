@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Random = UnityEngine.Random;
@@ -17,8 +18,8 @@ public class CanonShoot : MonoBehaviour
     [SerializeField] GameObject canonBoomParticles;
     [SerializeField] GameObject canonParticles;
 
-    [SerializeField] float fireRate = 0.5f;
-    [SerializeField] float nextTimeFire = 0.2f;
+    [SerializeField] float nextTimeFire = 1f;
+    public float currentTimeShoot { get; set; }
 
     public Vector3 CanonForward => canonForward;
     private Vector3 canonForward;
@@ -39,13 +40,14 @@ public class CanonShoot : MonoBehaviour
 
     private void Update()
     {
+        currentTimeShoot += Time.deltaTime;
         if (Time.timeScale == 1)
         {
-            if (/*Input.GetMouseButton(shootButton)*/playerInput.actions["Shoot"].WasPressedThisFrame() && Time.time >= nextTimeFire)
+            if (/*Input.GetMouseButton(shootButton)*/playerInput.actions["Shoot"].WasPressedThisFrame() && currentTimeShoot >= nextTimeFire)
             {
-                Shoot();
-                ShootBullet();
-
+                StartCoroutine(Shoot());
+                ShootBullet(spawnPosition.position);
+                
                 playerAnimator.SetTrigger("Shoot");
             }
             else if (/*Input.GetKeyDown(KeyCode.LeftShift)*/playerInput.actions["Dash"].WasPressedThisFrame()) /////////////////////// ARREGLAR
@@ -61,16 +63,18 @@ public class CanonShoot : MonoBehaviour
             }
         }
 
-
     }
 
-    private void Shoot()
+    IEnumerator Shoot()
     {
         audioManager.SetPlaySfx(audioManager.ShootSound, 0.5f, transform.position);
-        nextTimeFire = Time.time + fireRate;
+        currentTimeShoot = 0;
         canonForward = transform.forward;
         SpawnCanonParticles();
-        //playerMovement.SpawnCanonParticles(canonBoomParticles, canonBoomParticles.transform.position);
+        playerMovement.canJump = false;
+
+        yield return new WaitForSeconds(0.25f);
+        playerMovement.canJump = true;
     }
 
     public void SpawnCanonParticles()
@@ -82,9 +86,9 @@ public class CanonShoot : MonoBehaviour
         canonParticles.GetComponent<ParticleSystem>().Play();
     }
 
-    public void ShootBullet()
+    public void ShootBullet(Vector3 position)
     {
-        GameObject _bullet = Instantiate(bulletPrefab, spawnPosition.position, bulletPrefab.transform.rotation);
+        GameObject _bullet = Instantiate(bulletPrefab, position, bulletPrefab.transform.rotation);
         Destroy(_bullet, 10);
     }
 }

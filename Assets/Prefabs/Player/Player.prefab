@@ -913,9 +913,10 @@ MonoBehaviour:
     type: 3}
   wallJumpParticles: {fileID: 7334190416142256798}
   jumpParticles: {fileID: 7286329852137414549}
-  spawnJumpCanonParticlesPos: {fileID: 6870223169479544195}
+  spawnBulletDoubleJumpPosition: {fileID: 6870223169479544195}
   canonShoot: {fileID: 5741698530815852904}
   dustParticles: {fileID: 8196844698687515114}
+  spawnBulletDashPosition: {fileID: 824903714382592646}
   speedMovement: 40
   maxVelocity: 6
   rotationTime: 0.2
@@ -1021,8 +1022,7 @@ MonoBehaviour:
     type: 3}
   canonBoomParticles: {fileID: 5241242940701029559}
   canonParticles: {fileID: 3138042963513272267}
-  fireRate: 1
-  nextTimeFire: 0.2
+  nextTimeFire: 1
   playerAnimator: {fileID: 3282902346876754578}
 --- !u!114 &5280560021130776560
 MonoBehaviour:
@@ -2003,7 +2003,7 @@ Transform:
   m_GameObject: {fileID: 9187376411180312453}
   serializedVersion: 2
   m_LocalRotation: {x: 0.021023218, y: 0.68178225, z: 0.7309901, w: 0.019607997}
-  m_LocalPosition: {x: -0.023913877, y: 0.58749497, z: 0.014113619}
+  m_LocalPosition: {x: -0.19, y: 0.631, z: -0.467}
   m_LocalScale: {x: 1.7075472, y: 1.4999285, z: 1.5492678}
   m_ConstrainProportionsScale: 0
   m_Children: []
