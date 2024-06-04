@@ -61,6 +61,7 @@
 	<object class="GroupTrack" id="{8585b82a-3dea-481a-9da7-0bd27f32b16e}">
 		<relationship name="modules">
 			<destination>{f48e99c2-cf5a-44c1-a854-18f054f91b12}</destination>
+			<destination>{797ae0ed-8643-4689-96c9-c6dda7d979d8}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{7710899e-c86a-4dc2-8607-27407f8deb7b}</destination>
@@ -69,6 +70,7 @@
 	<object class="Timeline" id="{6edef2d2-94d2-47d2-87fa-68a760af4d96}">
 		<relationship name="modules">
 			<destination>{f48e99c2-cf5a-44c1-a854-18f054f91b12}</destination>
+			<destination>{797ae0ed-8643-4689-96c9-c6dda7d979d8}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{9818246c-c44a-4547-81f4-5938e90369b3}">
@@ -90,13 +92,39 @@
 	<object class="MixerBusPanner" id="{a158e4a9-4574-498a-8a77-4954442765cf}" />
 	<object class="SingleSound" id="{f48e99c2-cf5a-44c1-a854-18f054f91b12}">
 		<property name="length">
-			<value>0.23839583333333333</value>
+			<value>0.17254482474714403</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>0.1128131216702695</value>
+		</property>
+		<property name="volume">
+			<value>-80</value>
+		</property>
+		<property name="pitch">
+			<value>-5.5</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{cdb71026-e843-457e-8eb9-4d6083c10a1a}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{797ae0ed-8643-4689-96c9-c6dda7d979d8}">
+		<property name="start">
+			<value>0.17254482474714403</value>
+		</property>
+		<property name="length">
+			<value>0.32754482474714397</value>
+		</property>
+		<property name="pitch">
+			<value>-5.5</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{cdb71026-e843-457e-8eb9-4d6083c10a1a}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{7710899e-c86a-4dc2-8607-27407f8deb7b}">
+		<property name="volume">
+			<value>-12</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>

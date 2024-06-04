@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{902f28ea-ca2e-45e3-927f-d5a90d967b03}">
+		<property name="assetPath">
+			<value>crowdLaugh.mp3</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>32</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>29.988</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{cd574ac3-f0db-4a5a-a39a-c71bcd21aeec}</destination>
+		</relationship>
+	</object>
+</objects>

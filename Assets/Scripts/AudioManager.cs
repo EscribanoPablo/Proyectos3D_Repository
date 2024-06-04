@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
 using UnityEngine.SceneManagement;
+using FMOD.Studio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -25,7 +26,12 @@ public class AudioManager : MonoBehaviour
     [Header("AudioClips_Music")]
     public EventReference menuMusic;
     public EventReference backgroundLevelMusic;
-    
+    public EventReference ambientNoiseSound;
+
+    private EventInstance instanceMenuSong;
+    private EventInstance instanceGameSong;
+    private EventInstance instanceCrowdNoise;
+
     [Header("AudioClips_Player")]
     public EventReference runSounds;
     public EventReference JumpSound;
@@ -55,6 +61,7 @@ public class AudioManager : MonoBehaviour
     public EventReference breakingBoxSound;
     public EventReference breakingPlatformSound;
     public EventReference punchTrapSound;
+    public EventReference punchTrapHitSound;
     public EventReference buttonSpinSound;
     public EventReference doorOpenSound;
     public EventReference bombAttackDeathSound;
@@ -118,8 +125,13 @@ public class AudioManager : MonoBehaviour
         //audioMusic.clip = backgroundLevelMusic;
         //audioMusic.Play();
 
-        if (SceneManager.GetActiveScene().name == "MainMenu")
-            RuntimeManager.PlayOneShot(backgroundLevelMusic);
+        instanceMenuSong = RuntimeManager.CreateInstance(menuMusic);
+        instanceGameSong = RuntimeManager.CreateInstance(menuMusic);
+        instanceCrowdNoise = RuntimeManager.CreateInstance(menuMusic);
+
+        instanceMenuSong.start();
+        instanceMenuSong.release();
+        //instanceMenuSong.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     void Update()

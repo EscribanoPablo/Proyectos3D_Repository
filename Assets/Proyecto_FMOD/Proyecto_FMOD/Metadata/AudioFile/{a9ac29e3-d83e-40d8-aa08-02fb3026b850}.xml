@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{a9ac29e3-d83e-40d8-aa08-02fb3026b850}">
+		<property name="assetPath">
+			<value>CrowdNoises.flac</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>180</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{cd574ac3-f0db-4a5a-a39a-c71bcd21aeec}</destination>
+		</relationship>
+	</object>
+</objects>

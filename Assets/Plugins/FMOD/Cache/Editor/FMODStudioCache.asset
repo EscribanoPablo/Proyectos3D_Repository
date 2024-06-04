@@ -131,7 +131,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 238
+  Length: 500
 --- !u!114 &-7156648942545021124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,13 +504,13 @@ MonoBehaviour:
     Data4: -1423562531
   Banks:
   - {fileID: -1171099192714362602}
-  IsStream: 0
+  IsStream: 1
   Is3D: 0
   IsOneShot: 1
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 4631
+  Length: 4650
 --- !u!114 &-4382081294576755454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,10 +715,10 @@ MonoBehaviour:
   Path: Assets/Proyecto_FMOD/Proyecto_FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638531180138676535
+  lastModified: 638531340576898460
   FileSizes:
   - Name: Desktop
-    Value: 2183872
+    Value: 4759296
   Exists: 1
 --- !u!114 &-1155037153516824789
 MonoBehaviour:
@@ -762,10 +762,10 @@ MonoBehaviour:
   Path: Assets/Proyecto_FMOD/Proyecto_FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638531125366413712
+  lastModified: 638531340576963424
   FileSizes:
   - Name: Desktop
-    Value: 3982
+    Value: 4018
   Exists: 1
 --- !u!114 &-617027351597156443
 MonoBehaviour:
@@ -794,6 +794,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 944
+--- !u!114 &-352296962162488249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: "event:/36.AMBIENTE & RISAS & M\xDASICA/NOISES"
+  m_EditorClassIdentifier: 
+  Path: "event:/36.AMBIENTE & RISAS & M\xDASICA/NOISES"
+  Guid:
+    Data1: -2087735427
+    Data2: 1298396155
+    Data3: 1636816777
+    Data4: -97788248
+  Banks:
+  - {fileID: -1171099192714362602}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 180000
 --- !u!114 &-338895296749545240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -891,12 +918,13 @@ MonoBehaviour:
   - {fileID: 7995278304860264263}
   - {fileID: -6235584809418186026}
   - {fileID: -4927193312136610820}
+  - {fileID: -352296962162488249}
   EditorParameters: []
   MasterBanks:
   - {fileID: -1171099192714362602}
   StringsBanks:
   - {fileID: -624920892974660021}
-  cacheTime: 638531180138676535
+  cacheTime: 638531340576963424
   cacheVersion: 131618
 --- !u!114 &41122358759208174
 MonoBehaviour:
