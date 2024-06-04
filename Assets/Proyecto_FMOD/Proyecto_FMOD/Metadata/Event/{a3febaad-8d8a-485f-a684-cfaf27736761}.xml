@@ -94,22 +94,16 @@
 		<property name="length">
 			<value>0.45141039476957734</value>
 		</property>
-		<property name="pitch">
-			<value>-2.79999995</value>
-		</property>
 		<relationship name="audioFile">
 			<destination>{2139245c-3c13-440b-ab8e-d3207f673ab7}</destination>
 		</relationship>
 	</object>
 	<object class="SingleSound" id="{456f3182-b60c-43ae-b2bb-392107e23324}">
 		<property name="start">
-			<value>0.029999999999999999</value>
+			<value>0.040000000000000001</value>
 		</property>
 		<property name="length">
 			<value>0.38400000000000001</value>
-		</property>
-		<property name="pitch">
-			<value>-2.79999995</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{a5e9c40a-c414-4b74-872f-28b2fe9799e5}</destination>
@@ -149,7 +143,7 @@
 	<object class="MixerBusFader" id="{e5a39135-7755-4b3a-8131-5f1bffca35ce}" />
 	<object class="PitchShifterEffect" id="{6b0e6476-9b19-48ff-b05b-c3e14082f937}">
 		<property name="pitch">
-			<value>1.80999994</value>
+			<value>1.10000002</value>
 		</property>
 		<property name="fftSize">
 			<value>820</value>
