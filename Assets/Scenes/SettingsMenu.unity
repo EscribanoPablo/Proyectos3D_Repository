@@ -3095,8 +3095,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1282434534}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+      - m_Target: {fileID: 1556573082}
+        m_TargetAssemblyTypeName: FindAudioManager, Assembly-CSharp
         m_MethodName: SFXVolumeLevel
         m_Mode: 0
         m_Arguments:
@@ -3694,18 +3694,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79bc59eca4e2a4242bbdd4215cf322fd, type: 3}
---- !u!114 &1282434534 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6008174964156712024, guid: 79bc59eca4e2a4242bbdd4215cf322fd,
-    type: 3}
-  m_PrefabInstance: {fileID: 1282434533}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe99d651316d0ee419c3f6c0820b3d47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1311949700
 GameObject:
   m_ObjectHideFlags: 0
@@ -3809,8 +3797,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1282434534}
-        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+      - m_Target: {fileID: 1556573082}
+        m_TargetAssemblyTypeName: FindAudioManager, Assembly-CSharp
         m_MethodName: MusicVolumeLevel
         m_Mode: 0
         m_Arguments:
@@ -4785,6 +4773,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1556573081}
+  - component: {fileID: 1556573082}
   m_Layer: 5
   m_Name: Volume
   m_TagString: Untagged
@@ -4813,6 +4802,20 @@ RectTransform:
   m_AnchoredPosition: {x: -81.52, y: -75.4}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1556573082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1556573080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8c58e47adba5047a257bfafb7d2416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SFXVolumeSlider: {fileID: 1133759030}
+  MusicVolumeSlider: {fileID: 1311949702}
 --- !u!1 &1609774938
 GameObject:
   m_ObjectHideFlags: 0

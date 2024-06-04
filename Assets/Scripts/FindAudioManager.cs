@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FindAudioManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private Slider SFXVolumeSlider;
+    [SerializeField]
+    private Slider MusicVolumeSlider;
+
+    private void Update()
     {
-        
+        SFXVolumeSlider.value = FindObjectOfType<AudioManager>().GetSXFVolume();
+        MusicVolumeSlider.value = FindObjectOfType<AudioManager>().GetMusicVolume();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void MusicVolumeLevel(float newMusicVolume)
     {
-        
+        FindObjectOfType<AudioManager>().MusicVolumeLevel(newMusicVolume);
+    }
+
+    public void SFXVolumeLevel(float newSFXVolume)
+    {
+        FindObjectOfType<AudioManager>().SFXVolumeLevel(newSFXVolume);
     }
 }
