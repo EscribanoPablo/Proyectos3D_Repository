@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayStepsSounds : MonoBehaviour
 {
-    private void OnEnable()
+    private void PlayStepsSound()
     {
         FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().runSounds, transform.position);
     }

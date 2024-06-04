@@ -95,11 +95,17 @@
 		<property name="timelockedOffset">
 			<value>0.050000000000000003</value>
 		</property>
+		<property name="pitch">
+			<value>-1.80000007</value>
+		</property>
 		<relationship name="audioFile">
 			<destination>{220152e0-a7ab-433a-9138-b8f981e1da08}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{fd2f9269-da89-42fd-8b47-41bd11bb9d5a}">
+		<property name="volume">
+			<value>-14</value>
+		</property>
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
