@@ -6,6 +6,9 @@ public class Knockback : Traps
 {
     [SerializeField] float knockBackImpulse; 
     PlayerMovement player;
+    [SerializeField] GameObject damageParticles;
+    [SerializeField] GameObject childrenDamageParticles;
+
 
     private void Start()
     {
@@ -19,6 +22,14 @@ public class Knockback : Traps
             player.GetComponent<PlayerMovement>().playerControllerEnabled = false;
             collision.gameObject.GetComponent<PlayerHealth>().AddKnockback(transform.position, knockBackImpulse);
             StartCoroutine(PunchPlayer());
+
+            if (damageParticles != null && childrenDamageParticles != null)
+            {
+                ParticleSystem particles = damageParticles.GetComponent<ParticleSystem>();
+                ParticleSystem childrenParticles = childrenDamageParticles.GetComponent<ParticleSystem>();
+                childrenParticles.Emit(5);
+                particles.Emit(5);
+            }
         }
     }
 

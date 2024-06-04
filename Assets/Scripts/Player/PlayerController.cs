@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
         ParticleSystem particles = restartPlayerParticles.GetComponent<ParticleSystem>();
 
         yield return new WaitForSeconds(0.25f);
-        particles.Emit(20);
+        particles.Emit(4);
 
         yield return new WaitForSeconds(timeToMoveAgain);
         playerMovement.playerControllerEnabled = true;
