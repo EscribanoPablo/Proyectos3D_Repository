@@ -11,12 +11,15 @@ public class MenusController : MonoBehaviour
     [SerializeField]
     private GameObject pauseMenu;
 
+    [SerializeField] GameObject controlMenu;
+
     private void Start()
     {
         if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
         {
             playerInputs = FindObjectOfType<PlayerInput>();
         }
+        controlMenu.SetActive(false);
     }
 
     private void Update()
@@ -72,5 +75,17 @@ public class MenusController : MonoBehaviour
             }
             SceneManager.LoadScene("MainMenu");
         }
+    }
+
+    public void ControlsButtonPressed()
+    {
+        pauseMenu.SetActive(false);
+        controlMenu.SetActive(true);
+    }
+
+    public void ReturnButtonPressed()
+    {
+        pauseMenu.SetActive(true);
+        controlMenu.SetActive(false);
     }
 }
