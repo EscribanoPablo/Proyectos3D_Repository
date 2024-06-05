@@ -3865,7 +3865,7 @@ MonoBehaviour:
     m_Mode: 4
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 1133759030}
-    m_SelectOnDown: {fileID: 0}
+    m_SelectOnDown: {fileID: 185211390}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -4088,6 +4088,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
+  controlMenu: {fileID: 0}
 --- !u!114 &1344817745
 MonoBehaviour:
   m_ObjectHideFlags: 0
