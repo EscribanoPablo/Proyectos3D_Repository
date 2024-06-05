@@ -321,6 +321,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1384
+--- !u!114 &-5774534087330318449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: "event:/36.AMBIENTE & RISAS & M\xDASICA/M\xDASICA-MENU"
+  m_EditorClassIdentifier: 
+  Path: "event:/36.AMBIENTE & RISAS & M\xDASICA/M\xDASICA-MENU"
+  Guid:
+    Data1: 2008637306
+    Data2: 1224278752
+    Data3: 2037668481
+    Data4: 230084629
+  Banks:
+  - {fileID: -1171099192714362602}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 156000
 --- !u!114 &-5185699030705997176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,10 +742,10 @@ MonoBehaviour:
   Path: Assets/Proyecto_FMOD/Proyecto_FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638531340576898460
+  lastModified: 638531910702532957
   FileSizes:
   - Name: Desktop
-    Value: 4759296
+    Value: 6296256
   Exists: 1
 --- !u!114 &-1155037153516824789
 MonoBehaviour:
@@ -762,10 +789,10 @@ MonoBehaviour:
   Path: Assets/Proyecto_FMOD/Proyecto_FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638531340576963424
+  lastModified: 638531910702584464
   FileSizes:
   - Name: Desktop
-    Value: 4018
+    Value: 4066
   Exists: 1
 --- !u!114 &-617027351597156443
 MonoBehaviour:
@@ -919,12 +946,13 @@ MonoBehaviour:
   - {fileID: -6235584809418186026}
   - {fileID: -4927193312136610820}
   - {fileID: -352296962162488249}
+  - {fileID: -5774534087330318449}
   EditorParameters: []
   MasterBanks:
   - {fileID: -1171099192714362602}
   StringsBanks:
   - {fileID: -624920892974660021}
-  cacheTime: 638531340576963424
+  cacheTime: 638531910702584464
   cacheVersion: 131618
 --- !u!114 &41122358759208174
 MonoBehaviour:
@@ -1544,7 +1572,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 1075
+  Length: 520
 --- !u!114 &7941101882670373576
 MonoBehaviour:
   m_ObjectHideFlags: 0
