@@ -207,6 +207,12 @@ PrefabInstance:
       objectReference: {fileID: 7218731115131656916}
     - target: {fileID: 4210757856112458466, guid: 14acd0c3e8b9d9541a36361e9128a42a,
         type: 3}
+      propertyPath: explosionParticles
+      value: 
+      objectReference: {fileID: 3054148924898103664, guid: 7a47a897ebe6c034cb33397ba99d36f7,
+        type: 3}
+    - target: {fileID: 4210757856112458466, guid: 14acd0c3e8b9d9541a36361e9128a42a,
+        type: 3}
       propertyPath: patrolPoints.Array.data[0]
       value: 
       objectReference: {fileID: 3390984396957823370}
