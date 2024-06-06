@@ -161,13 +161,13 @@ public class AudioManager : MonoBehaviour
 
     public void StopMusic(EventInstance musicEventToStop)
     {
-        musicEventToStop.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        musicEventToStop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     public void PlayMusic(EventInstance musicEventToPlay)
     {
         musicEventToPlay.start();
-        musicEventToPlay.release();
+        //musicEventToPlay.release();
     }
 
     private void playSFX(EventReference sfxClip, float clipVolume)

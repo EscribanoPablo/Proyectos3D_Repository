@@ -24,6 +24,8 @@ public class Checkpoint : MonoBehaviour
         {
             other.GetComponent<PlayerController>().SetRespawnPos(gameObject.transform);
             checkpointGrabbed = true;
+            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>().SetTrigger("Celebrate");
+            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientClapsSounds);
 
             StartCoroutine(SpawnCheckPointParticles());
 

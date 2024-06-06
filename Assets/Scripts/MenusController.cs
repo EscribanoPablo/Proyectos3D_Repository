@@ -45,10 +45,6 @@ public class MenusController : MonoBehaviour
             GameObject.FindObjectOfType<PlayTransition>().GoBlack(true);
 
             Cursor.lockState = CursorLockMode.Locked;
-
-            FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
-            FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceGameSong);
-            FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
         }
         else if(SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
         {

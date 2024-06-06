@@ -13,6 +13,11 @@ public class Collectible : MonoBehaviour
             gameObject.SetActive(false);
             FindObjectOfType<HudController>().CollectibleTaken();
             FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().GrabCollectibleSound, transform.position);
+
+            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>().SetTrigger("Celebrate");
+
+            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientClapsSounds);
+            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientLaughtsSounds);
         }
     }
 }
