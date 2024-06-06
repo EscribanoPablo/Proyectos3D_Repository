@@ -14,17 +14,32 @@ public class MenusController : MonoBehaviour
     [SerializeField] 
     private GameObject controlMenu;
 
+    [SerializeField]
+    private GameObject creditsText;
+    Animator creditsAnimator;
+    float currentTime = 0;
+    float clipDuration;
+
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
+        if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02" || SceneManager.GetActiveScene().name == "TutorialLevel")
         {
             playerInputs = FindObjectOfType<PlayerInput>();
+        }
+        if (SceneManager.GetActiveScene().name == "CreditsScene")
+        {
+            if (creditsText != null)
+            {
+                creditsAnimator = creditsText.GetComponent<Animator>();
+                AnimatorClipInfo[] clipInfo = creditsAnimator.GetCurrentAnimatorClipInfo(0);
+                clipDuration = clipInfo.Length > 0 ? clipInfo[0].clip.length : 0f;
+            }
         }
     }
 
     private void Update()
     {
-        if(SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
+        if(SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02" || SceneManager.GetActiveScene().name == "TutorialLevel")
         {
             if (playerInputs.actions["PauseGame"].WasPressedThisFrame())
             {
@@ -32,6 +47,15 @@ public class MenusController : MonoBehaviour
                pauseMenu.SetActive(true);
                 playerInputs.enabled = false;
                 Time.timeScale = 0;
+            }
+        }
+        if (SceneManager.GetActiveScene().name == "CreditsScene")
+        {
+            currentTime += Time.deltaTime;
+            if (currentTime > clipDuration)
+            {
+                currentTime = 0;
+                FindObjectOfType<PlayTransition>().GoBlack(false);
             }
         }
     }
@@ -46,7 +70,7 @@ public class MenusController : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.Locked;
         }
-        else if(SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
+        else if(SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02" || SceneManager.GetActiveScene().name == "TutorialLevel")
         {
             FindObjectOfType<AudioManager>().AugmentVolume();
             pauseMenu.SetActive(false);
@@ -54,6 +78,11 @@ public class MenusController : MonoBehaviour
             Time.timeScale = 1;
             Cursor.lockState = CursorLockMode.Locked;
         }
+    }
+
+    public void TutorialButtonPressed()
+    {
+        SceneManager.LoadScene("TutorialLevel");
     }
 
     public void SettingsButtonPressed()
@@ -75,9 +104,12 @@ public class MenusController : MonoBehaviour
                 playerInputs.enabled = true;
                 Time.timeScale = 1;
 
-                FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
-                FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
-                FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
+                if(SceneManager.GetActiveScene().name != "TutorialLevel")
+                {
+                    FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
+                    FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
+                    FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
+                }
             }
             SceneManager.LoadScene("MainMenu");
         }

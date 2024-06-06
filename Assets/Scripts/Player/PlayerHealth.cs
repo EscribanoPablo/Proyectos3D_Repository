@@ -146,10 +146,13 @@ public class PlayerHealth : MonoBehaviour
         audioManager.SetPlaySfx(audioManager.DieSound, transform.position);
 
         audioManager.SetPlaySfx(audioManager.cirucsMasterLaughSound, transform.position);
-        audioManager.SetPlaySfx(audioManager.ambientLaughtsSounds, transform.position);
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
+            audioManager.SetPlaySfx(audioManager.ambientLaughtsSounds, transform.position);
         
         yield return new WaitForSeconds(1f);
-        FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
+
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
+            FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
 
         Die();
     }

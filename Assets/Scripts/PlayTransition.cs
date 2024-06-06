@@ -39,6 +39,11 @@ public class PlayTransition : MonoBehaviour
             FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
             FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
         }
+        else if (SceneManager.GetActiveScene().name == "TutorialLevel")
+        {
+            GameController.GetGameController().EmptyRestartList();
+            SceneManager.LoadScene("MainMenu");
+        }
         else if (SceneManager.GetActiveScene().name == "BetaLevel01")
         {
             GameController.GetGameController().EmptyRestartList();
