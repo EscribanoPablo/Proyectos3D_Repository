@@ -37,7 +37,7 @@ public class FallingPlatform : Traps
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == PLAYER_TAG && !disappearing)
+        if(collision.gameObject.tag == PLAYER_TAG && !disappearing && !playerTouched)
         {
             if (PlayerOnPlatform(collision))
             {
@@ -50,7 +50,7 @@ public class FallingPlatform : Traps
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag == PLAYER_TAG && !disappearing)
+        if (collision.gameObject.tag == PLAYER_TAG && !disappearing && !playerTouched)
         {
             if (PlayerOnPlatform(collision))
             {

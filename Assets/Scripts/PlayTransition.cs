@@ -35,6 +35,9 @@ public class PlayTransition : MonoBehaviour
         {
             GameController.GetGameController().EmptyRestartList();
             SceneManager.LoadScene("BetaLevel01");
+
+            FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
+            FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
         }
         else if (SceneManager.GetActiveScene().name == "BetaLevel01")
         {
@@ -45,6 +48,10 @@ public class PlayTransition : MonoBehaviour
         {
             GameController.GetGameController().EmptyRestartList();
             SceneManager.LoadScene("MainMenu");
+
+            FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
+            FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
+            FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
         }
     }
 

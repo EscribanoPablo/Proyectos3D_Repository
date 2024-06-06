@@ -20,7 +20,7 @@ public class AudioManager : MonoBehaviour
     [Header("Volume")]
     FMOD.Studio.Bus Music;
     FMOD.Studio.Bus SFX;
-    float MusicVolume = 0.5f;
+    float musicVolume = 0.5f;
     float SFXVolume = 0.5f;
 
     [Header("AudioClips_Music")]
@@ -28,9 +28,9 @@ public class AudioManager : MonoBehaviour
     public EventReference backgroundLevelMusic;
     public EventReference ambientNoiseSound;
 
-    private EventInstance instanceMenuSong;
-    private EventInstance instanceGameSong;
-    private EventInstance instanceCrowdNoise;
+    public EventInstance instanceMenuSong;
+    public EventInstance instanceGameSong;
+    public EventInstance instanceCrowdNoise;
 
     [Header("AudioClips_Player")]
     public EventReference runSounds;
@@ -79,7 +79,7 @@ public class AudioManager : MonoBehaviour
     }
     public float GetMusicVolume()
     {
-        return MusicVolume;
+        return musicVolume;
     }
 
     public void SetPlaySfx(EventReference sfxClip)
@@ -126,23 +126,32 @@ public class AudioManager : MonoBehaviour
         //audioMusic.Play();
 
         instanceMenuSong = RuntimeManager.CreateInstance(menuMusic);
-        instanceGameSong = RuntimeManager.CreateInstance(menuMusic);
-        instanceCrowdNoise = RuntimeManager.CreateInstance(menuMusic);
+        instanceGameSong = RuntimeManager.CreateInstance(backgroundLevelMusic);
+        instanceCrowdNoise = RuntimeManager.CreateInstance(ambientNoiseSound);
 
         instanceMenuSong.start();
         instanceMenuSong.release();
-        //instanceMenuSong.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     void Update()
     {
-        Music.setVolume(MusicVolume);
+        Music.setVolume(musicVolume);
         SFX.setVolume(SFXVolume);
+    }
+
+    public void ReduceVolume()
+    {
+        musicVolume /= 1.5f;
+    }
+
+    public void AugmentVolume()
+    {
+        musicVolume *= 1.5f;
     }
 
     public void MusicVolumeLevel(float newMusicVolume)
     {
-        MusicVolume = newMusicVolume;
+        musicVolume = newMusicVolume;
     }
 
     public void SFXVolumeLevel(float newSFXVolume)
@@ -150,11 +159,16 @@ public class AudioManager : MonoBehaviour
         SFXVolume = newSFXVolume;
     }
 
-    //public void playMusic(AudioClip musicClip)
-    //{
-    //    audioMusic.clip = musicClip;
-    //    audioMusic.Play();
-    //}
+    public void StopMusic(EventInstance musicEventToStop)
+    {
+        musicEventToStop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
+
+    public void PlayMusic(EventInstance musicEventToPlay)
+    {
+        musicEventToPlay.start();
+        //musicEventToPlay.release();
+    }
 
     private void playSFX(EventReference sfxClip, float clipVolume)
     {

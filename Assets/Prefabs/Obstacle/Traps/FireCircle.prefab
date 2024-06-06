@@ -95,6 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2865739117766065518}
   - component: {fileID: 398826093186473091}
+  - component: {fileID: 6728142219744017053}
   m_Layer: 0
   m_Name: FireCircle
   m_TagString: Untagged
@@ -141,6 +142,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 5, z: 0.09}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6728142219744017053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4662780668368711994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785f6f5d2abdcec4abd3e3ad2708379a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5085111512435933296
 PrefabInstance:
   m_ObjectHideFlags: 0

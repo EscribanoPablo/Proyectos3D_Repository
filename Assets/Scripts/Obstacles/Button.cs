@@ -19,6 +19,9 @@ public class Button : Obstacles
     {
         if (collision.transform.tag == BULLET_TAG && !doorOpened)
         {
+            if (Random.Range(0, 2) == 0)
+                FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientClapsSounds);
+
             m_Event.Invoke();
             //buttonAnimations.Play(buttonPressedAnimation.name);
             doorOpened = true;

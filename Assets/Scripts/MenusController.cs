@@ -11,6 +11,9 @@ public class MenusController : MonoBehaviour
     [SerializeField]
     private GameObject pauseMenu;
 
+    [SerializeField] 
+    private GameObject controlMenu;
+
     private void Start()
     {
         if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
@@ -25,7 +28,8 @@ public class MenusController : MonoBehaviour
         {
             if (playerInputs.actions["PauseGame"].WasPressedThisFrame())
             {
-                pauseMenu.SetActive(true);
+                FindObjectOfType<AudioManager>().ReduceVolume();
+               pauseMenu.SetActive(true);
                 playerInputs.enabled = false;
                 Time.timeScale = 0;
             }
@@ -37,7 +41,6 @@ public class MenusController : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             Time.timeScale = 1;
-            //SceneManager.LoadScene("BetaLevel01");
 
             GameObject.FindObjectOfType<PlayTransition>().GoBlack(true);
 
@@ -45,6 +48,7 @@ public class MenusController : MonoBehaviour
         }
         else if(SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
         {
+            FindObjectOfType<AudioManager>().AugmentVolume();
             pauseMenu.SetActive(false);
             playerInputs.enabled = true;
             Time.timeScale = 1;
@@ -67,10 +71,27 @@ public class MenusController : MonoBehaviour
         {
             if(SceneManager.GetActiveScene().name != "SettingsMenu")
             {
+                FindObjectOfType<AudioManager>().AugmentVolume();
                 playerInputs.enabled = true;
                 Time.timeScale = 1;
+
+                FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
+                FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
+                FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
             }
             SceneManager.LoadScene("MainMenu");
         }
+    }
+
+    public void ControlsButtonPressed()
+    {
+        pauseMenu.SetActive(false);
+        controlMenu.SetActive(true);
+    }
+
+    public void ReturnButtonPressed()
+    {
+        pauseMenu.SetActive(true);
+        controlMenu.SetActive(false);
     }
 }

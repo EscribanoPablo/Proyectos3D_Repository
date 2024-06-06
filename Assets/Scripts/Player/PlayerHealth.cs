@@ -111,8 +111,6 @@ public class PlayerHealth : MonoBehaviour
     {
         if (currentLifes <= 0)
         {
-            audioManager.SetPlaySfx(audioManager.DieSound, transform.position);
-            audioManager.SetPlaySfx(audioManager.cirucsMasterLaughSound, transform.position);
             currentLifes = 0;
 
             StartCoroutine(StartDeath());
@@ -133,7 +131,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void EnterDeathZone()
     {
-        Die();
+        StartCoroutine(StartDeath());
         //podemos o quitarle vida y respawnear o que tenga que volver a empezar de nuevo, preguntar jowy
         //GameController.GetGameController().RestartLevelElment();
         //RESPAWN
@@ -145,20 +143,26 @@ public class PlayerHealth : MonoBehaviour
     IEnumerator StartDeath()
     {
         playerAnimator.SetTrigger("Death");
+        audioManager.SetPlaySfx(audioManager.DieSound, transform.position);
+
+        audioManager.SetPlaySfx(audioManager.cirucsMasterLaughSound, transform.position);
+        audioManager.SetPlaySfx(audioManager.ambientLaughtsSounds, transform.position);
         
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
+        FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
 
         Die();
     }
 
     private void Die()
     {
+        playerAnimator.SetTrigger("Respawn");
+        audioManager.SetPlaySfx(audioManager.RespawnSound, transform.position);
+        
         hudController.RestartLifes();
         currentLifes = startLifes;
         GameController.GetGameController().RestartLevelElment();
         playerRigidBody.velocity = Vector3.zero;
-
-        audioManager.SetPlaySfx(audioManager.RespawnSound, transform.position);
     }
 }
 

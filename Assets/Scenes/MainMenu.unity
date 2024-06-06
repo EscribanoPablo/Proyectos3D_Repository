@@ -3720,6 +3720,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
+  controlMenu: {fileID: 0}
 --- !u!114 &1380173583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4544,7 +4545,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1380173583}
           m_TargetAssemblyTypeName: UiSounds, Assembly-CSharp
-          m_MethodName: ButtonPressedSound
+          m_MethodName: MovedToOtherButtonSound
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
