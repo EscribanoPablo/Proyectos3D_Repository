@@ -42,7 +42,7 @@ public class FallingPlatform : Traps
             if (PlayerOnPlatform(collision))
             {
                 playerTouched = true;
-                animations.PlayQueued(vibrateAnimation.name);
+                animations.Play(vibrateAnimation.name);
                 FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().vibrateFallPlatformSound, transform.position);
             }
         }

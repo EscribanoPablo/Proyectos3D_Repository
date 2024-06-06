@@ -16,7 +16,7 @@ public class PlayerShadow : MonoBehaviour
         Ray ray = new Ray(transform.position, -Vector3.up);
         RaycastHit hitInfo;
 
-        if(Physics.Raycast(ray, 3f, _layerMask))
+        if(Physics.Raycast(ray, 2.5f, _layerMask))
         {
             _parent.position = new Vector3(0f, 1000f, 0f);
         }

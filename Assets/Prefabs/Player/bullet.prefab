@@ -588,6 +588,12 @@ MonoBehaviour:
   bulletSpeed: 15
   explosionParticles: {fileID: 3699226993522872764, guid: 4b7022955c1342a4c87ab9cb9a04228c,
     type: 3}
+  decalExplosion: {fileID: 1910620508029491731, guid: 3b217d16432d1f947ae3c2dfba160010,
+    type: 3}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 704
+  decalOffsetForward: -0.2
 --- !u!95 &4568607291897466443
 Animator:
   serializedVersion: 5
