@@ -35,6 +35,9 @@ public class PlayTransition : MonoBehaviour
         {
             GameController.GetGameController().EmptyRestartList();
             SceneManager.LoadScene("BetaLevel01");
+
+            FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
+            FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
         }
         else if (SceneManager.GetActiveScene().name == "BetaLevel01")
         {
@@ -44,11 +47,16 @@ public class PlayTransition : MonoBehaviour
         else if (SceneManager.GetActiveScene().name == "BetaLevel02")
         {
             GameController.GetGameController().EmptyRestartList();
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("CreditsScene");
 
             FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
             FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
             FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
+        }
+        else if(SceneManager.GetActiveScene().name == "CreditsScene")
+        {
+            GameController.GetGameController().EmptyRestartList();
+            SceneManager.LoadScene("MainMenu");
         }
     }
 

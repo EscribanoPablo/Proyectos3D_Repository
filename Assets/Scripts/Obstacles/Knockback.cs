@@ -19,6 +19,8 @@ public class Knockback : Traps
     {
         if (collision.gameObject.tag == PLAYER_TAG)
         {
+            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().punchTrapHitSound);
+
             player.GetComponent<PlayerMovement>().playerControllerEnabled = false;
             collision.gameObject.GetComponent<PlayerHealth>().AddKnockback(transform.position, knockBackImpulse);
             StartCoroutine(PunchPlayer());

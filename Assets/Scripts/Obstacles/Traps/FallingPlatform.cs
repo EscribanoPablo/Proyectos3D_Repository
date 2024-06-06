@@ -37,12 +37,12 @@ public class FallingPlatform : Traps
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == PLAYER_TAG && !disappearing)
+        if(collision.gameObject.tag == PLAYER_TAG && !disappearing && !playerTouched)
         {
             if (PlayerOnPlatform(collision))
             {
                 playerTouched = true;
-                animations.PlayQueued(vibrateAnimation.name);
+                animations.Play(vibrateAnimation.name);
                 FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().vibrateFallPlatformSound, transform.position);
             }
         }
@@ -50,7 +50,7 @@ public class FallingPlatform : Traps
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag == PLAYER_TAG && !disappearing)
+        if (collision.gameObject.tag == PLAYER_TAG && !disappearing && !playerTouched)
         {
             if (PlayerOnPlatform(collision))
             {

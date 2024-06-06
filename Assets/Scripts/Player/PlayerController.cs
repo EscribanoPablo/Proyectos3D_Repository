@@ -54,6 +54,8 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
         yield return new WaitForSeconds(timeToMoveAgain);
         playerMovement.playerControllerEnabled = true;
 
+        FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceGameSong);
+
     }
 
     private void ResetLight()
