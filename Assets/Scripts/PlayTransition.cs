@@ -47,11 +47,16 @@ public class PlayTransition : MonoBehaviour
         else if (SceneManager.GetActiveScene().name == "BetaLevel02")
         {
             GameController.GetGameController().EmptyRestartList();
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("CreditsScene");
 
             FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
             FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
             FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
+        }
+        else if(SceneManager.GetActiveScene().name == "CreditsScene")
+        {
+            GameController.GetGameController().EmptyRestartList();
+            SceneManager.LoadScene("MainMenu");
         }
     }
 
