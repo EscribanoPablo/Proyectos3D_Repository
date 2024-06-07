@@ -58,10 +58,12 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dash Variables")]
     [SerializeField] float dashDuration = 0.2f;
     [SerializeField] float dashPower = 300;
-    bool canDash;
+    public bool canDash { get; set; }
     public bool IsDashing => isDashing;
     bool isDashing;
     float coolDown = 1;
+    float multipleDashOnAir = 2;
+    float currentDashes = 0;
 
     [Header("WallJump Variables")]
     [SerializeField] float wallJumpUpForce;
@@ -250,7 +252,7 @@ public class PlayerMovement : MonoBehaviour
                     Jump(doubleJumpForce);
                     canonShoot.ShootBullet(spawnBulletDoubleJumpPosition.position);
                     canonShoot.SpawnCanonParticles();
-                    canonShoot.currentTimeShoot = 0; 
+                    canonShoot.currentTimeShoot = 0.5f; 
 
                     doubleJump = false;
                     isJumping = true;
@@ -293,6 +295,7 @@ public class PlayerMovement : MonoBehaviour
     private void ResetJumps()
     {
         currentJumps = 0;
+        currentDashes = 0;
     }
     private void Jump(float jumpForce)
     {
@@ -346,7 +349,7 @@ public class PlayerMovement : MonoBehaviour
     private void PlayerDash()
     {
         if (isDashing) return;
-        if (/*Input.GetKeyDown(dashKey)*/playerInput.actions["Dash"].WasPressedThisFrame() && canDash)
+        if (/*Input.GetKeyDown(dashKey)*/playerInput.actions["Dash"].WasPressedThisFrame() && canDash && currentDashes < multipleDashOnAir)
         {
             StartCoroutine(DoDash());
         }
@@ -354,11 +357,13 @@ public class PlayerMovement : MonoBehaviour
 
     private IEnumerator DoDash()
     {
+        canDash = false;
+        isDashing = true;
+        currentDashes++;
+        canonShoot.currentTimeShoot = 0.3f;
         audioManager.SetPlaySfx(audioManager.DashSound, 0.5f, transform.position);
         playerAnimator.SetTrigger("Dashed");
         StartCoroutine(AddLitleForceUp());
-        canDash = false;
-        isDashing = true;
 
         rigidBody.useGravity = false;
 
@@ -375,7 +380,6 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         canonShoot.ShootBullet(spawnBulletDashPosition.position);
-        canonShoot.currentTimeShoot = 0;
 
         yield return new WaitForSeconds(dashDuration);
 
@@ -452,7 +456,6 @@ public class PlayerMovement : MonoBehaviour
     private void KillXZVelocity()
     {
         rigidBody.velocity = new Vector3(0, rigidBody.velocity.y-0.5f, 0);
-        Debug.Log(rigidBody.velocity);
     }
     public bool GetIsJumping()
     {
