@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class PlayTransition : MonoBehaviour
@@ -36,6 +37,13 @@ public class PlayTransition : MonoBehaviour
         {
             case SceneToGo.MainMenu:
                 GameController.GetGameController().EmptyRestartList();
+                if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
+                {
+                    FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
+                    FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
+                    FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
+                }
+                FindObjectOfType<AudioManager>().AugmentVolume();
                 SceneManager.LoadScene("MainMenu");
                 break;
             case SceneToGo.Settings:
@@ -107,6 +115,7 @@ public class PlayTransition : MonoBehaviour
         transitionAnimator.SetBool("MenuTransition", fromMenu);
         transitionAnimator.SetTrigger("GoBlack");
         sceneToGo = nextScene;
+        FindObjectOfType<EventSystem>().enabled = false;
     }
 
     public void GoTransparent()

@@ -50,7 +50,7 @@ public class PlayerHealth : MonoBehaviour
                 gotHit = false;
                 timeCounter = 0;
             }
-            else if(timeCounter >= noInputsTime)
+            else if(timeCounter >= noInputsTime && currentLifes > 0)
                 playerInputs.enabled = true;
         }
     }
@@ -149,7 +149,7 @@ public class PlayerHealth : MonoBehaviour
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
             audioManager.SetPlaySfx(audioManager.ambientLaughtsSounds, transform.position);
         
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.8f);
 
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
             FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
@@ -158,10 +158,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
     private void Die()
-    {
-        playerAnimator.SetTrigger("Respawn");
-        audioManager.SetPlaySfx(audioManager.RespawnSound, transform.position);
-        
+    {   
         hudController.RestartLifes();
         currentLifes = startLifes;
         GameController.GetGameController().RestartLevelElment();

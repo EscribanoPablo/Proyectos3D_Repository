@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
         transform.position = startPosition;
         transform.rotation = startRotation;
         ResetLight();
+        GetComponentInChildren<Animator>().SetTrigger("Respawn");
+        FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().RespawnSound, transform.position);
 
         yield return new WaitForSeconds(0.1f);
         playerMovement.playerControllerEnabled = false;

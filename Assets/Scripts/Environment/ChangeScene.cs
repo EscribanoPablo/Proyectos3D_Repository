@@ -27,7 +27,7 @@ public class ChangeScene : MonoBehaviour
             else if(SceneManager.GetActiveScene().name == "BetaLevel02")
                 GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.Credits);
 
-            else if (SceneManager.GetActiveScene().name == "TutorialScene")
+            else if (SceneManager.GetActiveScene().name == "TutorialLevel")
                 GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.MainMenu);
             //StartCoroutine(waitToChangeLevel());
             /*}
