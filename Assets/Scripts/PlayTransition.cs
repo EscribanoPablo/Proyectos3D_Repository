@@ -43,7 +43,8 @@ public class PlayTransition : MonoBehaviour
                     FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
                     FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
                 }
-                FindObjectOfType<AudioManager>().AugmentVolume();
+                if(SceneManager.GetActiveScene().name != "SettingsMenu" && SceneManager.GetActiveScene().name != "CreditsScene")
+                    FindObjectOfType<AudioManager>().AugmentVolume();
                 SceneManager.LoadScene("MainMenu");
                 break;
             case SceneToGo.Settings:
