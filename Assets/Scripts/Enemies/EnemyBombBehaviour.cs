@@ -129,7 +129,8 @@ public class EnemyBombBehaviour : MonoBehaviour
         {
             player.GetComponent<PlayerHealth>().TakeDamage(transform.position);
         }
-        GameObject.Instantiate(explosionParticles, transform.position, transform.rotation);
+        GameObject particles = GameObject.Instantiate(explosionParticles, transform.position + (Vector3.up * (navMeshAgent.height/2)), transform.rotation);
+        particles.transform.localScale *= 1.5f;
 
         bombMovingSound.Stop(); bombMovingSound.PlayEvent = EmitterGameEvent.None;
         FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().bombAttackDeathSound, transform.position);

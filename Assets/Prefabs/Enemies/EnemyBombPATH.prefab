@@ -195,22 +195,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyBombWITHOUTPATH
       objectReference: {fileID: 0}
-    - target: {fileID: 3714868402791367019, guid: 14acd0c3e8b9d9541a36361e9128a42a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4210757856112458466, guid: 14acd0c3e8b9d9541a36361e9128a42a,
         type: 3}
       propertyPath: bombMovingSound
       value: 
       objectReference: {fileID: 7218731115131656916}
-    - target: {fileID: 4210757856112458466, guid: 14acd0c3e8b9d9541a36361e9128a42a,
-        type: 3}
-      propertyPath: explosionParticles
-      value: 
-      objectReference: {fileID: 3054148924898103664, guid: 7a47a897ebe6c034cb33397ba99d36f7,
-        type: 3}
     - target: {fileID: 4210757856112458466, guid: 14acd0c3e8b9d9541a36361e9128a42a,
         type: 3}
       propertyPath: patrolPoints.Array.data[0]
@@ -221,11 +210,6 @@ PrefabInstance:
       propertyPath: patrolPoints.Array.data[1]
       value: 
       objectReference: {fileID: 5521800061979147161}
-    - target: {fileID: 7872863231994027898, guid: 14acd0c3e8b9d9541a36361e9128a42a,
-        type: 3}
-      propertyPath: m_AngularSpeed
-      value: 280
-      objectReference: {fileID: 0}
     - target: {fileID: 7932092292164947394, guid: 14acd0c3e8b9d9541a36361e9128a42a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -276,8 +260,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 3714868402791367019, guid: 14acd0c3e8b9d9541a36361e9128a42a, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
