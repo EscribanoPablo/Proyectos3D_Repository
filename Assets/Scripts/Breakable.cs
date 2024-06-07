@@ -1,5 +1,5 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -17,7 +17,9 @@ public class Breakable : Obstacles, IRestartLevelElement
     Quaternion[] breakableStartRotation;
 
     [SerializeField] float timeToDisappear;
-    float timer;
+    MeshRenderer[] meshRenderers;
+    Color originalColor;
+    bool isFading;
 
     [SerializeField] float boxExplosionForce;
 
@@ -40,9 +42,13 @@ public class Breakable : Obstacles, IRestartLevelElement
 
         SaveBreakablesPosition();
 
+        SetUpMeshRenderers();
+        originalColor = meshRenderers[0].material.color;
+
         wholeObject.SetActive(true);
         prefracturedObject.SetActive(false);
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -63,16 +69,24 @@ public class Breakable : Obstacles, IRestartLevelElement
 
             if (rigidBody != null) rigidBody.isKinematic = true;
 
-
             StartCoroutine(DesactivateGameObject());
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (isFading)
+        {
+            FadeBreakables();
+
         }
     }
 
     private void SaveBreakablesPosition()
     {
-        breakableCubes = new GameObject[prefracturedObject.transform.childCount - 1];
+        breakableCubes = new GameObject[prefracturedObject.transform.childCount];
 
-        for (int i = 0; i < prefracturedObject.transform.childCount - 1; i++)
+        for (int i = 0; i < prefracturedObject.transform.childCount; i++)
         {
             breakableCubes[i] = prefracturedObject.transform.GetChild(i).gameObject;
         }
@@ -113,8 +127,15 @@ public class Breakable : Obstacles, IRestartLevelElement
 
     IEnumerator DesactivateGameObject()
     {
-        yield return new WaitForSeconds(timeToDisappear);
-        //esto se tendria que hacer mas suave, haciendolo desaparecer poco a poco
+        yield return new WaitForSeconds(timeToDisappear/4);
+
+        isFading = true;
+
+        yield return new WaitForSeconds(timeToDisappear*3/4);
+
+        isFading = false;
+        ResetBreakablesColor();
+
         prefracturedObject.SetActive(false);
         if (isPlatform)
         {
@@ -127,5 +148,32 @@ public class Breakable : Obstacles, IRestartLevelElement
         yield return new WaitForSeconds(platformReappearTime);
 
         RestartLevel();
+    }
+
+    private void SetUpMeshRenderers()
+    {
+        meshRenderers = new MeshRenderer[breakableCubes.Length];
+
+        for (int i = 0; i < breakableCubes.Length; i++)
+        {
+            Debug.Log(breakableCubes[i].name);
+            meshRenderers[i] = breakableCubes[i].GetComponent<MeshRenderer>();
+        }
+    }
+
+    private void FadeBreakables()
+    {
+        foreach (MeshRenderer meshRenderer in meshRenderers)
+        {
+            meshRenderer.material.color = Color.Lerp(meshRenderer.material.color, Color.clear, 0.01f);
+        }
+    }
+
+    private void ResetBreakablesColor()
+    {
+        foreach (MeshRenderer meshRenderer in meshRenderers)
+        {
+            meshRenderer.material.color = originalColor;
+        }
     }
 }
