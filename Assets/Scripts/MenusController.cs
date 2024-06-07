@@ -82,6 +82,7 @@ public class MenusController : MonoBehaviour
 
     public void TutorialButtonPressed()
     {
+        GameController.GetGameController().EmptyRestartList();
         SceneManager.LoadScene("TutorialLevel");
     }
 
