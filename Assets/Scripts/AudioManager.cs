@@ -129,8 +129,8 @@ public class AudioManager : MonoBehaviour
         instanceGameSong = RuntimeManager.CreateInstance(backgroundLevelMusic);
         instanceCrowdNoise = RuntimeManager.CreateInstance(ambientNoiseSound);
 
-        instanceMenuSong.start();
-        instanceMenuSong.release();
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+            instanceMenuSong.start();
     }
 
     void Update()
