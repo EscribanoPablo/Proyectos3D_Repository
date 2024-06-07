@@ -55,7 +55,7 @@ public class MenusController : MonoBehaviour
             if (currentTime > clipDuration)
             {
                 currentTime = 0;
-                FindObjectOfType<PlayTransition>().GoBlack(false);
+                FindObjectOfType<PlayTransition>().GoBlack(true,SceneToGo.MainMenu);
             }
         }
     }
@@ -66,7 +66,7 @@ public class MenusController : MonoBehaviour
         {
             Time.timeScale = 1;
 
-            GameObject.FindObjectOfType<PlayTransition>().GoBlack(true);
+            GameObject.FindObjectOfType<PlayTransition>().GoBlack(true, SceneToGo.Level01);
 
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -82,13 +82,12 @@ public class MenusController : MonoBehaviour
 
     public void TutorialButtonPressed()
     {
-        GameController.GetGameController().EmptyRestartList();
-        SceneManager.LoadScene("TutorialLevel");
+        GameObject.FindObjectOfType<PlayTransition>().GoBlack(true, SceneToGo.TutorialLevel);
     }
 
     public void SettingsButtonPressed()
     {
-        SceneManager.LoadScene("SettingsMenu");
+        GameObject.FindObjectOfType<PlayTransition>().GoBlack(true, SceneToGo.Settings);
     }
 
     public void ExitButtonPressed()
@@ -112,7 +111,7 @@ public class MenusController : MonoBehaviour
                     FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
                 }
             }
-            SceneManager.LoadScene("MainMenu");
+            GameObject.FindObjectOfType<PlayTransition>().GoBlack(true, SceneToGo.MainMenu);
         }
     }
 

@@ -13,6 +13,7 @@ public class PlayTransition : MonoBehaviour
     [SerializeField] AnimationClip outSceneTransitionAnim2;*/
 
     Animator transitionAnimator;
+    SceneToGo sceneToGo;
 
     private void Start()
     {
@@ -31,7 +32,43 @@ public class PlayTransition : MonoBehaviour
 
     private void ChangeScene()
     {
-        if(SceneManager.GetActiveScene().name == "MainMenu")
+        switch (sceneToGo)
+        {
+            case SceneToGo.MainMenu:
+                GameController.GetGameController().EmptyRestartList();
+                SceneManager.LoadScene("MainMenu");
+                break;
+            case SceneToGo.Settings:
+                SceneManager.LoadScene("SettingsMenu");
+                break;
+            case SceneToGo.TutorialLevel:
+                GameController.GetGameController().EmptyRestartList();
+                SceneManager.LoadScene("TutorialLevel");
+                break;
+            case SceneToGo.Level01:
+                GameController.GetGameController().EmptyRestartList();
+                SceneManager.LoadScene("BetaLevel01");
+
+                FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
+                FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
+                break;
+            case SceneToGo.Level02:
+                GameController.GetGameController().EmptyRestartList();
+                SceneManager.LoadScene("BetaLevel02");
+                break;
+            case SceneToGo.Credits:
+                GameController.GetGameController().EmptyRestartList();
+                SceneManager.LoadScene("CreditsScene");
+
+                FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
+                FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
+                FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
+                break;
+            default:
+                break;
+        }
+
+        /*if (SceneManager.GetActiveScene().name == "MainMenu")
         {
             GameController.GetGameController().EmptyRestartList();
             SceneManager.LoadScene("BetaLevel01");
@@ -62,13 +99,14 @@ public class PlayTransition : MonoBehaviour
         {
             GameController.GetGameController().EmptyRestartList();
             SceneManager.LoadScene("MainMenu");
-        }
+        }*/
     }
 
-    public void GoBlack(bool fromMenu)
+    public void GoBlack(bool fromMenu, SceneToGo nextScene)
     {
         transitionAnimator.SetBool("MenuTransition", fromMenu);
         transitionAnimator.SetTrigger("GoBlack");
+        sceneToGo = nextScene;
     }
 
     public void GoTransparent()
@@ -99,4 +137,16 @@ public class PlayTransition : MonoBehaviour
     {
         animationManager.Play(outSceneTransitionAnim2.name);
     }*/
+
+    
+}
+
+public enum SceneToGo
+{
+    MainMenu,
+    Settings,
+    TutorialLevel,
+    Level01,
+    Level02,
+    Credits,
 }
