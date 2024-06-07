@@ -72,9 +72,14 @@ public class CanonShoot : MonoBehaviour
         canonForward = transform.forward;
         SpawnCanonParticles();
         playerMovement.canJump = false;
-
+        playerMovement.canDash = false;
         yield return new WaitForSeconds(0.25f);
         playerMovement.canJump = true;
+        if (!playerMovement.IsDashing)
+        {
+            playerMovement.canDash = true;
+        }
+
     }
 
     public void SpawnCanonParticles()
