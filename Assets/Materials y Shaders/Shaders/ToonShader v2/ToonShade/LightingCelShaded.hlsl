@@ -61,7 +61,7 @@ float3 CalculateCelShading(Light l, SurfaceVariables s) {
       rim
    );
 
-   return l.color * ((diffuse/1000) + max(specular/1000, rim));
+   return l.color * ((diffuse/500) + max(specular/500, rim));
 }
 #endif
 

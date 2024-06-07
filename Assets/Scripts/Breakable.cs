@@ -9,8 +9,6 @@ public class Breakable : Obstacles, IRestartLevelElement
     [SerializeField] GameObject prefracturedObject;
     [SerializeField] string breakerTag;
     GameObject[] breakableCubes;
-    [SerializeField] GameObject damageParticles;
-    [SerializeField] GameObject childrenDamageParticles;
 
     [SerializeField] bool isPlatform;
     [SerializeField] float platformReappearTime;
@@ -64,14 +62,6 @@ public class Breakable : Obstacles, IRestartLevelElement
             GetComponent<Collider>().enabled = false;
 
             if (rigidBody != null) rigidBody.isKinematic = true;
-
-            if (damageParticles!= null && childrenDamageParticles!= null)
-            {
-                ParticleSystem particles = damageParticles.GetComponent<ParticleSystem>();
-                ParticleSystem childrenParticles = childrenDamageParticles.GetComponent<ParticleSystem>();
-                childrenParticles.Emit(5);
-                particles.Emit(5);
-            }
 
 
             StartCoroutine(DesactivateGameObject());
