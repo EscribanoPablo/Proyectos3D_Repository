@@ -156,7 +156,6 @@ public class Breakable : Obstacles, IRestartLevelElement
 
         for (int i = 0; i < breakableCubes.Length; i++)
         {
-            Debug.Log(breakableCubes[i].name);
             meshRenderers[i] = breakableCubes[i].GetComponent<MeshRenderer>();
         }
     }

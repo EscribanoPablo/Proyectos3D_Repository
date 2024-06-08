@@ -161,7 +161,7 @@ public class PlayerHealth : MonoBehaviour
     {   
         hudController.RestartLifes();
         currentLifes = startLifes;
-        GameController.GetGameController().RestartLevelElment();
+        GameController.GetGameController().RestartLevelElement();
         playerRigidBody.velocity = Vector3.zero;
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -11,8 +9,13 @@ public class MenusController : MonoBehaviour
     [SerializeField]
     private GameObject pauseMenu;
 
-    [SerializeField] 
+    [SerializeField]
     private GameObject controlMenu;
+
+    [SerializeField]
+    private GameObject skipCutsceneController;
+    [SerializeField]
+    private GameObject skipCutscenePC;
 
     [SerializeField]
     private GameObject creditsText;
@@ -20,11 +23,25 @@ public class MenusController : MonoBehaviour
     float currentTime = 0;
     float clipDuration;
 
+    public void DisableCutseceMessage()
+    {
+        skipCutsceneController.SetActive(false);
+        skipCutscenePC.SetActive(false);
+    }
+
     private void Start()
     {
         if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02" || SceneManager.GetActiveScene().name == "TutorialLevel")
         {
             playerInputs = FindObjectOfType<PlayerInput>();
+
+            if (SceneManager.GetActiveScene().name != "TutorialLevel")
+            {
+                if (playerInputs.currentControlScheme == "Gamepad")
+                    skipCutsceneController.SetActive(true);
+                else
+                    skipCutscenePC.SetActive(true);
+            }
         }
         if (SceneManager.GetActiveScene().name == "CreditsScene")
         {
@@ -39,7 +56,7 @@ public class MenusController : MonoBehaviour
 
     private void Update()
     {
-        if(SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02" || SceneManager.GetActiveScene().name == "TutorialLevel")
+        if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02" || SceneManager.GetActiveScene().name == "TutorialLevel")
         {
             if (playerInputs.actions["PauseGame"].WasPressedThisFrame())
             {
@@ -55,7 +72,7 @@ public class MenusController : MonoBehaviour
             if (currentTime > clipDuration)
             {
                 currentTime = 0;
-                FindObjectOfType<PlayTransition>().GoBlack(true,SceneToGo.MainMenu);
+                FindObjectOfType<PlayTransition>().GoBlack(true, SceneToGo.MainMenu);
             }
         }
     }
@@ -70,7 +87,7 @@ public class MenusController : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.Locked;
         }
-        else if(SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02" || SceneManager.GetActiveScene().name == "TutorialLevel")
+        else if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02" || SceneManager.GetActiveScene().name == "TutorialLevel")
         {
             FindObjectOfType<AudioManager>().AugmentVolume();
             pauseMenu.SetActive(false);
@@ -98,7 +115,7 @@ public class MenusController : MonoBehaviour
         }
         else
         {
-            if(SceneManager.GetActiveScene().name != "SettingsMenu")
+            if (SceneManager.GetActiveScene().name != "SettingsMenu")
             {
                 Time.timeScale = 1;
             }

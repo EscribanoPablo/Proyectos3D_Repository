@@ -24,6 +24,8 @@ public class Bullet : MonoBehaviour, IRestartLevelElement
         direction = canonShoot.CanonForward;
 
         GameController.GetGameController().AddRestartLevelElement(this);
+
+        StartCoroutine(DestroyBullet());
     }
 
     // Update is called once per frame
@@ -52,12 +54,21 @@ public class Bullet : MonoBehaviour, IRestartLevelElement
             ParticleSystem explosionParticle = GameObject.Instantiate(explosionParticles, transform.position, transform.rotation);
             explosionParticle.Play();
             Destroy(explosionParticle, 3);
+            GameController.GetGameController().RemoveRestartLevelElement(this);
             Destroy(this.gameObject);
         }
     }
 
     public void Restart()
     {
+        GameController.GetGameController().RemoveRestartLevelElement(this);
+        Destroy(this.gameObject);
+    }
+
+    private IEnumerator DestroyBullet()
+    {
+        yield return new WaitForSeconds(10.0f);
+        GameController.GetGameController().RemoveRestartLevelElement(this);
         Destroy(this.gameObject);
     }
 }
