@@ -16,6 +16,7 @@ public class MenusController : MonoBehaviour
     private GameObject skipCutsceneController;
     [SerializeField]
     private GameObject skipCutscenePC;
+    private bool watchingCutscene = true;
 
     [SerializeField]
     private GameObject creditsText;
@@ -27,6 +28,7 @@ public class MenusController : MonoBehaviour
     {
         skipCutsceneController.SetActive(false);
         skipCutscenePC.SetActive(false);
+        watchingCutscene = false;
     }
 
     private void Start()
@@ -34,14 +36,6 @@ public class MenusController : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02" || SceneManager.GetActiveScene().name == "TutorialLevel")
         {
             playerInputs = FindObjectOfType<PlayerInput>();
-
-            if (SceneManager.GetActiveScene().name != "TutorialLevel")
-            {
-                if (playerInputs.currentControlScheme == "Gamepad")
-                    skipCutsceneController.SetActive(true);
-                else
-                    skipCutscenePC.SetActive(true);
-            }
         }
         if (SceneManager.GetActiveScene().name == "CreditsScene")
         {
@@ -64,6 +58,20 @@ public class MenusController : MonoBehaviour
                 pauseMenu.SetActive(true);
                 playerInputs.enabled = false;
                 Time.timeScale = 0;
+            }
+
+            if (SceneManager.GetActiveScene().name != "TutorialLevel" && watchingCutscene)
+            {
+                if (playerInputs.currentControlScheme == "Gamepad")
+                {
+                    skipCutscenePC.SetActive(false);
+                    skipCutsceneController.SetActive(true);
+                }
+                else
+                {
+                    skipCutsceneController.SetActive(false);
+                    skipCutscenePC.SetActive(true);
+                }
             }
         }
         if (SceneManager.GetActiveScene().name == "CreditsScene")
@@ -118,6 +126,7 @@ public class MenusController : MonoBehaviour
             if (SceneManager.GetActiveScene().name != "SettingsMenu")
             {
                 Time.timeScale = 1;
+                FindObjectOfType<AudioManager>().AugmentVolume();
             }
             GameObject.FindObjectOfType<PlayTransition>().GoBlack(true, SceneToGo.MainMenu);
         }

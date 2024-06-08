@@ -4,6 +4,11 @@ public class AmbientSounds : MonoBehaviour, IRestartLevelElement
 {
     private bool eventTriggered = false;
 
+    private void Start()
+    {
+        GameController.GetGameController().AddRestartLevelElement(this);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!eventTriggered)

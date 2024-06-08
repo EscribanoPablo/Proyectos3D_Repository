@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -27,8 +25,6 @@ public class PlayTransition : MonoBehaviour
                     FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
                     FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
                 }
-                if(SceneManager.GetActiveScene().name != "SettingsMenu" && SceneManager.GetActiveScene().name != "CreditsScene")
-                    FindObjectOfType<AudioManager>().AugmentVolume();
                 SceneManager.LoadScene("MainMenu");
                 break;
             case SceneToGo.Settings:
@@ -75,7 +71,6 @@ public class PlayTransition : MonoBehaviour
     {
         transitionAnimator.SetTrigger("GoTransparent");
     }
-
 }
 
 public enum SceneToGo
