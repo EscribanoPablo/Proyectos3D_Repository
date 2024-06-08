@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IRestartLevelElement
 {
     [SerializeField] float bulletSpeed = 20;
     [SerializeField] ParticleSystem explosionParticles;
@@ -22,6 +22,8 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         canonShoot = FindObjectOfType<CanonShoot>();
         direction = canonShoot.CanonForward;
+
+        GameController.GetGameController().AddRestartLevelElement(this);
     }
 
     // Update is called once per frame
@@ -54,5 +56,8 @@ public class Bullet : MonoBehaviour
         }
     }
 
-
+    public void Restart()
+    {
+        Destroy(this.gameObject);
+    }
 }
