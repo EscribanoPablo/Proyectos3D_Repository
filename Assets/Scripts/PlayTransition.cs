@@ -1,3 +1,5 @@
+using FMODUnity;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -65,6 +67,11 @@ public class PlayTransition : MonoBehaviour
         transitionAnimator.SetTrigger("GoBlack");
         sceneToGo = nextScene;
         FindObjectOfType<EventSystem>().enabled = false;
+
+        foreach (StudioEventEmitter eventEmitter in FindObjectsOfType<StudioEventEmitter>())
+        {
+            eventEmitter.Stop(); eventEmitter.PlayEvent = EmitterGameEvent.None;
+        }
     }
 
     public void GoTransparent()

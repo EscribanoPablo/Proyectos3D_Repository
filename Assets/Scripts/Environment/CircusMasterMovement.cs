@@ -70,7 +70,6 @@ public class CircusMasterMovement : MonoBehaviour
         }
         else
         {
-            // poner la ola cada 10 segundos o cuando llegue el player a un checkpoint
         }
     }
 
@@ -121,7 +120,7 @@ public class CircusMasterMovement : MonoBehaviour
                 rotationDestination += 360;
             }
             transform.parent.transform.rotation = Quaternion.Euler(0, yRotationValue, 0);
-            //Debug.Log(transform.rotation.eulerAngles + "    , " + Quaternion.Euler(0, yRotationValue, 0));
+
             if (Snapping.Snap(rotationDestination, snapRotationFactor) == Snapping.Snap(transform.parent.transform.rotation.eulerAngles.y, snapRotationFactor))
             {
                 moving = false;
@@ -182,11 +181,6 @@ public class CircusMasterMovement : MonoBehaviour
             }
         }
         animationCircusMaster.CrossFadeQueued(idleAnimation.name);
-    }
-
-    private void CircusMasterMoveSound()
-    {
-        //FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().circusMasterMoveHand);
     }
 }
 

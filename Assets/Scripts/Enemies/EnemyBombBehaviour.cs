@@ -26,8 +26,6 @@ public class EnemyBombBehaviour : MonoBehaviour
     void Start()
     {
         player = FindAnyObjectByType<PlayerController>();
-        //player = GameController.GetGameController().GetPlayer();
-        //player = GameController.GetGameController().GetPlayer();
         navMeshAgent = GetComponent<NavMeshAgent>();
         EnterState(EnemyState.PATROL);
     }

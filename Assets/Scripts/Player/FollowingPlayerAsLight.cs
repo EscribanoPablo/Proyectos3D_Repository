@@ -24,7 +24,8 @@ public class FollowingPlayerAsLight : MonoBehaviour
     {
         //FindObjectOfType<PlayerInput>().SwitchCurrentActionMap("PlayerActions");
         FindObjectOfType<PlayerInput>().currentActionMap.Enable();
-        FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceGameSong);
+        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
+            FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceGameSong);
     }
 
     // Update is called once per frame
