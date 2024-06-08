@@ -18,14 +18,14 @@ public class SettingsController : MonoBehaviour
     //[SerializeField]
     //private AudioMixer audioMixer;
 
+    private void Start()
+    {
+        qualityDropdown.value = GameController.GetGameController().qualityValue;
+    }
+
     public void ChangeGraphicsQuality()
     {
         QualitySettings.SetQualityLevel(qualityDropdown.value);
-    }
-
-    public void ChangeVolume()
-    {
-        //audioMixer.SetFloat("musicVol", musicVolume.value);
-        //audioMixer.SetFloat("sfxVol", sfxVolume.value);
+        GameController.GetGameController().qualityValue = qualityDropdown.value;
     }
 }

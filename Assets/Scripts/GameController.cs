@@ -7,6 +7,8 @@ public class GameController : MonoBehaviour
 {
     public bool firstTimeInMenu = true;
 
+    public int qualityValue = 1;
+
     public static GameController gameController = null;
 
     public PlayerController player;
