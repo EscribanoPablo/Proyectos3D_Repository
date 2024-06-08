@@ -94,6 +94,5 @@ public class CanonShoot : MonoBehaviour
     public void ShootBullet(Vector3 position)
     {
         GameObject _bullet = Instantiate(bulletPrefab, position, bulletPrefab.transform.rotation);
-        Destroy(_bullet, 10);
     }
 }

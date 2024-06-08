@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5016870487998286434
 RectTransform:
   m_ObjectHideFlags: 0
@@ -262,7 +262,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1724783339136508126
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1215,6 +1215,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 2234179185807790159}
   controlMenu: {fileID: 2522270981169590097}
+  skipCutsceneController: {fileID: 20338225290939615}
+  skipCutscenePC: {fileID: 370540067287922475}
   creditsText: {fileID: 0}
 --- !u!114 &3379806178737128547
 MonoBehaviour:

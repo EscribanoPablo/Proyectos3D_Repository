@@ -27,6 +27,23 @@ public class TriggerMessage : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (FindObjectOfType<PlayerInput>().currentControlScheme == "Gamepad")
+            {
+                messagePc.SetActive(false);
+                messageController.SetActive(true);
+            }
+            else
+            {
+                messageController.SetActive(false);
+                messagePc.SetActive(true);
+            }
+        }
+    }
+
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))

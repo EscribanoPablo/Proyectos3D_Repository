@@ -76,6 +76,8 @@ public class CircusMasterMovement : MonoBehaviour
 
     private void SkipCutscene()
     {
+        FindObjectOfType<MenusController>().DisableCutseceMessage();
+
         foreach (GameObject cam in introCameras)
         {
             cam.SetActive(false);
@@ -173,6 +175,11 @@ public class CircusMasterMovement : MonoBehaviour
                 introCameras[currentCam].SetActive(true);
             }
             introCameras[currentCam - 1].SetActive(false);
+            
+            if(currentCam == 1)
+            {
+                FindObjectOfType<MenusController>().DisableCutseceMessage();
+            }
         }
         animationCircusMaster.CrossFadeQueued(idleAnimation.name);
     }
