@@ -100,7 +100,6 @@ public class MenusController : MonoBehaviour
         {
             if(SceneManager.GetActiveScene().name != "SettingsMenu")
             {
-                FindObjectOfType<AudioManager>().AugmentVolume();
                 Time.timeScale = 1;
             }
             GameObject.FindObjectOfType<PlayTransition>().GoBlack(true, SceneToGo.MainMenu);

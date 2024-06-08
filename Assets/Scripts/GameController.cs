@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public bool firstTimeInMenu = true;
 
     public static GameController gameController = null;
 
