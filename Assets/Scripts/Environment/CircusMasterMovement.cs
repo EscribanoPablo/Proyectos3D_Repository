@@ -31,7 +31,6 @@ public class CircusMasterMovement : MonoBehaviour
     {
         playerInput = FindObjectOfType<PlayerInput>();
         playerInput.currentActionMap.Disable();
-        //playerInput.SwitchCurrentActionMap("HudControls");
         animationCircusMaster = GetComponent<Animation>();
         animationCircusMaster.Play(idleAnimation.name);
         introducingScenario = true;
@@ -110,7 +109,6 @@ public class CircusMasterMovement : MonoBehaviour
         if (moving)
         {
             float yRotationValue = Mathf.Lerp(transform.parent.transform.rotation.eulerAngles.y, rotationDestination, Time.deltaTime * rotateSpeed);
-            //Debug.Log("Myangles: " + transform.rotation.eulerAngles.y + ", my new Y value: " + yRotationValue + ", my destination: " + rotationDestination);
             if (yRotationValue > 360)
             {
                 rotationDestination -= 360;
@@ -136,7 +134,6 @@ public class CircusMasterMovement : MonoBehaviour
         rotationDestination = Quaternion.LookRotation(direction).eulerAngles.y;
         if(rotationDestination - transform.parent.transform.rotation.eulerAngles.y > 180)
         {
-            //transform.parent.transform.rotation = Quaternion.Euler(0, transform.parent.transform.rotation.eulerAngles.y + 360, 0);
             rotationDestination -= 360;
         }
         else if ( transform.parent.transform.rotation.eulerAngles.y - rotationDestination > 180)

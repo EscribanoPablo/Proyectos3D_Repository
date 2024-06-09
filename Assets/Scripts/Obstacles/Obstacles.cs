@@ -15,7 +15,6 @@ public abstract class Obstacles : MonoBehaviour, IRestartLevelElement
     {
     }
 
-    // heredado de la interfaz
     public void Restart()
     {
         RestartLevel();

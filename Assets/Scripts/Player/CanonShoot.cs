@@ -43,20 +43,20 @@ public class CanonShoot : MonoBehaviour
         currentTimeShoot += Time.deltaTime;
         if (Time.timeScale == 1)
         {
-            if (/*Input.GetMouseButton(shootButton)*/playerInput.actions["Shoot"].WasPressedThisFrame() && currentTimeShoot >= nextTimeFire)
+            if (playerInput.actions["Shoot"].WasPressedThisFrame() && currentTimeShoot >= nextTimeFire)
             {
                 StartCoroutine(Shoot());
                 ShootBullet(spawnPosition.position);
                 
                 playerAnimator.SetTrigger("Shoot");
             }
-            else if (/*Input.GetKeyDown(KeyCode.LeftShift)*/playerInput.actions["Dash"].WasPressedThisFrame()) /////////////////////// ARREGLAR
+            else if (playerInput.actions["Dash"].WasPressedThisFrame()) 
             {
                 canonForward = -transform.forward;
             }
             else if (playerMovement.DoubleJump)
             {
-                if (/*Input.GetKeyDown(KeyCode.Space)*/playerInput.actions["Jump"].WasPressedThisFrame())
+                if (playerInput.actions["Jump"].WasPressedThisFrame())
                 {
                     canonForward = Vector3.down;
                 }

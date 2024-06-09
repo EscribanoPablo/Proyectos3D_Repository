@@ -10,14 +10,6 @@ public class SettingsController : MonoBehaviour
     [SerializeField]
     private TMP_Dropdown qualityDropdown;
 
-    //[SerializeField]
-    //private Slider sfxVolume;
-    //[SerializeField]
-    //private Slider musicVolume;
-    //
-    //[SerializeField]
-    //private AudioMixer audioMixer;
-
     private void Start()
     {
         qualityDropdown.value = GameController.GetGameController().qualityValue;

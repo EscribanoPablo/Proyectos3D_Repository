@@ -47,7 +47,5 @@ public class PlacaPresiónPinchos : Traps
         }
 
         spikesHidden = !spikesHidden;
-
-        // (de)activate hit collider?
     }
 }

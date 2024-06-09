@@ -5,7 +5,6 @@ using UnityEngine.Rendering.Universal;
 
 public class DecalDisappear : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField] float timeToDisappear = 3f;
     [SerializeField] float opacitySpeed = 1f;
     DecalProjector decalProjector;
@@ -16,7 +15,6 @@ public class DecalDisappear : MonoBehaviour
         decalProjector = GetComponent<DecalProjector>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;

@@ -140,7 +140,6 @@ public class EnemyBombBehaviour : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //if bala, explode
         if(collision.gameObject.tag == "Cannonball")
         {
             Explode();

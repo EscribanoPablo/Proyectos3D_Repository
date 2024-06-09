@@ -7,11 +7,6 @@ using FMOD.Studio;
 
 public class AudioManager : MonoBehaviour
 {
-    //[SerializeField]
-    //AudioSource audioMusic;
-    //[SerializeField]
-    //AudioSource audioSFX;
-
     [SerializeField]
     private float maxDistanceToHearSounds = 20.0f;
 
@@ -122,9 +117,6 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        //audioMusic.clip = backgroundLevelMusic;
-        //audioMusic.Play();
-
         instanceMenuSong = RuntimeManager.CreateInstance(menuMusic);
         instanceGameSong = RuntimeManager.CreateInstance(backgroundLevelMusic);
         instanceCrowdNoise = RuntimeManager.CreateInstance(ambientNoiseSound);
@@ -167,18 +159,15 @@ public class AudioManager : MonoBehaviour
     public void PlayMusic(EventInstance musicEventToPlay)
     {
         musicEventToPlay.start();
-        //musicEventToPlay.release();
     }
 
     private void playSFX(EventReference sfxClip, float clipVolume)
     {
-        //audioSFX.PlayOneShot(sfxClip, clipVolume);
         RuntimeManager.PlayOneShot(sfxClip);
     }
 
     private void playSFX(EventReference sfxClip)
     {
-        //audioSFX.PlayOneShot(sfxClip, 1.0f);
         RuntimeManager.PlayOneShot(sfxClip);
     }
 }

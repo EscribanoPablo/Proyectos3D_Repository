@@ -56,13 +56,10 @@ public class Breakable : Obstacles, IRestartLevelElement
         {
 
             wholeObject.SetActive(false);
-            //prefracturedObject.transform.rotation = wholeObject.transform.rotation;
             prefracturedObject.SetActive(true);
 
-            //prefracturedObject.transform.position = wholeObject.transform.position;
             for (int i = 0; i < prefracturedObject.transform.childCount - 1; i++)
             {
-                //hacer que pille la dirección de la bala y añadirle velocidad
                 breakableCubes[i].GetComponent<Rigidbody>().velocity += canonShoot.CanonForward * boxExplosionForce;
             }
             GetComponent<Collider>().enabled = false;

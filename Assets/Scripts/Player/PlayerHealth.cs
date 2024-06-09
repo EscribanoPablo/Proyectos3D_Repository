@@ -74,8 +74,6 @@ public class PlayerHealth : MonoBehaviour
                 ParticleSystem childrenParticles = childrenDamageParticles.GetComponent<ParticleSystem>();
                 childrenParticles.Emit(10);
                 particles.Emit(10);
-
-                //Debug.Log("Player current health = " + currentLifes);
             }
         }
     }
@@ -91,8 +89,6 @@ public class PlayerHealth : MonoBehaviour
                 hudController.LifeLost(currentLifes);
                 CheckHealth();
                 gotHit = true;
-
-                //Debug.Log("Player current health = " + currentLifes);
             }
         }
     }
@@ -132,12 +128,6 @@ public class PlayerHealth : MonoBehaviour
     public void EnterDeathZone()
     {
         StartCoroutine(StartDeath());
-        //podemos o quitarle vida y respawnear o que tenga que volver a empezar de nuevo, preguntar jowy
-        //GameController.GetGameController().RestartLevelElment();
-        //RESPAWN
-        //playerRigidBody.velocity = Vector3.zero;
-        //hudController.RestartLifes();
-        //currentHearts = startHearts;
     }
 
     IEnumerator StartDeath()

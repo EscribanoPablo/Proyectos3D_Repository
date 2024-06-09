@@ -37,8 +37,6 @@ public class Knockback : Traps
 
     private IEnumerator PunchPlayer()
     {
-        //Rigidbody playerRb = player.GetComponent<PlayerMovement>().rigidBody;
-        //playerRb.AddForce(playerRb.velocity * 2, ForceMode.Impulse);
         yield return new WaitForSeconds(0.1f);
         player.GetComponent<PlayerMovement>().playerControllerEnabled = true; 
 

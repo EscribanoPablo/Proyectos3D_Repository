@@ -6,7 +6,6 @@ public class FollowingPlayerAsLight : MonoBehaviour
 {
 
     [SerializeField] float heightOffset = 10;
-    //[SerializeField] float rightOffset;
     [SerializeField] float lightMovementSpeed = 1;
     [SerializeField] float lightRotateSpeed = 3;
 
@@ -22,7 +21,6 @@ public class FollowingPlayerAsLight : MonoBehaviour
 
     private void OnEnable()
     {
-        //FindObjectOfType<PlayerInput>().SwitchCurrentActionMap("PlayerActions");
         FindObjectOfType<PlayerInput>().currentActionMap.Enable();
         if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
             FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceGameSong);
@@ -43,15 +41,8 @@ public class FollowingPlayerAsLight : MonoBehaviour
 
     private void UpdateRotation()
     {
-       //transform.rotation = Quaternion.Euler( transform.rotation.eulerAngles.x , mainCamera.transform.rotation.eulerAngles.y + 90, transform.rotation.eulerAngles.z);
-       //Quaternion lookRotation = Quaternion.LookRotation(player.transform.position - transform.position);
-       //transform.rotation = Quaternion.Euler(lookRotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
-
         Quaternion lookRotation = Quaternion.LookRotation(player.transform.position - transform.position);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * lightRotateSpeed);
-        //Vector3 directionToLook = player.transform.position - transform.position;
-        //transform.forward = Vector3.Lerp(transform.forward.normalized, directionToLook.normalized, Time.deltaTime * cameraSpeed);
-        //transform.LookAt(player.transform);
     }
 
     public void ResetLight()

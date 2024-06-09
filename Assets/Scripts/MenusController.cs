@@ -134,13 +134,15 @@ public class MenusController : MonoBehaviour
 
     public void ControlsButtonPressed()
     {
-        pauseMenu.SetActive(false);
+        if(SceneManager.GetActiveScene().name != "SettingsMenu")
+            pauseMenu.SetActive(false);
         controlMenu.SetActive(true);
     }
 
     public void ReturnButtonPressed()
     {
-        pauseMenu.SetActive(true);
+        if (SceneManager.GetActiveScene().name != "SettingsMenu")
+            pauseMenu.SetActive(true);
         controlMenu.SetActive(false);
     }
 }

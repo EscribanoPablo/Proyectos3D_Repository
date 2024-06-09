@@ -10,17 +10,6 @@ public class CameraController : MonoBehaviour
 
     private void Awake()
     {
-
-        //if (GameController.GetGameController().GetCamera() == null)
-        //{
-
-        //    GameController.GetGameController().cameraController = this;
-        //    GameObject.DontDestroyOnLoad(gameObject);
-        //}
-        //else
-        //{
-        //    GameObject.Destroy(this.gameObject);
-        //}
     }
 
     private void Start()
@@ -40,9 +29,6 @@ public class CameraController : MonoBehaviour
         {
             virtualCamera.m_LookAt = player.transform;
         }
-
-
-        //Debug.Log(transform.forward.normalized);
     }
 
     private bool CameraTooInclined()

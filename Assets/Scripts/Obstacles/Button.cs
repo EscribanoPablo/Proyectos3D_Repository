@@ -9,11 +9,6 @@ public class Button : Obstacles
     UnityEvent m_Event;
 
     bool doorOpened = false;
-    
-    //[SerializeField]
-    //Animation buttonAnimations;
-    //[SerializeField]
-    //AnimationClip buttonPressedAnimation;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -23,7 +18,6 @@ public class Button : Obstacles
                 FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientClapsSounds);
 
             m_Event.Invoke();
-            //buttonAnimations.Play(buttonPressedAnimation.name);
             doorOpened = true;
         }
     }

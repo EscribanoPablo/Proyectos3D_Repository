@@ -156,10 +156,6 @@ public class PlayerMovement : MonoBehaviour
     private void Movement()
     {
         if (isDashing) return;
-
-        //float l_AD = Input.GetAxis("Horizontal");
-        //float l_WS = Input.GetAxis("Vertical");
-        //Vector3 l_Direction = new Vector3(l_AD, 0f, l_WS).normalized;
         Vector3 direction = new Vector3(playerInput.actions["Movement"].ReadValue<Vector2>().x, 0f, playerInput.actions["Movement"].ReadValue<Vector2>().y).normalized;
 
 
@@ -167,22 +163,18 @@ public class PlayerMovement : MonoBehaviour
         if (!onWall)
         {
             playerAnimator.SetBool("OnWall", false);
-            verticalSpeed += /*Physics.gravity.y*/ -gravity;
+            verticalSpeed += -gravity;
         }
 
         if (direction.magnitude >= 0.1f)
         {
             isMoving = true;
-            //Look Where You Go
+
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            //moveDirection = l_MoveDir;
-
-            //Apply to rb
-            //m_Rb.velocity = new Vector3(l_MoveDir.x * m_SpeedMovement * Time.deltaTime, verticalSpeed, l_MoveDir.z * m_SpeedMovement * Time.deltaTime);
 
             rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
 
@@ -214,7 +206,6 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 flatVel = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
 
-        // limit velocity if needed
         if (flatVel.magnitude > maxVelocity)
         {
             Vector3 limitedVel = flatVel.normalized * maxVelocity;
@@ -224,7 +215,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jumper()
     {
-        if (/*Input.GetKeyDown(m_JumpKey)*/playerInput.actions["Jump"].WasPressedThisFrame())
+        if (playerInput.actions["Jump"].WasPressedThisFrame())
         {
             if (currentJumps < multipleJumps && !isDashing && canJump)
             {
@@ -349,7 +340,7 @@ public class PlayerMovement : MonoBehaviour
     private void PlayerDash()
     {
         if (isDashing) return;
-        if (/*Input.GetKeyDown(dashKey)*/playerInput.actions["Dash"].WasPressedThisFrame() && canDash && currentDashes < multipleDashOnAir)
+        if (playerInput.actions["Dash"].WasPressedThisFrame() && canDash && currentDashes < multipleDashOnAir)
         {
             StartCoroutine(DoDash());
         }
@@ -374,7 +365,6 @@ public class PlayerMovement : MonoBehaviour
 
         rigidBody.AddForce(dashDirection, ForceMode.Impulse);
 
-        //SpawnCanonParticles(canonParticles, spawnJumpCanonParticlesPos.position);
         canonShoot.SpawnCanonParticles();
 
         yield return new WaitForSeconds(0.2f);
@@ -382,9 +372,6 @@ public class PlayerMovement : MonoBehaviour
         canonShoot.ShootBullet(spawnBulletDashPosition.position);
 
         yield return new WaitForSeconds(dashDuration);
-
-        //Stop inercia rigidBody;
-        //m_Rb.velocity = new Vector3(0, 0, 0);
 
         rigidBody.useGravity = true;
         isDashing = false;
@@ -432,7 +419,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 jumpDirection = -transform.forward;
         jumpDirection.Normalize();
         rigidBody.AddForce((jumpDirection * wallJumpSideForce) + (Vector3.up * wallJumpUpForce), ForceMode.Impulse);
-        //transform.Rotate(Vector3.up * 180f);
         transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180, transform.rotation.eulerAngles.z));
 
         rigidBody.useGravity = true;
@@ -442,9 +428,7 @@ public class PlayerMovement : MonoBehaviour
     {
         wallJumpParticles.SetActive(true);
 
-        //PlayParticles(wallJumpParticles);
         SpawnCanonParticles(wallJumpParticles, wallJumpParticles.transform.position);
-        //StopParticles(wallJumpParticles);
     }
 
     private void WallFall()

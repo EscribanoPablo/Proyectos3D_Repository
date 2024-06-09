@@ -29,12 +29,15 @@ public class GameController : MonoBehaviour
         {
             GameObject gameObject = new GameObject("GameController");
             gameController = gameObject.AddComponent<GameController>();
-            //m_GameController.m_DestroyObjects = new GameObject("DestroyObjects");
-            //m_DestroyObjects.transform.SetParent(l_GameObject.transform);
             GameController.DontDestroyOnLoad(gameObject);
             alreadyInitializated = true;
         }
         return gameController;
+    }
+
+    private void Update()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public PlayerController GetPlayer()
@@ -69,12 +72,6 @@ public class GameController : MonoBehaviour
 
     public void RestartLevelElement()
     {
-        //foreach (IRestartLevelElement element in restartLevelElements)
-        //{
-        //    if (element != null)
-        //        element?.Restart();
-        //}
-
         for (int index = 0; index < restartLevelElements.Count; index++)
         {
             if(restartLevelElements[index] != null)
