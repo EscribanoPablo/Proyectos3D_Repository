@@ -38,6 +38,7 @@ public class GameController : MonoBehaviour
     private void Update()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public PlayerController GetPlayer()
