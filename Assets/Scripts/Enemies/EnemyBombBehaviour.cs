@@ -133,8 +133,6 @@ public class EnemyBombBehaviour : MonoBehaviour
         bombMovingSound.Stop(); bombMovingSound.PlayEvent = EmitterGameEvent.None;
         FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().bombAttackDeathSound, transform.position);
 
-        if(Random.Range(1, 4) == 1)
-            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().circusMasterHeySound, transform.position);
         gameObject.SetActive(false);
     }
 

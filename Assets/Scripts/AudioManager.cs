@@ -40,10 +40,24 @@ public class AudioManager : MonoBehaviour
     public EventReference DieSound;
     public EventReference RespawnSound;
 
+    [Header("AudioClips_CircusMaster")]
+    public EventReference TutorialWelcomeSound;
+    public EventReference FirstStageWelcomeSound;
+    public EventReference FirstStageJackieSound;
+    public EventReference FirstStageEndSound;
+    public EventReference SecondStageWelcomeSound;
+    public EventReference SecondStageJackieSound;
+    public EventReference SecondStageEndSound;
+    public EventReference SecondStageEndEscapeSound;
+    public EventReference LevelCheckpointSound;
+    public EventReference LevelFireRingSound;
+    public EventReference LevelCollectibleSound;
+    public EventReference LevelDeathSound;
+
+    public EventInstance instanceFirstStageWelcome;
+    public EventInstance instanceSecondStageWelcome;
+
     [Header("AudioClips_Environment/Obstacles")]
-    public EventReference cirucsMasterLaughSound;
-    public EventReference circusMasterHeySound;
-    public EventReference circusMasterMoveHand;
     public EventReference ambientLaughtsSounds;
     public EventReference ambientClapsSounds;
     public EventReference GrabCollectibleSound;
@@ -120,6 +134,9 @@ public class AudioManager : MonoBehaviour
         instanceMenuSong = RuntimeManager.CreateInstance(menuMusic);
         instanceGameSong = RuntimeManager.CreateInstance(backgroundLevelMusic);
         instanceCrowdNoise = RuntimeManager.CreateInstance(ambientNoiseSound);
+
+        instanceFirstStageWelcome = RuntimeManager.CreateInstance(FirstStageWelcomeSound);
+        instanceSecondStageWelcome = RuntimeManager.CreateInstance(SecondStageWelcomeSound);
 
         if (SceneManager.GetActiveScene().name == "MainMenu")
             instanceMenuSong.start();

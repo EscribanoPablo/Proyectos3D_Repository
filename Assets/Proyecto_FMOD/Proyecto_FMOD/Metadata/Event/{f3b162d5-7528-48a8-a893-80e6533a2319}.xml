@@ -2,10 +2,10 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{f3b162d5-7528-48a8-a893-80e6533a2319}">
 		<property name="name">
-			<value>HEY JEFE</value>
+			<value>TUTORIAL JUMP</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{0a0cb6b1-bea7-4ff2-9a71-44e66a47b425}</destination>
@@ -60,7 +60,7 @@
 	<object class="MarkerTrack" id="{840002a5-5f0c-41de-9d0f-bd620fa90a3b}" />
 	<object class="GroupTrack" id="{ac561e28-2d35-4109-b140-b6f4f8a3afe3}">
 		<relationship name="modules">
-			<destination>{9bac8140-9789-4079-b442-1719a357e768}</destination>
+			<destination>{90b90607-c9cb-4e3d-9370-75fc5110ad20}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{67b4a9ac-a9a0-40c1-9f32-6830966215bf}</destination>
@@ -68,7 +68,7 @@
 	</object>
 	<object class="Timeline" id="{eba80277-e70a-49cb-9d99-0e4d6fb5826e}">
 		<relationship name="modules">
-			<destination>{9bac8140-9789-4079-b442-1719a357e768}</destination>
+			<destination>{90b90607-c9cb-4e3d-9370-75fc5110ad20}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{1ad84ad3-7fdb-4da0-a99b-67d878391749}">
@@ -88,17 +88,17 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{bcff3400-cab2-496e-91b7-6257022d06ec}" />
-	<object class="SingleSound" id="{9bac8140-9789-4079-b442-1719a357e768}">
+	<object class="SingleSound" id="{90b90607-c9cb-4e3d-9370-75fc5110ad20}">
 		<property name="length">
-			<value>0.57937499999999997</value>
+			<value>2.5</value>
 		</property>
 		<relationship name="audioFile">
-			<destination>{7198b3d1-ed1f-467c-886a-7b354aec5087}</destination>
+			<destination>{2d130e98-49e3-40ed-9423-ff7dbe4ad848}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{67b4a9ac-a9a0-40c1-9f32-6830966215bf}">
 		<property name="volume">
-			<value>4</value>
+			<value>-5</value>
 		</property>
 		<property name="name">
 			<value>Audio 1</value>

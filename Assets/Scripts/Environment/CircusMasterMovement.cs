@@ -76,6 +76,11 @@ public class CircusMasterMovement : MonoBehaviour
     {
         FindObjectOfType<MenusController>().DisableCutseceMessage();
 
+        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "BetaLevel01")
+            FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceFirstStageWelcome);
+        else
+            FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceSecondStageWelcome);
+
         foreach (GameObject cam in introCameras)
         {
             cam.SetActive(false);

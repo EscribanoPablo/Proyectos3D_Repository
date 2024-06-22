@@ -143,27 +143,118 @@ MonoBehaviour:
       Data3: 2026474663
       Data4: -471895825
     Path: event:/FX/25.REAPARECER/REAPARECER
-  cirucsMasterLaughSound:
+  TutorialWelcomeSound:
     Guid:
       Data1: 747054311
       Data2: 1208267588
       Data3: 823517873
       Data4: -1945059529
-    Path: event:/FX/37.JEFE CIRCO/RISA JEFE
-  circusMasterHeySound:
+    Path: event:/FX/37.JEFE CIRCO/TUTORIAL WELCOME
+  TutorialJumpSound:
     Guid:
       Data1: -206478635
       Data2: 1218999592
       Data3: -427781208
       Data4: 421739091
-    Path: event:/FX/37.JEFE CIRCO/HEY JEFE
-  circusMasterMoveHand:
+    Path: event:/FX/37.JEFE CIRCO/TUTORIAL JUMP
+  TutorialDoubleJumpSound:
+    Guid:
+      Data1: -2027008781
+      Data2: 1236149203
+      Data3: 1399007630
+      Data4: 855725424
+    Path: event:/FX/37.JEFE CIRCO/TUTORIAL DOUBLE JUMP
+  TutorialDashSound:
+    Guid:
+      Data1: -52057110
+      Data2: 1285706706
+      Data3: -1362599261
+      Data4: -1545014264
+    Path: event:/FX/37.JEFE CIRCO/TUTORIAL DASH
+  TutorialShootSound:
     Guid:
       Data1: -871148063
       Data2: 1174727065
       Data3: -481884795
       Data4: 1812065761
-    Path: event:/FX/37.JEFE CIRCO/PASO JEFE
+    Path: event:/FX/37.JEFE CIRCO/TUTORIAL SHOOT
+  FirstStageWelcomeSound:
+    Guid:
+      Data1: -149767999
+      Data2: 1290776533
+      Data3: 341201845
+      Data4: -1450819886
+    Path: event:/FX/37.JEFE CIRCO/FIRST STAGE WELCOME
+  FirstStageJackieSound:
+    Guid:
+      Data1: 1366748305
+      Data2: 1292512572
+      Data3: -1673771096
+      Data4: -1881572544
+    Path: event:/FX/37.JEFE CIRCO/FIRST STAGE JACKIE
+  FirstStageEndSound:
+    Guid:
+      Data1: -1673719269
+      Data2: 1314528935
+      Data3: -2086720879
+      Data4: -188658793
+    Path: event:/FX/37.JEFE CIRCO/FIRST STAGE END
+  SecondStageWelcomeSound:
+    Guid:
+      Data1: -356127628
+      Data2: 1097185703
+      Data3: 1921691780
+      Data4: 1776254664
+    Path: event:/FX/37.JEFE CIRCO/SECOND STAGE WELCOME
+  SecondStageJackieSound:
+    Guid:
+      Data1: 502968013
+      Data2: 1237589452
+      Data3: 1324154537
+      Data4: -2019673574
+    Path: event:/FX/37.JEFE CIRCO/SECOND STAGE JACKIE
+  SecondStageEndSound:
+    Guid:
+      Data1: 313699415
+      Data2: 1148317815
+      Data3: -1067779404
+      Data4: 344381662
+    Path: event:/FX/37.JEFE CIRCO/SECOND STAGE END
+  SecondStageEndEscapeSound:
+    Guid:
+      Data1: -206496962
+      Data2: 1295606181
+      Data3: 1636826038
+      Data4: -74191268
+    Path: event:/FX/37.JEFE CIRCO/SECOND STAGE END ESCAPE
+  LevelCheckpointSound:
+    Guid:
+      Data1: 1400000039
+      Data2: 1207379219
+      Data3: 81197707
+      Data4: -2080234525
+    Path: event:/FX/37.JEFE CIRCO/LEVEL CHECKPOINT
+  LevelFireRingSound:
+    Guid:
+      Data1: -384884705
+      Data2: 1311778166
+      Data3: -752090227
+      Data4: 215945104
+    Path: event:/FX/37.JEFE CIRCO/LEVEL FIRE RING
+  LevelCollectibleSound:
+    Guid:
+      Data1: -817199294
+      Data2: 1170240875
+      Data3: 1230930077
+      Data4: -1272792098
+    Path: event:/FX/37.JEFE CIRCO/LEVEL COLLECTIBLE
+  LevelDeathSound:
+    Guid:
+      Data1: -1507578884
+      Data2: 1224816114
+      Data3: 944905650
+      Data4: -1381813666
+    Path: event:/FX/37.JEFE CIRCO/LEVEL DEATH
   ambientLaughtsSounds:
     Guid:
       Data1: 1381155944

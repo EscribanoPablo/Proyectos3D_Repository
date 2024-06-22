@@ -2,10 +2,10 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{2c8724e7-b344-4804-b1e2-153137bf108c}">
 		<property name="name">
-			<value>RISA JEFE</value>
+			<value>TUTORIAL WELCOME</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{0a0cb6b1-bea7-4ff2-9a71-44e66a47b425}</destination>
@@ -60,7 +60,7 @@
 	<object class="MarkerTrack" id="{f255e631-3be5-493a-bf40-240e6b2add9a}" />
 	<object class="GroupTrack" id="{2d0a1e3b-ca9e-4e60-9e0d-74c5f11191d2}">
 		<relationship name="modules">
-			<destination>{6f574a01-3339-4e26-aa90-8194cb952b19}</destination>
+			<destination>{83cac38a-2c61-43d9-bc45-3485a8864d0e}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{d3062097-12da-414f-9918-5b709ff51290}</destination>
@@ -68,7 +68,7 @@
 	</object>
 	<object class="Timeline" id="{1ca92c6c-3b37-4907-b0a7-e724ae166522}">
 		<relationship name="modules">
-			<destination>{6f574a01-3339-4e26-aa90-8194cb952b19}</destination>
+			<destination>{83cac38a-2c61-43d9-bc45-3485a8864d0e}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{c2bd1dc1-b1fb-467c-a2f1-83dc0550f2de}">
@@ -88,17 +88,17 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{6c680896-39ad-46b6-a211-f2f9fdc95910}" />
-	<object class="SingleSound" id="{6f574a01-3339-4e26-aa90-8194cb952b19}">
+	<object class="SingleSound" id="{83cac38a-2c61-43d9-bc45-3485a8864d0e}">
 		<property name="length">
-			<value>1.817375</value>
+			<value>4.75</value>
 		</property>
 		<relationship name="audioFile">
-			<destination>{b47fa0f7-f4a7-472d-ab6c-a38ee31862e8}</destination>
+			<destination>{8d90bd94-042e-4b45-b23b-c077c4d6242b}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{d3062097-12da-414f-9918-5b709ff51290}">
 		<property name="volume">
-			<value>4</value>
+			<value>-5</value>
 		</property>
 		<property name="name">
 			<value>Audio 1</value>

@@ -3,15 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TriggerMessage : MonoBehaviour
+public class TriggerMessage : MonoBehaviour, IRestartLevelElement
 {
     [SerializeField]
     private GameObject messageController;
     [SerializeField]
     private GameObject messagePc;
 
+    private bool soundNotPlayed = true;
+
+    public FMODUnity.EventReference TutorialSound;
+
     void Start()
     {
+        GameController.GetGameController().AddRestartLevelElement(this);
         messageController.SetActive(false);
         messagePc.SetActive(false);
     }
@@ -24,6 +29,12 @@ public class TriggerMessage : MonoBehaviour
                 messageController.SetActive(true);
             else
                 messagePc.SetActive(true);
+
+            if (soundNotPlayed)
+            {
+                FindObjectOfType<AudioManager>().SetPlaySfx(TutorialSound);
+                soundNotPlayed = false;
+            }
         }
     }
 
@@ -53,5 +64,10 @@ public class TriggerMessage : MonoBehaviour
             else
                 messagePc.SetActive(false);
         }
+    }
+
+    public void Restart()
+    {
+        soundNotPlayed = true;
     }
 }

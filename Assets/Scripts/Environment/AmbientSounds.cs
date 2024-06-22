@@ -4,6 +4,9 @@ public class AmbientSounds : MonoBehaviour, IRestartLevelElement
 {
     private bool eventTriggered = false;
 
+    [SerializeField]
+    private bool isFireRing = false;
+
     private void Start()
     {
         GameController.GetGameController().AddRestartLevelElement(this);
@@ -17,6 +20,9 @@ public class AmbientSounds : MonoBehaviour, IRestartLevelElement
                 FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientLaughtsSounds);
 
             FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientClapsSounds);
+
+            if(isFireRing)
+                FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().LevelFireRingSound);
 
             eventTriggered = true;
         }

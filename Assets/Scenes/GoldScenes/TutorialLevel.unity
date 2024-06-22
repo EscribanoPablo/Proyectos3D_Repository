@@ -3593,6 +3593,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageController: {fileID: 315298306}
   messagePc: {fileID: 2066981895}
+  TutorialSound:
+    Guid:
+      Data1: -206478635
+      Data2: 1218999592
+      Data3: -427781208
+      Data4: 421739091
+    Path: event:/FX/37.JEFE CIRCO/TUTORIAL JUMP
 --- !u!65 &152773737
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5058,6 +5065,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageController: {fileID: 1827132935}
   messagePc: {fileID: 744001761}
+  TutorialSound:
+    Guid:
+      Data1: -871148063
+      Data2: 1174727065
+      Data3: -481884795
+      Data4: 1812065761
+    Path: event:/FX/37.JEFE CIRCO/TUTORIAL SHOOT
 --- !u!65 &266685496
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20711,6 +20725,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageController: {fileID: 80334242}
   messagePc: {fileID: 115240776}
+  TutorialSound:
+    Guid:
+      Data1: -2027008781
+      Data2: 1236149203
+      Data3: 1399007630
+      Data4: 855725424
+    Path: event:/FX/37.JEFE CIRCO/TUTORIAL DOUBLE JUMP
 --- !u!65 &1074786173
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20806,6 +20827,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageController: {fileID: 377492972}
   messagePc: {fileID: 1382674752}
+  TutorialSound:
+    Guid:
+      Data1: -52057110
+      Data2: 1285706706
+      Data3: -1362599261
+      Data4: -1545014264
+    Path: event:/FX/37.JEFE CIRCO/TUTORIAL DASH
 --- !u!65 &1105105753
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20844,7 +20872,7 @@ Transform:
   m_GameObject: {fileID: 1105105751}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.23462576, z: -0, w: 0.9720858}
-  m_LocalPosition: {x: 19.14, y: 0, z: -9.81}
+  m_LocalPosition: {x: 21.09, y: 0, z: -10.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
