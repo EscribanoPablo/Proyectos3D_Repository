@@ -15,11 +15,15 @@ public class PlayerHealth : MonoBehaviour
     private HudController hudController;
 
     private bool gotHit = false;
-    private float timeCounter = 0;
+    private float invulnerableCounter = 0;
     [SerializeField]
     private float invulnerableTime = 1.0f;
     [SerializeField]
     private float noInputsTime = 0.3f;
+
+    private float restartingCounter = 0;
+    [SerializeField]
+    private float restartPressedTime = 2.0f;
 
     private AudioManager audioManager;
     [SerializeField]
@@ -44,15 +48,32 @@ public class PlayerHealth : MonoBehaviour
     {
         if (gotHit)
         {
-            timeCounter += 1.0f * Time.deltaTime;
-            if (timeCounter >= invulnerableTime)
+            invulnerableCounter += 1.0f * Time.deltaTime;
+            if (invulnerableCounter >= invulnerableTime)
             {
                 gotHit = false;
-                timeCounter = 0;
+                invulnerableCounter = 0;
             }
-            else if(timeCounter >= noInputsTime && currentLifes > 0)
+            else if(invulnerableCounter >= noInputsTime && currentLifes > 0)
                 playerInputs.enabled = true;
         }
+
+        if (playerInputs.actions["Restart"].IsPressed())
+        {
+            if (restartingCounter >= restartPressedTime)
+            {
+                restartingCounter = 0.0f;
+
+                currentLifes = 0;
+                playerInputs.enabled = false;
+                CheckHealth();
+                gotHit = true;
+            }
+            else
+                restartingCounter += 1.0f * Time.deltaTime;
+        }
+        else
+            restartingCounter = 0.0f;
     }
 
     public void TakeDamage(Vector3 pointOfImpact)
