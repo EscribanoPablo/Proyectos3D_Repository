@@ -37,10 +37,12 @@ public class Bullet : MonoBehaviour, IRestartLevelElement
         }
     }
 
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Breakable")
         {
+            GetComponent<SphereCollider>().isTrigger = true;
         }
         else
         {
@@ -56,6 +58,13 @@ public class Bullet : MonoBehaviour, IRestartLevelElement
             Destroy(explosionParticle, 3);
             GameController.GetGameController().RemoveRestartLevelElement(this);
             Destroy(this.gameObject);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "DoorButton")
+        {
+            GetComponent<SphereCollider>().isTrigger = false;
         }
     }
 
