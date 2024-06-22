@@ -13,6 +13,9 @@ public class MenusController : MonoBehaviour
     private GameObject controlMenu;
 
     [SerializeField]
+    private GameObject settingsPauseMenu;
+
+    [SerializeField]
     private GameObject skipCutsceneController;
     [SerializeField]
     private GameObject skipCutscenePC;
@@ -54,7 +57,6 @@ public class MenusController : MonoBehaviour
         {
             if (playerInputs.actions["PauseGame"].WasPressedThisFrame())
             {
-                FindObjectOfType<AudioManager>().ReduceVolume();
                 pauseMenu.SetActive(true);
                 playerInputs.enabled = false;
                 Time.timeScale = 0;
@@ -97,7 +99,6 @@ public class MenusController : MonoBehaviour
         }
         else if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02" || SceneManager.GetActiveScene().name == "TutorialLevel")
         {
-            FindObjectOfType<AudioManager>().AugmentVolume();
             pauseMenu.SetActive(false);
             playerInputs.enabled = true;
             Time.timeScale = 1;
@@ -112,7 +113,13 @@ public class MenusController : MonoBehaviour
 
     public void SettingsButtonPressed()
     {
-        GameObject.FindObjectOfType<PlayTransition>().GoBlack(true, SceneToGo.Settings);
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+            GameObject.FindObjectOfType<PlayTransition>().GoBlack(true, SceneToGo.Settings);
+        else
+        {
+            pauseMenu.SetActive(false);
+            settingsPauseMenu.SetActive(true);
+        }
     }
 
     public void ExitButtonPressed()
@@ -126,7 +133,6 @@ public class MenusController : MonoBehaviour
             if (SceneManager.GetActiveScene().name != "SettingsMenu")
             {
                 Time.timeScale = 1;
-                FindObjectOfType<AudioManager>().AugmentVolume();
             }
             GameObject.FindObjectOfType<PlayTransition>().GoBlack(true, SceneToGo.MainMenu);
         }
@@ -142,7 +148,10 @@ public class MenusController : MonoBehaviour
     public void ReturnButtonPressed()
     {
         if (SceneManager.GetActiveScene().name != "SettingsMenu")
-            pauseMenu.SetActive(true);
+        {
+            pauseMenu.SetActive(true); 
+            settingsPauseMenu.SetActive(false);
+        }
         controlMenu.SetActive(false);
     }
 }
