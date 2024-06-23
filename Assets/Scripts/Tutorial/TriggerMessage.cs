@@ -10,9 +10,19 @@ public class TriggerMessage : MonoBehaviour, IRestartLevelElement
     [SerializeField]
     private GameObject messagePc;
 
-    private bool soundNotPlayed = true;
+    //private bool soundNotPlayed = true;
 
-    public FMODUnity.EventReference TutorialSound;
+    //public FMODUnity.EventReference TutorialSound;
+
+    public enum TutorialsTypes
+    {
+        jump,
+        doubleJump,
+        dash,
+        shoot
+    }
+
+    public TutorialsTypes tutorialType = TutorialsTypes.jump;
 
     void Start()
     {
@@ -30,11 +40,20 @@ public class TriggerMessage : MonoBehaviour, IRestartLevelElement
             else
                 messagePc.SetActive(true);
 
-            if (soundNotPlayed)
-            {
-                FindObjectOfType<AudioManager>().SetPlaySfx(TutorialSound);
-                soundNotPlayed = false;
-            }
+            //if (soundNotPlayed)
+            //{
+            //    FindObjectOfType<AudioManager>().SetPlaySfx(TutorialSound);
+            //    soundNotPlayed = false;
+            //}
+
+            if(tutorialType == TutorialsTypes.jump)
+                FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceTutorialJumpSound);
+            else if (tutorialType == TutorialsTypes.doubleJump)
+                FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceTutorialDoubleJumpSound);
+            else if (tutorialType == TutorialsTypes.dash)
+                FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceTutorialDashSound);
+            else
+                FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceTutorialShootSound);
         }
     }
 
@@ -68,6 +87,6 @@ public class TriggerMessage : MonoBehaviour, IRestartLevelElement
 
     public void Restart()
     {
-        soundNotPlayed = true;
+        //soundNotPlayed = true;
     }
 }

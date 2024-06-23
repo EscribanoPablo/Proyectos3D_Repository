@@ -37,7 +37,7 @@ public class Checkpoint : MonoBehaviour
             checkpointAnimation.Play(checkpointClip.name);
 
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
-                FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().LevelCheckpointSound);
+                FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceLevelCheckpointSound);
         }
     }
 

@@ -42,6 +42,10 @@ public class AudioManager : MonoBehaviour
 
     [Header("AudioClips_CircusMaster")]
     public EventReference TutorialWelcomeSound;
+    public EventReference TutorialJumpSound;
+    public EventReference TutorialDoubleJumpSound;
+    public EventReference TutorialDashSound;
+    public EventReference TutorialShootSound;
     public EventReference FirstStageWelcomeSound;
     public EventReference FirstStageJackieSound;
     public EventReference FirstStageEndSound;
@@ -54,8 +58,24 @@ public class AudioManager : MonoBehaviour
     public EventReference LevelCollectibleSound;
     public EventReference LevelDeathSound;
 
+    public EventInstance instanceTutorialWelcomeSound;
+    public EventInstance instanceTutorialJumpSound;
+    public EventInstance instanceTutorialDoubleJumpSound;
+    public EventInstance instanceTutorialDashSound;
+    public EventInstance instanceTutorialShootSound;
     public EventInstance instanceFirstStageWelcome;
+    public EventInstance instanceFirstStageJackieSound;
+    public EventInstance instanceFirstStageEndSound;
     public EventInstance instanceSecondStageWelcome;
+    public EventInstance instanceSecondStageJackieSound;
+    public EventInstance instanceSecondStageEndSound;
+    public EventInstance instanceSecondStageEndEscapeSound;
+    public EventInstance instanceLevelCheckpointSound;
+    public EventInstance instanceLevelFireRingSound;
+    public EventInstance instanceLevelCollectibleSound;
+    public EventInstance instanceLevelDeathSound;
+
+    private List<EventInstance> circusMasterAudios = new List<EventInstance>(); 
 
     [Header("AudioClips_Environment/Obstacles")]
     public EventReference ambientLaughtsSounds;
@@ -135,11 +155,46 @@ public class AudioManager : MonoBehaviour
         instanceGameSong = RuntimeManager.CreateInstance(backgroundLevelMusic);
         instanceCrowdNoise = RuntimeManager.CreateInstance(ambientNoiseSound);
 
-        instanceFirstStageWelcome = RuntimeManager.CreateInstance(FirstStageWelcomeSound);
-        instanceSecondStageWelcome = RuntimeManager.CreateInstance(SecondStageWelcomeSound);
+        InstanciateCircusMasterSounds();
 
         if (SceneManager.GetActiveScene().name == "MainMenu")
             instanceMenuSong.start();
+    }
+
+    private void InstanciateCircusMasterSounds()
+    {
+        instanceTutorialWelcomeSound = RuntimeManager.CreateInstance(TutorialWelcomeSound);
+        circusMasterAudios.Add(instanceTutorialWelcomeSound);
+        instanceTutorialJumpSound = RuntimeManager.CreateInstance(TutorialJumpSound);
+        circusMasterAudios.Add(instanceTutorialJumpSound);
+        instanceTutorialDoubleJumpSound = RuntimeManager.CreateInstance(TutorialDoubleJumpSound);
+        circusMasterAudios.Add(instanceTutorialDoubleJumpSound);
+        instanceTutorialDashSound = RuntimeManager.CreateInstance(TutorialDashSound);
+        circusMasterAudios.Add(instanceTutorialDashSound);
+        instanceTutorialShootSound = RuntimeManager.CreateInstance(TutorialShootSound);
+        circusMasterAudios.Add(instanceTutorialShootSound);
+        instanceFirstStageWelcome = RuntimeManager.CreateInstance(FirstStageWelcomeSound);
+        circusMasterAudios.Add(instanceFirstStageWelcome);
+        instanceFirstStageJackieSound = RuntimeManager.CreateInstance(FirstStageJackieSound);
+        circusMasterAudios.Add(instanceFirstStageJackieSound);
+        instanceFirstStageEndSound = RuntimeManager.CreateInstance(FirstStageEndSound);
+        circusMasterAudios.Add(instanceFirstStageEndSound);
+        instanceSecondStageWelcome = RuntimeManager.CreateInstance(SecondStageWelcomeSound);
+        circusMasterAudios.Add(instanceSecondStageWelcome);
+        instanceSecondStageJackieSound = RuntimeManager.CreateInstance(SecondStageJackieSound);
+        circusMasterAudios.Add(instanceSecondStageJackieSound);
+        instanceSecondStageEndSound = RuntimeManager.CreateInstance(SecondStageEndSound);
+        circusMasterAudios.Add(instanceSecondStageEndSound);
+        instanceSecondStageEndEscapeSound = RuntimeManager.CreateInstance(SecondStageEndEscapeSound);
+        circusMasterAudios.Add(instanceSecondStageEndEscapeSound);
+        instanceLevelCheckpointSound = RuntimeManager.CreateInstance(LevelCheckpointSound);
+        circusMasterAudios.Add(instanceLevelCheckpointSound);
+        instanceLevelFireRingSound = RuntimeManager.CreateInstance(LevelFireRingSound);
+        circusMasterAudios.Add(instanceLevelFireRingSound);
+        instanceLevelCollectibleSound = RuntimeManager.CreateInstance(LevelCollectibleSound);
+        circusMasterAudios.Add(instanceLevelCollectibleSound);
+        instanceLevelDeathSound = RuntimeManager.CreateInstance(LevelDeathSound);
+        circusMasterAudios.Add(instanceLevelDeathSound);
     }
 
     void Update()
@@ -166,6 +221,21 @@ public class AudioManager : MonoBehaviour
     public void PlayMusic(EventInstance musicEventToPlay)
     {
         musicEventToPlay.start();
+    }
+
+
+    public void PlayCircusMasterAudio(EventInstance musicEventToPlay)
+    {
+        foreach(EventInstance circusMasterAudio in circusMasterAudios)
+        {
+            circusMasterAudio.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+
+        musicEventToPlay.start();
+    }
+    public void StopCircusMasterAudio(EventInstance musicEventToStop)
+    {
+        musicEventToStop.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
     }
 
     private void playSFX(EventReference sfxClip, float clipVolume)

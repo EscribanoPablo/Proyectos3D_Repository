@@ -17,7 +17,7 @@ public class Collectible : MonoBehaviour
             GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>().SetTrigger("Celebrate");
 
             FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientClapsSounds);
-            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().LevelCollectibleSound);
+            FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceLevelCollectibleSound);
         }
     }
 }

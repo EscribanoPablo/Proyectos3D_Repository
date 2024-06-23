@@ -160,7 +160,7 @@ public class PlayerHealth : MonoBehaviour
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
         {
             audioManager.StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
-            audioManager.SetPlaySfx(audioManager.LevelDeathSound);
+            audioManager.PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceLevelDeathSound);
             audioManager.SetPlaySfx(audioManager.ambientLaughtsSounds);
         }
         
