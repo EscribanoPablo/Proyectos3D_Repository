@@ -148,16 +148,6 @@ public class AudioManager : MonoBehaviour
         SFX.setVolume(SFXVolume);
     }
 
-    public void ReduceVolume()
-    {
-        musicVolume /= 1.5f;
-    }
-
-    public void AugmentVolume()
-    {
-        musicVolume *= 1.5f;
-    }
-
     public void MusicVolumeLevel(float newMusicVolume)
     {
         musicVolume = newMusicVolume;

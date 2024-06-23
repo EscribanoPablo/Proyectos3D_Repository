@@ -154,18 +154,17 @@ public class PlayerHealth : MonoBehaviour
     IEnumerator StartDeath()
     {
         playerAnimator.SetTrigger("Death");
+        
         audioManager.SetPlaySfx(audioManager.DieSound, transform.position);
 
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
         {
+            audioManager.StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
             audioManager.SetPlaySfx(audioManager.LevelDeathSound);
             audioManager.SetPlaySfx(audioManager.ambientLaughtsSounds);
         }
         
         yield return new WaitForSeconds(0.8f);
-
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
-            audioManager.StopMusic(audioManager.instanceGameSong);
 
         Die();
     }
