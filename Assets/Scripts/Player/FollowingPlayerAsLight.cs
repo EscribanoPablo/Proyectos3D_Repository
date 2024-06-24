@@ -21,7 +21,11 @@ public class FollowingPlayerAsLight : MonoBehaviour
 
     private void OnEnable()
     {
-        FindObjectOfType<PlayerInput>().transform.GetChild(1).gameObject.SetActive(true);
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
+            FindObjectOfType<PlayerInput>().transform.GetChild(1).gameObject.SetActive(true);
+        else
+            FindObjectOfType<PlayerInput>().transform.GetChild(1).GetComponent<Animator>().SetTrigger("IsInTutorial");
+
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "BetaLevel01")
             FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceFirstStageJackieSound);
         else
