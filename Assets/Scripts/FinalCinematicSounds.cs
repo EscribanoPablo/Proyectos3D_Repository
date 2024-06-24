@@ -22,6 +22,6 @@ public class FinalCinematicSounds : MonoBehaviour
 
     private void GoToCredits()
     {
-        GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.Credits);
+        GameObject.FindObjectOfType<PlayTransition>().GoBlack(true, SceneToGo.Credits);
     }
 }
