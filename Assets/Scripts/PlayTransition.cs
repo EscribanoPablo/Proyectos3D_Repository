@@ -48,14 +48,22 @@ public class PlayTransition : MonoBehaviour
             case SceneToGo.Level02:
                 GameController.GetGameController().EmptyRestartList();
                 SceneManager.LoadScene("BetaLevel02");
+
                 FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceSecondStageWelcome);
+                break;
+            case SceneToGo.FinalCinematic:
+                GameController.GetGameController().EmptyRestartList();
+                SceneManager.LoadScene("FinalScene");
+
+                FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
+                FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
+                FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceFinalCinematicSong);
                 break;
             case SceneToGo.Credits:
                 GameController.GetGameController().EmptyRestartList();
                 SceneManager.LoadScene("CreditsScene");
 
-                FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
-                FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
+                FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceFinalCinematicSong);
                 FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
                 break;
             default:
@@ -90,5 +98,6 @@ public enum SceneToGo
     TutorialLevel,
     Level01,
     Level02,
+    FinalCinematic,
     Credits,
 }
