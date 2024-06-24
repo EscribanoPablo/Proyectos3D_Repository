@@ -15,10 +15,11 @@ public class ChangeScene : MonoBehaviour
 
             if (SceneManager.GetActiveScene().name == "BetaLevel01")
                 GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.Level02);
-
             else if (SceneManager.GetActiveScene().name == "BetaLevel02")
+            {
+                FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceSecondStageEndEscapeSound);
                 GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.FinalCinematic);
-
+            }
             else if (SceneManager.GetActiveScene().name == "TutorialLevel")
                 GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.MainMenu);
 
