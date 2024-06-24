@@ -6,6 +6,8 @@ public class Checkpoint : MonoBehaviour
 {
     private bool checkpointGrabbed = false;
     [SerializeField]
+    private GameObject spawnPosition;
+    [SerializeField]
     private Animation checkpointAnimation;
     [SerializeField]
     private AnimationClip checkpointClip;
@@ -22,7 +24,7 @@ public class Checkpoint : MonoBehaviour
     {
         if(other.transform.tag == "Player" && !checkpointGrabbed)
         {
-            other.GetComponent<PlayerController>().SetRespawnPos(gameObject.transform);
+            other.GetComponent<PlayerController>().SetRespawnPos(spawnPosition.transform);
             checkpointGrabbed = true;
             GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>().SetTrigger("Celebrate");
 
@@ -35,7 +37,7 @@ public class Checkpoint : MonoBehaviour
             checkpointAnimation.Play(checkpointClip.name);
 
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
-                FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().LevelCheckpointSound);
+                FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceLevelCheckpointSound);
         }
     }
 

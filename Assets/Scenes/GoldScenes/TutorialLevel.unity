@@ -3593,13 +3593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageController: {fileID: 315298306}
   messagePc: {fileID: 2066981895}
-  TutorialSound:
-    Guid:
-      Data1: -206478635
-      Data2: 1218999592
-      Data3: -427781208
-      Data4: 421739091
-    Path: event:/FX/37.JEFE CIRCO/TUTORIAL JUMP
+  tutorialType: 0
 --- !u!65 &152773737
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5065,13 +5059,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageController: {fileID: 1827132935}
   messagePc: {fileID: 744001761}
-  TutorialSound:
-    Guid:
-      Data1: -871148063
-      Data2: 1174727065
-      Data3: -481884795
-      Data4: 1812065761
-    Path: event:/FX/37.JEFE CIRCO/TUTORIAL SHOOT
+  tutorialType: 3
 --- !u!65 &266685496
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8288,8 +8276,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 424204896}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.055561632, y: 0.14914109, z: -0.008393811, w: 0.987218}
-  m_LocalPosition: {x: -58.85499, y: 3.8493385, z: 7.2458925}
+  m_LocalRotation: {x: 0.07634986, y: 0.08848176, z: -0.006802342, w: 0.9931241}
+  m_LocalPosition: {x: -55.850918, y: 3.8493385, z: 11.522668}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20725,13 +20713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageController: {fileID: 80334242}
   messagePc: {fileID: 115240776}
-  TutorialSound:
-    Guid:
-      Data1: -2027008781
-      Data2: 1236149203
-      Data3: 1399007630
-      Data4: 855725424
-    Path: event:/FX/37.JEFE CIRCO/TUTORIAL DOUBLE JUMP
+  tutorialType: 1
 --- !u!65 &1074786173
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20827,13 +20809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   messageController: {fileID: 377492972}
   messagePc: {fileID: 1382674752}
-  TutorialSound:
-    Guid:
-      Data1: -52057110
-      Data2: 1285706706
-      Data3: -1362599261
-      Data4: -1545014264
-    Path: event:/FX/37.JEFE CIRCO/TUTORIAL DASH
+  tutorialType: 2
 --- !u!65 &1105105753
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23040,8 +23016,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1272360297}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.055561632, y: 0.14914109, z: -0.008393811, w: 0.987218}
-  m_LocalPosition: {x: -58.85499, y: 3.8493385, z: 7.2458925}
+  m_LocalRotation: {x: 0.07634986, y: 0.08848176, z: -0.006802342, w: 0.9931241}
+  m_LocalPosition: {x: -55.850918, y: 3.8493385, z: 11.522668}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -34667,7 +34643,7 @@ Transform:
   m_GameObject: {fileID: 2031192663}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.20407, y: 3.6954951, z: -11.476775}
+  m_LocalPosition: {x: -1.2, y: 3.6954951, z: -7.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -35234,10 +35210,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: Checkpoint
       objectReference: {fileID: 0}
+    - target: {fileID: 3766662416416838078, guid: de7ca834f50366548ab691c89cddbfc6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 3766662416416838078, guid: de7ca834f50366548ab691c89cddbfc6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.79
+      objectReference: {fileID: 0}
     - target: {fileID: 9096695543117627208, guid: de7ca834f50366548ab691c89cddbfc6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -25.376616
+      value: -25.655
       objectReference: {fileID: 0}
     - target: {fileID: 9096695543117627208, guid: de7ca834f50366548ab691c89cddbfc6,
         type: 3}
@@ -35247,7 +35233,7 @@ PrefabInstance:
     - target: {fileID: 9096695543117627208, guid: de7ca834f50366548ab691c89cddbfc6,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.952721
+      value: 11.994
       objectReference: {fileID: 0}
     - target: {fileID: 9096695543117627208, guid: de7ca834f50366548ab691c89cddbfc6,
         type: 3}

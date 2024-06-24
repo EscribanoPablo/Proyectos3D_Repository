@@ -22,7 +22,7 @@ public class AmbientSounds : MonoBehaviour, IRestartLevelElement
             FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientClapsSounds);
 
             if(isFireRing)
-                FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().LevelFireRingSound);
+                FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceLevelFireRingSound);
 
             eventTriggered = true;
         }

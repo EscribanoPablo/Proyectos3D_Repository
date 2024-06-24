@@ -282,10 +282,10 @@ MonoBehaviour:
   Path: Assets/Proyecto_FMOD/Proyecto_FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638546641989764177
+  lastModified: 638548526797431065
   FileSizes:
   - Name: Desktop
-    Value: 4668
+    Value: 4710
   Exists: 1
 --- !u!114 &-5458826236674231234
 MonoBehaviour:
@@ -438,10 +438,10 @@ MonoBehaviour:
   Path: Assets/Proyecto_FMOD/Proyecto_FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638546641989678284
+  lastModified: 638548526797370819
   FileSizes:
   - Name: Desktop
-    Value: 7716032
+    Value: 8053888
   Exists: 1
 --- !u!114 &-4389460532534620492
 MonoBehaviour:
@@ -604,7 +604,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 156000
+  Length: 119000
 --- !u!114 &-3189643201104495201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1036,7 +1036,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 58592
+  Length: 83000
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1122,12 +1122,13 @@ MonoBehaviour:
   - {fileID: 2632563036299613633}
   - {fileID: 5781133316862738266}
   - {fileID: 4067012942181182990}
+  - {fileID: 1468550696176656924}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4516381969142102036}
   StringsBanks:
   - {fileID: -5526131102937998401}
-  cacheTime: 638546641989764177
+  cacheTime: 638548526797431065
   cacheVersion: 131618
 --- !u!114 &205369280310691588
 MonoBehaviour:
@@ -1289,6 +1290,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 995
+--- !u!114 &1468550696176656924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: "event:/36.AMBIENTE & RISAS & M\xDASICA/M\xDASICA CINEMATICA"
+  m_EditorClassIdentifier: 
+  Path: "event:/36.AMBIENTE & RISAS & M\xDASICA/M\xDASICA CINEMATICA"
+  Guid:
+    Data1: -1379594161
+    Data2: 1288413883
+    Data3: -1081082476
+    Data4: -909207395
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 68880
 --- !u!114 &1662522279847442016
 MonoBehaviour:
   m_ObjectHideFlags: 0

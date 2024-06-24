@@ -31,6 +31,7 @@ public class CircusMasterMovement : MonoBehaviour
     {
         playerInput = FindObjectOfType<PlayerInput>();
         playerInput.currentActionMap.Disable();
+        FindObjectOfType<ActivatePlayerInput>().gameObject.SetActive(false);
         animationCircusMaster = GetComponent<Animation>();
         animationCircusMaster.Play(idleAnimation.name);
         introducingScenario = true;

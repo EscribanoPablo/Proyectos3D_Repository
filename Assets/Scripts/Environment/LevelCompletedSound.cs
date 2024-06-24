@@ -16,12 +16,13 @@ public class LevelCompletedSound : MonoBehaviour, IRestartLevelElement
         if (!eventTriggered)
         {
             FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
-            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().levelEndedSound, transform.position);
+            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().levelEndedSound);
+            FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientClapsSounds);
 
             if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "BetaLevel01")
-                FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().FirstStageEndSound);
+                FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceFirstStageEndSound);
             else
-                FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().SecondStageEndSound);
+                FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceSecondStageEndSound);
 
             eventTriggered = true;
         }

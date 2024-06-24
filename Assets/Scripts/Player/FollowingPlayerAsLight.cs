@@ -21,8 +21,8 @@ public class FollowingPlayerAsLight : MonoBehaviour
 
     private void OnEnable()
     {
-        FindObjectOfType<PlayerInput>().currentActionMap.Enable();
-        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
+        FindObjectOfType<PlayerInput>().transform.GetChild(1).gameObject.SetActive(true);
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
             FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceGameSong);
     }
 
