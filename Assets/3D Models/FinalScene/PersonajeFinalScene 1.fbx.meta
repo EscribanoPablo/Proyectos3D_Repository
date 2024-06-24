@@ -56,7 +56,39 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.013174113
+        functionName: CaeSuelo
+        data: 
+        objectReferenceParameter: {fileID: 8300000, guid: f043608e368e052489eb15680bc16ed5,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.7651195
+        functionName: Saltar
+        data: 
+        objectReferenceParameter: {fileID: 8300000, guid: bc0e5826269af6849bd311320517a8bf,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.013760019
+        functionName: "RuidoDa\xF1o"
+        data: 
+        objectReferenceParameter: {fileID: 8300000, guid: f9c5848b19c55474793266bea742d732,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.84159976
+        functionName: Aplausos
+        data: 
+        objectReferenceParameter: {fileID: 8300000, guid: 4b628ee7790111d419dc0a3738f6335b,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
