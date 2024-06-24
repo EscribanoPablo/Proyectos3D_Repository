@@ -22,17 +22,17 @@ public class FollowingPlayerAsLight : MonoBehaviour
     private void OnEnable()
     {
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
+        {
             FindObjectOfType<PlayerInput>().transform.GetChild(1).gameObject.SetActive(true);
+            FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceGameSong);
+
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "BetaLevel01")
+                FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceFirstStageJackieSound);
+            else
+                FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceSecondStageJackieSound);
+        }
         else
             FindObjectOfType<PlayerInput>().transform.GetChild(1).GetComponent<Animator>().SetTrigger("IsInTutorial");
-
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "BetaLevel01")
-            FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceFirstStageJackieSound);
-        else
-            FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceSecondStageJackieSound);
-
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
-            FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceGameSong);
     }
 
     // Update is called once per frame
