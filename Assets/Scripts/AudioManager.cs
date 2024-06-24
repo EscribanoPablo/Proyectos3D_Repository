@@ -22,10 +22,12 @@ public class AudioManager : MonoBehaviour
     public EventReference menuMusic;
     public EventReference backgroundLevelMusic;
     public EventReference ambientNoiseSound;
+    public EventReference finalCinematicMusic;
 
     public EventInstance instanceMenuSong;
     public EventInstance instanceGameSong;
     public EventInstance instanceCrowdNoise;
+    public EventInstance instanceFinalCinematicSong;
 
     [Header("AudioClips_Player")]
     public EventReference runSounds;
@@ -154,6 +156,7 @@ public class AudioManager : MonoBehaviour
         instanceMenuSong = RuntimeManager.CreateInstance(menuMusic);
         instanceGameSong = RuntimeManager.CreateInstance(backgroundLevelMusic);
         instanceCrowdNoise = RuntimeManager.CreateInstance(ambientNoiseSound);
+        instanceFinalCinematicSong = RuntimeManager.CreateInstance(finalCinematicMusic);
 
         InstanciateCircusMasterSounds();
 
