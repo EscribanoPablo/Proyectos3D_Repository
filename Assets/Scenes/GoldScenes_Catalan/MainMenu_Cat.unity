@@ -268,7 +268,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &66141768
 RectTransform:
   m_ObjectHideFlags: 0
@@ -902,7 +902,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Settings
+  m_text: Opcions
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 232a619e8c40d10408bdec7b080800b8, type: 2}
   m_sharedMaterial: {fileID: -9025192037354457976, guid: 232a619e8c40d10408bdec7b080800b8,
@@ -2331,7 +2331,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: presents...
+  m_text: presenta...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e4ed2ab7c3c0f424681f53a4073cd304, type: 2}
   m_sharedMaterial: {fileID: 4499454089745447336, guid: e4ed2ab7c3c0f424681f53a4073cd304,
@@ -3972,7 +3972,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -6.918541}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1255808647
 MonoBehaviour:
@@ -3994,7 +3994,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Start
+  m_text: "Comen\xE7ar"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 232a619e8c40d10408bdec7b080800b8, type: 2}
   m_sharedMaterial: {fileID: -9025192037354457976, guid: 232a619e8c40d10408bdec7b080800b8,
@@ -4226,7 +4226,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Better with
+  m_text: Millor amb
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 232a619e8c40d10408bdec7b080800b8, type: 2}
   m_sharedMaterial: {fileID: -9025192037354457976, guid: 232a619e8c40d10408bdec7b080800b8,
@@ -4430,6 +4430,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 0}
   controlMenu: {fileID: 0}
+  settingsPauseMenu: {fileID: 0}
   skipCutsceneController: {fileID: 0}
   skipCutscenePC: {fileID: 0}
   creditsText: {fileID: 0}
@@ -5167,7 +5168,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Exit
+  m_text: Sortir
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 232a619e8c40d10408bdec7b080800b8, type: 2}
   m_sharedMaterial: {fileID: -9025192037354457976, guid: 232a619e8c40d10408bdec7b080800b8,
@@ -5693,7 +5694,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -204, y: -81.5}
-  m_SizeDelta: {x: 1316, y: 2048}
+  m_SizeDelta: {x: 1405.2, y: 2048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1839217688
 MonoBehaviour:
@@ -6296,7 +6297,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: controller
+  m_text: Comandament
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 232a619e8c40d10408bdec7b080800b8, type: 2}
   m_sharedMaterial: {fileID: -9025192037354457976, guid: 232a619e8c40d10408bdec7b080800b8,
