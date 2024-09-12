@@ -162,6 +162,87 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 5362
+--- !u!114 &-7525186072789797371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/LEVEL COLLECTIBLE - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/LEVEL COLLECTIBLE - CAT
+  Guid:
+    Data1: -1601848885
+    Data2: 1235345401
+    Data3: -426014813
+    Data4: -1700233946
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 5000
+--- !u!114 &-6310013528496494083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/TUTORIAL WELCOME - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/TUTORIAL WELCOME - CAT
+  Guid:
+    Data1: -946560784
+    Data2: 1321873071
+    Data3: 958632892
+    Data4: -937852764
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4250
+--- !u!114 &-6289522055956737306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/FIRST STAGE WELCOME - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/FIRST STAGE WELCOME - CAT
+  Guid:
+    Data1: -1358650108
+    Data2: 1341024459
+    Data3: -615425406
+    Data4: -2137263068
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 28133
 --- !u!114 &-6258465466989976194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,6 +270,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 6000
+--- !u!114 &-6154765502184306507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/LEVEL DEATH - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/LEVEL DEATH - CAT
+  Guid:
+    Data1: 604190489
+    Data2: 1156587899
+    Data3: 1444585384
+    Data4: -465517075
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4100
+--- !u!114 &-5934447468766272920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/SECOND STAGE END ESCAPE - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/SECOND STAGE END ESCAPE - CAT
+  Guid:
+    Data1: -273007711
+    Data2: 1219045871
+    Data3: -1924220496
+    Data4: 1204169710
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2599
 --- !u!114 &-5848605482420449642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,10 +417,10 @@ MonoBehaviour:
   Path: Assets/Proyecto_FMOD/Proyecto_FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638548568271153804
+  lastModified: 638617654167244646
   FileSizes:
   - Name: Desktop
-    Value: 4710
+    Value: 5478
   Exists: 1
 --- !u!114 &-5458826236674231234
 MonoBehaviour:
@@ -438,11 +573,38 @@ MonoBehaviour:
   Path: Assets/Proyecto_FMOD/Proyecto_FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638548568271132513
+  lastModified: 638617654167121748
   FileSizes:
   - Name: Desktop
-    Value: 8053888
+    Value: 9539104
   Exists: 1
+--- !u!114 &-4513505876976810884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/FIRST STAGE JACKIE - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/FIRST STAGE JACKIE - CAT
+  Guid:
+    Data1: 1989203346
+    Data2: 1117293897
+    Data3: -720275313
+    Data4: -649368382
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 5500
 --- !u!114 &-4389460532534620492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -578,6 +740,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 615
+--- !u!114 &-3507371861252443259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/LEVEL CHECKPOINT - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/LEVEL CHECKPOINT - CAT
+  Guid:
+    Data1: 493668977
+    Data2: 1086210778
+    Data3: 281336738
+    Data4: -884337743
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2660
+--- !u!114 &-3327363453984949212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/FIRST STAGE END - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/FIRST STAGE END - CAT
+  Guid:
+    Data1: -1158306392
+    Data2: 1214505988
+    Data3: -147902038
+    Data4: 340483640
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4000
 --- !u!114 &-3299712344969575799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -659,6 +875,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 600
+--- !u!114 &-2608578353256135866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/TUTORIAL DOUBLE JUMP - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/TUTORIAL DOUBLE JUMP - CAT
+  Guid:
+    Data1: 1903750943
+    Data2: 1173467450
+    Data3: -772476487
+    Data4: 993578828
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3941
 --- !u!114 &-2486439647406657044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -902,6 +1145,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 753
+--- !u!114 &-930550577884502070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/SECOND STAGE WELCOME - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/SECOND STAGE WELCOME - CAT
+  Guid:
+    Data1: -1468429499
+    Data2: 1167041112
+    Data3: -1961185894
+    Data4: -1988871297
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 28875
+--- !u!114 &-756613426070324082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/TUTORIAL DASH - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/TUTORIAL DASH - CAT
+  Guid:
+    Data1: 510504137
+    Data2: 1287991534
+    Data3: -1439989321
+    Data4: -825152099
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3000
 --- !u!114 &-716911353288059562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1123,13 +1420,56 @@ MonoBehaviour:
   - {fileID: 5781133316862738266}
   - {fileID: 4067012942181182990}
   - {fileID: 1468550696176656924}
+  - {fileID: -6289522055956737306}
+  - {fileID: 8702791464965257254}
+  - {fileID: 9215352164760094652}
+  - {fileID: -6154765502184306507}
+  - {fileID: -2608578353256135866}
+  - {fileID: -930550577884502070}
+  - {fileID: -3507371861252443259}
+  - {fileID: 7523794579647703752}
+  - {fileID: -4513505876976810884}
+  - {fileID: -5934447468766272920}
+  - {fileID: -3327363453984949212}
+  - {fileID: -756613426070324082}
+  - {fileID: -7525186072789797371}
+  - {fileID: 71311787852815564}
+  - {fileID: 5952010218478258057}
+  - {fileID: -6310013528496494083}
   EditorParameters: []
   MasterBanks:
   - {fileID: -4516381969142102036}
   StringsBanks:
   - {fileID: -5526131102937998401}
-  cacheTime: 638548568271153804
+  cacheTime: 638617654167244646
   cacheVersion: 131618
+--- !u!114 &71311787852815564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/TUTORIAL SHOOT - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/TUTORIAL SHOOT - CAT
+  Guid:
+    Data1: 1268610512
+    Data2: 1300216928
+    Data3: 2022890653
+    Data4: -1772185562
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2626
 --- !u!114 &205369280310691588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1749,6 +2089,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3250
+--- !u!114 &5952010218478258057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/SECOND STAGE JACKIE - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/SECOND STAGE JACKIE - CAT
+  Guid:
+    Data1: 2018576083
+    Data2: 1294668937
+    Data3: 207197088
+    Data4: 1589509939
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 5500
 --- !u!114 &6570185032750979143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1857,6 +2224,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1350
+--- !u!114 &7523794579647703752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/SECOND STAGE END - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/SECOND STAGE END - CAT
+  Guid:
+    Data1: -752855430
+    Data2: 1128700827
+    Data3: 314657934
+    Data4: 496525592
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3650
 --- !u!114 &7597045185381122275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1938,6 +2332,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 667
+--- !u!114 &8702791464965257254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/LEVEL FIRE RING - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/LEVEL FIRE RING - CAT
+  Guid:
+    Data1: 954896391
+    Data2: 1315043104
+    Data3: -868475770
+    Data4: 1673972556
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2900
 --- !u!114 &8900190120879067174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2073,3 +2494,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 800
+--- !u!114 &9215352164760094652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/FX/37.JEFE CIRCO/TUTORIAL JUMP - CAT
+  m_EditorClassIdentifier: 
+  Path: event:/FX/37.JEFE CIRCO/TUTORIAL JUMP - CAT
+  Guid:
+    Data1: 1881714200
+    Data2: 1267322609
+    Data3: -1036759116
+    Data4: 1744722089
+  Banks:
+  - {fileID: -4516381969142102036}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1830

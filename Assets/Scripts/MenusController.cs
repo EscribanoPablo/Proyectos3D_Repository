@@ -36,11 +36,11 @@ public class MenusController : MonoBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02" || SceneManager.GetActiveScene().name == "TutorialLevel")
+        if (SceneManager.GetActiveScene().name == "BetaLevel01_Cat" || SceneManager.GetActiveScene().name == "BetaLevel02_Cat" || SceneManager.GetActiveScene().name == "TutorialLevel_Cat")
         {
             playerInputs = FindObjectOfType<PlayerInput>();
         }
-        if (SceneManager.GetActiveScene().name == "CreditsScene")
+        if (SceneManager.GetActiveScene().name == "CreditsScene_Cat")
         {
             if (creditsText != null)
             {
@@ -53,7 +53,7 @@ public class MenusController : MonoBehaviour
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02" || SceneManager.GetActiveScene().name == "TutorialLevel")
+        if (SceneManager.GetActiveScene().name == "BetaLevel01_Cat" || SceneManager.GetActiveScene().name == "BetaLevel02_Cat" || SceneManager.GetActiveScene().name == "TutorialLevel_Cat")
         {
             if (playerInputs.actions["PauseGame"].WasPressedThisFrame())
             {
@@ -62,7 +62,7 @@ public class MenusController : MonoBehaviour
                 Time.timeScale = 0;
             }
 
-            if (SceneManager.GetActiveScene().name != "TutorialLevel" && watchingCutscene)
+            if (SceneManager.GetActiveScene().name != "TutorialLevel_Cat" && watchingCutscene)
             {
                 if (playerInputs.currentControlScheme == "Gamepad")
                 {
@@ -76,7 +76,7 @@ public class MenusController : MonoBehaviour
                 }
             }
         }
-        if (SceneManager.GetActiveScene().name == "CreditsScene")
+        if (SceneManager.GetActiveScene().name == "CreditsScene_Cat")
         {
             currentTime += Time.deltaTime;
             if (currentTime > clipDuration)
@@ -89,7 +89,7 @@ public class MenusController : MonoBehaviour
 
     public void StartButtonPressed()
     {
-        if (SceneManager.GetActiveScene().name == "MainMenu")
+        if (SceneManager.GetActiveScene().name == "MainMenu_Cat")
         {
             Time.timeScale = 1;
 
@@ -97,7 +97,7 @@ public class MenusController : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.Locked;
         }
-        else if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02" || SceneManager.GetActiveScene().name == "TutorialLevel")
+        else if (SceneManager.GetActiveScene().name == "BetaLevel01_Cat" || SceneManager.GetActiveScene().name == "BetaLevel02_Cat" || SceneManager.GetActiveScene().name == "TutorialLevel_Cat")
         {
             pauseMenu.SetActive(false);
             playerInputs.enabled = true;
@@ -113,7 +113,7 @@ public class MenusController : MonoBehaviour
 
     public void SettingsButtonPressed()
     {
-        if (SceneManager.GetActiveScene().name == "MainMenu")
+        if (SceneManager.GetActiveScene().name == "MainMenu_Cat")
             GameObject.FindObjectOfType<PlayTransition>().GoBlack(true, SceneToGo.Settings);
         else
         {
@@ -124,13 +124,13 @@ public class MenusController : MonoBehaviour
 
     public void ExitButtonPressed()
     {
-        if (SceneManager.GetActiveScene().name == "MainMenu")
+        if (SceneManager.GetActiveScene().name == "MainMenu_Cat")
         {
             Application.Quit();
         }
         else
         {
-            if (SceneManager.GetActiveScene().name != "SettingsMenu")
+            if (SceneManager.GetActiveScene().name != "SettingsMenu_Cat")
             {
                 Time.timeScale = 1;
             }
@@ -140,14 +140,14 @@ public class MenusController : MonoBehaviour
 
     public void ControlsButtonPressed()
     {
-        if(SceneManager.GetActiveScene().name != "SettingsMenu")
+        if(SceneManager.GetActiveScene().name != "SettingsMenu_Cat")
             pauseMenu.SetActive(false);
         controlMenu.SetActive(true);
     }
 
     public void ReturnButtonPressed()
     {
-        if (SceneManager.GetActiveScene().name != "SettingsMenu")
+        if (SceneManager.GetActiveScene().name != "SettingsMenu_Cat")
         {
             pauseMenu.SetActive(true); 
             settingsPauseMenu.SetActive(false);

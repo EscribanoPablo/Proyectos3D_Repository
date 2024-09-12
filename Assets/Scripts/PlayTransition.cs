@@ -21,25 +21,25 @@ public class PlayTransition : MonoBehaviour
         {
             case SceneToGo.MainMenu:
                 GameController.GetGameController().EmptyRestartList();
-                if (SceneManager.GetActiveScene().name == "BetaLevel01" || SceneManager.GetActiveScene().name == "BetaLevel02")
+                if (SceneManager.GetActiveScene().name == "BetaLevel01_Cat" || SceneManager.GetActiveScene().name == "BetaLevel02_Cat")
                 {
                     FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
                     FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
                     FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
                 }
-                SceneManager.LoadScene("MainMenu");
+                SceneManager.LoadScene("MainMenu_Cat");
                 break;
             case SceneToGo.Settings:
-                SceneManager.LoadScene("SettingsMenu");
+                SceneManager.LoadScene("SettingsMenu_Cat");
                 break;
             case SceneToGo.TutorialLevel:
                 GameController.GetGameController().EmptyRestartList();
-                SceneManager.LoadScene("TutorialLevel");
+                SceneManager.LoadScene("TutorialLevel_Cat");
                 FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceTutorialWelcomeSound);
                 break;
             case SceneToGo.Level01:
                 GameController.GetGameController().EmptyRestartList();
-                SceneManager.LoadScene("BetaLevel01");
+                SceneManager.LoadScene("BetaLevel01_Cat");
 
                 FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
                 FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
@@ -47,13 +47,13 @@ public class PlayTransition : MonoBehaviour
                 break;
             case SceneToGo.Level02:
                 GameController.GetGameController().EmptyRestartList();
-                SceneManager.LoadScene("BetaLevel02");
+                SceneManager.LoadScene("BetaLevel02_Cat");
 
                 FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceSecondStageWelcome);
                 break;
             case SceneToGo.FinalCinematic:
                 GameController.GetGameController().EmptyRestartList();
-                SceneManager.LoadScene("FinalScene");
+                SceneManager.LoadScene("FinalScene_Cat");
 
                 FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
                 FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceGameSong);
@@ -61,7 +61,7 @@ public class PlayTransition : MonoBehaviour
                 break;
             case SceneToGo.Credits:
                 GameController.GetGameController().EmptyRestartList();
-                SceneManager.LoadScene("CreditsScene");
+                SceneManager.LoadScene("CreditsScene_Cat");
 
                 FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceFinalCinematicSong);
                 FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceMenuSong);

@@ -160,7 +160,7 @@ public class AudioManager : MonoBehaviour
 
         InstanciateCircusMasterSounds();
 
-        if (SceneManager.GetActiveScene().name == "MainMenu")
+        if (SceneManager.GetActiveScene().name == "MainMenu_Cat")
             instanceMenuSong.start();
     }
 

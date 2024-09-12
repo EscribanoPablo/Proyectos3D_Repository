@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
         transform.rotation = startRotation;
         ResetLight();
         GetComponentInChildren<Animator>().SetTrigger("Respawn");
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel_Cat")
             FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().RespawnSound);
 
         yield return new WaitForSeconds(0.1f);
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour, IRestartLevelElement
         yield return new WaitForSeconds(timeToMoveAgain);
         playerMovement.playerControllerEnabled = true;
 
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel_Cat")
             FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceGameSong);
 
     }

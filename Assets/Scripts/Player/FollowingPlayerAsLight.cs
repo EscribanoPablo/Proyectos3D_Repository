@@ -21,12 +21,12 @@ public class FollowingPlayerAsLight : MonoBehaviour
 
     private void OnEnable()
     {
-        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel_Cat")
         {
             FindObjectOfType<PlayerInput>().transform.GetChild(1).gameObject.SetActive(true);
             FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceGameSong);
 
-            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "BetaLevel01")
+            if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "BetaLevel01_Cat")
                 FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceFirstStageJackieSound);
             else
                 FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceSecondStageJackieSound);

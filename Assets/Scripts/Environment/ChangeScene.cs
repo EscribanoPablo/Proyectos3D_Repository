@@ -13,14 +13,14 @@ public class ChangeScene : MonoBehaviour
             FindObjectOfType<PlayerInput>().enabled = false;
             FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().transitionsSound);
 
-            if (SceneManager.GetActiveScene().name == "BetaLevel01")
+            if (SceneManager.GetActiveScene().name == "BetaLevel01_Cat")
                 GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.Level02);
-            else if (SceneManager.GetActiveScene().name == "BetaLevel02")
+            else if (SceneManager.GetActiveScene().name == "BetaLevel02_Cat")
             {
                 FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceSecondStageEndEscapeSound);
                 GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.FinalCinematic);
             }
-            else if (SceneManager.GetActiveScene().name == "TutorialLevel")
+            else if (SceneManager.GetActiveScene().name == "TutorialLevel_Cat")
                 GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.MainMenu);
 
         }
