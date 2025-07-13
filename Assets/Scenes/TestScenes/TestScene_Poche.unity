@@ -239,17 +239,17 @@ PrefabInstance:
     - target: {fileID: 9132840212407591407, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.1984554
+      value: 0.19845542
       objectReference: {fileID: 0}
     - target: {fileID: 9132840212407591407, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000038741925
+      value: -0.000000025591165
       objectReference: {fileID: 0}
     - target: {fileID: 9132840212407591407, guid: 7b253aac7eb52f9469d4251d337c0571,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -7.8445667e-10
+      value: 0.000000005181771
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -680,6 +680,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 6.413278
+      objectReference: {fileID: 0}
+    - target: {fileID: 2156684860663523514, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2183968879372088000, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
@@ -1351,6 +1356,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 13.377565
       objectReference: {fileID: 0}
+    - target: {fileID: 6889367891435777933, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6966162768543723699, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1923,6 +1933,7 @@ GameObject:
   - component: {fileID: 1088802176}
   - component: {fileID: 1088802175}
   - component: {fileID: 1088802174}
+  - component: {fileID: 1088802179}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1937,7 +1948,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088802173}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
@@ -2075,13 +2086,37 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1088802173}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.18488708, y: 0.00000003279361, z: -0.0000000061694783, w: 0.9827598}
+  m_LocalRotation: {x: 0.1848871, y: 0.000000018611999, z: -0.000000003501485, w: 0.9827598}
   m_LocalPosition: {x: 3.45, y: 5.303128, z: -8.907366}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1088802179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1088802173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8d1289fdd336042a4ed7b62025c7b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lookAt: {fileID: 1488975757}
+  minDistance: 10
+  maxDistance: 20
+  rotationalYawSpeed: 180
+  rotationalPitchSpeed: 90
+  minPitch: -30
+  maxPitch: 70
+  avoidObstaclesLayerMask:
+    serializedVersion: 2
+    m_Bits: 33472
+  offsetAvoidObstacles: 0.1
+  playerInputs: {fileID: 1488975758}
 --- !u!1001 &1329751774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2261,6 +2296,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 261314125}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1488975758 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2407899779544871975, guid: d9756f0770de0894f9f83e3991330c2e,
+    type: 3}
+  m_PrefabInstance: {fileID: 261314125}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1911373282
 GameObject:
   m_ObjectHideFlags: 0
