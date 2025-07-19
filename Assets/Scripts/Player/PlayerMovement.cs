@@ -80,6 +80,10 @@ public class PlayerMovement : MonoBehaviour
     [Range(0.1f, 1.0f)] [SerializeField] float coyoteTimeDuration = 0.3f;
     private float coyoteTimeCounter = 0f;
 
+    private float groundedTime = 0f;
+    private float groundedGraceTime = 0.1f; // tiempo mínimo en el suelo para resetear
+    private bool wasGroundedLastFrame = false;
+
     private AudioManager audioManager;
     [SerializeField]
     private Animator playerAnimator;
@@ -108,23 +112,24 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded())
             {
                 coyoteTimeCounter = coyoteTimeDuration;
+                groundedTime += Time.deltaTime;
             }
             else
             {
                 coyoteTimeCounter -= Time.deltaTime;
+                groundedTime = 0f;
             }
-            if (!(currentJumps >=multipleJumps))
-            {
-                Jumper();
-            }
+            //if (!(currentJumps >=multipleJumps))
+            //{
+            //}
+            Jumper();
 
             if (!onWall)
             {
                 PlayerDash();
 
-                if (IsGrounded())
+                if (IsGrounded() && groundedTime >= groundedGraceTime)
                 {
-                    //coyoteTimeCounter = coyoteTimeDuration;
                     ResetJumps();
                     rigidBody.drag = 5;
                 }
@@ -141,7 +146,6 @@ public class PlayerMovement : MonoBehaviour
                     else
                     {
                         rigidBody.drag = 0.5f;
-                        //coyoteTimeCounter -= Time.deltaTime;
                     }
 
                 }
@@ -250,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
                     audioManager.SetPlaySfx(audioManager.JumpSound, transform.position);
                     Jump(jumpForce);
                     Debug.Log("jump");
-
+                    Debug.Log(currentJumps); 
                     ParticleSystem particlesJump = jumpParticles.GetComponent<ParticleSystem>();
                     particlesJump.Emit(5);
 
@@ -270,11 +274,13 @@ public class PlayerMovement : MonoBehaviour
                 {
                     audioManager.SetPlaySfx(audioManager.DoubleJumpSound, 0.5f, transform.position);
                     Jump(doubleJumpForce);
+                    Debug.Log("doble jump");
+                    Debug.Log(currentJumps);
+
                     canonShoot.ShootBullet(spawnBulletDoubleJumpPosition.position);
                     canonShoot.SpawnCanonParticles();
                     canonShoot.currentTimeShoot = 0.5f;
 
-                    Debug.Log("doble jump");
 
                     doubleJump = false;
                     isJumping = true;
