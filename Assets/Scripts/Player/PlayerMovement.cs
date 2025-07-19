@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
     public bool playerControllerEnabled { get; set;}
 
     [Header("Jump Variables")]
-    [SerializeField] int multipleJumps = 2;
+    [SerializeField] int multipleJumps = 1;
     [SerializeField] float jumpForce;
     [SerializeField] float doubleJumpForce;
     int currentJumps;
@@ -54,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float gravity;
     float verticalSpeed;
     bool isJumping = false;
+    private bool hasUsedInitialJump = false;
 
     [Header("Dash Variables")]
     [SerializeField] float dashDuration = 0.2f;
@@ -74,6 +75,10 @@ public class PlayerMovement : MonoBehaviour
     private bool onWall = false;
     private bool canWall = true;
     private float wallTimer;
+
+    [Header("Coyote Time")]
+    [Range(0.1f, 1.0f)] [SerializeField] float coyoteTimeDuration = 0.3f;
+    private float coyoteTimeCounter = 0f;
 
     private AudioManager audioManager;
     [SerializeField]
@@ -100,13 +105,26 @@ public class PlayerMovement : MonoBehaviour
     {
         if (playerControllerEnabled)
         {
-            Jumper();
+            if (IsGrounded())
+            {
+                coyoteTimeCounter = coyoteTimeDuration;
+            }
+            else
+            {
+                coyoteTimeCounter -= Time.deltaTime;
+            }
+            if (!(currentJumps >=multipleJumps))
+            {
+                Jumper();
+            }
+
             if (!onWall)
             {
                 PlayerDash();
 
                 if (IsGrounded())
                 {
+                    //coyoteTimeCounter = coyoteTimeDuration;
                     ResetJumps();
                     rigidBody.drag = 5;
                 }
@@ -123,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
                     else
                     {
                         rigidBody.drag = 0.5f;
+                        //coyoteTimeCounter -= Time.deltaTime;
                     }
 
                 }
@@ -140,7 +159,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-
     }
 
     private void FixedUpdate()
@@ -150,6 +168,7 @@ public class PlayerMovement : MonoBehaviour
             Movement();
             UpdateDustParticles();
         }
+
     }
 
 
@@ -215,20 +234,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jumper()
     {
+        if (IsDashing)
+            return;
+
         if (playerInput.actions["Jump"].WasPressedThisFrame())
         {
-            if (currentJumps < multipleJumps && !isDashing && canJump)
+            if (currentJumps <= multipleJumps && canJump)
             {
-                if (IsGrounded())
+                //  check coyote
+                if ((IsGrounded() || coyoteTimeCounter > 0f) && currentJumps == 0 && !hasUsedInitialJump)
                 {
+                    ResetJumps();
+                    doubleJump = true;
+                    hasUsedInitialJump = true;
                     audioManager.SetPlaySfx(audioManager.JumpSound, transform.position);
                     Jump(jumpForce);
+                    Debug.Log("jump");
 
                     ParticleSystem particlesJump = jumpParticles.GetComponent<ParticleSystem>();
                     particlesJump.Emit(5);
 
                     isJumping = true;
                     playerAnimator.SetTrigger("Jumped");
+
+                    coyoteTimeCounter = 0f; 
                 }
                 else if (onWall)
                 {
@@ -243,14 +272,18 @@ public class PlayerMovement : MonoBehaviour
                     Jump(doubleJumpForce);
                     canonShoot.ShootBullet(spawnBulletDoubleJumpPosition.position);
                     canonShoot.SpawnCanonParticles();
-                    canonShoot.currentTimeShoot = 0.5f; 
+                    canonShoot.currentTimeShoot = 0.5f;
+
+                    Debug.Log("doble jump");
 
                     doubleJump = false;
                     isJumping = true;
                     playerAnimator.SetTrigger("DoubleJumped");
                 }
                 else
+                {
                     isJumping = false;
+                }
             }
             else
             {
@@ -276,6 +309,7 @@ public class PlayerMovement : MonoBehaviour
             if (isOnAir)
                 audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
             isOnAir = false;
+            hasUsedInitialJump = false;
             return true;
         }
         playerAnimator.SetBool("OnGround", false);
@@ -290,9 +324,9 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Jump(float jumpForce)
     {
+        currentJumps++;
         StopVerticalVelocity();
         rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        currentJumps++;
     }
 
     private void StopVerticalVelocity()
