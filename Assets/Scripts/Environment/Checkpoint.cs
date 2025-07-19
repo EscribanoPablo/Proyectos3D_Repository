@@ -14,6 +14,13 @@ public class Checkpoint : MonoBehaviour
     [SerializeField] GameObject checkPointParticles;
     Animator animator;
 
+    [SerializeField] private RotateCamera rotateCamera;
+
+    public bool GetIfCheckpointGrabbed() 
+    {
+        return checkpointGrabbed;
+    }
+
     private void Start()
     {
         checkPointParticles.SetActive(false);
@@ -27,6 +34,7 @@ public class Checkpoint : MonoBehaviour
             other.GetComponent<PlayerController>().SetRespawnPos(spawnPosition.transform);
             checkpointGrabbed = true;
             GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>().SetTrigger("Celebrate");
+            rotateCamera.SaveActualRotation();
 
             if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
                 FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientClapsSounds);
