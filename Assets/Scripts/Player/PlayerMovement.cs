@@ -31,10 +31,12 @@ public class PlayerMovement : MonoBehaviour
     PlayerInput playerInput;
 
     [Header("Movement Variables")]
-    [SerializeField] float speedMovement;
+    [SerializeField] float baseSpeedMovement = 40;
+    private float speedMovement;
     [SerializeField] float maxVelocity;
-    [SerializeField] float rotationTime = 0.1f;
-    float turnSmoothVelocity;
+    [SerializeField] float baseRotationSpeed = 7.5f;
+    private float rotationSpeed;
+    //float turnSmoothVelocity;
     bool isMoving;
     [SerializeField] float transitionDurationStart = 0.5f; 
     [SerializeField] float transitionDurationStop = 0.5f; 
@@ -88,6 +90,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Animator playerAnimator;
 
+    public void ReducePlayerMovement() 
+    {
+        speedMovement = speedMovement / 4;
+        rotationSpeed = rotationSpeed / 10;
+    }
+
+    public void ResetPlayerMovement() 
+    {
+        speedMovement = baseSpeedMovement;
+        rotationSpeed = baseRotationSpeed;
+    }
 
     void Start()
     {
@@ -102,7 +115,8 @@ public class PlayerMovement : MonoBehaviour
         wallJumpParticles.SetActive(false);
         speedAnimation = 0;
         canJump = true; 
-
+        speedMovement = baseSpeedMovement;
+        rotationSpeed = baseRotationSpeed;
     }
 
     private void Update()
@@ -193,9 +207,12 @@ public class PlayerMovement : MonoBehaviour
         {
             isMoving = true;
 
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
+            /*float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);*/
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
+            Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
@@ -277,7 +294,7 @@ public class PlayerMovement : MonoBehaviour
                     Debug.Log("doble jump");
                     Debug.Log(currentJumps);
 
-                    canonShoot.ShootBullet(spawnBulletDoubleJumpPosition.position);
+                    canonShoot.ShootBullet(spawnBulletDoubleJumpPosition.position, false);
                     canonShoot.SpawnCanonParticles();
                     canonShoot.currentTimeShoot = 0.5f;
 
@@ -300,6 +317,11 @@ public class PlayerMovement : MonoBehaviour
         {
             isJumping = false;
         }
+    }
+
+    public bool GetIfGrounded() 
+    {
+        return IsGrounded();
     }
 
     private bool IsGrounded()
@@ -409,7 +431,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
-        canonShoot.ShootBullet(spawnBulletDashPosition.position);
+        canonShoot.ShootBullet(spawnBulletDashPosition.position, false);
 
         yield return new WaitForSeconds(dashDuration);
 

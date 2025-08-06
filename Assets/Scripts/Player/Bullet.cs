@@ -15,13 +15,16 @@ public class Bullet : MonoBehaviour, IRestartLevelElement
     [SerializeField] LayerMask whatIsGround;
     [SerializeField] float decalOffsetForward = 0.5f;
 
-    // Start is called before the first frame update
+    public void SetDirection(Vector3 dir)
+    {
+        direction = dir.normalized;
+    }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         canonShoot = FindObjectOfType<CanonShoot>();
-        direction = canonShoot.CanonForward;
+        //direction = canonShoot.CanonForward;
 
         GameController.GetGameController().AddRestartLevelElement(this);
 

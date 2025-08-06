@@ -134,6 +134,7 @@ public class EnemyBombBehaviour : MonoBehaviour
         FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().bombAttackDeathSound, transform.position);
 
         gameObject.SetActive(false);
+        gameObject.layer = 2;
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -18,7 +18,7 @@ public class PlayerShadow : MonoBehaviour
 
         if(Physics.Raycast(ray, 2.5f, _layerMask))
         {
-            _parent.position = new Vector3(0f, 10f, 0f);
+            _parent.position = new Vector3(0f, 10000f, 0f);
         }
         else if (Physics.Raycast(ray, out hitInfo, 10f, _layerMask))
         {
@@ -28,7 +28,7 @@ public class PlayerShadow : MonoBehaviour
         }
         else
         {
-            _parent.position = new Vector3(0f, 10f, 0f);
+            _parent.position = new Vector3(0f, 10000f, 0f);
         }
     }
 }
