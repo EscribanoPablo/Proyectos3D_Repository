@@ -246,4 +246,9 @@ public class CanonShoot : MonoBehaviour
         return bestDirection;
     }
 
+    public bool GetIsPressing()
+    {
+        return isPressing;
+    }
+
 }

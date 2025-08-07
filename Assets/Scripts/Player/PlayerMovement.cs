@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement Variables")]
     [SerializeField] float baseSpeedMovement = 40;
+    [SerializeField] float runSpeedMovement = 70;
     private float speedMovement;
     [SerializeField] float maxVelocity;
     [SerializeField] float baseRotationSpeed = 7.5f;
@@ -50,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float doubleJumpForce;
     int currentJumps;
     bool isOnAir = false;
+    private bool longJumped = false;
     public bool canJump { get; set; } 
     public bool DoubleJump => doubleJump;
     bool doubleJump;
@@ -216,7 +218,11 @@ public class PlayerMovement : MonoBehaviour
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
-            rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
+            if ((playerInput.actions["Run"].IsPressed() && IsGrounded() && !canonShoot.GetIsPressing())
+                || !IsGrounded() && longJumped)
+                rigidBody.AddForce(moveDir.normalized * runSpeedMovement, ForceMode.Force);
+            else
+                rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
 
             transitionTimer += Time.deltaTime;
             if (transitionTimer > transitionDurationStart) transitionTimer = transitionDurationStart;
@@ -251,6 +257,9 @@ public class PlayerMovement : MonoBehaviour
             Vector3 limitedVel = flatVel.normalized * maxVelocity;
             rigidBody.velocity = new Vector3(limitedVel.x, rigidBody.velocity.y, limitedVel.z);
         }
+
+        // Para saber la velocidad del jugador en ejes XZ
+        // Debug.Log("velocity = " + new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z));
     }
 
     private void Jumper()
@@ -265,15 +274,20 @@ public class PlayerMovement : MonoBehaviour
                 //  check coyote
                 if ((IsGrounded() || coyoteTimeCounter > 0f) && currentJumps == 0 && !hasUsedInitialJump)
                 {
-                    ResetJumps();
+                    ResetJumps(); // tendria que haber algo que reseteara los dashes por si solo, y no así
                     doubleJump = true;
                     hasUsedInitialJump = true;
                     audioManager.SetPlaySfx(audioManager.JumpSound, transform.position);
                     Jump(jumpForce);
-                    Debug.Log("jump");
-                    Debug.Log(currentJumps); 
                     ParticleSystem particlesJump = jumpParticles.GetComponent<ParticleSystem>();
                     particlesJump.Emit(5);
+
+                    if (playerInput.actions["Run"].IsPressed())
+                    {
+                        longJumped = true;
+                        StartCoroutine(CheckIfLongJump());
+                        Debug.Log("hola");
+                    }
 
                     isJumping = true;
                     playerAnimator.SetTrigger("Jumped");
@@ -291,8 +305,6 @@ public class PlayerMovement : MonoBehaviour
                 {
                     audioManager.SetPlaySfx(audioManager.DoubleJumpSound, 0.5f, transform.position);
                     Jump(doubleJumpForce);
-                    Debug.Log("doble jump");
-                    Debug.Log(currentJumps);
 
                     canonShoot.ShootBullet(spawnBulletDoubleJumpPosition.position, false);
                     canonShoot.SpawnCanonParticles();
@@ -447,6 +459,20 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         rigidBody.AddForce(Vector3.up * 3.5f, ForceMode.Impulse);
+    }
+
+    IEnumerator CheckIfLongJump()
+    {
+        yield return new WaitForSeconds(0.2f);
+        while (longJumped)
+        {
+            if (IsGrounded())
+            {
+                longJumped = false;
+                Debug.Log("dw");
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     private bool HeadOnWall()
