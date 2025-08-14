@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
 
     public CameraController cameraController;
 
+    public LevelsController levelsController;
+
     public GameObject destroyObjects;
 
     public static bool alreadyInitializated = false;
