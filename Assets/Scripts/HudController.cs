@@ -17,6 +17,8 @@ public class HudController : MonoBehaviour
     [SerializeField]
     List<GameObject> lifes;
 
+    [SerializeField] private bool isTestScene = true; //Esto se puede borrar para el final, es sobretodo ahora para probar
+
     public List<bool> GetCollectiblesTaken() 
     {
         List<bool> collectiblesStatus = new List<bool>();
@@ -33,16 +35,19 @@ public class HudController : MonoBehaviour
     }
     int collectiblesTaken = 0;
 
-    private void Start()
+    private void Start() //Esto se puede borrar para el final, es sobretodo ahora para probar
     {
-        for (int index = 0; index < collectibles.Count; index++)
+        if (!isTestScene) 
         {
-            if (FindObjectOfType<LevelsController>().CollectiblesCount()[index]) 
-            { 
-                collectibles[index].SetActive(true);
-                collectiblesGO[index].SetActive(false);
+            for (int index = 0; index < collectibles.Count; index++)
+            {
+                if (FindObjectOfType<LevelsController>().CollectiblesCount()[index])
+                {
+                    collectibles[index].SetActive(true);
+                    collectiblesGO[index].SetActive(false);
 
-                collectiblesTaken++;
+                    collectiblesTaken++;
+                }
             }
         }
     }

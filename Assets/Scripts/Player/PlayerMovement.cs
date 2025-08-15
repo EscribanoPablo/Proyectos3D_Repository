@@ -209,6 +209,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isMoving = true;
 
+            //Como se hacia antes la rotacion, no borrar por si se quiere volver a usar
             /*float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);*/
