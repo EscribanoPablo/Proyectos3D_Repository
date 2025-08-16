@@ -33,12 +33,17 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement Variables")]
     [SerializeField] float baseSpeedMovement = 40;
     [SerializeField] float runSpeedMovement = 70;
+    [SerializeField] float crouchSpeedMovement = 20;
     private float speedMovement;
     [SerializeField] float maxVelocity;
     [SerializeField] float baseRotationSpeed = 7.5f;
     private float rotationSpeed;
     //float turnSmoothVelocity;
-    bool isMoving;
+    private bool isMoving;
+    private bool movementBlocked = false;
+    public bool GetIfCrouching() { return isCrouching; }
+    private bool isCrouching;
+    private float timeCrouching = 0;
     [SerializeField] float transitionDurationStart = 0.5f; 
     [SerializeField] float transitionDurationStop = 0.5f; 
     private float transitionTimer = 0f;
@@ -48,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump Variables")]
     [SerializeField] int multipleJumps = 1;
     [SerializeField] float jumpForce;
+    [SerializeField] float crouchingJumpForce;
     [SerializeField] float doubleJumpForce;
     int currentJumps;
     bool isOnAir = false;
@@ -195,14 +201,28 @@ public class PlayerMovement : MonoBehaviour
     private void Movement()
     {
         if (isDashing) return;
-        Vector3 direction = new Vector3(playerInput.actions["Movement"].ReadValue<Vector2>().x, 0f, playerInput.actions["Movement"].ReadValue<Vector2>().y).normalized;
 
+        Vector3 direction = Vector3.zero;
+        if(!movementBlocked)
+            direction = new Vector3(playerInput.actions["Movement"].ReadValue<Vector2>().x, 0f, playerInput.actions["Movement"].ReadValue<Vector2>().y).normalized;
 
         float verticalSpeed = rigidBody.velocity.y;
         if (!onWall)
         {
             playerAnimator.SetBool("OnWall", false);
             verticalSpeed += -gravity;
+        }
+
+        //Detectar si se esta agachando
+        if (playerInput.actions["Crouch"].IsPressed() && IsGrounded())
+        {
+            isCrouching = true;
+            timeCrouching += Time.deltaTime;
+        }
+        else
+        {
+            isCrouching = false;
+            timeCrouching = 0;
         }
 
         if (direction.magnitude >= 0.1f)
@@ -219,11 +239,18 @@ public class PlayerMovement : MonoBehaviour
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
-            if ((playerInput.actions["Run"].IsPressed() && IsGrounded() && !canonShoot.GetIsPressing())
+            if (isCrouching)
+            {
+                rigidBody.AddForce(moveDir.normalized * crouchSpeedMovement, ForceMode.Force);
+            }
+            else 
+            {
+                if ((playerInput.actions["Run"].IsPressed() && IsGrounded() && !canonShoot.GetIfAiming())
                 || !IsGrounded() && longJumped)
-                rigidBody.AddForce(moveDir.normalized * runSpeedMovement, ForceMode.Force);
-            else
-                rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
+                    rigidBody.AddForce(moveDir.normalized * runSpeedMovement, ForceMode.Force);
+                else
+                    rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
+            }
 
             transitionTimer += Time.deltaTime;
             if (transitionTimer > transitionDurationStart) transitionTimer = transitionDurationStart;
@@ -240,8 +267,8 @@ public class PlayerMovement : MonoBehaviour
         }
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, verticalSpeed, rigidBody.velocity.z);
 
+        playerAnimator.SetBool("IsCrouching", isCrouching);
         playerAnimator.SetFloat("Speed", speedAnimation);
-
     }
 
     public void SetSpeedAnimation(float speed)
@@ -270,7 +297,14 @@ public class PlayerMovement : MonoBehaviour
 
         if (playerInput.actions["Jump"].WasPressedThisFrame())
         {
-            if (currentJumps <= multipleJumps && canJump)
+            if (isCrouching)
+            {
+                if(timeCrouching >= 0.5f)
+                    StartCoroutine(DoCrouchingJump());
+                else
+                    playerAnimator.SetTrigger("Jumped");
+            }
+            else if (currentJumps <= multipleJumps && canJump)
             {
                 //  check coyote
                 if ((IsGrounded() || coyoteTimeCounter > 0f) && currentJumps == 0 && !hasUsedInitialJump)
@@ -317,19 +351,13 @@ public class PlayerMovement : MonoBehaviour
                     playerAnimator.SetTrigger("DoubleJumped");
                 }
                 else
-                {
                     isJumping = false;
-                }
             }
             else
-            {
                 isJumping = false;
-            }
         }
         else
-        {
             isJumping = false;
-        }
     }
 
     public bool GetIfGrounded() 
@@ -474,6 +502,27 @@ public class PlayerMovement : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    IEnumerator DoCrouchingJump()
+    {
+        movementBlocked = true;
+        yield return new WaitForSeconds(0.3f);
+        isCrouching = false;
+        canJump = false;
+
+        ResetJumps();
+        doubleJump = true;
+        hasUsedInitialJump = true;
+
+        Jump(crouchingJumpForce);
+
+        isJumping = true;
+        playerAnimator.SetTrigger("CrouchJumped");
+
+        yield return new WaitForSeconds(1f);
+        movementBlocked = false;
+        canJump = true;
     }
 
     private bool HeadOnWall()
