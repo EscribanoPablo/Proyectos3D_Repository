@@ -4,11 +4,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     public Rigidbody rigidBody { get; set; }
     [Header("References")]
+    [SerializeField] private CapsuleCollider baseCollider;
+    [SerializeField] private CapsuleCollider crouchingCollider;
     [SerializeField] Camera camera;
     [SerializeField] Transform groundChecker;
+    [SerializeField] Transform roofChecker;
     [SerializeField] LayerMask whatIsGround;
     [SerializeField] LayerMask whatIsWall;
     [SerializeField] GameObject armCanon;
@@ -44,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     public bool GetIfCrouching() { return isCrouching; }
     private bool isCrouching;
     private float timeCrouching = 0;
+    [SerializeField] private float groundPoundForce = 10f;
     [SerializeField] float transitionDurationStart = 0.5f; 
     [SerializeField] float transitionDurationStop = 0.5f; 
     private float transitionTimer = 0f;
@@ -140,6 +143,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 coyoteTimeCounter -= Time.deltaTime;
                 groundedTime = 0f;
+
+                if (playerInput.actions["Crouch"].WasPressedThisFrame())
+                    StartCoroutine(DoGroundPound());
             }
             //if (!(currentJumps >=multipleJumps))
             //{
@@ -218,11 +224,17 @@ public class PlayerMovement : MonoBehaviour
         {
             isCrouching = true;
             timeCrouching += Time.deltaTime;
+
+            crouchingCollider.enabled = true;
+            baseCollider.enabled = false;
         }
-        else
+        else if(!HasRoofAbove())
         {
             isCrouching = false;
             timeCrouching = 0;
+
+            crouchingCollider.enabled = false;
+            baseCollider.enabled = true;
         }
 
         if (direction.magnitude >= 0.1f)
@@ -299,10 +311,17 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isCrouching)
             {
-                if(timeCrouching >= 0.5f)
-                    StartCoroutine(DoCrouchingJump());
-                else
-                    playerAnimator.SetTrigger("Jumped");
+                if (!HasRoofAbove())
+                {
+                    if (timeCrouching >= 0.25f)
+                        StartCoroutine(DoCrouchingJump());
+                    /*else 
+                    {
+                        timeCrouching = 0;
+                        playerAnimator.SetTrigger("Jumped");
+                    }*/
+                    //esto es por si el jugador salta mientras esta agachado y aun no puede hacer superimpulso, hablar de si queremos algo asi o no fa falta
+                }
             }
             else if (currentJumps <= multipleJumps && canJump)
             {
@@ -376,13 +395,27 @@ public class PlayerMovement : MonoBehaviour
             canWall = true;
             playerAnimator.SetBool("OnGround", true);
             if (isOnAir)
+            { 
+                hasUsedInitialJump = false;
                 audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
+            }
             isOnAir = false;
-            hasUsedInitialJump = false;
             return true;
         }
         playerAnimator.SetBool("OnGround", false);
         isOnAir = true;
+        return false;
+    }
+
+    private bool HasRoofAbove()
+    {
+        float detectionRadius = 1f;
+
+        Collider[] colliders = Physics.OverlapSphere(roofChecker.position, detectionRadius, whatIsGround);
+        if (colliders.Length > 0)
+        {
+            return true;
+        }
         return false;
     }
 
@@ -523,6 +556,31 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(1f);
         movementBlocked = false;
         canJump = true;
+    }
+
+    IEnumerator DoGroundPound()
+    {
+        StopAllMovement();
+        playerControllerEnabled = false;
+        canJump = false;
+        canDash = false;
+
+        playerAnimator.SetTrigger("GroundPound");
+
+        yield return new WaitForSeconds(0.2f);
+        playerControllerEnabled = true;
+        movementBlocked = true;
+        rigidBody.AddForce(Vector3.down * groundPoundForce, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(0.3f);
+        movementBlocked = false;
+        canJump = true;
+        canDash = true;
+    }
+
+    private void StopAllMovement()
+    {
+        rigidBody.velocity = Vector3.zero;
     }
 
     private bool HeadOnWall()

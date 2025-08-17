@@ -999,6 +999,7 @@ GameObject:
   - component: {fileID: 5741698530815852904}
   - component: {fileID: 5280560021130776560}
   - component: {fileID: 2407899779544871975}
+  - component: {fileID: 1473511775892376736}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1024,6 +1025,7 @@ Transform:
   - {fileID: 9150631957321747548}
   - {fileID: 5307005625148072334}
   - {fileID: 8722211926356234388}
+  - {fileID: 4407552948084560772}
   - {fileID: 4537645027817099959}
   - {fileID: 7931401522551624204}
   m_Father: {fileID: 0}
@@ -1040,8 +1042,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc3c2f97497a35449a0335ffeffec6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseCollider: {fileID: 410713183316784795}
+  crouchingCollider: {fileID: 1473511775892376736}
   camera: {fileID: 0}
   groundChecker: {fileID: 8722211926356234388}
+  roofChecker: {fileID: 4407552948084560772}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 704
@@ -1062,12 +1067,15 @@ MonoBehaviour:
   spawnBulletDashPosition: {fileID: 824903714382592646}
   baseSpeedMovement: 40
   runSpeedMovement: 180
+  crouchSpeedMovement: 20
   maxVelocity: 6
   baseRotationSpeed: 7.5
+  groundPoundForce: 20
   transitionDurationStart: 0.5
   transitionDurationStop: 0.29
   multipleJumps: 1
   jumpForce: 12
+  crouchingJumpForce: 40
   doubleJumpForce: 13
   gravity: 0.27
   dashDuration: 0.2
@@ -1264,13 +1272,40 @@ MonoBehaviour:
     m_ActionName: PlayerActions/Restart[/Keyboard/r]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 29f45641-e709-40ea-9f63-24e2648f24a0
-    m_ActionName: PlayerActions/Camera[/Mouse/delta]
+    m_ActionId: 0274af94-84de-47bc-ae63-d14a4c2a6bac
+    m_ActionName: PlayerActions/Run[/Keyboard/leftShift]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2e215fb6-3268-4386-b126-e770e9bf1d12
+    m_ActionName: PlayerActions/Crouch[/Keyboard/q]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerActions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!136 &1473511775892376736
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4398075436590841281}
+  m_Material: {fileID: 13400000, guid: 84e5ced5333ed6c4e911c7c5888a0174, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.58
+  m_Height: 1.6731635
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.5172, z: 0}
 --- !u!1 &4736000364395186754
 GameObject:
   m_ObjectHideFlags: 0
@@ -1520,6 +1555,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5446200737772258601
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4407552948084560772}
+  m_Layer: 3
+  m_Name: RoofChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4407552948084560772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5446200737772258601}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9059143790163231872}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5743010177009893129
 GameObject:
   m_ObjectHideFlags: 0
