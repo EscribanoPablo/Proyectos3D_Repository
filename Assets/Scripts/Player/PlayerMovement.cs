@@ -26,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject dustParticles;
     [SerializeField] Transform spawnBulletDashPosition;
 
+    [SerializeField] private GameObject groundPoundExplosion;
+
 
     [Header("Inputs")]
     //[SerializeField] KeyCode m_JumpKey;
@@ -47,11 +49,13 @@ public class PlayerMovement : MonoBehaviour
     private bool isCrouching;
     private float timeCrouching = 0;
     [SerializeField] private float groundPoundForce = 10f;
-    [SerializeField] float transitionDurationStart = 0.5f; 
-    [SerializeField] float transitionDurationStop = 0.5f; 
+    private bool doingGroundPound = false;
+    [SerializeField] private float distanceToGroundPound = 2f;
+    [SerializeField] float transitionDurationStart = 0.5f;
+    [SerializeField] float transitionDurationStop = 0.5f;
     private float transitionTimer = 0f;
-    float speedAnimation = 0; 
-    public bool playerControllerEnabled { get; set;}
+    float speedAnimation = 0;
+    public bool playerControllerEnabled { get; set; }
 
     [Header("Jump Variables")]
     [SerializeField] int multipleJumps = 1;
@@ -61,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
     int currentJumps;
     bool isOnAir = false;
     private bool longJumped = false;
-    public bool canJump { get; set; } 
+    public bool canJump { get; set; }
     public bool DoubleJump => doubleJump;
     bool doubleJump;
     [SerializeField] float gravity;
@@ -101,13 +105,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Animator playerAnimator;
 
-    public void ReducePlayerMovement() 
+    public void ReducePlayerMovement()
     {
         speedMovement = speedMovement / 4;
         rotationSpeed = rotationSpeed / 10;
     }
 
-    public void ResetPlayerMovement() 
+    public void ResetPlayerMovement()
     {
         speedMovement = baseSpeedMovement;
         rotationSpeed = baseRotationSpeed;
@@ -125,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
         playerControllerEnabled = true;
         wallJumpParticles.SetActive(false);
         speedAnimation = 0;
-        canJump = true; 
+        canJump = true;
         speedMovement = baseSpeedMovement;
         rotationSpeed = baseRotationSpeed;
     }
@@ -138,13 +142,20 @@ public class PlayerMovement : MonoBehaviour
             {
                 coyoteTimeCounter = coyoteTimeDuration;
                 groundedTime += Time.deltaTime;
+
+                if (doingGroundPound)
+                {
+                    movementBlocked = false;
+                    StartCoroutine(ActivateGroundPoundExplosion());
+                    doingGroundPound = false;
+                }
             }
             else
             {
                 coyoteTimeCounter -= Time.deltaTime;
                 groundedTime = 0f;
 
-                if (playerInput.actions["Crouch"].WasPressedThisFrame())
+                if (playerInput.actions["Crouch"].WasPressedThisFrame() && DistanceToGroundChecker(distanceToGroundPound))
                     StartCoroutine(DoGroundPound());
             }
             //if (!(currentJumps >=multipleJumps))
@@ -209,7 +220,7 @@ public class PlayerMovement : MonoBehaviour
         if (isDashing) return;
 
         Vector3 direction = Vector3.zero;
-        if(!movementBlocked)
+        if (!movementBlocked)
             direction = new Vector3(playerInput.actions["Movement"].ReadValue<Vector2>().x, 0f, playerInput.actions["Movement"].ReadValue<Vector2>().y).normalized;
 
         float verticalSpeed = rigidBody.velocity.y;
@@ -228,7 +239,7 @@ public class PlayerMovement : MonoBehaviour
             crouchingCollider.enabled = true;
             baseCollider.enabled = false;
         }
-        else if(!HasRoofAbove())
+        else if (!HasRoofAbove())
         {
             isCrouching = false;
             timeCrouching = 0;
@@ -255,7 +266,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 rigidBody.AddForce(moveDir.normalized * crouchSpeedMovement, ForceMode.Force);
             }
-            else 
+            else
             {
                 if ((playerInput.actions["Run"].IsPressed() && IsGrounded() && !canonShoot.GetIfAiming())
                 || !IsGrounded() && longJumped)
@@ -346,7 +357,7 @@ public class PlayerMovement : MonoBehaviour
                     isJumping = true;
                     playerAnimator.SetTrigger("Jumped");
 
-                    coyoteTimeCounter = 0f; 
+                    coyoteTimeCounter = 0f;
                 }
                 else if (onWall)
                 {
@@ -357,6 +368,9 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else if (doubleJump)
                 {
+                    movementBlocked = false;
+                    doingGroundPound = false;
+
                     audioManager.SetPlaySfx(audioManager.DoubleJumpSound, 0.5f, transform.position);
                     Jump(doubleJumpForce);
 
@@ -379,7 +393,7 @@ public class PlayerMovement : MonoBehaviour
             isJumping = false;
     }
 
-    public bool GetIfGrounded() 
+    public bool GetIfGrounded()
     {
         return IsGrounded();
     }
@@ -395,7 +409,7 @@ public class PlayerMovement : MonoBehaviour
             canWall = true;
             playerAnimator.SetBool("OnGround", true);
             if (isOnAir)
-            { 
+            {
                 hasUsedInitialJump = false;
                 audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
             }
@@ -478,6 +492,9 @@ public class PlayerMovement : MonoBehaviour
         if (isDashing) return;
         if (playerInput.actions["Dash"].WasPressedThisFrame() && canDash && currentDashes < multipleDashOnAir)
         {
+            movementBlocked = false;
+            doingGroundPound = false;
+
             StartCoroutine(DoDash());
         }
     }
@@ -560,6 +577,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DoGroundPound()
     {
+        doingGroundPound = true;
         StopAllMovement();
         playerControllerEnabled = false;
         canJump = false;
@@ -573,9 +591,33 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.AddForce(Vector3.down * groundPoundForce, ForceMode.Impulse);
 
         yield return new WaitForSeconds(0.3f);
-        movementBlocked = false;
         canJump = true;
         canDash = true;
+    }
+
+    IEnumerator ActivateGroundPoundExplosion()
+    {
+        playerControllerEnabled = false;
+
+        playerAnimator.SetTrigger("GroundPoundHit");
+        groundPoundExplosion.SetActive(true);
+
+        yield return new WaitForSeconds(0.4f);
+
+        groundPoundExplosion.SetActive(false);
+        playerControllerEnabled = true;
+    }
+
+    private bool DistanceToGroundChecker(float distanceToGround)
+    {
+        Ray ray = new Ray(groundChecker.position, Vector3.down);
+
+        if(Physics.Raycast(ray, distanceToGround, whatIsGround))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     private void StopAllMovement()
@@ -586,7 +628,7 @@ public class PlayerMovement : MonoBehaviour
     private bool HeadOnWall()
     {
         return Physics.Raycast(transform.position, transform.forward, wallDetectionDistance, whatIsWall) ||
-            Physics.Raycast(transform.position + (Vector3.up*wallDetectionOffset), transform.forward, wallDetectionDistance, whatIsWall) ||
+            Physics.Raycast(transform.position + (Vector3.up * wallDetectionOffset), transform.forward, wallDetectionDistance, whatIsWall) ||
             Physics.Raycast(transform.position - (Vector3.up * wallDetectionOffset), transform.forward, wallDetectionDistance, whatIsWall);
     }
 
@@ -635,7 +677,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void KillXZVelocity()
     {
-        rigidBody.velocity = new Vector3(0, rigidBody.velocity.y-0.5f, 0);
+        rigidBody.velocity = new Vector3(0, rigidBody.velocity.y - 0.5f, 0);
     }
     public bool GetIsJumping()
     {

@@ -4,7 +4,7 @@ using UnityEngine.AI;
 using FMODUnity;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class EnemyBombBehaviour : MonoBehaviour
+public class EnemyBombBehaviour : EnemyBehaviour
 {
     private PlayerController player;
     private NavMeshAgent navMeshAgent;
@@ -145,6 +145,11 @@ public class EnemyBombBehaviour : MonoBehaviour
         }
     }
 
+    public override void ReceiveDamage()
+    {
+        Explode();
+    }
+
     private float DistanceToPlayer()
     {
         Vector3 l_PlayerPosition = player.transform.position;
@@ -152,7 +157,6 @@ public class EnemyBombBehaviour : MonoBehaviour
         Vector3 l_EnemyToPlayer = l_PlayerPosition - l_EnemyPosition;
         return l_EnemyToPlayer.magnitude;
     }
-
 }
 
 public enum EnemyState
