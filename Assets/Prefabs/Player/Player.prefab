@@ -1043,6 +1043,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbc3c2f97497a35449a0335ffeffec6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  abilitiesList:
+  - abilityData: {fileID: 11400000, guid: 14d3dfe2394acad49a93d4097f69a345, type: 2}
+    canUse: 1
+  - abilityData: {fileID: 11400000, guid: a39983d44a19251439f5dfb56d018356, type: 2}
+    canUse: 1
+  - abilityData: {fileID: 11400000, guid: 499aac8b0e7eec44dbf0b3b2017f339c, type: 2}
+    canUse: 0
+  - abilityData: {fileID: 11400000, guid: 34cc0a3fdb766954ebc777ed0cb3a237, type: 2}
+    canUse: 0
+  - abilityData: {fileID: 11400000, guid: c759f7f368614864b829672566b4bf1c, type: 2}
+    canUse: 1
+  - abilityData: {fileID: 11400000, guid: a205bc64c34604447b2a42b71e2edc85, type: 2}
+    canUse: 0
   baseCollider: {fileID: 410713183316784795}
   crouchingCollider: {fileID: 1473511775892376736}
   camera: {fileID: 0}
@@ -1054,40 +1067,37 @@ MonoBehaviour:
   whatIsWall:
     serializedVersion: 2
     m_Bits: 192
-  armCanon: {fileID: 321474049592577477}
-  armCanonJump: {fileID: 2169129222556867023}
-  canonJump: {fileID: 7195080838147387175}
-  canonIdle: {fileID: 4736000364395186754}
+  cannonGO: {fileID: 2697753074643379428}
+  canonShoot: {fileID: 5741698530815852904}
+  spawnBulletDoubleJumpPosition: {fileID: 6870223169479544195}
+  spawnBulletDashPosition: {fileID: 824903714382592646}
+  groundPoundExplosion: {fileID: 7728528774930289815}
   canonParticles: {fileID: 7807666680103370727, guid: c36f55faa284bd54aaa8dc11308d5c0c,
     type: 3}
   wallJumpParticles: {fileID: 7334190416142256798}
   jumpParticles: {fileID: 7286329852137414549}
-  spawnBulletDoubleJumpPosition: {fileID: 6870223169479544195}
-  canonShoot: {fileID: 5741698530815852904}
   dustParticles: {fileID: 8196844698687515114}
-  spawnBulletDashPosition: {fileID: 824903714382592646}
-  groundPoundExplosion: {fileID: 7728528774930289815}
   baseSpeedMovement: 40
   runSpeedMovement: 180
   crouchSpeedMovement: 20
   maxVelocity: 6
   baseRotationSpeed: 7.5
-  groundPoundForce: 20
-  distanceToGroundPound: 3
   transitionDurationStart: 0.5
   transitionDurationStop: 0.29
   multipleJumps: 1
   jumpForce: 12
-  crouchingJumpForce: 40
   doubleJumpForce: 13
-  gravity: 0.27
-  dashDuration: 0.2
-  dashPower: 13
   wallJumpUpForce: 13
   wallJumpSideForce: 13
+  crouchingJumpForce: 40
+  gravity: 0.27
   wallDetectionDistance: 1.2
   wallDetectionOffset: 1.1
   timeToWallFall: 3
+  dashDuration: 0.2
+  dashPower: 13
+  groundPoundForce: 20
+  distanceToGroundPound: 3
   coyoteTimeDuration: 0.3
   playerAnimator: {fileID: 3282902346876754578}
 --- !u!54 &2113590656291869998
@@ -1173,13 +1183,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30c07646d23c61f4eab58d6ff0683c0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootButton: 0
   spawnPosition: {fileID: 824903714382592646}
   bulletPrefab: {fileID: 8311382077795666320, guid: b243c7373ae674443a71c737cfd223f7,
     type: 3}
   canonBoomParticles: {fileID: 5241242940701029559}
   canonParticles: {fileID: 3138042963513272267}
-  nextTimeFire: 1
   aimLine: {fileID: 7510715254086139180}
   maxLineLength: 5
   lineGrowTime: 0
@@ -2443,6 +2451,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WallJumpParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 7525856046757394277, guid: f8b4b65512a499c4284bff5237d91c25,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4973,6 +4986,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6454881978378292380}
   m_SourcePrefab: {fileID: 100100000, guid: dda156ec25323a946903da9d0ffc909e, type: 3}
+--- !u!1 &2697753074643379428 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 996124010256200990, guid: dda156ec25323a946903da9d0ffc909e,
+    type: 3}
+  m_PrefabInstance: {fileID: 2928089224187531770}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &3282902346876754578 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 373130166273723240, guid: dda156ec25323a946903da9d0ffc909e,
@@ -5194,6 +5213,51 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: JumpParticlesPrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 7794596276933183765, guid: d64306b0b8c9a3e49a80e740ddec63ff,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7794596276933183765, guid: d64306b0b8c9a3e49a80e740ddec63ff,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7794596276933183765, guid: d64306b0b8c9a3e49a80e740ddec63ff,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7794596276933183765, guid: d64306b0b8c9a3e49a80e740ddec63ff,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.atime0
+      value: 21203
+      objectReference: {fileID: 0}
+    - target: {fileID: 7794596276933183765, guid: d64306b0b8c9a3e49a80e740ddec63ff,
+        type: 3}
+      propertyPath: ColorModule.gradient.maxGradient.key0.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7794596276933183765, guid: d64306b0b8c9a3e49a80e740ddec63ff,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 0.5315323
+      objectReference: {fileID: 0}
+    - target: {fileID: 7794596276933183765, guid: d64306b0b8c9a3e49a80e740ddec63ff,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
+      value: 0.57657623
+      objectReference: {fileID: 0}
+    - target: {fileID: 7794596276933183765, guid: d64306b0b8c9a3e49a80e740ddec63ff,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7794596276933183765, guid: d64306b0b8c9a3e49a80e740ddec63ff,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

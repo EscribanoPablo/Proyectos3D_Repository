@@ -6,32 +6,34 @@ using Random = UnityEngine.Random;
 
 public class CanonShoot : MonoBehaviour
 {
-    [Range(0, 1)]
-    [SerializeField] int shootButton;
+    [Header("Inputs")]
+    private PlayerInput playerInput;
+    private PlayerMovement playerMovement;
 
-    PlayerInput playerInput;
-    PlayerMovement playerMovement;
+    [Header("References")]
+    [SerializeField] private Transform spawnPosition;
+    [SerializeField] private GameObject bulletPrefab;
 
-    [SerializeField] Transform spawnPosition;
-    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] private GameObject canonBoomParticles;
+    [SerializeField] private GameObject canonParticles;
 
-    [SerializeField] GameObject canonBoomParticles;
-    [SerializeField] GameObject canonParticles;
-
-    [SerializeField] float nextTimeFire = 1f;
+    [Header("Shoot")]
+    private Ability shootAbility;
     public float currentTimeShoot { get; set; }
+    public Vector3 CanonForward => cannonForward;
+    private Vector3 cannonForward;
 
+    [Header("Aiming")]
     [SerializeField] private LineRenderer aimLine;
     [SerializeField] private float maxLineLength = 20f;
     [SerializeField] private float lineGrowTime = 1f;
     [SerializeField] private int linePoints = 5;
 
     private float lineTimer = 0f;
+    public bool GetIfAiming() { return isAiming; }
     private bool isAiming = false;
 
-    public Vector3 CanonForward => canonForward;
-    private Vector3 canonForward;
-
+    [Header("AutoAim")]
     [SerializeField] private float autoAimRange = 20f;
     [SerializeField] private float autoAimAngle = 10f;
     [SerializeField] private LayerMask isEnemyLayer;
@@ -46,119 +48,118 @@ public class CanonShoot : MonoBehaviour
         audioManager = FindObjectOfType<AudioManager>();
         playerMovement = GetComponent<PlayerMovement>();
         playerInput = GetComponent<PlayerInput>();
+        shootAbility = playerMovement.GetAbility("Shoot");
         canonParticles.SetActive(false);
         canonBoomParticles.SetActive(false);
-
     }
 
     private void Update()
     {
         currentTimeShoot += Time.deltaTime;
-        if (Time.timeScale == 1)
+        if (Time.timeScale == 1 && shootAbility.abilityData.isUnlocked)
         {
-            if (playerMovement.GetIfGrounded() && !playerMovement.GetIfCrouching())
+            HandleAiming();
+            HandleCannonShoots();
+        }
+
+    }
+
+    private void HandleAiming()
+    {
+        if (playerMovement.GetIfGrounded() && !playerMovement.GetIfCrouching())
+        {
+            if (playerInput.actions["Aim"].IsPressed() && !isAiming && currentTimeShoot >= shootAbility.abilityData.cooldown)
             {
-                if (playerInput.actions["Aim"].IsPressed() && !isAiming && currentTimeShoot >= nextTimeFire)
-                {
-                    playerMovement.ReducePlayerMovement();
-                    isAiming = true;
+                playerMovement.ReducePlayerMovement(4f, 10f);
+                isAiming = true;
 
-                    playerAnimator.SetBool("IsAiming", true);
-                    //aimLine.enabled = true;
-                }
-
-                if (playerInput.actions["Aim"].IsPressed() && isAiming && currentTimeShoot >= nextTimeFire)
-                {
-                    lineTimer += Time.deltaTime;
-                    float t = Mathf.Clamp01(lineTimer / lineGrowTime);
-                    int activePoints = Mathf.FloorToInt(t * linePoints);
-
-                    Vector3 flatForward = transform.forward;
-                    flatForward.y = 0f;
-                    flatForward.Normalize();
-
-                    aimLine.positionCount = activePoints;
-
-                    for (int i = 0; i < activePoints; i++)
-                    {
-                        float segmentLength = (i / (float)(linePoints - 1)) * maxLineLength;
-                        Vector3 point = spawnPosition.position + flatForward * segmentLength;
-                        aimLine.SetPosition(i, point);
-                    }
-                }
-
-                if (playerInput.actions["Aim"].WasReleasedThisFrame() && currentTimeShoot >= nextTimeFire)
-                {
-                    playerMovement.ResetPlayerMovement();
-                    isAiming = false;
-                    //aimLine.enabled = false;
-
-                    lineTimer = 0f;
-                    aimLine.positionCount = 0;
-
-                    playerAnimator.SetBool("IsAiming", false);
-                }
+                playerAnimator.SetBool("IsAiming", true);
+                //aimLine.enabled = true;
             }
-            else 
-            {
-                if (isAiming) 
-                {
-                    playerMovement.ResetPlayerMovement();
-                    isAiming = false;
-                    //aimLine.enabled = false;
 
-                    lineTimer = 0f;
-                    aimLine.positionCount = 0;
-                    playerAnimator.SetBool("IsAiming", false);
+            if (playerInput.actions["Aim"].IsPressed() && isAiming && currentTimeShoot >= shootAbility.abilityData.cooldown)
+            {
+                lineTimer += Time.deltaTime;
+                float t = Mathf.Clamp01(lineTimer / lineGrowTime);
+                int activePoints = Mathf.FloorToInt(t * linePoints);
+
+                Vector3 flatForward = transform.forward;
+                flatForward.y = 0f;
+                flatForward.Normalize();
+
+                aimLine.positionCount = activePoints;
+
+                for (int i = 0; i < activePoints; i++)
+                {
+                    float segmentLength = (i / (float)(linePoints - 1)) * maxLineLength;
+                    Vector3 point = spawnPosition.position + flatForward * segmentLength;
+                    aimLine.SetPosition(i, point);
                 }
             }
 
-            if(!isAiming)
-                playerAnimator.SetBool("IsAiming", false);
-
-            if (playerInput.actions["Shoot"].WasPressedThisFrame() && currentTimeShoot >= nextTimeFire)
+            if (playerInput.actions["Aim"].WasReleasedThisFrame() && currentTimeShoot >= shootAbility.abilityData.cooldown)
             {
-                StartCoroutine(Shoot());
-                ShootBullet(spawnPosition.position, true);
-                
-                playerAnimator.SetTrigger("Shoot");
-
                 playerMovement.ResetPlayerMovement();
                 isAiming = false;
                 //aimLine.enabled = false;
 
                 lineTimer = 0f;
                 aimLine.positionCount = 0;
+
+                playerAnimator.SetBool("IsAiming", false);
             }
-            else if (playerInput.actions["Dash"].WasPressedThisFrame()) 
+        }
+        else
+        {
+            if (isAiming)
             {
-                canonForward = -transform.forward;
-            }
-            else if (playerMovement.DoubleJump)
-            {
-                if (playerInput.actions["Jump"].WasPressedThisFrame())
-                {
-                    canonForward = Vector3.down;
-                }
+                playerMovement.ResetPlayerMovement();
+                isAiming = false;
+                //aimLine.enabled = false;
+
+                lineTimer = 0f;
+                aimLine.positionCount = 0;
+                playerAnimator.SetBool("IsAiming", false);
             }
         }
 
+        if (!isAiming)
+            playerAnimator.SetBool("IsAiming", false);
+    }
+
+    private void HandleCannonShoots()
+    {
+        if (playerInput.actions["Shoot"].WasPressedThisFrame() && currentTimeShoot >= shootAbility.abilityData.cooldown)
+        {
+            StartCoroutine(Shoot());
+            ShootBullet(spawnPosition.position, true, false);
+
+            playerAnimator.SetTrigger("Shoot");
+
+            playerMovement.ResetPlayerMovement();
+            isAiming = false;
+            //aimLine.enabled = false;
+
+            lineTimer = 0f;
+            aimLine.positionCount = 0;
+        }
     }
 
     IEnumerator Shoot()
     {
         audioManager.SetPlaySfx(audioManager.ShootSound, 0.5f, transform.position);
         currentTimeShoot = 0;
-        canonForward = transform.forward;
+        cannonForward = transform.forward;
         SpawnCanonParticles();
-        playerMovement.canJump = false;
-        playerMovement.canDash = false;
+        playerMovement.GetAbility("Jump").canUse = false;
+        playerMovement.GetAbility("DoubleJump").canUse = false;
+        playerMovement.GetAbility("Dash").canUse = false;
+
         yield return new WaitForSeconds(0.25f);
-        playerMovement.canJump = true;
-        if (!playerMovement.IsDashing)
-        {
-            playerMovement.canDash = true;
-        }
+
+        playerMovement.GetAbility("Jump").canUse = true;
+        if (!playerMovement.GetIfDashing())
+            playerMovement.GetAbility("Dash").canUse = true;
 
     }
 
@@ -171,7 +172,7 @@ public class CanonShoot : MonoBehaviour
         canonParticles.GetComponent<ParticleSystem>().Play();
     }
 
-    public void ShootBullet(Vector3 position, bool isNormalShoot)
+    public void ShootBullet(Vector3 position, bool isNormalShoot, bool isDoubleJump)
     {
         if (isNormalShoot) 
         {
@@ -180,19 +181,20 @@ public class CanonShoot : MonoBehaviour
 
             Bullet bullet = _bullet.GetComponent<Bullet>();
             if (bullet != null)
-            {
                 bullet.SetDirection(shootDirection);
-            }
         }
         else 
         {
+            if (isDoubleJump)
+                cannonForward = Vector3.down;
+            else
+                cannonForward = -transform.forward;
+
             GameObject _bullet = Instantiate(bulletPrefab, position, bulletPrefab.transform.rotation);
 
             Bullet bullet = _bullet.GetComponent<Bullet>();
             if (bullet != null)
-            {
-                bullet.SetDirection(CanonForward);
-            }
+                bullet.SetDirection(cannonForward);
         }
     }
 
@@ -245,10 +247,4 @@ public class CanonShoot : MonoBehaviour
 
         return bestDirection;
     }
-
-    public bool GetIfAiming()
-    {
-        return isAiming;
-    }
-
 }
