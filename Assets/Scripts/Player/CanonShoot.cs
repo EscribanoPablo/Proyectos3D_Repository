@@ -27,7 +27,7 @@ public class CanonShoot : MonoBehaviour
     [SerializeField] private int linePoints = 5;
 
     private float lineTimer = 0f;
-    private bool isPressing = false;
+    private bool isAiming = false;
 
     public Vector3 CanonForward => canonForward;
     private Vector3 canonForward;
@@ -56,18 +56,18 @@ public class CanonShoot : MonoBehaviour
         currentTimeShoot += Time.deltaTime;
         if (Time.timeScale == 1)
         {
-            if (playerMovement.GetIfGrounded())
+            if (playerMovement.GetIfGrounded() && !playerMovement.GetIfCrouching())
             {
-                if (playerInput.actions["Aim"].IsPressed() && !isPressing && currentTimeShoot >= nextTimeFire)
+                if (playerInput.actions["Aim"].IsPressed() && !isAiming && currentTimeShoot >= nextTimeFire)
                 {
                     playerMovement.ReducePlayerMovement();
-                    isPressing = true;
+                    isAiming = true;
 
                     playerAnimator.SetBool("IsAiming", true);
                     //aimLine.enabled = true;
                 }
 
-                if (playerInput.actions["Aim"].IsPressed() && isPressing && currentTimeShoot >= nextTimeFire)
+                if (playerInput.actions["Aim"].IsPressed() && isAiming && currentTimeShoot >= nextTimeFire)
                 {
                     lineTimer += Time.deltaTime;
                     float t = Mathf.Clamp01(lineTimer / lineGrowTime);
@@ -90,7 +90,7 @@ public class CanonShoot : MonoBehaviour
                 if (playerInput.actions["Aim"].WasReleasedThisFrame() && currentTimeShoot >= nextTimeFire)
                 {
                     playerMovement.ResetPlayerMovement();
-                    isPressing = false;
+                    isAiming = false;
                     //aimLine.enabled = false;
 
                     lineTimer = 0f;
@@ -101,10 +101,10 @@ public class CanonShoot : MonoBehaviour
             }
             else 
             {
-                if (isPressing) 
+                if (isAiming) 
                 {
                     playerMovement.ResetPlayerMovement();
-                    isPressing = false;
+                    isAiming = false;
                     //aimLine.enabled = false;
 
                     lineTimer = 0f;
@@ -113,7 +113,7 @@ public class CanonShoot : MonoBehaviour
                 }
             }
 
-            if(!isPressing)
+            if(!isAiming)
                 playerAnimator.SetBool("IsAiming", false);
 
             if (playerInput.actions["Shoot"].WasPressedThisFrame() && currentTimeShoot >= nextTimeFire)
@@ -124,7 +124,7 @@ public class CanonShoot : MonoBehaviour
                 playerAnimator.SetTrigger("Shoot");
 
                 playerMovement.ResetPlayerMovement();
-                isPressing = false;
+                isAiming = false;
                 //aimLine.enabled = false;
 
                 lineTimer = 0f;
@@ -246,9 +246,9 @@ public class CanonShoot : MonoBehaviour
         return bestDirection;
     }
 
-    public bool GetIsPressing()
+    public bool GetIfAiming()
     {
-        return isPressing;
+        return isAiming;
     }
 
 }

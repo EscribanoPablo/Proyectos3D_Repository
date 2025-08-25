@@ -4,11 +4,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     public Rigidbody rigidBody { get; set; }
     [Header("References")]
+    [SerializeField] private CapsuleCollider baseCollider;
+    [SerializeField] private CapsuleCollider crouchingCollider;
     [SerializeField] Camera camera;
     [SerializeField] Transform groundChecker;
+    [SerializeField] Transform roofChecker;
     [SerializeField] LayerMask whatIsGround;
     [SerializeField] LayerMask whatIsWall;
     [SerializeField] GameObject armCanon;
@@ -24,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject dustParticles;
     [SerializeField] Transform spawnBulletDashPosition;
 
+    [SerializeField] private GameObject groundPoundExplosion;
+
 
     [Header("Inputs")]
     //[SerializeField] KeyCode m_JumpKey;
@@ -33,26 +37,35 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement Variables")]
     [SerializeField] float baseSpeedMovement = 40;
     [SerializeField] float runSpeedMovement = 70;
+    [SerializeField] float crouchSpeedMovement = 20;
     private float speedMovement;
     [SerializeField] float maxVelocity;
     [SerializeField] float baseRotationSpeed = 7.5f;
     private float rotationSpeed;
     //float turnSmoothVelocity;
-    bool isMoving;
-    [SerializeField] float transitionDurationStart = 0.5f; 
-    [SerializeField] float transitionDurationStop = 0.5f; 
+    private bool isMoving;
+    private bool movementBlocked = false;
+    public bool GetIfCrouching() { return isCrouching; }
+    private bool isCrouching;
+    private float timeCrouching = 0;
+    [SerializeField] private float groundPoundForce = 10f;
+    private bool doingGroundPound = false;
+    [SerializeField] private float distanceToGroundPound = 2f;
+    [SerializeField] float transitionDurationStart = 0.5f;
+    [SerializeField] float transitionDurationStop = 0.5f;
     private float transitionTimer = 0f;
-    float speedAnimation = 0; 
-    public bool playerControllerEnabled { get; set;}
+    float speedAnimation = 0;
+    public bool playerControllerEnabled { get; set; }
 
     [Header("Jump Variables")]
     [SerializeField] int multipleJumps = 1;
     [SerializeField] float jumpForce;
+    [SerializeField] float crouchingJumpForce;
     [SerializeField] float doubleJumpForce;
     int currentJumps;
     bool isOnAir = false;
     private bool longJumped = false;
-    public bool canJump { get; set; } 
+    public bool canJump { get; set; }
     public bool DoubleJump => doubleJump;
     bool doubleJump;
     [SerializeField] float gravity;
@@ -92,13 +105,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Animator playerAnimator;
 
-    public void ReducePlayerMovement() 
+    public void ReducePlayerMovement()
     {
         speedMovement = speedMovement / 4;
         rotationSpeed = rotationSpeed / 10;
     }
 
-    public void ResetPlayerMovement() 
+    public void ResetPlayerMovement()
     {
         speedMovement = baseSpeedMovement;
         rotationSpeed = baseRotationSpeed;
@@ -116,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
         playerControllerEnabled = true;
         wallJumpParticles.SetActive(false);
         speedAnimation = 0;
-        canJump = true; 
+        canJump = true;
         speedMovement = baseSpeedMovement;
         rotationSpeed = baseRotationSpeed;
     }
@@ -129,11 +142,21 @@ public class PlayerMovement : MonoBehaviour
             {
                 coyoteTimeCounter = coyoteTimeDuration;
                 groundedTime += Time.deltaTime;
+
+                if (doingGroundPound)
+                {
+                    movementBlocked = false;
+                    StartCoroutine(ActivateGroundPoundExplosion());
+                    doingGroundPound = false;
+                }
             }
             else
             {
                 coyoteTimeCounter -= Time.deltaTime;
                 groundedTime = 0f;
+
+                if (playerInput.actions["Crouch"].WasPressedThisFrame() && DistanceToGroundChecker(distanceToGroundPound))
+                    StartCoroutine(DoGroundPound());
             }
             //if (!(currentJumps >=multipleJumps))
             //{
@@ -195,8 +218,10 @@ public class PlayerMovement : MonoBehaviour
     private void Movement()
     {
         if (isDashing) return;
-        Vector3 direction = new Vector3(playerInput.actions["Movement"].ReadValue<Vector2>().x, 0f, playerInput.actions["Movement"].ReadValue<Vector2>().y).normalized;
 
+        Vector3 direction = Vector3.zero;
+        if (!movementBlocked)
+            direction = new Vector3(playerInput.actions["Movement"].ReadValue<Vector2>().x, 0f, playerInput.actions["Movement"].ReadValue<Vector2>().y).normalized;
 
         float verticalSpeed = rigidBody.velocity.y;
         if (!onWall)
@@ -205,10 +230,29 @@ public class PlayerMovement : MonoBehaviour
             verticalSpeed += -gravity;
         }
 
+        //Detectar si se esta agachando
+        if (playerInput.actions["Crouch"].IsPressed() && IsGrounded())
+        {
+            isCrouching = true;
+            timeCrouching += Time.deltaTime;
+
+            crouchingCollider.enabled = true;
+            baseCollider.enabled = false;
+        }
+        else if (!HasRoofAbove())
+        {
+            isCrouching = false;
+            timeCrouching = 0;
+
+            crouchingCollider.enabled = false;
+            baseCollider.enabled = true;
+        }
+
         if (direction.magnitude >= 0.1f)
         {
             isMoving = true;
 
+            //Como se hacia antes la rotacion, no borrar por si se quiere volver a usar
             /*float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + camera.transform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationTime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);*/
@@ -218,11 +262,18 @@ public class PlayerMovement : MonoBehaviour
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
-            if ((playerInput.actions["Run"].IsPressed() && IsGrounded() && !canonShoot.GetIsPressing())
-                || !IsGrounded() && longJumped)
-                rigidBody.AddForce(moveDir.normalized * runSpeedMovement, ForceMode.Force);
+            if (isCrouching)
+            {
+                rigidBody.AddForce(moveDir.normalized * crouchSpeedMovement, ForceMode.Force);
+            }
             else
-                rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
+            {
+                if ((playerInput.actions["Run"].IsPressed() && IsGrounded() && !canonShoot.GetIfAiming())
+                || !IsGrounded() && longJumped)
+                    rigidBody.AddForce(moveDir.normalized * runSpeedMovement, ForceMode.Force);
+                else
+                    rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
+            }
 
             transitionTimer += Time.deltaTime;
             if (transitionTimer > transitionDurationStart) transitionTimer = transitionDurationStart;
@@ -239,8 +290,8 @@ public class PlayerMovement : MonoBehaviour
         }
         rigidBody.velocity = new Vector3(rigidBody.velocity.x, verticalSpeed, rigidBody.velocity.z);
 
+        playerAnimator.SetBool("IsCrouching", isCrouching);
         playerAnimator.SetFloat("Speed", speedAnimation);
-
     }
 
     public void SetSpeedAnimation(float speed)
@@ -269,7 +320,21 @@ public class PlayerMovement : MonoBehaviour
 
         if (playerInput.actions["Jump"].WasPressedThisFrame())
         {
-            if (currentJumps <= multipleJumps && canJump)
+            if (isCrouching)
+            {
+                if (!HasRoofAbove())
+                {
+                    if (timeCrouching >= 0.25f)
+                        StartCoroutine(DoCrouchingJump());
+                    /*else 
+                    {
+                        timeCrouching = 0;
+                        playerAnimator.SetTrigger("Jumped");
+                    }*/
+                    //esto es por si el jugador salta mientras esta agachado y aun no puede hacer superimpulso, hablar de si queremos algo asi o no fa falta
+                }
+            }
+            else if (currentJumps <= multipleJumps && canJump)
             {
                 //  check coyote
                 if ((IsGrounded() || coyoteTimeCounter > 0f) && currentJumps == 0 && !hasUsedInitialJump)
@@ -292,7 +357,7 @@ public class PlayerMovement : MonoBehaviour
                     isJumping = true;
                     playerAnimator.SetTrigger("Jumped");
 
-                    coyoteTimeCounter = 0f; 
+                    coyoteTimeCounter = 0f;
                 }
                 else if (onWall)
                 {
@@ -303,6 +368,9 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else if (doubleJump)
                 {
+                    movementBlocked = false;
+                    doingGroundPound = false;
+
                     audioManager.SetPlaySfx(audioManager.DoubleJumpSound, 0.5f, transform.position);
                     Jump(doubleJumpForce);
 
@@ -316,22 +384,16 @@ public class PlayerMovement : MonoBehaviour
                     playerAnimator.SetTrigger("DoubleJumped");
                 }
                 else
-                {
                     isJumping = false;
-                }
             }
             else
-            {
                 isJumping = false;
-            }
         }
         else
-        {
             isJumping = false;
-        }
     }
 
-    public bool GetIfGrounded() 
+    public bool GetIfGrounded()
     {
         return IsGrounded();
     }
@@ -347,13 +409,27 @@ public class PlayerMovement : MonoBehaviour
             canWall = true;
             playerAnimator.SetBool("OnGround", true);
             if (isOnAir)
+            {
+                hasUsedInitialJump = false;
                 audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
+            }
             isOnAir = false;
-            hasUsedInitialJump = false;
             return true;
         }
         playerAnimator.SetBool("OnGround", false);
         isOnAir = true;
+        return false;
+    }
+
+    private bool HasRoofAbove()
+    {
+        float detectionRadius = 1f;
+
+        Collider[] colliders = Physics.OverlapSphere(roofChecker.position, detectionRadius, whatIsGround);
+        if (colliders.Length > 0)
+        {
+            return true;
+        }
         return false;
     }
 
@@ -416,6 +492,9 @@ public class PlayerMovement : MonoBehaviour
         if (isDashing) return;
         if (playerInput.actions["Dash"].WasPressedThisFrame() && canDash && currentDashes < multipleDashOnAir)
         {
+            movementBlocked = false;
+            doingGroundPound = false;
+
             StartCoroutine(DoDash());
         }
     }
@@ -475,10 +554,81 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    IEnumerator DoCrouchingJump()
+    {
+        movementBlocked = true;
+        yield return new WaitForSeconds(0.3f);
+        isCrouching = false;
+        canJump = false;
+
+        ResetJumps();
+        doubleJump = true;
+        hasUsedInitialJump = true;
+
+        Jump(crouchingJumpForce);
+
+        isJumping = true;
+        playerAnimator.SetTrigger("CrouchJumped");
+
+        yield return new WaitForSeconds(1f);
+        movementBlocked = false;
+        canJump = true;
+    }
+
+    IEnumerator DoGroundPound()
+    {
+        doingGroundPound = true;
+        StopAllMovement();
+        playerControllerEnabled = false;
+        canJump = false;
+        canDash = false;
+
+        playerAnimator.SetTrigger("GroundPound");
+
+        yield return new WaitForSeconds(0.2f);
+        playerControllerEnabled = true;
+        movementBlocked = true;
+        rigidBody.AddForce(Vector3.down * groundPoundForce, ForceMode.Impulse);
+
+        yield return new WaitForSeconds(0.3f);
+        canJump = true;
+        canDash = true;
+    }
+
+    IEnumerator ActivateGroundPoundExplosion()
+    {
+        playerControllerEnabled = false;
+
+        playerAnimator.SetTrigger("GroundPoundHit");
+        groundPoundExplosion.SetActive(true);
+
+        yield return new WaitForSeconds(0.4f);
+
+        groundPoundExplosion.SetActive(false);
+        playerControllerEnabled = true;
+    }
+
+    private bool DistanceToGroundChecker(float distanceToGround)
+    {
+        Ray ray = new Ray(groundChecker.position, Vector3.down);
+
+        if(Physics.Raycast(ray, distanceToGround, whatIsGround))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void StopAllMovement()
+    {
+        rigidBody.velocity = Vector3.zero;
+    }
+
     private bool HeadOnWall()
     {
         return Physics.Raycast(transform.position, transform.forward, wallDetectionDistance, whatIsWall) ||
-            Physics.Raycast(transform.position + (Vector3.up*wallDetectionOffset), transform.forward, wallDetectionDistance, whatIsWall) ||
+            Physics.Raycast(transform.position + (Vector3.up * wallDetectionOffset), transform.forward, wallDetectionDistance, whatIsWall) ||
             Physics.Raycast(transform.position - (Vector3.up * wallDetectionOffset), transform.forward, wallDetectionDistance, whatIsWall);
     }
 
@@ -527,7 +677,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void KillXZVelocity()
     {
-        rigidBody.velocity = new Vector3(0, rigidBody.velocity.y-0.5f, 0);
+        rigidBody.velocity = new Vector3(0, rigidBody.velocity.y - 0.5f, 0);
     }
     public bool GetIsJumping()
     {

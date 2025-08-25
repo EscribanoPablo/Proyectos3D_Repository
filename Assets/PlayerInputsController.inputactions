@@ -69,18 +69,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Camera",
-                    "type": "Value",
-                    "id": "29f45641-e709-40ea-9f63-24e2648f24a0",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Run",
                     "type": "Button",
                     "id": "0274af94-84de-47bc-ae63-d14a4c2a6bac",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Crouch",
+                    "type": "Button",
+                    "id": "2e215fb6-3268-4386-b126-e770e9bf1d12",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -113,7 +113,7 @@
                 {
                     "name": "",
                     "id": "a0d47346-32eb-4d46-92fb-faa19122282a",
-                    "path": "<Keyboard>/leftShift",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -245,7 +245,7 @@
                 {
                     "name": "",
                     "id": "6cb98633-1dd2-4e5d-8841-b689b288fd12",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/rightStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -261,28 +261,6 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Restart",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5f9b527d-9411-497f-963d-40dca17005ec",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Camera",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0b5d5090-3d7c-4546-9af8-b41fc5ce510d",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Camera",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -311,7 +289,7 @@
                 {
                     "name": "",
                     "id": "d81edf9f-284e-4264-900c-d5a345b42467",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -322,11 +300,33 @@
                 {
                     "name": "",
                     "id": "46bdd4ac-78ba-4ca5-981d-c4ea4957a198",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "42533a3d-b3c0-4182-a2e7-cb4153205001",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a1c2b38-dd5c-4058-aace-8849ecd9368d",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Crouch",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

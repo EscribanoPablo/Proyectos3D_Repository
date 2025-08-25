@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
+    [SerializeField] private int collectibleIndex = 0;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -11,7 +12,7 @@ public class Collectible : MonoBehaviour
         {
             //añadir a la UI y al game controller
             gameObject.SetActive(false);
-            FindObjectOfType<HudController>().CollectibleTaken();
+            FindObjectOfType<HudController>().CollectibleTaken(collectibleIndex);
             FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().GrabCollectibleSound, transform.position);
 
             GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>().SetTrigger("Celebrate");
