@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GroundPoundDetector : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         //Aqui se tendrian que añadir las cosas que se quieran detectar con el groundpound, como los enemigos
         if (other.gameObject.tag == "Enemy")
