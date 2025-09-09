@@ -399,9 +399,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd48489d855a58d45b5b11c4bf0d80c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockBackImpulse: 20
+  knockBackImpulse: 10
   damageParticles: {fileID: 6055849287054295065}
   childrenDamageParticles: {fileID: 4057598836547981307}
+  stunTime: 0.327
 --- !u!1 &6726979905472052408
 GameObject:
   m_ObjectHideFlags: 0

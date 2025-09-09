@@ -1000,6 +1000,7 @@ GameObject:
   - component: {fileID: 5280560021130776560}
   - component: {fileID: 2407899779544871975}
   - component: {fileID: 1473511775892376736}
+  - component: {fileID: 5265580782934821365}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1046,16 +1047,22 @@ MonoBehaviour:
   abilitiesList:
   - abilityData: {fileID: 11400000, guid: 14d3dfe2394acad49a93d4097f69a345, type: 2}
     canUse: 1
+    alreadyUsed: 0
   - abilityData: {fileID: 11400000, guid: a39983d44a19251439f5dfb56d018356, type: 2}
     canUse: 1
+    alreadyUsed: 0
   - abilityData: {fileID: 11400000, guid: 499aac8b0e7eec44dbf0b3b2017f339c, type: 2}
     canUse: 0
+    alreadyUsed: 0
   - abilityData: {fileID: 11400000, guid: 34cc0a3fdb766954ebc777ed0cb3a237, type: 2}
     canUse: 0
+    alreadyUsed: 0
   - abilityData: {fileID: 11400000, guid: c759f7f368614864b829672566b4bf1c, type: 2}
     canUse: 1
+    alreadyUsed: 0
   - abilityData: {fileID: 11400000, guid: a205bc64c34604447b2a42b71e2edc85, type: 2}
     canUse: 0
+    alreadyUsed: 0
   baseCollider: {fileID: 410713183316784795}
   crouchingCollider: {fileID: 1473511775892376736}
   camera: {fileID: 0}
@@ -1099,6 +1106,7 @@ MonoBehaviour:
   groundPoundForce: 20
   distanceToGroundPound: 3
   coyoteTimeDuration: 0.3
+  inMovingPlatform: 0
   playerAnimator: {fileID: 3282902346876754578}
 --- !u!54 &2113590656291869998
 Rigidbody:
@@ -1317,6 +1325,19 @@ CapsuleCollider:
   m_Height: 1.6731635
   m_Direction: 1
   m_Center: {x: 0, y: -0.5172, z: 0}
+--- !u!114 &5265580782934821365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4398075436590841281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82be78f62c9673a48befbc897eeeb774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseKnockbackImpulse: 15
 --- !u!1 &4736000364395186754
 GameObject:
   m_ObjectHideFlags: 0

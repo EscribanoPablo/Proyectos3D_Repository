@@ -9,7 +9,6 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] bool DEV_INVINCIBLE;
 
     private Rigidbody playerRigidBody;
-    [SerializeField] float knockbackImpulse;
     private PlayerInput playerInputs;
 
     private HudController hudController;
@@ -88,7 +87,7 @@ public class PlayerHealth : MonoBehaviour
                 CheckHealth();
                 gotHit = true;
                 playerInputs.enabled = false;
-                AddKnockback(pointOfImpact, knockbackImpulse);
+                GetComponent<KnockbackHandler>().ApplyKnockback(pointOfImpact);
 
                 damageParticles.SetActive(true);
                 ParticleSystem particles = damageParticles.GetComponent<ParticleSystem>();
@@ -99,30 +98,16 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage()
-    {
-        if (!DEV_INVINCIBLE)
-        {
-            if (!gotHit)
-            {
-                playerInputs.enabled = false;
-                currentLifes--;
-                hudController.LifeLost(currentLifes);
-                CheckHealth();
-                gotHit = true;
-            }
-        }
-    }
 
-    public void AddKnockback(Vector3 pointOfImpact, float knockbackImpulseAded)
-    {
-        Vector3 knockbackDirection = transform.position - pointOfImpact;
-        float impulse = knockbackImpulse + knockbackImpulseAded;
-        //if (knockbackDirection.y < 0)
-            knockbackDirection.y = 0.5f;
-        knockbackDirection.Normalize();
-        playerRigidBody.AddForce(knockbackDirection.normalized * impulse, ForceMode.Impulse);
-    }
+    //public void AddKnockback(Vector3 pointOfImpact, float knockbackImpulseAded)
+    //{
+    //    Vector3 knockbackDirection = transform.position - pointOfImpact;
+    //    float impulse = knockbackImpulse + knockbackImpulseAded;
+    //    //if (knockbackDirection.y < 0)
+    //        knockbackDirection.y = 0.5f;
+    //    knockbackDirection.Normalize();
+    //    playerRigidBody.AddForce(knockbackDirection.normalized * impulse, ForceMode.Impulse);
+    //}
 
     private void CheckHealth()
     {

@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Knockback : Traps
+public class KnockbackTrap : Traps
 {
     [SerializeField] float knockBackImpulse; 
     PlayerMovement player;
     [SerializeField] GameObject damageParticles;
-    [SerializeField] GameObject childrenDamageParticles;
-
+    [SerializeField] GameObject childrenDamageParticles;    
+    [Range(0,1)]
+    [SerializeField] float stunTime;
 
     private void Start()
     {
@@ -22,8 +23,8 @@ public class Knockback : Traps
             FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().punchTrapHitSound);
 
             player.GetComponent<PlayerMovement>().playerControllerEnabled = false;
-            collision.gameObject.GetComponent<PlayerHealth>().AddKnockback(transform.position, knockBackImpulse);
-            StartCoroutine(PunchPlayer());
+            collision.gameObject.GetComponent<KnockbackHandler>().ApplyKnockback(transform.position, knockBackImpulse);
+            StartCoroutine(AddStun());
 
             if (damageParticles != null && childrenDamageParticles != null)
             {
@@ -35,9 +36,11 @@ public class Knockback : Traps
         }
     }
 
-    private IEnumerator PunchPlayer()
+    private IEnumerator AddStun()
     {
-        yield return new WaitForSeconds(0.1f);
+
+        //cambiar masa player? (opcional)
+        yield return new WaitForSeconds(stunTime);
         player.GetComponent<PlayerMovement>().playerControllerEnabled = true; 
 
     }
