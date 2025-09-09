@@ -8,6 +8,7 @@ public class Ability
 {
     public AbilityState abilityData;
     public bool canUse;
+    public bool alreadyUsed;
 }
 
 public class PlayerMovement : MonoBehaviour
@@ -106,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
     public bool GetIfGrounded() { return isGrounded; }
     private bool isGrounded = false;
     private float groundedGraceTime = 0.1f; // tiempo mínimo en el suelo para resetear
+    public bool inMovingPlatform = false;
 
     private AudioManager audioManager;
     [SerializeField] private Animator playerAnimator;
@@ -361,11 +363,14 @@ public class PlayerMovement : MonoBehaviour
             }
             else if (currentJumps <= multipleJumps)
             {
-                if ((isGrounded || coyoteTimeCounter > 0f) && currentJumps == 0 && GetAbility("Jump").canUse)
-                    DoNormalJump();
+                if (!(isGrounded || coyoteTimeCounter > 0f))
+                    GetAbility("Jump").canUse = false;
+
+                if (currentJumps == 0 && GetAbility("Jump").canUse)
+                    StartCoroutine(DoNormalJump());
                 else if (onWall)
                     WallJump();
-                else if (GetAbility("DoubleJump").canUse && GetAbility("DoubleJump").abilityData.isUnlocked)
+                else if (GetAbility("DoubleJump").canUse && GetAbility("DoubleJump").abilityData.isUnlocked && !GetAbility("Jump").canUse)
                     StartCoroutine(DoDoubleJump());
                 else
                     isJumping = false;
@@ -388,13 +393,13 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
-    private void DoNormalJump()
+    IEnumerator DoNormalJump()
     {
         isJumping = true;
         
         ResetJumps(); // tendria que haber algo que reseteara los dashes por si solo, y no así
-        GetAbility("DoubleJump").canUse = true;
         GetAbility("Jump").canUse = false;
+        GetAbility("Dash").canUse = false;
         Jump(jumpForce);
 
         audioManager.SetPlaySfx(audioManager.JumpSound, transform.position);
@@ -410,6 +415,12 @@ public class PlayerMovement : MonoBehaviour
         coyoteTimeCounter = 0f;
 
         playerAnimator.SetTrigger("Jumped");
+
+        yield return new WaitForSeconds(0.4f);
+
+        if(!GetAbility("DoubleJump").alreadyUsed)
+            GetAbility("DoubleJump").canUse = true;
+        GetAbility("Dash").canUse = true;
     }
 
     IEnumerator CheckIfLongJump()
@@ -443,6 +454,8 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DoDoubleJump()
     {
+        GetAbility("DoubleJump").alreadyUsed = true;
+
         movementBlocked = false;
         doingGroundPound = false;
         
@@ -460,7 +473,7 @@ public class PlayerMovement : MonoBehaviour
 
         playerAnimator.SetTrigger("DoubleJumped");
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.4f);
 
         GetAbility("Dash").canUse = true;
     }
@@ -496,18 +509,22 @@ public class PlayerMovement : MonoBehaviour
                 SpeedControl();
         }
 
-        if (playerInput.actions["Dash"].WasPressedThisFrame() && GetAbility("Dash").canUse && currentDashes < multipleDashOnAir && GetAbility("Dash").abilityData.isUnlocked)
+        if (playerInput.actions["Dash"].WasPressedThisFrame())
         {
-            movementBlocked = false;
-            doingGroundPound = false;
+            if(GetAbility("Dash").canUse && currentDashes < multipleDashOnAir && GetAbility("Dash").abilityData.isUnlocked && !GetAbility("Dash").alreadyUsed)
+            {
+                movementBlocked = false;
+                doingGroundPound = false;
 
-            StartCoroutine(DoDash());
+                StartCoroutine(DoDash());
+            }
         }
     }
 
     private IEnumerator DoDash()
     {
         GetAbility("Dash").canUse = false;
+        GetAbility("Dash").alreadyUsed = true;
         isDashing = true;
         currentDashes++;
 
@@ -535,12 +552,14 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(dashDuration);
 
-        GetAbility("Jump").canUse = true;
-        GetAbility("DoubleJump").canUse = true;
+        if(!GetAbility("DoubleJump").alreadyUsed)
+            GetAbility("DoubleJump").canUse = true;
         rigidBody.useGravity = true;
         isDashing = false;
 
         yield return new WaitForSeconds(GetAbility("Dash").abilityData.cooldown);
+
+        GetAbility("Dash").alreadyUsed = false;
         GetAbility("Dash").canUse = true;
     }
 
@@ -576,7 +595,9 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.AddForce(Vector3.down * groundPoundForce, ForceMode.Impulse);
 
         yield return new WaitForSeconds(0.3f);
-        GetAbility("DoubleJump").canUse = true;
+
+        if(!GetAbility("DoubleJump").alreadyUsed)
+            GetAbility("DoubleJump").canUse = true;
         GetAbility("Dash").canUse = true;
     }
 
@@ -622,17 +643,26 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGroundedChecker()
     {
-        float detectionRadius = 0.02f;
+        //float detectionRadius = 0.02f;
+        float detectionRadius = 0.1f;
 
-        Collider[] colliders = Physics.OverlapSphere(groundChecker.position, detectionRadius, whatIsGround);
-        if (colliders.Length > 0)
+        //Collider[] colliders = Physics.OverlapSphere(groundChecker.position, detectionRadius, whatIsGround);
+
+        Vector3 point1 = transform.position + baseCollider.center + Vector3.up * (-(baseCollider.height / 2) + baseCollider.radius);
+        Vector3 point2 = transform.position + baseCollider.center + Vector3.up * ((baseCollider.height / 2) - baseCollider.radius);
+
+        point1 += Vector3.down * detectionRadius;
+        point2 += Vector3.down * detectionRadius;
+
+        //if (colliders.Length > 0)
+        if(Physics.CheckCapsule(point1, point2, baseCollider.radius * 0.9f, whatIsGround) || inMovingPlatform)
         {
             playerAnimator.SetBool("OnGround", true);
 
             if (!isGrounded)
             {
                 GetAbility("Jump").canUse = true;
-                GetAbility("DoubleJump").canUse = true;
+                GetAbility("DoubleJump").canUse = true; GetAbility("DoubleJump").alreadyUsed = false;
                 canWall = true;
 
                 audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
