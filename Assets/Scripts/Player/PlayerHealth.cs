@@ -1,11 +1,14 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] int startLifes;
-    private int currentLifes;
+    [SerializeField] private int startExtraLifes;
+    private int currentExtraLifes;
+    [SerializeField] private int maxHealth;
+    private int currentHealth;
     [SerializeField] bool DEV_INVINCIBLE;
 
     private Rigidbody playerRigidBody;
@@ -35,7 +38,8 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         audioManager = FindObjectOfType<AudioManager>();
-        currentLifes = startLifes;
+        currentHealth = maxHealth;
+        currentExtraLifes = startExtraLifes;
         playerRigidBody = GetComponent<Rigidbody>();
         hudController = FindObjectOfType<HudController>();
         playerInputs = GetComponent<PlayerInput>();
@@ -53,7 +57,7 @@ public class PlayerHealth : MonoBehaviour
                 gotHit = false;
                 invulnerableCounter = 0;
             }
-            else if(invulnerableCounter >= noInputsTime && currentLifes > 0)
+            else if(invulnerableCounter >= noInputsTime && currentHealth > 0)
                 playerInputs.enabled = true;
         }
 
@@ -63,7 +67,7 @@ public class PlayerHealth : MonoBehaviour
             {
                 restartingCounter = 0.0f;
 
-                currentLifes = 0;
+                currentHealth = 0;
                 playerInputs.enabled = false;
                 CheckHealth();
                 gotHit = true;
@@ -81,9 +85,9 @@ public class PlayerHealth : MonoBehaviour
         {
             if (!gotHit)
             {
-                currentLifes--;
+                currentHealth--;
 
-                hudController.LifeLost(currentLifes);
+                hudController.LifeLost(currentHealth);
                 CheckHealth();
                 gotHit = true;
                 playerInputs.enabled = false;
@@ -98,6 +102,19 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void HealLife()
+    {
+        //A lo mejor hacer que puedas curarte solo un toque, mirar a futuro si habran items de estos por el mapa
+
+        currentHealth = maxHealth;
+        hudController.RestartLifes();
+    }
+
+    public void AddExtraLife(int lifesAdded)
+    {
+        currentExtraLifes += lifesAdded;
+        hudController.SetExtraLifesNumber(currentExtraLifes);
+    }
 
     //public void AddKnockback(Vector3 pointOfImpact, float knockbackImpulseAded)
     //{
@@ -111,15 +128,15 @@ public class PlayerHealth : MonoBehaviour
 
     private void CheckHealth()
     {
-        if (currentLifes <= 0)
+        if (currentHealth <= 0)
         {
-            currentLifes = 0;
+            currentHealth = 0;
 
             StartCoroutine(StartDeath());
         }
-        else if (currentLifes > startLifes)
+        else if (currentHealth > maxHealth)
         {
-            currentLifes = startLifes;
+            currentHealth = maxHealth;
             
             audioManager.SetPlaySfx(audioManager.RecieveDamageSound, transform.position);
             playerAnimator.SetTrigger("Hit");
@@ -133,7 +150,20 @@ public class PlayerHealth : MonoBehaviour
 
     public void EnterDeathZone()
     {
-        StartCoroutine(StartDeath());
+        currentHealth--;
+        hudController.LifeLost(currentHealth);
+        CheckHealth();
+        gotHit = true;
+
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            StartDeath();
+        }
+        else
+            GetComponent<PlayerMovement>().ReturnFromDeathZone();
+
+        //StartCoroutine(StartDeath());
     }
 
     IEnumerator StartDeath()
@@ -151,13 +181,23 @@ public class PlayerHealth : MonoBehaviour
         
         yield return new WaitForSeconds(0.8f);
 
-        Die();
+        currentExtraLifes--;
+        hudController.SetExtraLifesNumber(currentExtraLifes);
+
+        if (currentExtraLifes > 0)
+            Die();
+        else
+        {
+            //Hacer que te envie al level selector de nuevo
+            //GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.LevelSelector);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     private void Die()
     {   
         hudController.RestartLifes();
-        currentLifes = startLifes;
+        currentHealth = maxHealth;
         GameController.GetGameController().RestartLevelElement();
         playerRigidBody.velocity = Vector3.zero;
     }

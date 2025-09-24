@@ -1071,6 +1071,9 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 704
+  whatIsSafeGround:
+    serializedVersion: 2
+    m_Bits: 64
   whatIsWall:
     serializedVersion: 2
     m_Bits: 192
@@ -1107,6 +1110,7 @@ MonoBehaviour:
   distanceToGroundPound: 3
   coyoteTimeDuration: 0.3
   inMovingPlatform: 0
+  SafeGroundRadius: 1
   playerAnimator: {fileID: 3282902346876754578}
 --- !u!54 &2113590656291869998
 Rigidbody:
@@ -1170,7 +1174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6533de496ebeee4b89f8ceea9add225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startLifes: 3
+  startExtraLifes: 3
+  maxHealth: 6
   DEV_INVINCIBLE: 0
   invulnerableTime: 1
   noInputsTime: 0.3
