@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class HudController : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class HudController : MonoBehaviour
 
     [SerializeField]
     List<GameObject> lifes;
+
+    [SerializeField] private TMP_Text extraLifesCounter;
 
     [SerializeField] private bool isTestScene = true; //Esto se puede borrar para el final, es sobretodo ahora para probar
 
@@ -72,6 +75,9 @@ public class HudController : MonoBehaviour
         }
     }
 
-    
+    public void SetExtraLifesNumber(int currentExtraLifes)
+    {
+        extraLifesCounter.SetText("x" + currentExtraLifes);
+    }
 
 }

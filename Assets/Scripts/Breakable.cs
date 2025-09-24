@@ -23,6 +23,9 @@ public class Breakable : Obstacles, IRestartLevelElement
 
     [SerializeField] float boxExplosionForce;
 
+    [SerializeField] private bool containsSomething = false;
+    [SerializeField] private GameObject extraLifePrefab;
+
     Vector3 startPositionParent;
     Quaternion startRotationParent;
 
@@ -62,9 +65,14 @@ public class Breakable : Obstacles, IRestartLevelElement
             {
                 breakableCubes[i].GetComponent<Rigidbody>().velocity += canonShoot.CanonForward * boxExplosionForce;
             }
-            GetComponent<Collider>().enabled = false;
+            GetComponent<Collider>().enabled = false; //No sive, porque el collider del hijo aun esta activo para que no atraviese el suelo(a lo mejor hacer que las layers no se relacionen entre ellas, player y caja hija)
 
             if (rigidBody != null) rigidBody.isKinematic = true;
+
+            if (containsSomething)
+            {
+                Instantiate(extraLifePrefab, transform.position, transform.rotation);
+            }
 
             StartCoroutine(DesactivateGameObject());
         }
@@ -75,7 +83,6 @@ public class Breakable : Obstacles, IRestartLevelElement
         if (isFading)
         {
             FadeBreakables();
-
         }
     }
 

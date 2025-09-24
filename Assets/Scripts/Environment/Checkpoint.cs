@@ -31,6 +31,8 @@ public class Checkpoint : MonoBehaviour
     {
         if(other.transform.tag == "Player" && !checkpointGrabbed)
         {
+            other.GetComponent<PlayerHealth>().HealLife();
+
             other.GetComponent<PlayerController>().SetRespawnPos(spawnPosition.transform);
             checkpointGrabbed = true;
             GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>().SetTrigger("Celebrate");

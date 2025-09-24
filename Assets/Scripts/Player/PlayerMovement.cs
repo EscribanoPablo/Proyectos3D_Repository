@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform groundChecker;
     [SerializeField] private Transform roofChecker;
     [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private LayerMask whatIsSafeGround;
     [SerializeField] private LayerMask whatIsWall;
     [SerializeField] private GameObject cannonGO;
     [SerializeField] private CanonShoot canonShoot;
@@ -106,8 +107,10 @@ public class PlayerMovement : MonoBehaviour
     private float groundedTime = 0f;
     public bool GetIfGrounded() { return isGrounded; }
     private bool isGrounded = false;
-    private float groundedGraceTime = 0.1f; // tiempo mínimo en el suelo para resetear
+    private float groundedGraceTime = 0.1f; // tiempo mÃ­nimo en el suelo para resetear
     public bool inMovingPlatform = false;
+    private Vector3 lastGroundedPos;
+    [SerializeField] private float SafeGroundRadius = 1f;
 
     private AudioManager audioManager;
     [SerializeField] private Animator playerAnimator;
@@ -397,7 +400,7 @@ public class PlayerMovement : MonoBehaviour
     {
         isJumping = true;
         
-        ResetJumps(); // tendria que haber algo que reseteara los dashes por si solo, y no así
+        ResetJumps(); // tendria que haber algo que reseteara los dashes por si solo, y no asÃ­
         GetAbility("Jump").canUse = false;
         GetAbility("Dash").canUse = false;
         Jump(jumpForce);
@@ -667,12 +670,17 @@ public class PlayerMovement : MonoBehaviour
 
                 audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
             }
+
+            if(IsSafeGround())
+                lastGroundedPos = transform.position;
+
             return true;
         }
         playerAnimator.SetBool("OnGround", false);
 
         return false;
     }
+
     private bool DistanceToGroundChecker(float distanceToGround)
     {
         Ray ray = new Ray(groundChecker.position, Vector3.down);
@@ -695,6 +703,40 @@ public class PlayerMovement : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    private bool IsSafeGround()
+    {
+        int checks = 8;
+        for (int i = 0; i < checks; i++)
+        {
+            float angle = i * Mathf.PI * 2f / checks;
+            Vector3 dir = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle));
+            Vector3 origin = transform.position + dir * SafeGroundRadius + Vector3.up * 0.5f;
+
+            if (!Physics.Raycast(origin, Vector3.down, 2f, whatIsSafeGround))
+                return false;
+        }
+        return true; 
+    }
+
+    public void ReturnFromDeathZone()
+    {
+        StartCoroutine(SetPositionFromDeathZone());
+    }
+
+    IEnumerator SetPositionFromDeathZone()
+    {
+        transform.position = lastGroundedPos;
+        playerControllerEnabled = false;
+
+        playerAnimator.SetTrigger("Respawn");
+        SetSpeedAnimation(0);
+
+        rigidBody.velocity = Vector3.zero;
+
+        yield return new WaitForSeconds(1);
+        playerControllerEnabled = true;
     }
 
     private void StopVerticalVelocity()
