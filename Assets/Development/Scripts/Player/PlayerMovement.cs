@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform spawnBulletDoubleJumpPosition;
     [SerializeField] private Transform spawnBulletDashPosition;
     [SerializeField] private GameObject groundPoundExplosion;
-                     
+
     [SerializeField] private GameObject canonParticles;
     [SerializeField] private GameObject wallJumpParticles;
     [SerializeField] private GameObject jumpParticles;
@@ -117,9 +117,9 @@ public class PlayerMovement : MonoBehaviour
 
     public Ability GetAbility(string name)
     {
-        foreach(Ability ability in abilitiesList)
+        foreach (Ability ability in abilitiesList)
         {
-            if(ability.abilityData.name == name)
+            if (ability.abilityData.name == name)
                 return ability;
         }
         return null;
@@ -217,7 +217,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             transitionTimer += Time.deltaTime;
-            if (transitionTimer > transitionDurationStart) 
+            if (transitionTimer > transitionDurationStart)
                 transitionTimer = transitionDurationStart;
             speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
         }
@@ -226,7 +226,7 @@ public class PlayerMovement : MonoBehaviour
             isMoving = false;
 
             transitionTimer -= Time.deltaTime / transitionDurationStop * transitionDurationStart;
-            if (transitionTimer < 0f) 
+            if (transitionTimer < 0f)
                 transitionTimer = 0f;
             speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
         }
@@ -399,7 +399,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator DoNormalJump()
     {
         isJumping = true;
-        
+
         ResetJumps(); // tendria que haber algo que reseteara los dashes por si solo, y no así
         GetAbility("Jump").canUse = false;
         GetAbility("Dash").canUse = false;
@@ -421,7 +421,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f);
 
-        if(!GetAbility("DoubleJump").alreadyUsed)
+        if (!GetAbility("DoubleJump").alreadyUsed)
             GetAbility("DoubleJump").canUse = true;
         GetAbility("Dash").canUse = true;
     }
@@ -441,9 +441,9 @@ public class PlayerMovement : MonoBehaviour
     private void WallJump()
     {
         isJumping = true;
-        
+
         audioManager.SetPlaySfx(audioManager.WallJumpSound, transform.position);
-        
+
         onWall = false;
         ActivateWallJumpParticles();
         Vector3 jumpDirection = -transform.forward;
@@ -461,7 +461,7 @@ public class PlayerMovement : MonoBehaviour
 
         movementBlocked = false;
         doingGroundPound = false;
-        
+
         isJumping = true;
         GetAbility("DoubleJump").canUse = false;
         GetAbility("Dash").canUse = false;
@@ -514,7 +514,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (playerInput.actions["Dash"].WasPressedThisFrame())
         {
-            if(GetAbility("Dash").canUse && currentDashes < multipleDashOnAir && GetAbility("Dash").abilityData.isUnlocked && !GetAbility("Dash").alreadyUsed)
+            if (GetAbility("Dash").canUse && currentDashes < multipleDashOnAir && GetAbility("Dash").abilityData.isUnlocked && !GetAbility("Dash").alreadyUsed)
             {
                 movementBlocked = false;
                 doingGroundPound = false;
@@ -555,7 +555,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(dashDuration);
 
-        if(!GetAbility("DoubleJump").alreadyUsed)
+        if (!GetAbility("DoubleJump").alreadyUsed)
             GetAbility("DoubleJump").canUse = true;
         rigidBody.useGravity = true;
         isDashing = false;
@@ -586,7 +586,7 @@ public class PlayerMovement : MonoBehaviour
         playerControllerEnabled = false;
         GetAbility("DoubleJump").canUse = false;
         GetAbility("Dash").canUse = false;
-        
+
         rigidBody.velocity = Vector3.zero;
 
         playerAnimator.SetTrigger("GroundPound");
@@ -599,7 +599,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
 
-        if(!GetAbility("DoubleJump").alreadyUsed)
+        if (!GetAbility("DoubleJump").alreadyUsed)
             GetAbility("DoubleJump").canUse = true;
         GetAbility("Dash").canUse = true;
     }
@@ -607,7 +607,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator ActivateGroundPoundExplosion()
     {
         doingGroundPound = false;
-        
+
         movementBlocked = false;
         playerControllerEnabled = false;
 
@@ -622,12 +622,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void CannonGrabbed(GameObject cannonToGrab)
     {
-        if (playerInput.actions["Dash"].WasPressedThisFrame())
-        {
-            cannonToGrab.SetActive(false);
-            cannonGO.SetActive(true);
-            StartCoroutine(DoGrabbingCannon());
-        }
+        cannonToGrab.SetActive(false);
+        cannonGO.SetActive(true);
+        StartCoroutine(DoGrabbingCannon());
     }
 
     IEnumerator DoGrabbingCannon()
@@ -658,7 +655,7 @@ public class PlayerMovement : MonoBehaviour
         point2 += Vector3.down * detectionRadius;
 
         //if (colliders.Length > 0)
-        if(Physics.CheckCapsule(point1, point2, baseCollider.radius * 0.9f, whatIsGround) || inMovingPlatform)
+        if (Physics.CheckCapsule(point1, point2, baseCollider.radius * 0.9f, whatIsGround) || inMovingPlatform)
         {
             playerAnimator.SetBool("OnGround", true);
 
@@ -671,7 +668,7 @@ public class PlayerMovement : MonoBehaviour
                 audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
             }
 
-            if(IsSafeGround())
+            if (IsSafeGround())
                 lastGroundedPos = transform.position;
 
             return true;
@@ -717,7 +714,7 @@ public class PlayerMovement : MonoBehaviour
             if (!Physics.Raycast(origin, Vector3.down, 2f, whatIsSafeGround))
                 return false;
         }
-        return true; 
+        return true;
     }
 
     public void ReturnFromDeathZone()
