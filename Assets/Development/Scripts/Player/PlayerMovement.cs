@@ -79,6 +79,12 @@ public class PlayerMovement : MonoBehaviour
     private bool onWall = false;
     private bool canWall = true;
     private float wallTimer;
+    private Vector3 lastWallNormal = Vector3.zero;
+    private RaycastHit lastWallHit;
+    [SerializeField] private bool faceAwayAfterWallJump = true; // opcional: girar tras el salto
+    [SerializeField] private float wallRegrabCooldown = 0.18f; // 0.15–0.25s va bien
+    [SerializeField] private float minAngleBetweenWalls = 35f; // grados para evitar misma pared
+    private Vector3 lastWallJumpNormal = Vector3.zero;
 
     [Header("Crouching Variables")]
     private float timeCrouching = 0;
@@ -290,7 +296,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (doingGroundPound) return;
 
-        facingWall = HeadOnWall();
+        if (TryGetWallHit(out RaycastHit hit))
+        {
+            facingWall = true;
+            lastWallHit = hit;
+            lastWallNormal = hit.normal; // GUARDAMOS LA NORMAL
+        }
+        else
+        {
+            facingWall = false;
+            // No reseteamos lastWallNormal aquí para poder usarla si el salto se hace de inmediato
+        }
 
         if (!onWall)
         {
@@ -301,7 +317,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                if (facingWall)
+                if (facingWall && CanAttachToThisWall(lastWallNormal))
                 {
                     if (canWall)
                         SetOnWall();
@@ -323,11 +339,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool HeadOnWall()
+    private bool CanAttachToThisWall(Vector3 candidateNormal)
     {
-        return Physics.Raycast(transform.position, transform.forward, wallDetectionDistance, whatIsWall) ||
-            Physics.Raycast(transform.position + (Vector3.up * wallDetectionOffset), transform.forward, wallDetectionDistance, whatIsWall) ||
-            Physics.Raycast(transform.position - (Vector3.up * wallDetectionOffset), transform.forward, wallDetectionDistance, whatIsWall);
+        if (lastWallJumpNormal == Vector3.zero) return true;
+        // Ángulo entre la pared del último salto y la nueva pared
+        float angle = Vector3.Angle(candidateNormal, lastWallJumpNormal);
+        return angle >= minAngleBetweenWalls;
     }
 
     private void SetOnWall()
@@ -381,6 +398,46 @@ public class PlayerMovement : MonoBehaviour
             else
                 isJumping = false;
         }
+    }
+
+    private bool TryGetWallHit(out RaycastHit bestHit)
+    {
+        bestHit = default;
+        bool any = false;
+        float minDist = Mathf.Infinity;
+
+        Vector3[] origins = new Vector3[]
+        {
+        transform.position,
+        transform.position + (Vector3.up * wallDetectionOffset),
+        transform.position - (Vector3.up * wallDetectionOffset)
+        };
+
+        for (int i = 0; i < origins.Length; i++)
+        {
+            if (Physics.Raycast(origins[i], transform.forward, out RaycastHit hit, wallDetectionDistance, whatIsWall))
+            {
+                if (hit.distance < minDist)
+                {
+                    minDist = hit.distance;
+                    bestHit = hit;
+                }
+                any = true;
+            }
+        }
+        return any;
+    }
+
+    private Vector3 GetPlanarWallNormal()
+    {
+        if (lastWallNormal == Vector3.zero)
+            return -transform.forward; // reserva
+
+        Vector3 planar = Vector3.ProjectOnPlane(lastWallNormal, Vector3.up);
+        if (planar.sqrMagnitude < 1e-4f)
+            return -transform.forward; // si la normal apunta demasiado arriba/abajo
+
+        return planar.normalized;
     }
 
     private void ResetJumps()
@@ -445,14 +502,39 @@ public class PlayerMovement : MonoBehaviour
         audioManager.SetPlaySfx(audioManager.WallJumpSound, transform.position);
 
         onWall = false;
+
+        // Dirección lateral: SIEMPRE la normal de la pared (plana)
+        Vector3 away = GetPlanarWallNormal();
+
         ActivateWallJumpParticles();
-        Vector3 jumpDirection = -transform.forward;
-        jumpDirection.Normalize();
-        rigidBody.AddForce((jumpDirection * wallJumpSideForce) + (Vector3.up * wallJumpUpForce), ForceMode.Impulse);
-        transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180, transform.rotation.eulerAngles.z));
+
+        // Limpiamos vertical y aplicamos impulso compuesto
+        StopVerticalVelocity();
+
+        lastWallJumpNormal = lastWallNormal;            // recordamos desde qué pared saltamos
+        StartCoroutine(WallRegrabCooldownRoutine());    // cooldown breve de re-agarre
+
+        Vector3 lateral = away * wallJumpSideForce;
+        Vector3 vertical = Vector3.up * wallJumpUpForce;
+
         rigidBody.useGravity = true;
+        rigidBody.AddForce(lateral + vertical, ForceMode.Impulse);
+
+        // Opcional: reorientar al personaje mirando en sentido del salto
+        if (faceAwayAfterWallJump)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(away, Vector3.up);
+            transform.rotation = targetRot;
+        }
 
         playerAnimator.SetTrigger("WallJumped");
+    }
+
+    private IEnumerator WallRegrabCooldownRoutine()
+    {
+        canWall = false;                  // evita re-pegarte instantáneamente
+        yield return new WaitForSeconds(wallRegrabCooldown);
+        canWall = true;                   // permite agarrar la siguiente pared
     }
 
     IEnumerator DoDoubleJump()
@@ -665,6 +747,8 @@ public class PlayerMovement : MonoBehaviour
                 GetAbility("DoubleJump").canUse = true; GetAbility("DoubleJump").alreadyUsed = false;
                 canWall = true;
 
+                lastWallJumpNormal = Vector3.zero;
+
                 audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
             }
 
@@ -792,5 +876,13 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + (transform.forward * wallDetectionDistance));
         Gizmos.DrawLine(transform.position + (Vector3.up * wallDetectionOffset), transform.position + (transform.forward * wallDetectionDistance) + (Vector3.up * wallDetectionOffset));
         Gizmos.DrawLine(transform.position - (Vector3.up * wallDetectionOffset), transform.position + (transform.forward * wallDetectionDistance) - (Vector3.up * wallDetectionOffset));
+
+        // Normal de la última pared
+        if (lastWallNormal != Vector3.zero)
+        {
+            Gizmos.color = Color.cyan;
+            Vector3 p = (lastWallHit.point != Vector3.zero) ? lastWallHit.point : transform.position;
+            Gizmos.DrawLine(p, p + lastWallNormal * 0.5f);
+        }
     }
 }
