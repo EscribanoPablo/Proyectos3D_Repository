@@ -9,6 +9,8 @@ public class GameController : MonoBehaviour
 
     public int qualityValue = 1;
 
+    public int PlayerExtraLifes = 3;
+
     public static GameController gameController = null;
 
     public PlayerController player;
@@ -61,16 +63,16 @@ public class GameController : MonoBehaviour
     {
         restartLevelElements.Add(element);
     }
+
     public void EmptyRestartList()
     {
         restartLevelElements = new();
     }
+
     public void RemoveRestartLevelElement(IRestartLevelElement element)
     {
         restartLevelElements.Remove(element);
     }
-
-    
 
     public void RestartLevelElement()
     {

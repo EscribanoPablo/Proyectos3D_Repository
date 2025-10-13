@@ -77,6 +77,7 @@ public class HudController : MonoBehaviour
 
     public void SetExtraLifesNumber(int currentExtraLifes)
     {
+        FindObjectOfType<GameController>().PlayerExtraLifes = currentExtraLifes;
         extraLifesCounter.SetText("x" + currentExtraLifes);
     }
 

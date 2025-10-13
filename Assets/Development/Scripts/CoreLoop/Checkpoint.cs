@@ -36,7 +36,8 @@ public class Checkpoint : MonoBehaviour
             other.GetComponent<PlayerController>().SetRespawnPos(spawnPosition.transform);
             checkpointGrabbed = true;
             GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>().SetTrigger("Celebrate");
-            rotateCamera.SaveActualRotation();
+            if(rotateCamera != null)
+                rotateCamera.SaveActualRotation();
 
             if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name != "TutorialLevel")
                 FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().ambientClapsSounds);

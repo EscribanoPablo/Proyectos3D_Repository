@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform spawnBulletDoubleJumpPosition;
     [SerializeField] private Transform spawnBulletDashPosition;
     [SerializeField] private GameObject groundPoundExplosion;
-                     
+
     [SerializeField] private GameObject canonParticles;
     [SerializeField] private GameObject wallJumpParticles;
     [SerializeField] private GameObject jumpParticles;
@@ -79,6 +79,12 @@ public class PlayerMovement : MonoBehaviour
     private bool onWall = false;
     private bool canWall = true;
     private float wallTimer;
+    private Vector3 lastWallNormal = Vector3.zero;
+    private RaycastHit lastWallHit;
+    [SerializeField] private bool faceAwayAfterWallJump = true; // opcional: girar tras el salto
+    [SerializeField] private float wallRegrabCooldown = 0.18f; // 0.15–0.25s va bien
+    [SerializeField] private float minAngleBetweenWalls = 35f; // grados para evitar misma pared
+    private Vector3 lastWallJumpNormal = Vector3.zero;
 
     [Header("Crouching Variables")]
     private float timeCrouching = 0;
@@ -117,9 +123,9 @@ public class PlayerMovement : MonoBehaviour
 
     public Ability GetAbility(string name)
     {
-        foreach(Ability ability in abilitiesList)
+        foreach (Ability ability in abilitiesList)
         {
-            if(ability.abilityData.name == name)
+            if (ability.abilityData.name == name)
                 return ability;
         }
         return null;
@@ -217,7 +223,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             transitionTimer += Time.deltaTime;
-            if (transitionTimer > transitionDurationStart) 
+            if (transitionTimer > transitionDurationStart)
                 transitionTimer = transitionDurationStart;
             speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
         }
@@ -226,7 +232,7 @@ public class PlayerMovement : MonoBehaviour
             isMoving = false;
 
             transitionTimer -= Time.deltaTime / transitionDurationStop * transitionDurationStart;
-            if (transitionTimer < 0f) 
+            if (transitionTimer < 0f)
                 transitionTimer = 0f;
             speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
         }
@@ -290,7 +296,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (doingGroundPound) return;
 
-        facingWall = HeadOnWall();
+        if (TryGetWallHit(out RaycastHit hit))
+        {
+            facingWall = true;
+            lastWallHit = hit;
+            lastWallNormal = hit.normal; // GUARDAMOS LA NORMAL
+        }
+        else
+        {
+            facingWall = false;
+            // No reseteamos lastWallNormal aquí para poder usarla si el salto se hace de inmediato
+        }
 
         if (!onWall)
         {
@@ -301,7 +317,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                if (facingWall)
+                if (facingWall && CanAttachToThisWall(lastWallNormal))
                 {
                     if (canWall)
                         SetOnWall();
@@ -323,11 +339,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool HeadOnWall()
+    private bool CanAttachToThisWall(Vector3 candidateNormal)
     {
-        return Physics.Raycast(transform.position, transform.forward, wallDetectionDistance, whatIsWall) ||
-            Physics.Raycast(transform.position + (Vector3.up * wallDetectionOffset), transform.forward, wallDetectionDistance, whatIsWall) ||
-            Physics.Raycast(transform.position - (Vector3.up * wallDetectionOffset), transform.forward, wallDetectionDistance, whatIsWall);
+        if (lastWallJumpNormal == Vector3.zero) return true;
+        // Ángulo entre la pared del último salto y la nueva pared
+        float angle = Vector3.Angle(candidateNormal, lastWallJumpNormal);
+        return angle >= minAngleBetweenWalls;
     }
 
     private void SetOnWall()
@@ -383,6 +400,46 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private bool TryGetWallHit(out RaycastHit bestHit)
+    {
+        bestHit = default;
+        bool any = false;
+        float minDist = Mathf.Infinity;
+
+        Vector3[] origins = new Vector3[]
+        {
+        transform.position,
+        transform.position + (Vector3.up * wallDetectionOffset),
+        transform.position - (Vector3.up * wallDetectionOffset)
+        };
+
+        for (int i = 0; i < origins.Length; i++)
+        {
+            if (Physics.Raycast(origins[i], transform.forward, out RaycastHit hit, wallDetectionDistance, whatIsWall))
+            {
+                if (hit.distance < minDist)
+                {
+                    minDist = hit.distance;
+                    bestHit = hit;
+                }
+                any = true;
+            }
+        }
+        return any;
+    }
+
+    private Vector3 GetPlanarWallNormal()
+    {
+        if (lastWallNormal == Vector3.zero)
+            return -transform.forward; // reserva
+
+        Vector3 planar = Vector3.ProjectOnPlane(lastWallNormal, Vector3.up);
+        if (planar.sqrMagnitude < 1e-4f)
+            return -transform.forward; // si la normal apunta demasiado arriba/abajo
+
+        return planar.normalized;
+    }
+
     private void ResetJumps()
     {
         currentJumps = 0;
@@ -399,7 +456,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator DoNormalJump()
     {
         isJumping = true;
-        
+
         ResetJumps(); // tendria que haber algo que reseteara los dashes por si solo, y no así
         GetAbility("Jump").canUse = false;
         GetAbility("Dash").canUse = false;
@@ -421,7 +478,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f);
 
-        if(!GetAbility("DoubleJump").alreadyUsed)
+        if (!GetAbility("DoubleJump").alreadyUsed)
             GetAbility("DoubleJump").canUse = true;
         GetAbility("Dash").canUse = true;
     }
@@ -441,18 +498,43 @@ public class PlayerMovement : MonoBehaviour
     private void WallJump()
     {
         isJumping = true;
-        
+
         audioManager.SetPlaySfx(audioManager.WallJumpSound, transform.position);
-        
+
         onWall = false;
+
+        // Dirección lateral: SIEMPRE la normal de la pared (plana)
+        Vector3 away = GetPlanarWallNormal();
+
         ActivateWallJumpParticles();
-        Vector3 jumpDirection = -transform.forward;
-        jumpDirection.Normalize();
-        rigidBody.AddForce((jumpDirection * wallJumpSideForce) + (Vector3.up * wallJumpUpForce), ForceMode.Impulse);
-        transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180, transform.rotation.eulerAngles.z));
+
+        // Limpiamos vertical y aplicamos impulso compuesto
+        StopVerticalVelocity();
+
+        lastWallJumpNormal = lastWallNormal;            // recordamos desde qué pared saltamos
+        StartCoroutine(WallRegrabCooldownRoutine());    // cooldown breve de re-agarre
+
+        Vector3 lateral = away * wallJumpSideForce;
+        Vector3 vertical = Vector3.up * wallJumpUpForce;
+
         rigidBody.useGravity = true;
+        rigidBody.AddForce(lateral + vertical, ForceMode.Impulse);
+
+        // Opcional: reorientar al personaje mirando en sentido del salto
+        if (faceAwayAfterWallJump)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(away, Vector3.up);
+            transform.rotation = targetRot;
+        }
 
         playerAnimator.SetTrigger("WallJumped");
+    }
+
+    private IEnumerator WallRegrabCooldownRoutine()
+    {
+        canWall = false;                  // evita re-pegarte instantáneamente
+        yield return new WaitForSeconds(wallRegrabCooldown);
+        canWall = true;                   // permite agarrar la siguiente pared
     }
 
     IEnumerator DoDoubleJump()
@@ -461,7 +543,7 @@ public class PlayerMovement : MonoBehaviour
 
         movementBlocked = false;
         doingGroundPound = false;
-        
+
         isJumping = true;
         GetAbility("DoubleJump").canUse = false;
         GetAbility("Dash").canUse = false;
@@ -514,7 +596,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (playerInput.actions["Dash"].WasPressedThisFrame())
         {
-            if(GetAbility("Dash").canUse && currentDashes < multipleDashOnAir && GetAbility("Dash").abilityData.isUnlocked && !GetAbility("Dash").alreadyUsed)
+            if (GetAbility("Dash").canUse && currentDashes < multipleDashOnAir && GetAbility("Dash").abilityData.isUnlocked && !GetAbility("Dash").alreadyUsed)
             {
                 movementBlocked = false;
                 doingGroundPound = false;
@@ -555,7 +637,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(dashDuration);
 
-        if(!GetAbility("DoubleJump").alreadyUsed)
+        if (!GetAbility("DoubleJump").alreadyUsed)
             GetAbility("DoubleJump").canUse = true;
         rigidBody.useGravity = true;
         isDashing = false;
@@ -586,7 +668,7 @@ public class PlayerMovement : MonoBehaviour
         playerControllerEnabled = false;
         GetAbility("DoubleJump").canUse = false;
         GetAbility("Dash").canUse = false;
-        
+
         rigidBody.velocity = Vector3.zero;
 
         playerAnimator.SetTrigger("GroundPound");
@@ -599,7 +681,7 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
 
-        if(!GetAbility("DoubleJump").alreadyUsed)
+        if (!GetAbility("DoubleJump").alreadyUsed)
             GetAbility("DoubleJump").canUse = true;
         GetAbility("Dash").canUse = true;
     }
@@ -607,7 +689,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator ActivateGroundPoundExplosion()
     {
         doingGroundPound = false;
-        
+
         movementBlocked = false;
         playerControllerEnabled = false;
 
@@ -622,12 +704,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void CannonGrabbed(GameObject cannonToGrab)
     {
-        if (playerInput.actions["Dash"].WasPressedThisFrame())
-        {
-            cannonToGrab.SetActive(false);
-            cannonGO.SetActive(true);
-            StartCoroutine(DoGrabbingCannon());
-        }
+        cannonToGrab.SetActive(false);
+        cannonGO.SetActive(true);
+        StartCoroutine(DoGrabbingCannon());
     }
 
     IEnumerator DoGrabbingCannon()
@@ -658,7 +737,7 @@ public class PlayerMovement : MonoBehaviour
         point2 += Vector3.down * detectionRadius;
 
         //if (colliders.Length > 0)
-        if(Physics.CheckCapsule(point1, point2, baseCollider.radius * 0.9f, whatIsGround) || inMovingPlatform)
+        if (Physics.CheckCapsule(point1, point2, baseCollider.radius * 0.9f, whatIsGround) || inMovingPlatform)
         {
             playerAnimator.SetBool("OnGround", true);
 
@@ -668,10 +747,12 @@ public class PlayerMovement : MonoBehaviour
                 GetAbility("DoubleJump").canUse = true; GetAbility("DoubleJump").alreadyUsed = false;
                 canWall = true;
 
+                lastWallJumpNormal = Vector3.zero;
+
                 audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
             }
 
-            if(IsSafeGround())
+            if (IsSafeGround())
                 lastGroundedPos = transform.position;
 
             return true;
@@ -717,7 +798,7 @@ public class PlayerMovement : MonoBehaviour
             if (!Physics.Raycast(origin, Vector3.down, 2f, whatIsSafeGround))
                 return false;
         }
-        return true; 
+        return true;
     }
 
     public void ReturnFromDeathZone()
@@ -795,5 +876,13 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawLine(transform.position, transform.position + (transform.forward * wallDetectionDistance));
         Gizmos.DrawLine(transform.position + (Vector3.up * wallDetectionOffset), transform.position + (transform.forward * wallDetectionDistance) + (Vector3.up * wallDetectionOffset));
         Gizmos.DrawLine(transform.position - (Vector3.up * wallDetectionOffset), transform.position + (transform.forward * wallDetectionDistance) - (Vector3.up * wallDetectionOffset));
+
+        // Normal de la última pared
+        if (lastWallNormal != Vector3.zero)
+        {
+            Gizmos.color = Color.cyan;
+            Vector3 p = (lastWallHit.point != Vector3.zero) ? lastWallHit.point : transform.position;
+            Gizmos.DrawLine(p, p + lastWallNormal * 0.5f);
+        }
     }
 }

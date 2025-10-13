@@ -63,7 +63,10 @@ public class LevelsNode : MonoBehaviour
     {
         if (other.CompareTag("Player") && isUnlocked && playerInput.actions["Jump"].IsPressed())
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(levelSceneName);
+            //UnityEngine.SceneManagement.SceneManager.LoadScene(levelSceneName);
+            GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.Level01); 
+            //Se necesitara mirar el play transition para poder hacer transiciones desde level selector,
+            //para no tener que poner el valor del enum directamente y usar el nombre de la escena o algo
         }
 
         levelInfoController.WhileLevelInfoEnabled();

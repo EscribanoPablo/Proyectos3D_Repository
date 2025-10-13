@@ -24,6 +24,7 @@ public class ChangeScene : MonoBehaviour
             {
                 //Aqui es donde llegan todos los niveles del juego, para al completarlos se vaya al level selector
                 FindObjectOfType<LevelsController>().SetSceneCompleted();
+                FindObjectOfType<GameController>().PlayerExtraLifes = FindObjectOfType<PlayerHealth>().GetActualExtraLifes();
                 GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.LevelSelector);
             }
 

@@ -1103,7 +1103,10 @@ MonoBehaviour:
   gravity: 0.27
   wallDetectionDistance: 1.2
   wallDetectionOffset: 1.1
-  timeToWallFall: 3
+  timeToWallFall: 1.5
+  faceAwayAfterWallJump: 1
+  wallRegrabCooldown: 0.18
+  minAngleBetweenWalls: 35
   dashDuration: 0.2
   dashPower: 13
   groundPoundForce: 20

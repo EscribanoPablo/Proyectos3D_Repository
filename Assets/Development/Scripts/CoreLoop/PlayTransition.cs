@@ -33,6 +33,7 @@ public class PlayTransition : MonoBehaviour
                 SceneManager.LoadScene("SettingsMenu_Cat");
                 break;
             case SceneToGo.LevelSelector:
+                GameController.GetGameController().EmptyRestartList();
                 SceneManager.LoadScene("LevelSelector_TestScene");
                 break;
             case SceneToGo.TutorialLevel:

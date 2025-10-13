@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private int startExtraLifes;
+    //[SerializeField] private int startExtraLifes;
+    public int GetActualExtraLifes() { return currentExtraLifes; }
     private int currentExtraLifes;
     [SerializeField] private int maxHealth;
     private int currentHealth;
@@ -39,7 +40,7 @@ public class PlayerHealth : MonoBehaviour
     {
         audioManager = FindObjectOfType<AudioManager>();
         currentHealth = maxHealth;
-        currentExtraLifes = startExtraLifes;
+        currentExtraLifes = FindObjectOfType<GameController>().PlayerExtraLifes;
         playerRigidBody = GetComponent<Rigidbody>();
         hudController = FindObjectOfType<HudController>();
         playerInputs = GetComponent<PlayerInput>();
@@ -189,8 +190,8 @@ public class PlayerHealth : MonoBehaviour
         else
         {
             //Hacer que te envie al level selector de nuevo
-            //GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.LevelSelector);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.LevelSelector);
+            FindObjectOfType<GameController>().PlayerExtraLifes = 3;
         }
     }
 
