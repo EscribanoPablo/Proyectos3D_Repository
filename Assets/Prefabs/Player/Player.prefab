@@ -1087,10 +1087,10 @@ MonoBehaviour:
   wallJumpParticles: {fileID: 7334190416142256798}
   jumpParticles: {fileID: 7286329852137414549}
   dustParticles: {fileID: 8196844698687515114}
-  baseSpeedMovement: 40
-  runSpeedMovement: 180
+  baseSpeedMovement: 45
+  runSpeedMovement: 100
   crouchSpeedMovement: 20
-  maxVelocity: 6
+  maxVelocity: 7
   baseRotationSpeed: 7.5
   transitionDurationStart: 0.5
   transitionDurationStop: 0.29
@@ -1103,10 +1103,18 @@ MonoBehaviour:
   gravity: 0.27
   wallDetectionDistance: 1.2
   wallDetectionOffset: 1.1
-  timeToWallFall: 1.5
+  timeToWallFall: 2
   faceAwayAfterWallJump: 1
   wallRegrabCooldown: 0.18
   minAngleBetweenWalls: 35
+  wallSlideSpeed: 1.5
+  wallUpStopDamp: 12
+  requireNotGroundedToLatch: 1
+  minWallLatchGroundClearance: 0.6
+  wallAnticipationDistance: 0.6
+  wallAnticipationAngle: 35
+  wallAnticipationMinSpeed: 0.5
+  wallAnticipationSmoothing: 10
   dashDuration: 0.2
   dashPower: 13
   groundPoundForce: 20
@@ -1177,7 +1185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6533de496ebeee4b89f8ceea9add225, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startExtraLifes: 3
   maxHealth: 6
   DEV_INVINCIBLE: 0
   invulnerableTime: 1
