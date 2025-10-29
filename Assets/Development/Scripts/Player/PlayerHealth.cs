@@ -70,7 +70,7 @@ public class PlayerHealth : MonoBehaviour
 
                 currentHealth = 0;
                 playerInputs.enabled = false;
-                CheckHealth();
+                CheckHealth("Hit");
                 gotHit = true;
             }
             else
@@ -89,10 +89,32 @@ public class PlayerHealth : MonoBehaviour
                 currentHealth--;
 
                 hudController.LifeLost(currentHealth);
-                CheckHealth();
+                CheckHealth("Hit");
                 gotHit = true;
                 playerInputs.enabled = false;
                 GetComponent<KnockbackHandler>().ApplyKnockback(pointOfImpact);
+
+                damageParticles.SetActive(true);
+                ParticleSystem particles = damageParticles.GetComponent<ParticleSystem>();
+                ParticleSystem childrenParticles = childrenDamageParticles.GetComponent<ParticleSystem>();
+                childrenParticles.Emit(10);
+                particles.Emit(10);
+            }
+        }
+    }
+
+    public void TakeDamage() //Para trampas que no empujen, y tambien podria servir para cosas que te hagan daño pero quieras otra animacion en vez de la de Hit
+    {
+        if (!DEV_INVINCIBLE)
+        {
+            if (!gotHit)
+            {
+                currentHealth--;
+
+                hudController.LifeLost(currentHealth);
+                CheckHealth("Smash");
+                gotHit = true;
+                playerInputs.enabled = false;
 
                 damageParticles.SetActive(true);
                 ParticleSystem particles = damageParticles.GetComponent<ParticleSystem>();
@@ -127,7 +149,7 @@ public class PlayerHealth : MonoBehaviour
     //    playerRigidBody.AddForce(knockbackDirection.normalized * impulse, ForceMode.Impulse);
     //}
 
-    private void CheckHealth()
+    private void CheckHealth(string animationName)
     {
         if (currentHealth <= 0)
         {
@@ -140,12 +162,12 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = maxHealth;
             
             audioManager.SetPlaySfx(audioManager.RecieveDamageSound, transform.position);
-            playerAnimator.SetTrigger("Hit");
+            playerAnimator.SetTrigger(animationName);
         }
         else
         {
             audioManager.SetPlaySfx(audioManager.RecieveDamageSound, transform.position);
-            playerAnimator.SetTrigger("Hit");
+            playerAnimator.SetTrigger(animationName);
         }
     }
 
@@ -153,7 +175,7 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth--;
         hudController.LifeLost(currentHealth);
-        CheckHealth();
+        CheckHealth("Hit");
         gotHit = true;
 
         if (currentHealth <= 0)
