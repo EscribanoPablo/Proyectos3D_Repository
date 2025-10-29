@@ -85,6 +85,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float wallRegrabCooldown = 0.18f; // 0.15–0.25s va bien
     [SerializeField] private float minAngleBetweenWalls = 35f; // grados para evitar misma pared
     private Vector3 lastWallJumpNormal = Vector3.zero;
+    [SerializeField] private float wallSlideSpeed = 1.5f;     // velocidad máx. de caída estando en pared
+    [SerializeField] private float wallUpStopDamp = 12f;      // amortiguación para eliminar velocidad ascendente en pared
+    [SerializeField] private bool requireNotGroundedToLatch = true; // no entrar en pared si estás en suelo
+    [SerializeField] private float minWallLatchGroundClearance = 0.6f; // altura mínima al suelo para enganchar pared
+    
+    [SerializeField] private float wallAnticipationDistance = 0.6f;   // distancia para anticipar
+    [SerializeField] private float wallAnticipationAngle = 35f;       // grados máx entre forward y -normal
+    [SerializeField] private float wallAnticipationMinSpeed = 0.5f;   // mínima velocidad hacia la pared
+    [SerializeField] private float wallAnticipationSmoothing = 10f;   // rapidez del blend (mayor = más rápido)
+    private float wallApproachBlend = 0f;
 
     [Header("Crouching Variables")]
     private float timeCrouching = 0;
@@ -168,6 +178,7 @@ public class PlayerMovement : MonoBehaviour
 
             HandleCoyoteTime();
             HandleWallInteractions();
+            //UpdateWallAnticipation();
             HandleJumps();
             HandleDash();
             HandleGroundPound();
@@ -194,10 +205,21 @@ public class PlayerMovement : MonoBehaviour
 
         float verticalSpeed = rigidBody.velocity.y;
 
-        if (!onWall)
+        verticalSpeed += -gravity;
+
+        if (onWall)
+        {
+            // No permitir subir pegado a la pared (elimina ascenso)
+            if (verticalSpeed > 0f)
+                verticalSpeed = Mathf.Lerp(verticalSpeed, 0f, wallUpStopDamp * Time.deltaTime);
+
+            // Limitar el deslizamiento hacia abajo
+            if (verticalSpeed < -wallSlideSpeed)
+                verticalSpeed = -wallSlideSpeed;
+        }
+        else
         {
             playerAnimator.SetBool("OnWall", false);
-            verticalSpeed += -gravity;
         }
 
         HandleCrouching();
@@ -317,7 +339,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                if (facingWall && CanAttachToThisWall(lastWallNormal))
+                if (facingWall && CanAttachToThisWall(lastWallNormal) && (!requireNotGroundedToLatch || !isGrounded) && HasMinGroundClearance())
                 {
                     if (canWall)
                         SetOnWall();
@@ -331,7 +353,8 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             wallTimer += Time.deltaTime;
-            if ((wallTimer > timeToWallFall) || !facingWall)
+
+            if ((wallTimer > timeToWallFall) || !facingWall || !HasMinGroundClearance())
             {
                 WallFall();
                 wallTimer = 0;
@@ -353,14 +376,59 @@ public class PlayerMovement : MonoBehaviour
         canWall = false;
         ResetJumps();
         rigidBody.velocity = Vector3.zero;
-        rigidBody.useGravity = false;
+        //rigidBody.useGravity = false;
         playerAnimator.SetBool("OnWall", true);
+
+        // reset anticipación
+        //wallApproachBlend = 0f;
+        //playerAnimator.SetFloat("WallApproach", 0f);
+        //playerAnimator.SetBool("NearWall", false);
     }
 
     private void WallFall()
     {
         onWall = false;
-        rigidBody.useGravity = true;
+        //rigidBody.useGravity = true;
+    }
+
+    private bool HasMinGroundClearance()
+    {
+        // true si NO hay suelo dentro de la distancia indicada
+        return DistanceToGroundChecker(minWallLatchGroundClearance);
+    }
+
+    private void UpdateWallAnticipation()
+    {
+        float target = 0f;
+
+        // Anticipamos sólo si NO estamos ya en pared
+        if (!onWall)
+        {
+            if (TryGetWallHit(out RaycastHit hit))
+            {
+                bool closeEnough = hit.distance <= wallAnticipationDistance;
+
+                // ¿Mirando a la pared? (1 = de frente)
+                float facingDot = Vector3.Dot(transform.forward, -hit.normal);
+                bool facingOK = facingDot >= Mathf.Cos(wallAnticipationAngle * Mathf.Deg2Rad);
+
+                // ¿Moviéndote hacia delante?
+                float speedForward = Vector3.Dot(rigidBody.velocity, transform.forward);
+                bool movingToWall = speedForward > wallAnticipationMinSpeed;
+
+                bool clearanceOK = HasMinGroundClearance(); // ya la tienes implementada
+
+                if (closeEnough && facingOK && movingToWall && clearanceOK)
+                    target = 1f;
+            }
+        }
+
+        // Suavizado
+        wallApproachBlend = Mathf.MoveTowards(wallApproachBlend, target, wallAnticipationSmoothing * Time.deltaTime);
+
+        // Parámetros de animación
+        playerAnimator.SetFloat("WallApproach", wallApproachBlend);
+        playerAnimator.SetBool("NearWall", wallApproachBlend > 0.5f); // opcional
     }
 
     private void HandleJumps()
