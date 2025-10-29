@@ -5,6 +5,9 @@ using UnityEngine;
 public class FallingPlatformAnimations : MonoBehaviour
 {
     private FallingPlatform fallingPlatform;
+    [SerializeField] FallingPlatformSafety safety;   // componente del raíz
+    [SerializeField] Collider platformCollider;      // el collider SÓLIDO (NO el trigger)
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,4 +24,17 @@ public class FallingPlatformAnimations : MonoBehaviour
     {
         fallingPlatform.ObjectDisappear();
     }
+
+    public void OnFallStart()
+    {
+        if (safety) safety.SetActive(true);
+        if (platformCollider) platformCollider.isTrigger = false;
+    }
+
+    public void OnFallEnd()
+    {
+        if (platformCollider) platformCollider.isTrigger = true;
+        if (safety) safety.SetActive(false);
+    }
+
 }
