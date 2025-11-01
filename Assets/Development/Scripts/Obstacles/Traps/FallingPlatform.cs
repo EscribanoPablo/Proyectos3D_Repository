@@ -16,6 +16,9 @@ public class FallingPlatform : Traps
     [SerializeField] private AnimationClip vibrateAnimation;
     [SerializeField] private AnimationClip fallAnimation;
 
+    [Header("Anti-Crush")]
+    [SerializeField] FallingPlatformSafety safety; // referencia al script del padre
+
     private bool playerTouched = false;
     private bool disappearing = false;
 
@@ -50,6 +53,7 @@ public class FallingPlatform : Traps
 
     private void OnCollisionStay(Collision collision)
     {
+
         if (collision.gameObject.tag == PLAYER_TAG && !disappearing && !playerTouched)
         {
             if (PlayerOnPlatform(collision))
@@ -80,6 +84,9 @@ public class FallingPlatform : Traps
     public void ObjectDisappear()
     {
         timerVanished = 0;
+        // Por si quedó en trigger al final de la animación
+        if (platformCollider) platformCollider.isTrigger = true;
+
         platformRenderer.enabled = false;
         platformCollider.enabled = false;
         disappearing = false;
@@ -92,8 +99,33 @@ public class FallingPlatform : Traps
     IEnumerator ObjectReappear()
     {
         yield return new WaitForSeconds(timeToReappear);
+
+        // Restablecer estado para el siguiente ciclo
+        if (platformCollider)
+        {
+            platformCollider.enabled = true;
+            platformCollider.isTrigger = false;
+        }
+        if (safety) safety.SetActive(false);
+
         platformRenderer.enabled = true;
-        platformCollider.enabled = true;
         animations.Play(idleAnimation.name);
     }
+
+
+    // === LLAMADOS POR ANIMATION EVENTS ===
+    // Se activa cuando empieza a caer
+    //public void OnFallStart()
+    //{
+    //    if (safety) safety.SetActive(true);
+    //    // Aseguramos que el collider principal sigue siendo sólido
+    //    if (platformCollider) platformCollider.isTrigger = false;
+    //}
+
+    //// Se llama justo antes de que desaparezca (último tramo)
+    //public void OnFallEnd()
+    //{
+    //    if (platformCollider) platformCollider.isTrigger = true; // ya no puede aplastar
+    //    if (safety) safety.SetActive(false);
+    //}
 }

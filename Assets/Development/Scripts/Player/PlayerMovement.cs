@@ -818,6 +818,11 @@ public class PlayerMovement : MonoBehaviour
                 lastWallJumpNormal = Vector3.zero;
 
                 audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
+
+                // reset anticipación al tocar suelo
+                //wallApproachBlend = 0f;
+                //playerAnimator.SetFloat("WallApproach", 0f);
+                //playerAnimator.SetBool("NearWall", false);
             }
 
             if (IsSafeGround())
