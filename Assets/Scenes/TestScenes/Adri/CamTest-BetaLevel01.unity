@@ -128731,33 +128731,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2068040839}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1600705753 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8457264676820508504, guid: 5ae6b19705f53b6418a235ef453e61df,
-    type: 3}
-  m_PrefabInstance: {fileID: 6477497382347354333}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1600705756 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 5745005559868520494, guid: 5ae6b19705f53b6418a235ef453e61df,
-    type: 3}
-  m_PrefabInstance: {fileID: 6477497382347354333}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1600705757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1600705753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cc15941ca6b3984b8f432ecc05294e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollidersList:
-  - {fileID: 1600705756}
-  - {fileID: 6477497382347354337}
 --- !u!1001 &1601110004
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -168920,32 +168893,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5745005559868520494, guid: 5ae6b19705f53b6418a235ef453e61df,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5745005559868520494, guid: 5ae6b19705f53b6418a235ef453e61df,
-        type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 971752038533392222, guid: 5ae6b19705f53b6418a235ef453e61df, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8457264676820508504, guid: 5ae6b19705f53b6418a235ef453e61df,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1600705757}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ae6b19705f53b6418a235ef453e61df, type: 3}
---- !u!65 &6477497382347354337 stripped
-BoxCollider:
-  m_CorrespondingSourceObject: {fileID: 3029669630336853703, guid: 5ae6b19705f53b6418a235ef453e61df,
-    type: 3}
-  m_PrefabInstance: {fileID: 6477497382347354333}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

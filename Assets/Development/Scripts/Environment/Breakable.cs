@@ -65,7 +65,7 @@ public class Breakable : Obstacles, IRestartLevelElement
             {
                 breakableCubes[i].GetComponent<Rigidbody>().velocity += canonShoot.CanonForward * boxExplosionForce;
             }
-            GetComponent<Collider>().enabled = false; //No sive, porque el collider del hijo aun esta activo para que no atraviese el suelo(a lo mejor hacer que las layers no se relacionen entre ellas, player y caja hija)
+            GetComponent<Collider>().enabled = false;
 
             if (rigidBody != null) rigidBody.isKinematic = true;
 

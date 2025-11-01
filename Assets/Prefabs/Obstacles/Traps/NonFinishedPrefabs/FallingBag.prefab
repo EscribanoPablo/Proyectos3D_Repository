@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2707867145218864103}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.23255964, z: -0, w: 0.9725822}
+  m_LocalRotation: {x: 0, y: 0.23256278, z: 0, w: 0.9725814}
   m_LocalPosition: {x: -19.07, y: 3.9, z: -10.3}
   m_LocalScale: {x: 5.934794, y: 6.7493033, z: 6.048742}
   m_ConstrainProportionsScale: 0
@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5188468812941069672}
   - component: {fileID: 5745005559868520494}
-  - component: {fileID: 971752038533392222}
+  - component: {fileID: 9154584436820617901}
   m_Layer: 0
   m_Name: DeathCollider
   m_TagString: Untagged
@@ -171,13 +171,13 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.98, y: 1, z: 0.98}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &971752038533392222
+--- !u!114 &9154584436820617901
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -186,6 +186,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8457264676820508504}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a163b824d8935dd44841a98e9091acc0, type: 3}
+  m_Script: {fileID: 11500000, guid: 9cc15941ca6b3984b8f432ecc05294e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CollidersList:
+  - {fileID: 5745005559868520494}
+  - {fileID: 3029669630336853703}
