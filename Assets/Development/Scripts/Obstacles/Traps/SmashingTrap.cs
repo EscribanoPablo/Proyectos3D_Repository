@@ -22,10 +22,20 @@ public class SmashingTrap : Traps
         {
             if (collision.gameObject.GetComponent<PlayerMovement>().GetIfGrounded())
             {
+                collision.transform.SetParent(null);
                 collision.gameObject.GetComponent<PlayerHealth>().TakeDamage();
                 StartCoroutine(GotSmashed());
             }
+            else
+            {
+                collision.gameObject.transform.SetParent(this.gameObject.transform);
+            }
         }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        collision.transform.SetParent(null);
     }
 
     IEnumerator GotSmashed()
