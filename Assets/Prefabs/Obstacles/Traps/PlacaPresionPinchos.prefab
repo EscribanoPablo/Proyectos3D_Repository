@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 991634228591935476}
   - component: {fileID: 3426066022193351535}
   - component: {fileID: 332653789080337129}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd48489d855a58d45b5b11c4bf0d80c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockBackImpulse: 0
+  knockBackImpulse: 5
   damageParticles: {fileID: 1603598641106120008}
   childrenDamageParticles: {fileID: 8792414075229987498}
   stunTime: 0.271
