@@ -53,13 +53,21 @@ public class PlayerHealth : MonoBehaviour
         if (gotHit)
         {
             invulnerableCounter += 1.0f * Time.deltaTime;
+
+            // reactivar la lógica de movimiento tras noInputsTime
+            if (invulnerableCounter >= noInputsTime && currentHealth > 0)
+            {
+                PlayerMovement pm = GetComponent<PlayerMovement>();
+                if (pm != null)
+                    pm.playerControllerEnabled = true;
+            }
+
+            // terminar invulnerabilidad tras invulnerableTime
             if (invulnerableCounter >= invulnerableTime)
             {
                 gotHit = false;
-                invulnerableCounter = 0;
+                invulnerableCounter = 0f;
             }
-            else if(invulnerableCounter >= noInputsTime && currentHealth > 0)
-                playerInputs.enabled = true;
         }
 
         if (playerInputs.actions["Restart"].IsPressed())
@@ -91,8 +99,13 @@ public class PlayerHealth : MonoBehaviour
                 hudController.LifeLost(currentHealth);
                 CheckHealth();
                 gotHit = true;
-                playerInputs.enabled = false;
-                GetComponent<KnockbackHandler>().ApplyKnockback(pointOfImpact);
+                // bloquear solo la lógica de movimiento (no el componente PlayerInput)
+                PlayerMovement pm = GetComponent<PlayerMovement>();
+                if (pm != null)
+                    pm.playerControllerEnabled = false;
+
+                // aplicar knockback
+                //GetComponent<KnockbackHandler>().ApplyKnockback(pointOfImpact);
 
                 damageParticles.SetActive(true);
                 ParticleSystem particles = damageParticles.GetComponent<ParticleSystem>();

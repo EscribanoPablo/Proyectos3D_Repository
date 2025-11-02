@@ -62,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private int multipleJumps = 1;
     [SerializeField] private float jumpForce;
     [SerializeField] private float doubleJumpForce;
+    [SerializeField] private float detectionGroundRadius = 0.5f;
     [SerializeField] private float wallJumpUpForce;
     [SerializeField] private float wallJumpSideForce;
     [SerializeField] private float crouchingJumpForce;
@@ -131,6 +132,12 @@ public class PlayerMovement : MonoBehaviour
     private AudioManager audioManager;
     [SerializeField] private Animator playerAnimator;
 
+    // ----- NEW: external momentum (knockback smoothing) -----
+    [Header("Knockback smoothing")]
+    [SerializeField] private Vector3 externalVelocity = Vector3.zero; // planar impulse-preserved velocity (x,z)
+    [SerializeField] private float externalVelocityDamping = 6f; // decay rate
+    [SerializeField] private float externalVelocityBlend = 0.15f; // blending factor per FixedUpdate
+
     public Ability GetAbility(string name)
     {
         foreach (Ability ability in abilitiesList)
@@ -151,6 +158,71 @@ public class PlayerMovement : MonoBehaviour
     {
         speedMovement = baseSpeedMovement;
         rotationSpeed = baseRotationSpeed;
+    }
+
+    public IEnumerator GradientPlayerMassAfterKnockbackImpact(float duration = 2f)
+    {
+        playerControllerEnabled = false;
+        float startMass = 2f;
+        float endMass = 1f;
+        float elapsed = 0f;
+
+        rigidBody.mass = startMass;
+
+        while (elapsed < duration)
+        {
+
+            if (elapsed >= duration/2)
+            {
+                playerControllerEnabled = true;
+
+            }
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            rigidBody.mass = Mathf.Lerp(startMass, endMass, t);
+            yield return null;
+        }
+
+        rigidBody.mass = endMass; // asegurar el valor final exacto
+    }
+
+    public void AddExternalVelocity(Vector3 v)
+    {
+        v.y = 0f;
+        externalVelocity += v;
+    }
+
+    private void ApplyExternalVelocityTick()
+    {
+        // If there's no external velocity, don't do extra work (but still ensure SpeedControl when appropriate)
+        if (externalVelocity.sqrMagnitude <= 1e-6f)
+        {
+            // Keep speed limit if not dashing and not onWall
+            if (!isDashing && !onWall)
+                SpeedControl();
+
+            return;
+        }
+
+        // Current planar velocity (from physics + forces applied)
+        Vector3 currentPlanar = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
+
+        // Target planar is current + external
+        Vector3 targetPlanar = currentPlanar + externalVelocity;
+
+        // Blend towards target to avoid snapping
+        Vector3 newPlanar = Vector3.Lerp(currentPlanar, targetPlanar, Mathf.Clamp01(externalVelocityBlend));
+
+        // Preserve vertical (gravity/jumps), compute current vertical and set combined velocity
+        float currentY = rigidBody.velocity.y;
+        rigidBody.velocity = new Vector3(newPlanar.x, currentY, newPlanar.z);
+
+        // Decay external velocity (lerp towards zero)
+        externalVelocity = Vector3.Lerp(externalVelocity, Vector3.zero, externalVelocityDamping * Time.fixedDeltaTime);
+
+        // apply speed limit if needed
+        if (!isDashing && !onWall)
+            SpeedControl();
     }
 
     void Start()
@@ -258,7 +330,12 @@ public class PlayerMovement : MonoBehaviour
                 transitionTimer = 0f;
             speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
         }
-        rigidBody.velocity = new Vector3(rigidBody.velocity.x, verticalSpeed, rigidBody.velocity.z);
+
+        // NOTE: Don't directly overwrite planar velocity here (that would snap). We keep control of vertical and let
+        // physics + externalVelocity blending determine the planar result. ApplyExternalVelocityTick already writes a velocity
+        // that respects vertical component, but ensure vertical is set to our computed verticalSpeed here.
+        Vector3 currentPlanar = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
+        rigidBody.velocity = new Vector3(currentPlanar.x, verticalSpeed, currentPlanar.z);
 
         playerAnimator.SetBool("IsCrouching", isCrouching);
         SetSpeedAnimation(speedAnimation);
@@ -794,15 +871,14 @@ public class PlayerMovement : MonoBehaviour
     private bool IsGroundedChecker()
     {
         //float detectionRadius = 0.02f;
-        float detectionRadius = 0.1f;
 
         //Collider[] colliders = Physics.OverlapSphere(groundChecker.position, detectionRadius, whatIsGround);
 
         Vector3 point1 = transform.position + baseCollider.center + Vector3.up * (-(baseCollider.height / 2) + baseCollider.radius);
         Vector3 point2 = transform.position + baseCollider.center + Vector3.up * ((baseCollider.height / 2) - baseCollider.radius);
 
-        point1 += Vector3.down * detectionRadius;
-        point2 += Vector3.down * detectionRadius;
+        point1 += Vector3.down * detectionGroundRadius;
+        point2 += Vector3.down * detectionGroundRadius;
 
         //if (colliders.Length > 0)
         if (Physics.CheckCapsule(point1, point2, baseCollider.radius * 0.9f, whatIsGround) || inMovingPlatform)
@@ -942,6 +1018,8 @@ public class PlayerMovement : MonoBehaviour
 
         SpawnCanonParticles(wallJumpParticles, wallJumpParticles.transform.position);
     }
+
+    
 
     private void OnDrawGizmos()
     {

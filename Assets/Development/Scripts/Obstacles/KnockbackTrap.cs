@@ -22,10 +22,11 @@ public class KnockbackTrap : Traps
         {
             FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().punchTrapHitSound);
 
-            player.GetComponent<PlayerMovement>().playerControllerEnabled = false;
-            collision.gameObject.GetComponent<KnockbackHandler>().ApplyKnockback(transform.position, knockBackImpulse);
-            StartCoroutine(AddStun());
-
+            KnockbackHandler playerKnockbackHandler = collision.gameObject.GetComponent<KnockbackHandler>();
+            playerKnockbackHandler.ApplyKnockback(transform.position, knockBackImpulse);
+            PlayerMovement playerMovement = player.GetComponent<PlayerMovement>();
+            playerMovement.playerControllerEnabled = false;
+            StartCoroutine(playerMovement.GradientPlayerMassAfterKnockbackImpact(1));
             if (damageParticles != null && childrenDamageParticles != null)
             {
                 ParticleSystem particles = damageParticles.GetComponent<ParticleSystem>();
@@ -34,14 +35,5 @@ public class KnockbackTrap : Traps
                 particles.Emit(5);
             }
         }
-    }
-
-    private IEnumerator AddStun()
-    {
-
-        //cambiar masa player? (opcional)
-        yield return new WaitForSeconds(stunTime);
-        player.GetComponent<PlayerMovement>().playerControllerEnabled = true; 
-
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8253463015867323168}
   - component: {fileID: 6321117608776534470}
   - component: {fileID: 6141127404248572610}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: fistSupport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,11 +243,11 @@ GameObject:
   - component: {fileID: 5573396084715442494}
   - component: {fileID: 3098988683609152243}
   - component: {fileID: 7591848442793203803}
-  - component: {fileID: 5827799352792851791}
   - component: {fileID: 2162923474854876243}
   - component: {fileID: 36878506198079649}
   - component: {fileID: 247729127419243902}
-  m_Layer: 9
+  - component: {fileID: 533820883655522513}
+  m_Layer: 0
   m_Name: Fist
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,27 +322,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5827799352792851791
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6460843783554389925}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1.0850511, z: 1}
-  m_Center: {x: 4.0012576e-16, y: 0.042525373, z: 9.762933e-10}
 --- !u!111 &2162923474854876243
 Animation:
   m_ObjectHideFlags: 0
@@ -403,6 +382,27 @@ MonoBehaviour:
   damageParticles: {fileID: 6055849287054295065}
   childrenDamageParticles: {fileID: 4057598836547981307}
   stunTime: 0.327
+--- !u!135 &533820883655522513
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6460843783554389925}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.56
+  m_Center: {x: 0.07, y: 0.01, z: 0.05}
 --- !u!1 &6726979905472052408
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,10 +464,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5573396084715442494}
     m_Modifications:
+    - target: {fileID: 3085162714964330214, guid: a306fb2539b429e4194029a6844b3e69,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5086109167319320836, guid: a306fb2539b429e4194029a6844b3e69,
         type: 3}
       propertyPath: m_Name
       value: DamageParticles
+      objectReference: {fileID: 0}
+    - target: {fileID: 5086109167319320836, guid: a306fb2539b429e4194029a6844b3e69,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7412003977269092422, guid: a306fb2539b429e4194029a6844b3e69,
         type: 3}
@@ -742,7 +752,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9c5edc3c8516ffe48a036430ad423701,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -841,7 +851,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 4be69774bb856c54095b52aedebdb609,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
