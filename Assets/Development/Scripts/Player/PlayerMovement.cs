@@ -731,6 +731,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleDash()
     {
+        if (isCrouching)
+            return;
+
         if (!onWall)
         {
             if (isDashing)
