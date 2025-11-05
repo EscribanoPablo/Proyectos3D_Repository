@@ -127,7 +127,9 @@ public class PlayerHealth : MonoBehaviour
                 hudController.LifeLost(currentHealth);
                 CheckHealth("Smash");
                 gotHit = true;
-                playerInputs.enabled = false;
+                PlayerMovement pm = GetComponent<PlayerMovement>();
+                if (pm != null)
+                    pm.playerControllerEnabled = false;
 
                 damageParticles.SetActive(true);
                 ParticleSystem particles = damageParticles.GetComponent<ParticleSystem>();
