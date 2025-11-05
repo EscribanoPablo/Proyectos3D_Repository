@@ -4,6 +4,7 @@ public class KnockbackHandler : MonoBehaviour
 {
     [SerializeField] private float baseKnockbackImpulse = 0.0f;
     private Rigidbody rb;
+    [SerializeField] float knockbackPowerMultiplierWhenPlayerOnGround; 
 
     private void Awake()
     {
@@ -18,10 +19,10 @@ public class KnockbackHandler : MonoBehaviour
         float baseImpulseAdded = impulse;
         if (pm.GetIfGrounded() && !pm.GetIsJumping() && !pm.GetIfDashing())
         {
-            impulse *= 4; 
+            impulse *= knockbackPowerMultiplierWhenPlayerOnGround; 
         }
 
-        if (impulse >= baseImpulseAdded *4 && !pm.GetIfGrounded())
+        if (impulse >= baseImpulseAdded * knockbackPowerMultiplierWhenPlayerOnGround && !pm.GetIfGrounded() && !pm.GetIfDashing())
         {
              impulse = baseImpulseAdded;
         }

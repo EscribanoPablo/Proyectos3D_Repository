@@ -1097,6 +1097,7 @@ MonoBehaviour:
   multipleJumps: 1
   jumpForce: 12
   doubleJumpForce: 13
+  detectionGroundRadius: 0.2
   wallJumpUpForce: 13
   wallJumpSideForce: 13
   crouchingJumpForce: 40
@@ -1123,6 +1124,9 @@ MonoBehaviour:
   inMovingPlatform: 0
   SafeGroundRadius: 1
   playerAnimator: {fileID: 3282902346876754578}
+  externalVelocity: {x: 0, y: 0, z: 0}
+  externalVelocityDamping: 6
+  externalVelocityBlend: 0.15
 --- !u!54 &2113590656291869998
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1352,6 +1356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseKnockbackImpulse: 0
+  knockbackPowerMultiplierWhenPlayerOnGround: 3
 --- !u!1 &4736000364395186754
 GameObject:
   m_ObjectHideFlags: 0
