@@ -10,7 +10,7 @@ public class Breakable : Obstacles, IRestartLevelElement
     [SerializeField] string breakerTag;
     GameObject[] breakableCubes;
 
-    [SerializeField] bool isPlatform;
+    [SerializeField] bool doesRespawn = false;
     [SerializeField] float platformReappearTime;
 
     Vector3[] breakableStartPosition;
@@ -141,7 +141,7 @@ public class Breakable : Obstacles, IRestartLevelElement
         ResetBreakablesColor();
 
         prefracturedObject.SetActive(false);
-        if (isPlatform)
+        if (doesRespawn)
         {
             StartCoroutine(ReappearPlatform());
         }
