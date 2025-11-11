@@ -446,7 +446,6 @@ GameObject:
   - component: {fileID: 6468108428331909836}
   - component: {fileID: 35708809262442823}
   - component: {fileID: 5242840770428554577}
-  - component: {fileID: 5492672110160465538}
   - component: {fileID: 6716106965783679548}
   - component: {fileID: 5805737097800679000}
   - component: {fileID: 272135863884254168}
@@ -526,18 +525,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5492672110160465538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2726465660741183569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e22e06f2a098934bbb8ad46f27a05eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6716106965783679548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -550,10 +537,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd48489d855a58d45b5b11c4bf0d80c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockBackImpulse: 20.4
+  knockBackImpulse: 5
   damageParticles: {fileID: 2469775050808789263}
   childrenDamageParticles: {fileID: 5621522720962578157}
   stunTime: 0.356
+  audioClip:
+    Guid:
+      Data1: 1531562575
+      Data2: 1328501356
+      Data3: 211931526
+      Data4: 811572641
+    Path: event:/CHARACTER/8.CHR SPIKE IMPACT/CHR SPIKE IMAPCT
+  dealsDamage: 1
 --- !u!54 &5805737097800679000
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -596,7 +591,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2

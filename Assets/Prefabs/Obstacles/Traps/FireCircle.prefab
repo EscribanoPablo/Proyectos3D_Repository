@@ -348,7 +348,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 03424ee6a4ee9ac46a7b9be2b2750bd4,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6112431833427406064}
+      addedObject: {fileID: 2064434092931825969}
   m_SourcePrefab: {fileID: 100100000, guid: 03424ee6a4ee9ac46a7b9be2b2750bd4, type: 3}
 --- !u!4 &5785531428756693980 stripped
 Transform:
@@ -384,7 +384,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8803937527578110353, guid: 03424ee6a4ee9ac46a7b9be2b2750bd4, type: 3}
---- !u!114 &6112431833427406064
+--- !u!114 &2064434092931825969
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -393,6 +393,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 6557670429448141158}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd82e46fe7045b4ead24d3282afdf26, type: 3}
+  m_Script: {fileID: 11500000, guid: bd48489d855a58d45b5b11c4bf0d80c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackImpulse: 5
+  damageParticles: {fileID: 0}
+  childrenDamageParticles: {fileID: 0}
+  stunTime: 0.35
+  audioClip:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  dealsDamage: 1
