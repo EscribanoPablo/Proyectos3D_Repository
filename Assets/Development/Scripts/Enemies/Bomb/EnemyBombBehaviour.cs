@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using FMODUnity;
+using Cinemachine;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBombBehaviour : EnemyBehaviour
@@ -12,6 +13,8 @@ public class EnemyBombBehaviour : EnemyBehaviour
     [SerializeField] float distanceToExplode = 1.3f;
     [SerializeField] GameObject explosionParticles;
     EnemyState currentState;
+
+    CinemachineImpulseSource shakeSource;
 
     [SerializeField] List<Transform> patrolPoints;
     private int currentPoint = 0;
@@ -28,6 +31,8 @@ public class EnemyBombBehaviour : EnemyBehaviour
         player = FindAnyObjectByType<PlayerController>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         EnterState(EnemyState.PATROL);
+
+        shakeSource = GetComponent<CinemachineImpulseSource>();
     }
 
     // Update is called once per frame
@@ -132,6 +137,8 @@ public class EnemyBombBehaviour : EnemyBehaviour
 
         bombMovingSound.Stop(); bombMovingSound.PlayEvent = EmitterGameEvent.None;
         FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().bombAttackDeathSound, transform.position);
+
+        shakeSource.GenerateImpulseWithForce(0.15f);
 
         gameObject.SetActive(false);
         gameObject.layer = 2;

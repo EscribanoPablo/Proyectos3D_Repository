@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Bullet : MonoBehaviour, IRestartLevelElement
 {
@@ -9,6 +10,7 @@ public class Bullet : MonoBehaviour, IRestartLevelElement
     CanonShoot canonShoot;
     Rigidbody rb;
     Vector3 direction;
+    CinemachineImpulseSource shakeSource;
 
     [Header("Decal")]
     [SerializeField] GameObject decalExplosion;
@@ -29,6 +31,9 @@ public class Bullet : MonoBehaviour, IRestartLevelElement
         GameController.GetGameController().AddRestartLevelElement(this);
 
         StartCoroutine(DestroyBullet());
+
+        shakeSource = GetComponent<CinemachineImpulseSource>();
+        shakeSource.GenerateImpulseWithForce(0.1f);
     }
 
     // Update is called once per frame
@@ -45,7 +50,7 @@ public class Bullet : MonoBehaviour, IRestartLevelElement
     {
         if (collision.gameObject.tag == "Breakable")
         {
-            GetComponent<SphereCollider>().isTrigger = true;
+            //GetComponent<SphereCollider>().isTrigger = true;
         }
         else
         {
@@ -55,6 +60,8 @@ public class Bullet : MonoBehaviour, IRestartLevelElement
                 decal.transform.rotation = Quaternion.LookRotation(collision.GetContact(0).normal);
                 decal.transform.position = collision.GetContact(0).point + decal.transform.forward.normalized * decalOffsetForward;
             }
+            shakeSource.GenerateImpulseWithForce(0.3f);
+
             FindObjectOfType<AudioManager>().SetPlaySfx(FindObjectOfType<AudioManager>().cannonballHit, transform.position);
             ParticleSystem explosionParticle = GameObject.Instantiate(explosionParticles, transform.position, transform.rotation);
             explosionParticle.Play();
