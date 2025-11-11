@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RotatingSpikes : Traps
 {
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == PLAYER_TAG)
         {
@@ -19,5 +19,5 @@ public class RotatingSpikes : Traps
         {
             other.gameObject.GetComponent<PlayerHealth>().TakeDamage(GetComponentInParent<Transform>().position);
         }
-    }
+    }*/
 }

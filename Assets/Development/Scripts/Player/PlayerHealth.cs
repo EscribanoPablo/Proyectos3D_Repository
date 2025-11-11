@@ -17,7 +17,7 @@ public class PlayerHealth : MonoBehaviour
 
     private HudController hudController;
 
-    private bool gotHit = false;
+    public bool gotHit = false;
     private float invulnerableCounter = 0;
     [SerializeField]
     private float invulnerableTime = 1.0f;
