@@ -91,11 +91,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool requireNotGroundedToLatch = true; // no entrar en pared si estás en suelo
     [SerializeField] private float minWallLatchGroundClearance = 0.6f; // altura mínima al suelo para enganchar pared
     
-    [SerializeField] private float wallAnticipationDistance = 0.6f;   // distancia para anticipar
-    [SerializeField] private float wallAnticipationAngle = 35f;       // grados máx entre forward y -normal
-    [SerializeField] private float wallAnticipationMinSpeed = 0.5f;   // mínima velocidad hacia la pared
-    [SerializeField] private float wallAnticipationSmoothing = 10f;   // rapidez del blend (mayor = más rápido)
-    private float wallApproachBlend = 0f;
+    [SerializeField] private float postJumpNoLatchTime = 0.12f; // 0.1–0.15 s
+    private float blockWallLatchUntil = 0f;
+    [SerializeField] private float minFacingDotToLatch = 0.5f;     // ≈60° respecto a la normal
+    [SerializeField] private float minForwardSpeedToLatch = 0.2f;  // m/s hacia adelante
+    [SerializeField] private float wallJumpMoveFreeze = 0.15f;
+    private Coroutine movementUnlockRoutine = null;
+    //[SerializeField] private float wallAnticipationDistance = 0.6f;   // distancia para anticipar
+    //[SerializeField] private float wallAnticipationAngle = 35f;       // grados máx entre forward y -normal
+    //[SerializeField] private float wallAnticipationMinSpeed = 0.5f;   // mínima velocidad hacia la pared
+    //[SerializeField] private float wallAnticipationSmoothing = 10f;   // rapidez del blend (mayor = más rápido)
+    //private float wallApproachBlend = 0f;
 
     [Header("Crouching Variables")]
     private float timeCrouching = 0;
@@ -416,12 +422,15 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                if (facingWall && CanAttachToThisWall(lastWallNormal) && (!requireNotGroundedToLatch || !isGrounded) && HasMinGroundClearance())
+                bool timeOK = Time.time >= blockWallLatchUntil;
+                bool facingOK = Vector3.Dot(transform.forward, -lastWallNormal) >= minFacingDotToLatch;
+                bool forwardOK = Vector3.Dot(rigidBody.velocity, transform.forward) > minForwardSpeedToLatch;
+                bool differentWallOK = IsDifferentWall(lastWallNormal); 
+
+                if (facingWall && CanAttachToThisWall(lastWallNormal) && (!requireNotGroundedToLatch || !isGrounded) 
+                    && HasMinGroundClearance() && timeOK && facingOK && forwardOK && (canWall || differentWallOK))
                 {
-                    if (canWall)
-                        SetOnWall();
-                    else
-                        rigidBody.velocity = new Vector3(0, rigidBody.velocity.y - 0.5f, 0);
+                    SetOnWall();
                 }
                 else
                     rigidBody.drag = 0.5f;
@@ -452,8 +461,26 @@ public class PlayerMovement : MonoBehaviour
         onWall = true;
         canWall = false;
         ResetJumps();
-        rigidBody.velocity = Vector3.zero;
+        //rigidBody.velocity = Vector3.zero;
         //rigidBody.useGravity = false;
+
+        // Mantén el impulso: elimina solo la componente "hacia la pared"
+        Vector3 v = rigidBody.velocity;
+        Vector3 n = lastWallNormal.normalized;          // normal de la pared (hacia fuera)
+        Vector3 intoWall = Vector3.Project(v, -n);      // componente que empuja contra la pared
+        rigidBody.velocity = v - intoWall;              // conservas vertical + tangencial
+
+        // CANCELA cualquier “unlock” en curso (venías de otro wall jump)
+        if (movementUnlockRoutine != null)
+        {
+            StopCoroutine(movementUnlockRoutine);
+            movementUnlockRoutine = null;
+        }
+
+        movementBlocked = true;          // <- BLOQUEA input/fuerzas de locomoción
+        wallTimer = 0f;                  // asegúrate de arrancar el timer aquí
+
+
         playerAnimator.SetBool("OnWall", true);
 
         // reset anticipación
@@ -462,9 +489,22 @@ public class PlayerMovement : MonoBehaviour
         //playerAnimator.SetBool("NearWall", false);
     }
 
+    private bool IsDifferentWall(Vector3 candidateNormal)
+    {
+        if (lastWallJumpNormal == Vector3.zero) return true;
+        return Vector3.Angle(candidateNormal, lastWallJumpNormal) >= minAngleBetweenWalls;
+    }
+
     private void WallFall()
     {
         onWall = false;
+        movementBlocked = false;
+
+        if (movementUnlockRoutine != null)
+        {
+            StopCoroutine(movementUnlockRoutine);
+            movementUnlockRoutine = null;
+        }
         //rigidBody.useGravity = true;
     }
 
@@ -476,36 +516,36 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateWallAnticipation()
     {
-        float target = 0f;
+        //float target = 0f;
 
-        // Anticipamos sólo si NO estamos ya en pared
-        if (!onWall)
-        {
-            if (TryGetWallHit(out RaycastHit hit))
-            {
-                bool closeEnough = hit.distance <= wallAnticipationDistance;
+        //// Anticipamos sólo si NO estamos ya en pared
+        //if (!onWall)
+        //{
+        //    if (TryGetWallHit(out RaycastHit hit))
+        //    {
+        //        bool closeEnough = hit.distance <= wallAnticipationDistance;
 
-                // ¿Mirando a la pared? (1 = de frente)
-                float facingDot = Vector3.Dot(transform.forward, -hit.normal);
-                bool facingOK = facingDot >= Mathf.Cos(wallAnticipationAngle * Mathf.Deg2Rad);
+        //        // ¿Mirando a la pared? (1 = de frente)
+        //        float facingDot = Vector3.Dot(transform.forward, -hit.normal);
+        //        bool facingOK = facingDot >= Mathf.Cos(wallAnticipationAngle * Mathf.Deg2Rad);
 
-                // ¿Moviéndote hacia delante?
-                float speedForward = Vector3.Dot(rigidBody.velocity, transform.forward);
-                bool movingToWall = speedForward > wallAnticipationMinSpeed;
+        //        // ¿Moviéndote hacia delante?
+        //        float speedForward = Vector3.Dot(rigidBody.velocity, transform.forward);
+        //        bool movingToWall = speedForward > wallAnticipationMinSpeed;
 
-                bool clearanceOK = HasMinGroundClearance(); // ya la tienes implementada
+        //        bool clearanceOK = HasMinGroundClearance(); // ya la tienes implementada
 
-                if (closeEnough && facingOK && movingToWall && clearanceOK)
-                    target = 1f;
-            }
-        }
+        //        if (closeEnough && facingOK && movingToWall && clearanceOK)
+        //            target = 1f;
+        //    }
+        //}
 
-        // Suavizado
-        wallApproachBlend = Mathf.MoveTowards(wallApproachBlend, target, wallAnticipationSmoothing * Time.deltaTime);
+        //// Suavizado
+        //wallApproachBlend = Mathf.MoveTowards(wallApproachBlend, target, wallAnticipationSmoothing * Time.deltaTime);
 
-        // Parámetros de animación
-        playerAnimator.SetFloat("WallApproach", wallApproachBlend);
-        playerAnimator.SetBool("NearWall", wallApproachBlend > 0.5f); // opcional
+        //// Parámetros de animación
+        //playerAnimator.SetFloat("WallApproach", wallApproachBlend);
+        //playerAnimator.SetBool("NearWall", wallApproachBlend > 0.5f); // opcional
     }
 
     private void HandleJumps()
@@ -626,6 +666,8 @@ public class PlayerMovement : MonoBehaviour
         if (!GetAbility("DoubleJump").alreadyUsed)
             GetAbility("DoubleJump").canUse = true;
         GetAbility("Dash").canUse = true;
+
+        blockWallLatchUntil = Time.time + postJumpNoLatchTime;
     }
 
     IEnumerator CheckIfLongJump()
@@ -665,6 +707,7 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.useGravity = true;
         rigidBody.AddForce(lateral + vertical, ForceMode.Impulse);
 
+
         // Opcional: reorientar al personaje mirando en sentido del salto
         if (faceAwayAfterWallJump)
         {
@@ -673,6 +716,19 @@ public class PlayerMovement : MonoBehaviour
         }
 
         playerAnimator.SetTrigger("WallJumped");
+
+        // Si había un unlock anterior, lo cancelamos y lanzamos uno nuevo
+        if (movementUnlockRoutine != null)
+            StopCoroutine(movementUnlockRoutine);
+        movementUnlockRoutine = StartCoroutine(UnlockMovementAfter(wallJumpMoveFreeze));
+
+    }
+
+    private IEnumerator UnlockMovementAfter(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        movementBlocked = false;
+        movementUnlockRoutine = null; // limpiar handle
     }
 
     private IEnumerator WallRegrabCooldownRoutine()
