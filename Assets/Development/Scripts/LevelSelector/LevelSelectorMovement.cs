@@ -22,6 +22,9 @@ public class LevelSelectorMovement : MonoBehaviour
     [SerializeField] float baseRotationSpeed = 7.5f;
     private float rotationSpeed;
 
+    [SerializeField] private float groundSphereRadius = 0.4f;
+    [SerializeField] private float groundCheckDistance = 0.8f;
+
     bool isMoving;
     [SerializeField] float transitionDurationStart = 0.5f;
     [SerializeField] float transitionDurationStop = 0.5f;
@@ -75,7 +78,7 @@ public class LevelSelectorMovement : MonoBehaviour
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             moveDir = ProjectOnSlope(moveDir);
 
-            if (HasGroundInFront(moveDir))
+            if (HasGroundInFront(moveDir) && !IsNearEdge(moveDir))
             {
                 rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
             }
@@ -101,16 +104,25 @@ public class LevelSelectorMovement : MonoBehaviour
 
     private Vector3 ProjectOnSlope(Vector3 moveDir)
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 3.5f, whatIsGround))
+        /*if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, 3.5f, whatIsGround))
         {
             return Vector3.ProjectOnPlane(moveDir, hit.normal).normalized;
         }
+        return moveDir;*/
+
+        Vector3 origin = transform.position + Vector3.up * 0.2f;
+
+        if (Physics.SphereCast(origin, groundSphereRadius, Vector3.down, out RaycastHit hit, groundCheckDistance, whatIsGround))
+        {
+            return Vector3.ProjectOnPlane(moveDir, hit.normal).normalized;
+        }
+
         return moveDir;
     }
 
     private bool IsGrounded()
     {
-        float detectionRadius = 1.5f;
+        /*float detectionRadius = 1.5f;
 
         Collider[] colliders = Physics.OverlapSphere(groundChecker.position, detectionRadius, whatIsGround);
         if (colliders.Length > 0)
@@ -119,13 +131,36 @@ public class LevelSelectorMovement : MonoBehaviour
             return true;
         }
         playerAnimator.SetBool("OnGround", false);
+        return false;*/
+
+        Vector3 origin = transform.position + Vector3.up * 0.2f;
+
+        if (Physics.SphereCast(origin, groundSphereRadius, Vector3.down, out RaycastHit hit, groundCheckDistance, whatIsGround))
+        {
+            playerAnimator.SetBool("OnGround", true);
+            return true;
+        }
+
+        playerAnimator.SetBool("OnGround", false);
         return false;
     }
 
     private bool HasGroundInFront(Vector3 moveDir)
     {
-        Ray ray = new Ray(groundChecker.position + moveDir.normalized, Vector3.down);
-        return Physics.Raycast(ray, 0.75f, whatIsGround);
+        /*Ray ray = new Ray(groundChecker.position + moveDir.normalized, Vector3.down);
+        return Physics.Raycast(ray, 0.75f, whatIsGround);*/
+
+        Vector3 origin = transform.position + Vector3.up * 0.2f + moveDir.normalized * 0.4f;
+
+        return Physics.SphereCast(origin, groundSphereRadius, Vector3.down, out _, groundCheckDistance, whatIsGround);
+    }
+    
+    private bool IsNearEdge(Vector3 moveDir)
+    {
+        Vector3 origin = groundChecker.position + moveDir.normalized * 1.6f + Vector3.up * 0.2f;
+        bool groundInFront = Physics.Raycast(origin, Vector3.down, out _, 1f, whatIsGround);
+
+        return !groundInFront;
     }
 
     private void PlayParticles(GameObject particles)
