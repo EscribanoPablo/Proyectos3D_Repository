@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[System.Serializable]
+public class AbilitiesEnabled
+{
+    public AbilityState abilitySO;
+    public bool isEnabled;
+}
+
 public class LevelsNode : MonoBehaviour
 {
     [SerializeField] private string levelSceneName;
@@ -29,6 +36,8 @@ public class LevelsNode : MonoBehaviour
     [SerializeField] private Transform playerSpawnPostion;
 
     private PlayerInput playerInput;
+
+    [SerializeField] private List<AbilitiesEnabled> abilitiesList = new List<AbilitiesEnabled>();
 
     public void SetLevelStatus(bool ifUnlocked, bool ifCompleted) 
     {
@@ -63,6 +72,11 @@ public class LevelsNode : MonoBehaviour
     {
         if (other.CompareTag("Player") && isUnlocked && playerInput.actions["Jump"].IsPressed())
         {
+            foreach(AbilitiesEnabled abilities in abilitiesList)
+            {
+                abilities.abilitySO.isUnlocked = abilities.isEnabled;
+            }
+
             //UnityEngine.SceneManagement.SceneManager.LoadScene(levelSceneName);
             GameObject.FindObjectOfType<PlayTransition>().GoBlack(false, SceneToGo.Level01); 
             //Se necesitara mirar el play transition para poder hacer transiciones desde level selector,

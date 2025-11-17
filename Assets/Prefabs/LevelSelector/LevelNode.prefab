@@ -191,6 +191,19 @@ MonoBehaviour:
   doesUnlockArea: 0
   nextAreaEnabler: {fileID: 0}
   playerSpawnPostion: {fileID: 0}
+  abilitiesList:
+  - abilitySO: {fileID: 11400000, guid: 14d3dfe2394acad49a93d4097f69a345, type: 2}
+    isEnabled: 0
+  - abilitySO: {fileID: 11400000, guid: a39983d44a19251439f5dfb56d018356, type: 2}
+    isEnabled: 0
+  - abilitySO: {fileID: 11400000, guid: 499aac8b0e7eec44dbf0b3b2017f339c, type: 2}
+    isEnabled: 0
+  - abilitySO: {fileID: 11400000, guid: c759f7f368614864b829672566b4bf1c, type: 2}
+    isEnabled: 0
+  - abilitySO: {fileID: 11400000, guid: 34cc0a3fdb766954ebc777ed0cb3a237, type: 2}
+    isEnabled: 0
+  - abilitySO: {fileID: 11400000, guid: a205bc64c34604447b2a42b71e2edc85, type: 2}
+    isEnabled: 0
 --- !u!114 &6891857900433916252
 MonoBehaviour:
   m_ObjectHideFlags: 0

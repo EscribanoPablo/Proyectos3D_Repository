@@ -148,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
     {
         foreach (Ability ability in abilitiesList)
         {
-            if (ability.abilityData.name == name)
+            if (ability.abilityData.abilityName == name)
                 return ability;
         }
         return null;
