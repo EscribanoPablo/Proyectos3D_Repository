@@ -55667,57 +55667,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2055336123}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &748696378
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 748696379}
-  - component: {fileID: 748696382}
-  m_Layer: 21
-  m_Name: RevealThroughWall
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &748696379
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 748696378}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 1222595906}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &748696382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 748696378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a997f9d33b5143a44b43f492350bdb47, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCamera: {fileID: 424204896}
-  SeeThroughLayers:
-    serializedVersion: 2
-    m_Bits: 3145736
-  animationDuration: 0.5
-  seeThroughMaxRadius: 3
-  wallMaterial: {fileID: 2100000, guid: b718277bec722e94fb61d36fd899fea2, type: 2}
 --- !u!1001 &751720561
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -95746,6 +95695,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -9.856044
       objectReference: {fileID: 0}
+    - target: {fileID: 1040838798330289282, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 424204896}
     - target: {fileID: 1053033848504690777, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -97277,11 +97231,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 9059143790163231872, guid: d9756f0770de0894f9f83e3991330c2e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 748696379}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9756f0770de0894f9f83e3991330c2e, type: 3}
 --- !u!4 &1222595906 stripped

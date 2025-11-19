@@ -231,6 +231,57 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &936365208513586781
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6542025901585930163}
+  - component: {fileID: 1040838798330289282}
+  m_Layer: 21
+  m_Name: RevealThroughWall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6542025901585930163
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936365208513586781}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 9059143790163231872}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1040838798330289282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936365208513586781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a997f9d33b5143a44b43f492350bdb47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
+  SeeThroughLayers:
+    serializedVersion: 2
+    m_Bits: 3145736
+  animationDuration: 0.5
+  seeThroughMaxRadius: 3
+  wallMaterial: {fileID: 2100000, guid: b718277bec722e94fb61d36fd899fea2, type: 2}
 --- !u!1 &1139397069002929441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,6 +1081,7 @@ Transform:
   - {fileID: 5660944538381102376}
   - {fileID: 4537645027817099959}
   - {fileID: 7931401522551624204}
+  - {fileID: 6542025901585930163}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7526401319612956389
@@ -1089,7 +1141,7 @@ MonoBehaviour:
   dustParticles: {fileID: 8196844698687515114}
   baseSpeedMovement: 45
   runSpeedMovement: 100
-  crouchSpeedMovement: 20
+  crouchSpeedMovement: 45
   maxVelocity: 7
   baseRotationSpeed: 7.5
   transitionDurationStart: 0.5
