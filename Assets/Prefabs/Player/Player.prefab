@@ -1105,17 +1105,16 @@ MonoBehaviour:
   wallDetectionDistance: 1.2
   wallDetectionOffset: 1.1
   timeToWallFall: 2
-  faceAwayAfterWallJump: 1
   wallRegrabCooldown: 0.18
   minAngleBetweenWalls: 35
   wallSlideSpeed: 1
   wallUpStopDamp: 16
-  requireNotGroundedToLatch: 1
-  minWallLatchGroundClearance: 0.6
-  wallAnticipationDistance: 0.6
-  wallAnticipationAngle: 35
-  wallAnticipationMinSpeed: 0.5
-  wallAnticipationSmoothing: 10
+  minDistanceToGroundToSetOnWall: 0.6
+  postJumpNoLatchTime: 0.12
+  minFacingDotToSetOnWall: 0.753
+  minPlayerSpeedToSetOnWall: 0.2
+  wallJumpMoveFreeze: 0.15
+  jumpCooldownAfterWallJump: 0.15
   dashDuration: 0.2
   dashPower: 13
   groundPoundForce: 20
@@ -1191,6 +1190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 6
   DEV_INVINCIBLE: 0
+  gotHit: 0
   invulnerableTime: 1
   noInputsTime: 0.3
   restartPressedTime: 2

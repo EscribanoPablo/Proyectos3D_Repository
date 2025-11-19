@@ -82,21 +82,23 @@ public class PlayerMovement : MonoBehaviour
     private float wallTimer;
     private Vector3 lastWallNormal = Vector3.zero;
     private RaycastHit lastWallHit;
-    [SerializeField] private bool faceAwayAfterWallJump = true; // opcional: girar tras el salto
+    private bool faceAwayAfterWallJump = true; // opcional: girar tras el salto
     [SerializeField] private float wallRegrabCooldown = 0.18f; // 0.15–0.25s va bien
     [SerializeField] private float minAngleBetweenWalls = 35f; // grados para evitar misma pared
     private Vector3 lastWallJumpNormal = Vector3.zero;
     [SerializeField] private float wallSlideSpeed = 1.5f;     // velocidad máx. de caída estando en pared
     [SerializeField] private float wallUpStopDamp = 12f;      // amortiguación para eliminar velocidad ascendente en pared
-    [SerializeField] private bool requireNotGroundedToLatch = true; // no entrar en pared si estás en suelo
-    [SerializeField] private float minWallLatchGroundClearance = 0.6f; // altura mínima al suelo para enganchar pared
+    private bool requireNotGroundedToLatch = true; // no entrar en pared si estás en suelo
+    [SerializeField] private float minDistanceToGroundToSetOnWall = 0.6f; // altura mínima al suelo para enganchar pared
     
     [SerializeField] private float postJumpNoLatchTime = 0.12f; // 0.1–0.15 s
     private float blockWallLatchUntil = 0f;
-    [SerializeField] private float minFacingDotToLatch = 0.5f;     // ≈60° respecto a la normal
-    [SerializeField] private float minForwardSpeedToLatch = 0.2f;  // m/s hacia adelante
+    [Range(0,1)] [SerializeField] private float minFacingDotToSetOnWall = 0.5f;     // ≈60° respecto a la normal
+    [SerializeField] private float minPlayerSpeedToSetOnWall = 0.2f;  // m/s hacia adelante
     [SerializeField] private float wallJumpMoveFreeze = 0.15f;
     private Coroutine movementUnlockRoutine = null;
+    [SerializeField] private float jumpCooldownAfterWallJump = 0.15f; // 0.12–0.2 va bien
+    private float nextJumpAllowedTime = 0f;
     //[SerializeField] private float wallAnticipationDistance = 0.6f;   // distancia para anticipar
     //[SerializeField] private float wallAnticipationAngle = 35f;       // grados máx entre forward y -normal
     //[SerializeField] private float wallAnticipationMinSpeed = 0.5f;   // mínima velocidad hacia la pared
@@ -337,6 +339,19 @@ public class PlayerMovement : MonoBehaviour
             speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
         }
 
+        if (!onWall && !isGrounded && facingWall)
+        {
+            // Quitamos la componente de velocidad que empuja contra la pared
+            Vector3 v = rigidBody.velocity;
+            Vector3 n = lastWallNormal.normalized;
+            Vector3 intoWall = Vector3.Project(v, -n); // componente hacia la pared
+
+            if (intoWall.sqrMagnitude > 1e-6f)
+                v -= intoWall; // nos quedamos con vertical + tangencial
+
+            rigidBody.velocity = v;
+        }
+
         // NOTE: Don't directly overwrite planar velocity here (that would snap). We keep control of vertical and let
         // physics + externalVelocity blending determine the planar result. ApplyExternalVelocityTick already writes a velocity
         // that respects vertical component, but ensure vertical is set to our computed verticalSpeed here.
@@ -423,8 +438,8 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 bool timeOK = Time.time >= blockWallLatchUntil;
-                bool facingOK = Vector3.Dot(transform.forward, -lastWallNormal) >= minFacingDotToLatch;
-                bool forwardOK = Vector3.Dot(rigidBody.velocity, transform.forward) > minForwardSpeedToLatch;
+                bool facingOK = Vector3.Dot(transform.forward, -lastWallNormal) >= minFacingDotToSetOnWall;
+                bool forwardOK = Vector3.Dot(rigidBody.velocity, transform.forward) > minPlayerSpeedToSetOnWall;
                 bool differentWallOK = IsDifferentWall(lastWallNormal); 
 
                 if (facingWall && CanAttachToThisWall(lastWallNormal) && (!requireNotGroundedToLatch || !isGrounded) 
@@ -433,7 +448,10 @@ public class PlayerMovement : MonoBehaviour
                     SetOnWall();
                 }
                 else
+                {
                     rigidBody.drag = 0.5f;
+                    // AQUÍ YA NO TOCAMOS rigidBody.velocity
+                }
             }
         }
         else
@@ -511,7 +529,7 @@ public class PlayerMovement : MonoBehaviour
     private bool HasMinGroundClearance()
     {
         // true si NO hay suelo dentro de la distancia indicada
-        return DistanceToGroundChecker(minWallLatchGroundClearance);
+        return DistanceToGroundChecker(minDistanceToGroundToSetOnWall);
     }
 
     private void UpdateWallAnticipation()
@@ -552,6 +570,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isDashing)
             return;
+
+        if (Time.time < nextJumpAllowedTime)
+        {
+            isJumping = false;
+            return;
+        }
 
         if (!playerInput.actions["Jump"].WasPressedThisFrame())
         {
@@ -708,7 +732,7 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.AddForce(lateral + vertical, ForceMode.Impulse);
 
 
-        // Opcional: reorientar al personaje mirando en sentido del salto
+        // reorientar al personaje mirando en sentido del salto
         if (faceAwayAfterWallJump)
         {
             Quaternion targetRot = Quaternion.LookRotation(away, Vector3.up);
@@ -716,6 +740,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         playerAnimator.SetTrigger("WallJumped");
+
+
+        //bloquea el salto durante un pequeño tiempo
+        nextJumpAllowedTime = Time.time + jumpCooldownAfterWallJump;
 
         // Si había un unlock anterior, lo cancelamos y lanzamos uno nuevo
         if (movementUnlockRoutine != null)
