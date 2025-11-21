@@ -8,6 +8,7 @@ public class PlayTransition : MonoBehaviour
 {
     Animator transitionAnimator;
     SceneToGo sceneToGo;
+    private string nextLevelName;
 
     private void Start()
     {
@@ -41,7 +42,7 @@ public class PlayTransition : MonoBehaviour
                 SceneManager.LoadScene("TutorialLevel_Cat");
                 FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceTutorialWelcomeSound);
                 break;
-            case SceneToGo.Level01:
+            case SceneToGo.Level01: //to delete
                 GameController.GetGameController().EmptyRestartList();
                 SceneManager.LoadScene("BetaLevel01_Cat");
 
@@ -49,11 +50,20 @@ public class PlayTransition : MonoBehaviour
                 FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
                 FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceFirstStageWelcome);
                 break;
-            case SceneToGo.Level02:
+            case SceneToGo.Level02: //to delete
                 GameController.GetGameController().EmptyRestartList();
                 SceneManager.LoadScene("BetaLevel02_Cat");
 
                 FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceSecondStageWelcome);
+                break;
+            case SceneToGo.Level:
+                GameController.GetGameController().EmptyRestartList();
+                SceneManager.LoadScene(nextLevelName);
+
+                //Se tendra que mirar si cada nivel tiene algun audio o musica especial, se podria enviar tambien desde el level node
+                FindObjectOfType<AudioManager>().StopMusic(FindObjectOfType<AudioManager>().instanceMenuSong);
+                FindObjectOfType<AudioManager>().PlayMusic(FindObjectOfType<AudioManager>().instanceCrowdNoise);
+                //FindObjectOfType<AudioManager>().PlayCircusMasterAudio(FindObjectOfType<AudioManager>().instanceFirstStageWelcome);
                 break;
             case SceneToGo.FinalCinematic:
                 GameController.GetGameController().EmptyRestartList();
@@ -89,6 +99,20 @@ public class PlayTransition : MonoBehaviour
         }
     }
 
+    public void GoBlackFromLevelSel(bool fromMenu, string levelName)
+    {
+        transitionAnimator.SetBool("MenuTransition", fromMenu);
+        transitionAnimator.SetTrigger("GoBlack");
+        nextLevelName = levelName;
+        sceneToGo = SceneToGo.Level;
+        FindObjectOfType<EventSystem>().enabled = false;
+
+        foreach (StudioEventEmitter eventEmitter in FindObjectsOfType<StudioEventEmitter>())
+        {
+            eventEmitter.Stop(); eventEmitter.PlayEvent = EmitterGameEvent.None;
+        }
+    }
+
     public void GoTransparent()
     {
         transitionAnimator.SetTrigger("GoTransparent");
@@ -101,8 +125,9 @@ public enum SceneToGo
     Settings,
     LevelSelector,
     TutorialLevel,
-    Level01,
-    Level02,
+    Level01, //to delete
+    Level02, //to delete
+    Level,
     FinalCinematic,
     Credits,
 }

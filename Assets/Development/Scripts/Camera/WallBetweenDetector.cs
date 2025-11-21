@@ -19,8 +19,13 @@ public class WallBetweenDetector : MonoBehaviour
 
     private MaterialPropertyBlock[] mpbs;
 
+    [SerializeField] private bool hasTheVariablesImplemented = false; //variable temporal, para las escenas en las que no estan puestas estas variables en el GO
+
     void Start()
     {
+        if (!hasTheVariablesImplemented)
+            return;
+
         target = this.gameObject;
 
         wallsRenderers = GameObject.FindGameObjectsWithTag("SeeThroughWalls").Select(w => w.GetComponent<MeshRenderer>()).Where(r => r != null).ToArray();
@@ -36,6 +41,9 @@ public class WallBetweenDetector : MonoBehaviour
 
     void Update()
     {
+        if (!hasTheVariablesImplemented)
+            return;
+
         Vector3 playerPos = target.transform.position;
         Vector3 camPos = mainCamera.transform.position;
 
