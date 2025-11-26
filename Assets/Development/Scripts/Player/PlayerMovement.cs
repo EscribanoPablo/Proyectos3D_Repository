@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private CapsuleCollider baseCollider;
     [SerializeField] private CapsuleCollider crouchingCollider;
     [SerializeField] new Camera camera;
+    [SerializeField] private CinemachineVirtualCamera cameraCinemachine;
     [SerializeField] private Transform groundChecker;
     [SerializeField] private Transform roofChecker;
     [SerializeField] private LayerMask whatIsGround;
@@ -47,6 +49,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float runSpeedMovement = 70;
     [SerializeField] private float crouchSpeedMovement = 20;
     private float speedMovement;
+    private float cameraFOVBase;
+    [SerializeField] private float cameraFOVWhenRunning;
     [SerializeField] private float maxVelocity;
     [SerializeField] private float baseRotationSpeed = 7.5f;
     private float rotationSpeed;
@@ -247,6 +251,7 @@ public class PlayerMovement : MonoBehaviour
         speedAnimation = 0;
         speedMovement = baseSpeedMovement;
         rotationSpeed = baseRotationSpeed;
+        cameraFOVBase = cameraCinemachine.m_Lens.FieldOfView;
 
         if (GetAbility("Shoot").abilityData.isUnlocked)
             cannonGO.SetActive(true);
@@ -323,9 +328,19 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 if ((playerInput.actions["Run"].IsPressed() && isGrounded && !canonShoot.GetIfAiming()) || !isGrounded && longJumped)
+                {
                     rigidBody.AddForce(moveDir.normalized * runSpeedMovement, ForceMode.Force);
+                    //if (cameraCinemachine.m_Lens.FieldOfView == cameraFOVBase)
+                    //    cameraCinemachine.m_Lens.FieldOfView = cameraFOVWhenRunning;
+                    cameraCinemachine.m_Lens.FieldOfView = Mathf.Lerp(cameraCinemachine.m_Lens.FieldOfView, cameraFOVWhenRunning, 0.3f);
+                }
                 else
+                {
                     rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
+                    //if (cameraCinemachine.m_Lens.FieldOfView != cameraFOVBase)
+                    //    cameraCinemachine.m_Lens.FieldOfView = cameraFOVBase;
+                    cameraCinemachine.m_Lens.FieldOfView = Mathf.Lerp(cameraCinemachine.m_Lens.FieldOfView, cameraFOVBase, 0.2f);
+                }
             }
 
             transitionTimer += Time.deltaTime;
@@ -341,6 +356,8 @@ public class PlayerMovement : MonoBehaviour
             if (transitionTimer < 0f)
                 transitionTimer = 0f;
             speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
+
+            cameraCinemachine.m_Lens.FieldOfView = Mathf.Lerp(cameraCinemachine.m_Lens.FieldOfView, cameraFOVBase, 0.2f);
         }
 
         if (!onWall && !isGrounded && facingWall)
