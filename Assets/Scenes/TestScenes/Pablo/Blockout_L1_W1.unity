@@ -15250,6 +15250,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7526401319612956389, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
+      propertyPath: wallJumpInputDelay
+      value: 0.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526401319612956389, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
       propertyPath: minFacingDotToSetOnWall
       value: 0.167
       objectReference: {fileID: 0}
@@ -44835,7 +44840,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664116724}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 84e5ced5333ed6c4e911c7c5888a0174, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

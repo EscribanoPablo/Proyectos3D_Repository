@@ -282,6 +282,7 @@ MonoBehaviour:
   animationDuration: 0.5
   seeThroughMaxRadius: 3
   wallMaterial: {fileID: 2100000, guid: b718277bec722e94fb61d36fd899fea2, type: 2}
+  hasTheVariablesImplemented: 0
 --- !u!1 &1139397069002929441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,12 +1162,12 @@ MonoBehaviour:
   minAngleBetweenWalls: 35
   wallSlideSpeed: 1
   wallUpStopDamp: 16
-  minDistanceToGroundToSetOnWall: 0.6
+  minDistanceToGroundToSetOnWall: 0.15
   postJumpNoLatchTime: 0.12
   minFacingDotToSetOnWall: 0.753
   minPlayerSpeedToSetOnWall: 0.2
-  wallJumpMoveFreeze: 0.15
-  jumpCooldownAfterWallJump: 0.15
+  wallJumpMoveFreeze: 0.3
+  wallJumpCooldown: 0.15
   dashDuration: 0.2
   dashPower: 13
   groundPoundForce: 20

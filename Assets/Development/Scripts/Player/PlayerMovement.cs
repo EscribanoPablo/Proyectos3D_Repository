@@ -97,8 +97,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float minPlayerSpeedToSetOnWall = 0.2f;  // m/s hacia adelante
     [SerializeField] private float wallJumpMoveFreeze = 0.15f;
     private Coroutine movementUnlockRoutine = null;
-    [SerializeField] private float jumpCooldownAfterWallJump = 0.15f; // 0.12–0.2 va bien
-    private float nextJumpAllowedTime = 0f;
+    private float wallJumpCooldown = 0.15f; // 0.12–0.2 se siente bien
+    private float nextWallJumpAllowedTime = 0f;
+    [SerializeField] private float wallJumpInputDelay = 0.08f; // tiempo mínimo pegado antes de poder saltar
+    private float wallJumpCanStartAt = 0f;
     //[SerializeField] private float wallAnticipationDistance = 0.6f;   // distancia para anticipar
     //[SerializeField] private float wallAnticipationAngle = 35f;       // grados máx entre forward y -normal
     //[SerializeField] private float wallAnticipationMinSpeed = 0.5f;   // mínima velocidad hacia la pared
@@ -150,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
     {
         foreach (Ability ability in abilitiesList)
         {
-            if (ability.abilityData.abilityName == name)
+            if (ability.abilityData.name == name)
                 return ability;
         }
         return null;
@@ -341,15 +343,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (!onWall && !isGrounded && facingWall)
         {
-            // Quitamos la componente de velocidad que empuja contra la pared
             Vector3 v = rigidBody.velocity;
-            Vector3 n = lastWallNormal.normalized;
-            Vector3 intoWall = Vector3.Project(v, -n); // componente hacia la pared
+            Vector3 n = lastWallNormal.normalized;   // normal que sale de la pared
 
-            if (intoWall.sqrMagnitude > 1e-6f)
-                v -= intoWall; // nos quedamos con vertical + tangencial
-
-            rigidBody.velocity = v;
+            // componente que empuja HACIA la pared (en dirección -n)
+            float intoDot = Vector3.Dot(v, -n);
+            if (intoDot > 0f) // solo si realmente vamos hacia la pared
+            {
+                Vector3 intoWall = (-n) * intoDot;   // vector hacia la pared
+                v -= intoWall;                       // eliminamos solo esa componente
+                rigidBody.velocity = v;
+            }
         }
 
         // NOTE: Don't directly overwrite planar velocity here (that would snap). We keep control of vertical and let
@@ -440,17 +444,29 @@ public class PlayerMovement : MonoBehaviour
                 bool timeOK = Time.time >= blockWallLatchUntil;
                 bool facingOK = Vector3.Dot(transform.forward, -lastWallNormal) >= minFacingDotToSetOnWall;
                 bool forwardOK = Vector3.Dot(rigidBody.velocity, transform.forward) > minPlayerSpeedToSetOnWall;
-                bool differentWallOK = IsDifferentWall(lastWallNormal); 
+                bool differentWallOK = IsDifferentWall(lastWallNormal);
 
-                if (facingWall && CanAttachToThisWall(lastWallNormal) && (!requireNotGroundedToLatch || !isGrounded) 
-                    && HasMinGroundClearance() && timeOK && facingOK && forwardOK && (canWall || differentWallOK))
+                // MISMA pared desde la que hicimos el último wall jump
+                bool sameWallAsLastJump = !differentWallOK;
+
+                // Cooldown SOLO si es la misma pared
+                bool timeWallOK = !sameWallAsLastJump || Time.time >= nextWallJumpAllowedTime;
+
+                if (facingWall
+                    && CanAttachToThisWall(lastWallNormal)
+                    && (!requireNotGroundedToLatch || !isGrounded)
+                    && HasMinGroundClearance()
+                    && timeOK
+                    && timeWallOK          //solo limita la misma pared
+                    && facingOK
+                    && forwardOK
+                    && (canWall || differentWallOK))
                 {
                     SetOnWall();
                 }
                 else
                 {
                     rigidBody.drag = 0.5f;
-                    // AQUÍ YA NO TOCAMOS rigidBody.velocity
                 }
             }
         }
@@ -500,7 +516,8 @@ public class PlayerMovement : MonoBehaviour
 
 
         playerAnimator.SetBool("OnWall", true);
-
+        // A partir de este momento empezamos a contar el delay para poder hacer WallJump
+        wallJumpCanStartAt = Time.time + wallJumpInputDelay;
         // reset anticipación
         //wallApproachBlend = 0f;
         //playerAnimator.SetFloat("WallApproach", 0f);
@@ -571,11 +588,6 @@ public class PlayerMovement : MonoBehaviour
         if (isDashing)
             return;
 
-        if (Time.time < nextJumpAllowedTime)
-        {
-            isJumping = false;
-            return;
-        }
 
         if (!playerInput.actions["Jump"].WasPressedThisFrame())
         {
@@ -598,7 +610,14 @@ public class PlayerMovement : MonoBehaviour
                 if (currentJumps == 0 && GetAbility("Jump").canUse)
                     StartCoroutine(DoNormalJump());
                 else if (onWall)
-                    WallJump();
+                {
+                    // Si todavía no ha pasado el delay desde que nos enganchamos,
+                    // ignoramos este input de salto (no consumimos double jump tampoco).
+                    if (Time.time >= wallJumpCanStartAt)
+                        WallJump();
+                    else
+                        isJumping = false;
+                }
                 else if (GetAbility("DoubleJump").canUse && GetAbility("DoubleJump").abilityData.isUnlocked && !GetAbility("Jump").canUse)
                     StartCoroutine(DoDoubleJump());
                 else
@@ -743,7 +762,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         //bloquea el salto durante un pequeño tiempo
-        nextJumpAllowedTime = Time.time + jumpCooldownAfterWallJump;
+        nextWallJumpAllowedTime = Time.time + wallJumpCooldown;
 
         // Si había un unlock anterior, lo cancelamos y lanzamos uno nuevo
         if (movementUnlockRoutine != null)
