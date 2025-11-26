@@ -119,6 +119,8 @@ public class PlayerMovement : MonoBehaviour
     private bool isDashing;
     private float multipleDashOnAir = 2;
     private float currentDashes = 0;
+    [SerializeField] private float dashDrag = 0f;    // drag durante el dash
+    private float previousDrag = 0.5f;              // para restaurar luego
 
     [Header("GroundPound Variables")]
     [SerializeField] private float groundPoundForce = 10f;
@@ -419,6 +421,8 @@ public class PlayerMovement : MonoBehaviour
     private void HandleWallInteractions()
     {
         if (doingGroundPound) return;
+
+        if (isDashing) return;
 
         if (TryGetWallHit(out RaycastHit hit))
         {
@@ -875,8 +879,14 @@ public class PlayerMovement : MonoBehaviour
 
         rigidBody.useGravity = false;
 
-        float _dashPower = isGrounded ? dashPower * 1.5f : dashPower;
+        // >>> NUEVO: guardamos y sobreescribimos el drag
+        previousDrag = rigidBody.drag;
+        rigidBody.drag = dashDrag;
+
+        // >>> MISMO dashPower siempre (sin multiplicar en suelo)
+        float _dashPower = dashPower;
         Vector3 dashDirection = _dashPower * transform.forward;
+
         StopVerticalVelocity();
         rigidBody.AddForce(dashDirection, ForceMode.Impulse);
 
@@ -888,10 +898,15 @@ public class PlayerMovement : MonoBehaviour
 
         yield return new WaitForSeconds(dashDuration);
 
+        // Fin del dash: restauramos físico
         if (!GetAbility("DoubleJump").alreadyUsed)
             GetAbility("DoubleJump").canUse = true;
+
         rigidBody.useGravity = true;
         isDashing = false;
+
+        // >>> NUEVO: restaurar drag original
+        rigidBody.drag = previousDrag;
 
         yield return new WaitForSeconds(GetAbility("Dash").abilityData.cooldown);
 
