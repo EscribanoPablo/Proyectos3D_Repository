@@ -1322,18 +1322,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 104548254}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &108936927 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2135329001679434819, guid: 24bf1d5237e20a249b9b0a4eedc74f2c,
-    type: 3}
-  m_PrefabInstance: {fileID: 423317488}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &113326701
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19503,11 +19491,6 @@ PrefabInstance:
       propertyPath: speedMovement
       value: 80
       objectReference: {fileID: 0}
-    - target: {fileID: 7526401319612956389, guid: d9756f0770de0894f9f83e3991330c2e,
-        type: 3}
-      propertyPath: cameraCinemachine
-      value: 
-      objectReference: {fileID: 108936927}
     - target: {fileID: 9059143790163231872, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
       propertyPath: m_LocalPosition.x
