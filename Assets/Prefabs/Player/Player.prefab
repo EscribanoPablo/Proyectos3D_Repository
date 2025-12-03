@@ -1053,6 +1053,7 @@ GameObject:
   - component: {fileID: 2407899779544871975}
   - component: {fileID: 1473511775892376736}
   - component: {fileID: 5265580782934821365}
+  - component: {fileID: 1903008893135649284}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1119,6 +1120,7 @@ MonoBehaviour:
   baseCollider: {fileID: 410713183316784795}
   crouchingCollider: {fileID: 1473511775892376736}
   camera: {fileID: 0}
+  cameraCinemachine: {fileID: 0}
   groundChecker: {fileID: 8722211926356234388}
   roofChecker: {fileID: 4407552948084560772}
   whatIsGround:
@@ -1143,6 +1145,7 @@ MonoBehaviour:
   baseSpeedMovement: 45
   runSpeedMovement: 100
   crouchSpeedMovement: 45
+  cameraFOVWhenRunning: 62
   maxVelocity: 7
   baseRotationSpeed: 7.5
   transitionDurationStart: 0.5
@@ -1167,9 +1170,10 @@ MonoBehaviour:
   minFacingDotToSetOnWall: 0.753
   minPlayerSpeedToSetOnWall: 0.2
   wallJumpMoveFreeze: 0.3
-  wallJumpCooldown: 0.15
+  wallJumpInputDelay: 0.08
   dashDuration: 0.2
   dashPower: 13
+  dashDrag: 0
   groundPoundForce: 20
   distanceToGroundPound: 3
   coyoteTimeDuration: 0.3
@@ -1410,6 +1414,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseKnockbackImpulse: 0
   knockbackPowerMultiplierWhenPlayerOnGround: 3
+--- !u!114 &1903008893135649284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4398075436590841281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae48a1723d65c84ca6b6b5a3a97072e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swingForce: 20
+  maxSwingSpeed: 20
+  baseLaunchBoost: 6
+  extraBoostBySpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4736000364395186754
 GameObject:
   m_ObjectHideFlags: 0

@@ -154,6 +154,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float externalVelocityDamping = 6f; // decay rate
     [SerializeField] private float externalVelocityBlend = 0.15f; // blending factor per FixedUpdate
 
+    [Header("Balancín")]
+    private PlayerSwing swingHandler;
+
     public Ability GetAbility(string name)
     {
         foreach (Ability ability in abilitiesList)
@@ -243,6 +246,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        swingHandler = GetComponent<PlayerSwing>();
         audioManager = FindObjectOfType<AudioManager>();
         rigidBody = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
@@ -261,23 +265,39 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (playerControllerEnabled)
-        {
-            isGrounded = IsGroundedChecker();
+        if (!playerControllerEnabled)
+            return;
 
-            HandleCoyoteTime();
-            HandleWallInteractions();
-            //UpdateWallAnticipation();
-            HandleJumps();
-            HandleDash();
-            HandleGroundPound();
+        // Si estamos en el balancín, delegamos y salimos
+        if (swingHandler != null && swingHandler.IsSwinging)
+        {
+            swingHandler.HandleSwingUpdate();
+            return;
         }
+
+        isGrounded = IsGroundedChecker();
+
+        HandleCoyoteTime();
+        HandleWallInteractions();
+        //UpdateWallAnticipation();
+        HandleJumps();
+        HandleDash();
+        HandleGroundPound();
     }
 
     private void FixedUpdate()
     {
         if (playerControllerEnabled)
         {
+            if (swingHandler != null && swingHandler.IsSwinging)
+            {
+                // aquí en principio no hace falta nada, la física del joint
+                // ya trabaja con la gravedad normal; si algún día quieres
+                // aplicar fuerzas extras por frame, puedes añadir un método
+                // swingHandler.HandleSwingFixedUpdate();
+                return;
+            }
+
             Movement();
             UpdateDustParticles();
         }
