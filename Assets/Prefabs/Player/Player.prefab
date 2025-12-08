@@ -1119,6 +1119,7 @@ MonoBehaviour:
   baseCollider: {fileID: 410713183316784795}
   crouchingCollider: {fileID: 1473511775892376736}
   camera: {fileID: 0}
+  cameraCinemachine: {fileID: 0}
   groundChecker: {fileID: 8722211926356234388}
   roofChecker: {fileID: 4407552948084560772}
   whatIsGround:
@@ -1143,6 +1144,7 @@ MonoBehaviour:
   baseSpeedMovement: 45
   runSpeedMovement: 100
   crouchSpeedMovement: 45
+  cameraFOVWhenRunning: 62
   maxVelocity: 7
   baseRotationSpeed: 7.5
   transitionDurationStart: 0.5
@@ -1167,9 +1169,10 @@ MonoBehaviour:
   minFacingDotToSetOnWall: 0.753
   minPlayerSpeedToSetOnWall: 0.2
   wallJumpMoveFreeze: 0.3
-  wallJumpCooldown: 0.15
+  wallJumpInputDelay: 0.08
   dashDuration: 0.2
   dashPower: 13
+  dashDrag: 0
   groundPoundForce: 20
   distanceToGroundPound: 3
   coyoteTimeDuration: 0.3
