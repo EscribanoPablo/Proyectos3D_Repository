@@ -1817,26 +1817,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1903008893135649284, guid: d9756f0770de0894f9f83e3991330c2e,
-        type: 3}
-      propertyPath: swingForce
-      value: 48
-      objectReference: {fileID: 0}
-    - target: {fileID: 1903008893135649284, guid: d9756f0770de0894f9f83e3991330c2e,
-        type: 3}
-      propertyPath: maxSwingSpeed
-      value: 52
-      objectReference: {fileID: 0}
-    - target: {fileID: 1903008893135649284, guid: d9756f0770de0894f9f83e3991330c2e,
-        type: 3}
-      propertyPath: baseLaunchBoost
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1903008893135649284, guid: d9756f0770de0894f9f83e3991330c2e,
-        type: 3}
-      propertyPath: barReturnDamping
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 2169129222556867023, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
       propertyPath: m_IsActive
@@ -4932,6 +4912,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Swing
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968614076774970222, guid: 4cc4cc412414b5447be53b1dab21a5a9,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968614076774970222, guid: 4cc4cc412414b5447be53b1dab21a5a9,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968614076774970222, guid: 4cc4cc412414b5447be53b1dab21a5a9,
+        type: 3}
+      propertyPath: m_Size.z
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968614076774970222, guid: 4cc4cc412414b5447be53b1dab21a5a9,
+        type: 3}
+      propertyPath: m_Center.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968614076774970222, guid: 4cc4cc412414b5447be53b1dab21a5a9,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3968614076774970222, guid: 4cc4cc412414b5447be53b1dab21a5a9,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7608125648766852697, guid: 4cc4cc412414b5447be53b1dab21a5a9,
         type: 3}

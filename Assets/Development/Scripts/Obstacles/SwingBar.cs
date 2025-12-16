@@ -18,13 +18,32 @@ public class SwingBar : MonoBehaviour
             grabCollider.isTrigger = true;
     }
 
+    private void Awake()
+    {
+        //IMPORTANTE: buscar el Hinge en el PADRE
+        HingeJoint hinge = GetComponentInParent<HingeJoint>();
+        if (!hinge)
+        {
+            Debug.LogError("SwingBar: No se encontró HingeJoint en el padre");
+            return;
+        }
+
+        hinge.useSpring = true;
+
+        JointSpring spring = hinge.spring;
+        spring.spring = 80f;        // fuerza de retorno
+        spring.damper = 8f;         // amortiguación
+        spring.targetPosition = 0f; // neutro EXACTO
+        hinge.spring = spring;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player"))
             return;
 
         PlayerSwing swing = other.GetComponent<PlayerSwing>();
-        if (swing == null)
+        if (!swing)
             return;
 
         Vector3 grabPoint = grabCollider.ClosestPoint(other.transform.position);
