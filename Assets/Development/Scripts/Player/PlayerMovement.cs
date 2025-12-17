@@ -156,6 +156,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Balancín")]
     private PlayerSwing swingHandler;
+    private Trampoline lastTrampoline;
+
+    [Header("Trampoline")]
+    [SerializeField] private bool trampolineEnablesDoubleJump = true;
 
     public Ability GetAbility(string name)
     {
@@ -1053,6 +1057,11 @@ public class PlayerMovement : MonoBehaviour
 
                 audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
 
+                if (lastTrampoline != null)
+                {
+                    lastTrampoline.ResetBounces();
+                    lastTrampoline = null;
+                }
                 // reset anticipación al tocar suelo
                 //wallApproachBlend = 0f;
                 //playerAnimator.SetFloat("WallApproach", 0f);
@@ -1067,6 +1076,24 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator.SetBool("OnGround", false);
 
         return false;
+    }
+
+    public void RegisterTrampoline(Trampoline trampoline)
+    {
+        lastTrampoline = trampoline;
+    }
+
+    public void OnTrampolineBounce()
+    {
+        if (!trampolineEnablesDoubleJump)
+            return;
+
+        Ability doubleJump = GetAbility("DoubleJump");
+        if (doubleJump == null || !doubleJump.abilityData.isUnlocked)
+            return;
+
+        doubleJump.canUse = true;
+        doubleJump.alreadyUsed = false;
     }
 
     private bool DistanceToGroundChecker(float distanceToGround)
