@@ -1183,6 +1183,7 @@ MonoBehaviour:
   externalVelocity: {x: 0, y: 0, z: 0}
   externalVelocityDamping: 6
   externalVelocityBlend: 0.15
+  trampolineEnablesDoubleJump: 1
 --- !u!54 &2113590656291869998
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1426,7 +1427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ae48a1723d65c84ca6b6b5a3a97072e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingForce: 20
+  swingForce: 35
   maxSwingSpeed: 60
   baseLaunchBoost: 6
   extraBoostBySpeed:
