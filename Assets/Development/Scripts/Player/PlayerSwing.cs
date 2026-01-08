@@ -127,6 +127,9 @@ public class PlayerSwing : MonoBehaviour
         rb.rotation = Quaternion.Euler(0f, euler.y, 0f);
 
         rb.velocity = launchVelocity;
+
+        CanonShoot canonShoot = GetComponent<CanonShoot>();
+        canonShoot?.ShootAbility.SetCanUseAbility(true);
     }
 
     public void HandleSwingUpdate()

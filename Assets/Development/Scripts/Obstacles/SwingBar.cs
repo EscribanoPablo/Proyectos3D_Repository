@@ -46,6 +46,11 @@ public class SwingBar : MonoBehaviour
         if (!swing)
             return;
 
+        CanonShoot canonShoot = other.GetComponent<CanonShoot>();
+        if(canonShoot != null)
+        {
+            canonShoot.ShootAbility.SetCanUseAbility(false);
+        }
         Vector3 grabPoint = grabCollider.ClosestPoint(other.transform.position);
         swing.AttachToBar(this, grabPoint);
     }

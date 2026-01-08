@@ -19,6 +19,7 @@ public class CanonShoot : MonoBehaviour
 
     [Header("Shoot")]
     private Ability shootAbility;
+    public  Ability ShootAbility { get { return shootAbility; } set { shootAbility = value; } }
     public float currentTimeShoot { get; set; }
     public Vector3 CanonForward => cannonForward;
     private Vector3 cannonForward;
@@ -56,7 +57,7 @@ public class CanonShoot : MonoBehaviour
     private void Update()
     {
         currentTimeShoot += Time.deltaTime;
-        if (Time.timeScale == 1 && shootAbility.abilityData.isUnlocked)
+        if (Time.timeScale == 1 && shootAbility.abilityData.isUnlocked && shootAbility.canUse)
         {
             HandleAiming();
             HandleCannonShoots();

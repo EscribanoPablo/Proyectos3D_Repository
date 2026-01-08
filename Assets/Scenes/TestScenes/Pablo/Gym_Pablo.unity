@@ -1882,6 +1882,11 @@ PrefabInstance:
       propertyPath: runningMaxVelocity
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 7526401319612956389, guid: d9756f0770de0894f9f83e3991330c2e,
+        type: 3}
+      propertyPath: wallDetachInputDelay
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8357810456686329749, guid: d9756f0770de0894f9f83e3991330c2e,
         type: 3}
       propertyPath: m_IsActive

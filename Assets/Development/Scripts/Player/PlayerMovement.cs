@@ -10,6 +10,11 @@ public class Ability
     public AbilityState abilityData;
     public bool canUse;
     public bool alreadyUsed;
+
+    public void SetCanUseAbility(bool value)
+    {
+        canUse = value;
+    }
 }
 
 public class PlayerMovement : MonoBehaviour
@@ -567,6 +572,8 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator.SetBool("OnWall", true);
         // A partir de este momento empezamos a contar el delay para poder hacer WallJump
         wallJumpCanStartAt = Time.time + wallJumpInputDelay;
+
+        canonShoot.ShootAbility.SetCanUseAbility(false);
         // reset anticipación
         //wallApproachBlend = 0f;
         //playerAnimator.SetFloat("WallApproach", 0f);
@@ -594,6 +601,9 @@ public class PlayerMovement : MonoBehaviour
         }
 
         playerAnimator.SetBool("OnWall", false);
+
+        canonShoot.ShootAbility.SetCanUseAbility(true);
+
     }
 
     private bool HasMinGroundClearance()
