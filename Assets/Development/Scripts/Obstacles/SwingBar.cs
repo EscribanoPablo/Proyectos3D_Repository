@@ -8,26 +8,49 @@ public class SwingBar : MonoBehaviour
     [SerializeField] private Rigidbody barRigidbody;   // Rigidbody del GameObject padre
     [SerializeField] private Collider grabCollider;    // Este collider (trigger) que define la zona de agarre
     [SerializeField] private Transform pivot;
+    public Rigidbody BarRigidbody => barRigidbody;
+    public Transform Pivot => pivot;
+
     private void Reset()
     {
         grabCollider = GetComponent<Collider>();
         if (grabCollider != null)
             grabCollider.isTrigger = true;
     }
-    public Rigidbody BarRigidbody => barRigidbody;
-    public Collider GrabCollider => grabCollider;
-    public Transform Pivot => pivot;
+
+    private void Awake()
+    {
+        //IMPORTANTE: buscar el Hinge en el PADRE
+        HingeJoint hinge = GetComponentInParent<HingeJoint>();
+        if (!hinge)
+        {
+            Debug.LogError("SwingBar: No se encontró HingeJoint en el padre");
+            return;
+        }
+
+        hinge.useSpring = true;
+
+        JointSpring spring = hinge.spring;
+        spring.spring = 80f;        // fuerza de retorno
+        spring.damper = 8f;         // amortiguación
+        spring.targetPosition = 0f; // neutro EXACTO
+        hinge.spring = spring;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player"))
             return;
 
-        var swing = other.GetComponent<PlayerSwing>();
-        if (swing == null)
+        PlayerSwing swing = other.GetComponent<PlayerSwing>();
+        if (!swing)
             return;
 
-        // Punto más cercano de esta zona de agarre al jugador
+        CanonShoot canonShoot = other.GetComponent<CanonShoot>();
+        if(canonShoot != null)
+        {
+            canonShoot.ShootAbility.SetCanUseAbility(false);
+        }
         Vector3 grabPoint = grabCollider.ClosestPoint(other.transform.position);
         swing.AttachToBar(this, grabPoint);
     }

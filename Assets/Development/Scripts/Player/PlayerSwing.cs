@@ -4,148 +4,172 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerSwing : MonoBehaviour
 {
-    [Header("Ajustes de balancín")]
-    [SerializeField] private float swingForce = 40f;      // fuerza al empujar
-    [SerializeField] private float maxSwingSpeed = 20f;   // límite de velocidad
-    [SerializeField] private float baseLaunchBoost = 6f;  // extra de fuerza al soltar
-    [SerializeField] private AnimationCurve extraBoostBySpeed;
-    // opcional: velocidad -> boost extra
+    [SerializeField] float swingForce = 40f;
+    [SerializeField] float maxSwingSpeed = 20f;
+    [SerializeField] float baseLaunchBoost = 6f;
+    [SerializeField] AnimationCurve extraBoostBySpeed;
+    [SerializeField] float impulseScale = 1f;
+    [SerializeField] float attachAngularScale = 1f;
+    [SerializeField] float barReturnDamping = 3f;
 
-    private Rigidbody rb;
-    private PlayerInput input;
-    private PlayerMovement movement;
+    Rigidbody rb;
+    PlayerInput input;
 
-    private HingeJoint hinge;
-    private SwingBar currentBar;
-    private bool isSwinging;
-    private bool jumpConsumedThisFrame;   // para evitar doble lectura
+    HingeJoint hinge;
+    SwingBar currentBar;
+    bool isSwinging;
+
+    RigidbodyConstraints originalConstraints;
 
     public bool IsSwinging => isSwinging;
 
-    private void Awake()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
         input = GetComponent<PlayerInput>();
-        movement = GetComponent<PlayerMovement>();
     }
 
     public void AttachToBar(SwingBar bar, Vector3 grabPointWorld)
     {
-        if (isSwinging || bar == null)
-            return;
+        if (isSwinging || bar == null) return;
 
         currentBar = bar;
+        Vector3 incomingVel = rb.velocity;
 
-        // 1) Guardar la velocidad de entrada del jugador ANTES del joint
-        Vector3 incomingVelocity = rb.velocity;
+        // ===== GUARDAR Y BLOQUEAR ROTACIONES =====
+        originalConstraints = rb.constraints;
+        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 
-        // 2) Crear el joint
+        // ===== CALCULAR PIVOTE =====
+        Vector3 pivotPos = bar.Pivot
+            ? bar.Pivot.position
+            : bar.BarRigidbody.transform.position;
+
+        // ===== ORIENTAR JUGADOR MIRANDO AL BALANCÍN =====
+        Vector3 toPivot = pivotPos - transform.position;
+        toPivot.y = 0f;
+
+        if (toPivot.sqrMagnitude > 1e-6f)
+        {
+            rb.MoveRotation(Quaternion.LookRotation(toPivot.normalized, Vector3.up));
+        }
+
+        // ===== CREAR HINGE =====
         hinge = gameObject.AddComponent<HingeJoint>();
         hinge.connectedBody = bar.BarRigidbody;
         hinge.autoConfigureConnectedAnchor = false;
 
         hinge.anchor = transform.InverseTransformPoint(grabPointWorld);
-        hinge.connectedAnchor = bar.BarRigidbody.transform.InverseTransformPoint(grabPointWorld);
+        hinge.connectedAnchor =
+            bar.BarRigidbody.transform.InverseTransformPoint(grabPointWorld);
 
-        // Asegúrate de que este eje coincide con el eje real de giro del balancín
-        hinge.axis = Vector3.right;
+        Vector3 axisWorld = bar.BarRigidbody.transform.right;
+        hinge.axis = transform.InverseTransformDirection(axisWorld);
 
         hinge.useLimits = false;
         hinge.enableCollision = false;
 
         isSwinging = true;
 
-        // 3) DAR EL GOLPE INICIAL AL BALANCÍN
-        //    Impulso proporcional a tu velocidad de entrada.
-        float impulseScale = 1.0f; // prueba 0.5, 1, 1.5, 2
-        Vector3 impulse = incomingVelocity * rb.mass * impulseScale;
+        // ===== TRANSFERENCIA DE INERCIA =====
+        Vector3 r = grabPointWorld - pivotPos;
+        if (r.sqrMagnitude > 1e-6f)
+        {
+            Vector3 tangentialVel =
+                incomingVel - Vector3.Project(incomingVel, r.normalized);
 
-        bar.BarRigidbody.AddForceAtPosition(
-            impulse,
-            grabPointWorld,              // punto donde te agarras
-            ForceMode.Impulse
-        );
+            Vector3 impulse = tangentialVel * rb.mass * impulseScale;
+            bar.BarRigidbody.AddForceAtPosition(
+                impulse,
+                grabPointWorld,
+                ForceMode.Impulse
+            );
 
-        // 4) Ajustar la velocidad del jugador al punto de la barra
-        //    para que al enganchar no "patine" respecto al balancín.
-        Vector3 barPointVel = bar.BarRigidbody.GetPointVelocity(transform.position);
-        rb.velocity = barPointVel;
+            Vector3 omega =
+                Vector3.Cross(r, tangentialVel) / r.sqrMagnitude;
+
+            float omegaAxis = Vector3.Dot(omega, axisWorld);
+            bar.BarRigidbody.angularVelocity +=
+                axisWorld * (omegaAxis * attachAngularScale);
+        }
+
+        rb.velocity = bar.BarRigidbody.GetPointVelocity(transform.position);
     }
 
     public void DetachFromBar(bool withLaunch)
     {
-        if (!isSwinging)
-            return;
+        if (!isSwinging) return;
 
         Vector3 launchVelocity = rb.velocity;
 
         if (withLaunch)
         {
             float speed = launchVelocity.magnitude;
+            float extra = baseLaunchBoost;
 
-            // dirección de lanzamiento: tangente al movimiento actual
-            Vector3 dir = (speed > 0.1f) ? launchVelocity.normalized : transform.forward;
-
-            float extraBoost = baseLaunchBoost;
             if (extraBoostBySpeed != null && extraBoostBySpeed.keys.Length > 0)
-                extraBoost += extraBoostBySpeed.Evaluate(speed);
+                extra += extraBoostBySpeed.Evaluate(speed);
 
-            launchVelocity = dir * (speed + extraBoost);
+            launchVelocity = launchVelocity.normalized * (speed + extra);
         }
 
+        // ===== LIMPIAR HINGE =====
         Destroy(hinge);
         hinge = null;
         currentBar = null;
         isSwinging = false;
 
+        // ===== RESTAURAR ROTACIONES =====
+        rb.constraints = originalConstraints;
+
+        // Forzar upright (elimina inclinaciones residuales)
+        Vector3 euler = rb.rotation.eulerAngles;
+        rb.rotation = Quaternion.Euler(0f, euler.y, 0f);
+
         rb.velocity = launchVelocity;
+
+        CanonShoot canonShoot = GetComponent<CanonShoot>();
+        canonShoot?.ShootAbility.SetCanUseAbility(true);
     }
 
-    /// <summary>
-    /// Llamar desde Update del PlayerMovement mientras IsSwinging == true.
-    /// </summary>
     public void HandleSwingUpdate()
     {
-        if (!isSwinging || input == null)
-            return;
+        if (!isSwinging || hinge == null) return;
 
-        jumpConsumedThisFrame = false;
+        Vector2 inputMove = input.actions["Movement"].ReadValue<Vector2>();
+        float horizontal = inputMove.x;
 
-        // Input horizontal: usamos el eje X del movimiento
-        Vector2 moveInput = input.actions["Movement"].ReadValue<Vector2>();
-        float horizontal = -moveInput.x;
-
-        // fuerza tangencial según el stick
-        if (Mathf.Abs(horizontal) > 0.01f && currentBar != null)
+        if (Mathf.Abs(horizontal) > 0.01f)
         {
-            Vector3 pivotPos = currentBar.BarRigidbody.transform.TransformPoint(hinge.connectedAnchor);
+            Vector3 pivotPos =
+                currentBar.BarRigidbody.transform.TransformPoint(hinge.connectedAnchor);
+
             Vector3 radius = transform.position - pivotPos;
 
-            // plano de oscilación (aprox.): vertical (gravedad + radius)
-            Vector3 planeNormal = Vector3.Cross(radius, Vector3.up);
-            if (planeNormal.sqrMagnitude < 1e-4f)
-                planeNormal = Vector3.Cross(radius, transform.right);
+            if (radius.sqrMagnitude > 1e-6f)
+            {
+                Vector3 axisWorld = currentBar.BarRigidbody.transform.right;
+                Vector3 tangent = Vector3.Cross(axisWorld, radius).normalized;
 
-            // tangente en el arco
-            Vector3 tangent = Vector3.Cross(planeNormal.normalized, radius.normalized);
-
-            rb.AddForce(tangent * swingForce * horizontal, ForceMode.Acceleration);
+                rb.AddForce(
+                    tangent * swingForce * horizontal,
+                    ForceMode.Acceleration
+                );
+            }
         }
 
-        // limitar velocidad
+        // límite de velocidad
         Vector3 v = rb.velocity;
-        Vector3 horizontalVel = new Vector3(v.x, 0f, v.z);
-        if (horizontalVel.magnitude > maxSwingSpeed)
+        Vector3 planar = new Vector3(v.x, 0f, v.z);
+        if (planar.magnitude > maxSwingSpeed)
         {
-            horizontalVel = horizontalVel.normalized * maxSwingSpeed;
-            rb.velocity = new Vector3(horizontalVel.x, v.y, horizontalVel.z);
+            planar = planar.normalized * maxSwingSpeed;
+            rb.velocity = new Vector3(planar.x, v.y, planar.z);
         }
 
-        // salto para soltarse
         if (input.actions["Jump"].WasPressedThisFrame())
         {
-            jumpConsumedThisFrame = true;
-            DetachFromBar(withLaunch: true);
+            DetachFromBar(true);
         }
     }
 }

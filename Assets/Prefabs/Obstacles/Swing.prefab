@@ -79,8 +79,8 @@ HingeJoint:
   serializedVersion: 2
   m_UseSpring: 1
   m_Spring:
-    spring: 10
-    damper: 2
+    spring: 60
+    damper: 10
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -132,8 +132,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 946976930744940106}
-  - component: {fileID: 4883507987061341347}
   - component: {fileID: 4984683414768574766}
+  - component: {fileID: 3968614076774970222}
   m_Layer: 0
   m_Name: trigger
   m_TagString: Untagged
@@ -156,8 +156,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 766212878509882092}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!136 &4883507987061341347
-CapsuleCollider:
+--- !u!114 &4984683414768574766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2775704804835237462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f31bedf44f1b8794c87160be20b0468f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barRigidbody: {fileID: 1289183762538499422}
+  grabCollider: {fileID: 3968614076774970222}
+  pivot: {fileID: 6932061402757933735}
+--- !u!65 &3968614076774970222
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -174,26 +189,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.17
-  m_Height: 2.0953913
-  m_Direction: 1
-  m_Center: {x: 0.010836582, y: 0.020954167, z: 0.00032261194}
---- !u!114 &4984683414768574766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2775704804835237462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f31bedf44f1b8794c87160be20b0468f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  barRigidbody: {fileID: 1289183762538499422}
-  grabCollider: {fileID: 4883507987061341347}
-  pivot: {fileID: 6932061402757933735}
+  serializedVersion: 3
+  m_Size: {x: 0.9999997, y: 2.018074, z: 1}
+  m_Center: {x: -0.00000003916537, y: -0.0048214532, z: 0.000000008342345}
 --- !u!1 &3567192579399984055
 GameObject:
   m_ObjectHideFlags: 0

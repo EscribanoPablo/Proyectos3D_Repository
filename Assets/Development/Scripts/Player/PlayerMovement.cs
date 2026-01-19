@@ -10,6 +10,11 @@ public class Ability
     public AbilityState abilityData;
     public bool canUse;
     public bool alreadyUsed;
+
+    public void SetCanUseAbility(bool value)
+    {
+        canUse = value;
+    }
 }
 
 public class PlayerMovement : MonoBehaviour
@@ -105,6 +110,12 @@ public class PlayerMovement : MonoBehaviour
     private float nextWallJumpAllowedTime = 0f;
     [SerializeField] private float wallJumpInputDelay = 0.08f; // tiempo mínimo pegado antes de poder saltar
     private float wallJumpCanStartAt = 0f;
+    [Header("Wall Stick / Slide")]
+    [SerializeField] private float wallStickTime = 0.4f;   // tiempo clavado
+    [SerializeField] private float wallDetachInputDelay = 0.5f; // tiempo antes de permitir despegarse moviendo
+
+    private float wallStickUntil = 0f;
+    private float wallDetachAllowedAt = 0f;
     //[SerializeField] private float wallAnticipationDistance = 0.6f;   // distancia para anticipar
     //[SerializeField] private float wallAnticipationAngle = 35f;       // grados máx entre forward y -normal
     //[SerializeField] private float wallAnticipationMinSpeed = 0.5f;   // mínima velocidad hacia la pared
@@ -156,6 +167,10 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Balancín")]
     private PlayerSwing swingHandler;
+    private Trampoline lastTrampoline;
+
+    [Header("Trampoline")]
+    [SerializeField] private bool trampolineEnablesDoubleJump = true;
 
     public Ability GetAbility(string name)
     {
@@ -309,22 +324,36 @@ public class PlayerMovement : MonoBehaviour
         if (isDashing) return;
 
         Vector3 direction = Vector3.zero;
+
+        // Input SOLO si no está bloqueado
         if (!movementBlocked)
-            direction = new Vector3(playerInput.actions["Movement"].ReadValue<Vector2>().x, 0f, playerInput.actions["Movement"].ReadValue<Vector2>().y).normalized;
+        {
+            direction = new Vector3(
+                playerInput.actions["Movement"].ReadValue<Vector2>().x,
+                0f,
+                playerInput.actions["Movement"].ReadValue<Vector2>().y
+            ).normalized;
+        }
 
         float verticalSpeed = rigidBody.velocity.y;
-
         verticalSpeed += -gravity;
 
         if (onWall)
         {
-            // No permitir subir pegado a la pared (elimina ascenso)
-            if (verticalSpeed > 0f)
-                verticalSpeed = Mathf.Lerp(verticalSpeed, 0f, wallUpStopDamp * Time.deltaTime);
+            // WALL STICK: totalmente clavado
+            if (Time.time < wallStickUntil)
+            {
+                verticalSpeed = 0f;
+            }
+            else
+            {
+                // WALL SLIDE
+                if (verticalSpeed > 0f)
+                    verticalSpeed = Mathf.Lerp(verticalSpeed, 0f, wallUpStopDamp * Time.deltaTime);
 
-            // Limitar el deslizamiento hacia abajo
-            if (verticalSpeed < -wallSlideSpeed)
-                verticalSpeed = -wallSlideSpeed;
+                if (verticalSpeed < -wallSlideSpeed)
+                    verticalSpeed = -wallSlideSpeed;
+            }
         }
         else
         {
@@ -344,62 +373,42 @@ public class PlayerMovement : MonoBehaviour
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
 
             if (isCrouching)
-                rigidBody.AddForce(moveDir.normalized * crouchSpeedMovement, ForceMode.Force);
+                rigidBody.AddForce(moveDir * crouchSpeedMovement, ForceMode.Force);
             else
             {
-                if ((playerInput.actions["Run"].IsPressed() && isGrounded && !canonShoot.GetIfAiming()) || !isGrounded && longJumped)
-                {
-                    rigidBody.AddForce(moveDir.normalized * runSpeedMovement, ForceMode.Force);
-                    //if (cameraCinemachine.m_Lens.FieldOfView == cameraFOVBase)
-                    //    cameraCinemachine.m_Lens.FieldOfView = cameraFOVWhenRunning;
-                    cameraCinemachine.m_Lens.FieldOfView = Mathf.Lerp(cameraCinemachine.m_Lens.FieldOfView, cameraFOVWhenRunning, 0.3f);
-                }
+                if ((playerInput.actions["Run"].IsPressed() && isGrounded && !canonShoot.GetIfAiming()) || (!isGrounded && longJumped))
+                    rigidBody.AddForce(moveDir * runSpeedMovement, ForceMode.Force);
                 else
-                {
-                    rigidBody.AddForce(moveDir.normalized * speedMovement, ForceMode.Force);
-                    //if (cameraCinemachine.m_Lens.FieldOfView != cameraFOVBase)
-                    //    cameraCinemachine.m_Lens.FieldOfView = cameraFOVBase;
-                    cameraCinemachine.m_Lens.FieldOfView = Mathf.Lerp(cameraCinemachine.m_Lens.FieldOfView, cameraFOVBase, 0.2f);
-                }
+                    rigidBody.AddForce(moveDir * speedMovement, ForceMode.Force);
             }
 
-            transitionTimer += Time.deltaTime;
-            if (transitionTimer > transitionDurationStart)
-                transitionTimer = transitionDurationStart;
+            transitionTimer = Mathf.Min(transitionTimer + Time.deltaTime, transitionDurationStart);
             speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
         }
         else
         {
             isMoving = false;
 
-            transitionTimer -= Time.deltaTime / transitionDurationStop * transitionDurationStart;
-            if (transitionTimer < 0f)
-                transitionTimer = 0f;
+            transitionTimer = Mathf.Max(transitionTimer - Time.deltaTime / transitionDurationStop * transitionDurationStart, 0f);
             speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
-
-            cameraCinemachine.m_Lens.FieldOfView = Mathf.Lerp(cameraCinemachine.m_Lens.FieldOfView, cameraFOVBase, 0.2f);
         }
 
+        // Cancelar empuje contra la pared si no estamos en OnWall
         if (!onWall && !isGrounded && facingWall)
         {
             Vector3 v = rigidBody.velocity;
-            Vector3 n = lastWallNormal.normalized;   // normal que sale de la pared
+            Vector3 n = lastWallNormal.normalized;
 
-            // componente que empuja HACIA la pared (en dirección -n)
             float intoDot = Vector3.Dot(v, -n);
-            if (intoDot > 0f) // solo si realmente vamos hacia la pared
+            if (intoDot > 0f)
             {
-                Vector3 intoWall = (-n) * intoDot;   // vector hacia la pared
-                v -= intoWall;                       // eliminamos solo esa componente
+                v -= (-n) * intoDot;
                 rigidBody.velocity = v;
             }
         }
 
-        // NOTE: Don't directly overwrite planar velocity here (that would snap). We keep control of vertical and let
-        // physics + externalVelocity blending determine the planar result. ApplyExternalVelocityTick already writes a velocity
-        // that respects vertical component, but ensure vertical is set to our computed verticalSpeed here.
-        Vector3 currentPlanar = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
-        rigidBody.velocity = new Vector3(currentPlanar.x, verticalSpeed, currentPlanar.z);
+        Vector3 planar = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
+        rigidBody.velocity = new Vector3(planar.x, verticalSpeed, planar.z);
 
         playerAnimator.SetBool("IsCrouching", isCrouching);
         SetSpeedAnimation(speedAnimation);
@@ -513,9 +522,20 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            // Si ya se permite input y el jugador mueve, nos soltamos
+            if (Time.time >= wallDetachAllowedAt)
+            {
+                Vector2 moveInput = playerInput.actions["Movement"].ReadValue<Vector2>();
+                if (moveInput.magnitude > 0.2f)
+                {
+                    WallFall();
+                    return;
+                }
+            }
+
             wallTimer += Time.deltaTime;
 
-            if ((wallTimer > timeToWallFall) || !facingWall || !HasMinGroundClearance())
+            if (wallTimer > timeToWallFall || !HasMinGroundClearance())
             {
                 WallFall();
                 wallTimer = 0;
@@ -536,21 +556,14 @@ public class PlayerMovement : MonoBehaviour
         onWall = true;
         canWall = false;
         ResetJumps();
-        //rigidBody.velocity = Vector3.zero;
-        //rigidBody.useGravity = false;
 
-        // Mantén el impulso: elimina solo la componente "hacia la pared"
-        Vector3 v = rigidBody.velocity;
-        Vector3 n = lastWallNormal.normalized;          // normal de la pared (hacia fuera)
-        Vector3 intoWall = Vector3.Project(v, -n);      // componente que empuja contra la pared
-        rigidBody.velocity = v - intoWall;              // conservas vertical + tangencial
+        // PARÓN SECO
+        rigidBody.velocity = Vector3.zero;
+        rigidBody.angularVelocity = Vector3.zero;
 
-        // CANCELA cualquier “unlock” en curso (venías de otro wall jump)
-        if (movementUnlockRoutine != null)
-        {
-            StopCoroutine(movementUnlockRoutine);
-            movementUnlockRoutine = null;
-        }
+        // Timers
+        wallStickUntil = Time.time + wallStickTime;
+        wallDetachAllowedAt = Time.time + wallDetachInputDelay;
 
         movementBlocked = true;          // <- BLOQUEA input/fuerzas de locomoción
         wallTimer = 0f;                  // asegúrate de arrancar el timer aquí
@@ -559,6 +572,8 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator.SetBool("OnWall", true);
         // A partir de este momento empezamos a contar el delay para poder hacer WallJump
         wallJumpCanStartAt = Time.time + wallJumpInputDelay;
+
+        canonShoot.ShootAbility.SetCanUseAbility(false);
         // reset anticipación
         //wallApproachBlend = 0f;
         //playerAnimator.SetFloat("WallApproach", 0f);
@@ -576,12 +591,19 @@ public class PlayerMovement : MonoBehaviour
         onWall = false;
         movementBlocked = false;
 
+        wallStickUntil = 0f;
+        wallDetachAllowedAt = 0f;
+
         if (movementUnlockRoutine != null)
         {
             StopCoroutine(movementUnlockRoutine);
             movementUnlockRoutine = null;
         }
-        //rigidBody.useGravity = true;
+
+        playerAnimator.SetBool("OnWall", false);
+
+        canonShoot.ShootAbility.SetCanUseAbility(true);
+
     }
 
     private bool HasMinGroundClearance()
@@ -1053,6 +1075,11 @@ public class PlayerMovement : MonoBehaviour
 
                 audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
 
+                if (lastTrampoline != null)
+                {
+                    lastTrampoline.ResetBounces();
+                    lastTrampoline = null;
+                }
                 // reset anticipación al tocar suelo
                 //wallApproachBlend = 0f;
                 //playerAnimator.SetFloat("WallApproach", 0f);
@@ -1067,6 +1094,24 @@ public class PlayerMovement : MonoBehaviour
         playerAnimator.SetBool("OnGround", false);
 
         return false;
+    }
+
+    public void RegisterTrampoline(Trampoline trampoline)
+    {
+        lastTrampoline = trampoline;
+    }
+
+    public void OnTrampolineBounce()
+    {
+        if (!trampolineEnablesDoubleJump)
+            return;
+
+        Ability doubleJump = GetAbility("DoubleJump");
+        if (doubleJump == null || !doubleJump.abilityData.isUnlocked)
+            return;
+
+        doubleJump.canUse = true;
+        doubleJump.alreadyUsed = false;
     }
 
     private bool DistanceToGroundChecker(float distanceToGround)
