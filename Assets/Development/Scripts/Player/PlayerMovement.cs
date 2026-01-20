@@ -526,10 +526,28 @@ public class PlayerMovement : MonoBehaviour
             if (Time.time >= wallDetachAllowedAt)
             {
                 Vector2 moveInput = playerInput.actions["Movement"].ReadValue<Vector2>();
+
                 if (moveInput.magnitude > 0.2f)
                 {
-                    WallFall();
-                    return;
+                    // Convertimos el input a mundo (plano XZ, relativo a cámara)
+                    Vector3 inputWorld =
+                        Quaternion.Euler(0f, camera.transform.eulerAngles.y, 0f) *
+                        new Vector3(moveInput.x, 0f, moveInput.y);
+
+                    inputWorld.Normalize();
+
+                    // Normal plana de la pared
+                    Vector3 wallNormalPlanar = Vector3.ProjectOnPlane(lastWallNormal, Vector3.up).normalized;
+
+                    // Dot: >0 = moviéndose HACIA la pared
+                    float dotIntoWall = Vector3.Dot(inputWorld, -wallNormalPlanar);
+
+                    // Solo nos soltamos si NO estamos empujando hacia la pared
+                    if (dotIntoWall < 0.1f)
+                    {
+                        WallFall();
+                        return;
+                    }
                 }
             }
 
@@ -1075,11 +1093,11 @@ public class PlayerMovement : MonoBehaviour
 
                 audioManager.SetPlaySfx(audioManager.FallingToGroundSound, transform.position);
 
-                if (lastTrampoline != null)
-                {
-                    lastTrampoline.ResetBounces();
-                    lastTrampoline = null;
-                }
+                //if (lastTrampoline != null)
+                //{
+                //    lastTrampoline.ResetBounces();
+                //    lastTrampoline = null;
+                //}
                 // reset anticipación al tocar suelo
                 //wallApproachBlend = 0f;
                 //playerAnimator.SetFloat("WallApproach", 0f);
