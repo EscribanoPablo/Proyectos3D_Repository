@@ -57,12 +57,50 @@ public class WallBetweenDetector : MonoBehaviour
         DetectWall();
     }
 
-    private void DetectWall()
+    /*private void DetectWall()
     {
         RaycastHit hit;
         Vector3 dir = (target.transform.position - mainCamera.transform.position).normalized;
 
         if (Physics.Raycast(mainCamera.transform.position, dir, out hit, Mathf.Infinity, SeeThroughLayers))
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                if (behindWall)
+                {
+                    StartRadiusChange(0f);
+                    behindWall = false;
+                }
+            }
+            else
+            {
+                if (!behindWall)
+                {
+                    StartRadiusChange(seeThroughMaxRadius);
+                    behindWall = true;
+                }
+            }
+        }
+    }*/
+    private void DetectWall()
+    {
+        Vector3 camPos = mainCamera.transform.position;
+        Vector3 targetPos = target.transform.position;
+        Vector3 dir = (targetPos - camPos).normalized;
+
+        bool cameraInsideWall = Physics.CheckSphere(camPos, 0.1f, SeeThroughLayers, QueryTriggerInteraction.Ignore);
+
+        if (cameraInsideWall)
+        {
+            if (!behindWall)
+            {
+                StartRadiusChange(seeThroughMaxRadius);
+                behindWall = true;
+            }
+            return;
+        }
+
+        if (Physics.Raycast(camPos, dir, out RaycastHit hit, Mathf.Infinity, SeeThroughLayers))
         {
             if (hit.collider.CompareTag("Player"))
             {
