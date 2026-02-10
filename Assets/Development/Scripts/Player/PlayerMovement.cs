@@ -50,6 +50,7 @@ public class PlayerMovement : MonoBehaviour
     public bool playerControllerEnabled { get; set; }
 
     [Header("Movement Variables")]
+    private Vector3 lastMoveDir = Vector3.forward;
     [SerializeField] private float baseSpeedMovement = 40;
     [SerializeField] private float runSpeedMovement = 70;
     [SerializeField] private float crouchSpeedMovement = 20;
@@ -66,6 +67,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float transitionDurationStop = 0.5f;
     private float transitionTimer = 0f;
     private float speedAnimation = 0;
+
+    [Header("Slope Movement Variables")]
+    [SerializeField] private float maxSlopeAngle = 50f;
+    [SerializeField] private float slopeRayLength = 1.1f;
+    private RaycastHit slopeHit;
+    private bool isOnSlope = false;
+    private bool isOnTooInclinedSlope = false;
 
     [Header("Jumps Variables")]
     [SerializeField] private int multipleJumps = 1;
@@ -318,42 +326,28 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
+    private Vector3 moveDir;
     private void Movement()
     {
         if (isDashing) return;
 
         Vector3 direction = Vector3.zero;
-
-        // Input SOLO si no está bloqueado
         if (!movementBlocked)
-        {
-            direction = new Vector3(
-                playerInput.actions["Movement"].ReadValue<Vector2>().x,
-                0f,
-                playerInput.actions["Movement"].ReadValue<Vector2>().y
-            ).normalized;
-        }
+            direction = new Vector3(playerInput.actions["Movement"].ReadValue<Vector2>().x, 0f, playerInput.actions["Movement"].ReadValue<Vector2>().y).normalized;
 
         float verticalSpeed = rigidBody.velocity.y;
+
         verticalSpeed += -gravity;
 
         if (onWall)
         {
-            // WALL STICK: totalmente clavado
-            if (Time.time < wallStickUntil)
-            {
-                verticalSpeed = 0f;
-            }
-            else
-            {
-                // WALL SLIDE
-                if (verticalSpeed > 0f)
-                    verticalSpeed = Mathf.Lerp(verticalSpeed, 0f, wallUpStopDamp * Time.deltaTime);
+            // No permitir subir pegado a la pared (elimina ascenso)
+            if (verticalSpeed > 0f)
+                verticalSpeed = Mathf.Lerp(verticalSpeed, 0f, wallUpStopDamp * Time.deltaTime);
 
-                if (verticalSpeed < -wallSlideSpeed)
-                    verticalSpeed = -wallSlideSpeed;
-            }
+            // Limitar el deslizamiento hacia abajo
+            if (verticalSpeed < -wallSlideSpeed)
+                verticalSpeed = -wallSlideSpeed;
         }
         else
         {
@@ -361,6 +355,8 @@ public class PlayerMovement : MonoBehaviour
         }
 
         HandleCrouching();
+
+        moveDir = lastMoveDir;
 
         if (direction.magnitude >= 0.1f)
         {
@@ -370,48 +366,124 @@ public class PlayerMovement : MonoBehaviour
             Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            lastMoveDir = moveDir;
 
-            if (isCrouching)
-                rigidBody.AddForce(moveDir * crouchSpeedMovement, ForceMode.Force);
-            else
-            {
-                if ((playerInput.actions["Run"].IsPressed() && isGrounded && !canonShoot.GetIfAiming()) || (!isGrounded && longJumped))
-                    rigidBody.AddForce(moveDir * runSpeedMovement, ForceMode.Force);
-                else
-                    rigidBody.AddForce(moveDir * speedMovement, ForceMode.Force);
-            }
-
-            transitionTimer = Mathf.Min(transitionTimer + Time.deltaTime, transitionDurationStart);
+            transitionTimer += Time.deltaTime;
+            if (transitionTimer > transitionDurationStart)
+                transitionTimer = transitionDurationStart;
             speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
         }
         else
         {
             isMoving = false;
 
-            transitionTimer = Mathf.Max(transitionTimer - Time.deltaTime / transitionDurationStop * transitionDurationStart, 0f);
+            transitionTimer -= Time.deltaTime / transitionDurationStop * transitionDurationStart;
+            if (transitionTimer < 0f)
+                transitionTimer = 0f;
             speedAnimation = Mathf.Lerp(0f, 1f, transitionTimer / transitionDurationStart);
         }
 
-        // Cancelar empuje contra la pared si no estamos en OnWall
-        if (!onWall && !isGrounded && facingWall)
-        {
-            Vector3 v = rigidBody.velocity;
-            Vector3 n = lastWallNormal.normalized;
+        bool canMove = CanMoveForward(isMoving ? moveDir : Vector3.zero);
 
-            float intoDot = Vector3.Dot(v, -n);
-            if (intoDot > 0f)
+        if (isMoving)
+        {
+            if (canMove || !isGrounded)
             {
-                v -= (-n) * intoDot;
-                rigidBody.velocity = v;
+                float finalSpeed;
+
+                if (isCrouching)
+                    finalSpeed = crouchSpeedMovement;
+                else if ((playerInput.actions["Run"].IsPressed() && isGrounded && !canonShoot.GetIfAiming())
+                         || !isGrounded && longJumped)
+                    finalSpeed = runSpeedMovement;
+                else
+                    finalSpeed = speedMovement;
+
+                Vector3 forceDir = moveDir.normalized;
+
+                if (isOnSlope && isGrounded)
+                    forceDir = GetSlopeMoveDirection(forceDir);
+
+                rigidBody.AddForce(forceDir * finalSpeed, ForceMode.Force);
             }
         }
 
-        Vector3 planar = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
-        rigidBody.velocity = new Vector3(planar.x, verticalSpeed, planar.z);
+        if (!onWall && !isGrounded && facingWall)
+        {
+            // Quitamos la componente de velocidad que empuja contra la pared
+            Vector3 v = rigidBody.velocity;
+            Vector3 n = lastWallNormal.normalized;
+            Vector3 intoWall = Vector3.Project(v, -n); // componente hacia la pared
+
+            if (intoWall.sqrMagnitude > 1e-6f)
+                v -= intoWall; // nos quedamos con vertical + tangencial
+
+            rigidBody.velocity = v;
+        }
+
+        // NOTE: Don't directly overwrite planar velocity here (that would snap). We keep control of vertical and let
+        // physics + externalVelocity blending determine the planar result. ApplyExternalVelocityTick already writes a velocity
+        // that respects vertical component, but ensure vertical is set to our computed verticalSpeed here.
+        Vector3 currentPlanar = new Vector3(rigidBody.velocity.x, 0f, rigidBody.velocity.z);
+        if (!isMoving && isGrounded)
+        {
+            currentPlanar = Vector3.zero;
+        }
+        rigidBody.velocity = new Vector3(currentPlanar.x, verticalSpeed, currentPlanar.z);
 
         playerAnimator.SetBool("IsCrouching", isCrouching);
+
+        if (isOnTooInclinedSlope)
+            speedAnimation = 0;
         SetSpeedAnimation(speedAnimation);
+    }
+
+    private bool CanMoveForward(Vector3 moveDir)
+    {
+        if (moveDir == Vector3.zero)
+        {
+            isOnSlope = false;
+            isOnTooInclinedSlope = false;
+            return true;
+        }
+
+        Vector3 basePos = groundChecker.position + Vector3.up * 0.5f;
+
+        Vector3 originNear = basePos + moveDir.normalized * 0.2f;
+        Vector3 originFar = basePos + moveDir.normalized * 0.4f;
+
+        bool hitNear = Physics.Raycast(originNear, Vector3.down, out RaycastHit hitNearInfo, slopeRayLength, whatIsGround);
+        bool hitFar = Physics.Raycast(originFar, Vector3.down, out RaycastHit hitFarInfo, slopeRayLength, whatIsGround);
+
+        if (hitNear && hitFar)
+        {
+            float angleNear = Vector3.Angle(hitNearInfo.normal, Vector3.up);
+            float angleFar = Vector3.Angle(hitFarInfo.normal, Vector3.up);
+
+            float heightDiff = hitFarInfo.point.y - hitNearInfo.point.y;
+            bool goingUp = heightDiff > 0.03f;
+
+            if (angleNear > maxSlopeAngle)
+                isOnTooInclinedSlope = true;
+
+            if (goingUp && angleNear > maxSlopeAngle && angleFar > maxSlopeAngle)
+                return false;
+
+            isOnTooInclinedSlope = false;
+            slopeHit = hitNearInfo;
+            isOnSlope = angleNear > 0f & angleFar > 0f;
+            return true;
+        }
+
+        isOnTooInclinedSlope = false;
+        isOnSlope = false;
+        return true;
+    }
+
+    private Vector3 GetSlopeMoveDirection(Vector3 moveDir)
+    {
+        return Vector3.ProjectOnPlane(moveDir, slopeHit.normal).normalized;
     }
 
     private void HandleCrouching()
@@ -666,7 +738,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleJumps()
     {
-        if (isDashing)
+        if (isDashing || isOnTooInclinedSlope)
             return;
 
 
@@ -680,8 +752,9 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isCrouching)
             {
-                if (!HasRoofAbove() && timeCrouching >= GetAbility("CrouchingJump").abilityData.cooldown && GetAbility("CrouchingJump").abilityData.isUnlocked)
-                    StartCoroutine(DoCrouchingJump());
+                if (GetAbility("CrouchingJump").canUse)
+                    if (!HasRoofAbove() && timeCrouching >= GetAbility("CrouchingJump").abilityData.cooldown && GetAbility("CrouchingJump").abilityData.isUnlocked)
+                        StartCoroutine(DoCrouchingJump());
             }
             else if (currentJumps <= multipleJumps)
             {
@@ -758,6 +831,10 @@ public class PlayerMovement : MonoBehaviour
     private void Jump(float jumpForce)
     {
         currentJumps++;
+
+        isOnSlope = false;
+        isOnTooInclinedSlope = false;
+
         StopVerticalVelocity();
         rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
@@ -894,6 +971,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DoCrouchingJump()
     {
+        GetAbility("CrouchingJump").canUse = false;
         movementBlocked = true;
 
         yield return new WaitForSeconds(0.3f);
@@ -915,7 +993,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void HandleDash()
     {
-        if (isCrouching)
+        if (isCrouching || isOnTooInclinedSlope)
             return;
 
         if (!onWall)
@@ -1000,6 +1078,9 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            if (isOnTooInclinedSlope || doingGroundPound)
+                return;
+
             if (playerInput.actions["Crouch"].WasPressedThisFrame() && DistanceToGroundChecker(distanceToGroundPound) && GetAbility("GroundPound").abilityData.isUnlocked)
                 StartCoroutine(DoGroundPound());
         }
@@ -1087,6 +1168,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 GetAbility("Jump").canUse = true;
                 GetAbility("DoubleJump").canUse = true; GetAbility("DoubleJump").alreadyUsed = false;
+                GetAbility("CrouchingJump").canUse = true;
                 canWall = true;
 
                 lastWallJumpNormal = Vector3.zero;
@@ -1244,6 +1326,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Vector3 origin = groundChecker.position + Vector3.up * 0.5f + moveDir.normalized * 0.3f;
+        Gizmos.DrawLine(origin, origin + Vector3.down * slopeRayLength);
+
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, transform.position + (transform.forward * wallDetectionDistance));
         Gizmos.DrawLine(transform.position + (Vector3.up * wallDetectionOffset), transform.position + (transform.forward * wallDetectionDistance) + (Vector3.up * wallDetectionOffset));
